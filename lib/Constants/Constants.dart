@@ -8,4 +8,5 @@ const Color AppBGColor = const Color(0xfff3f6ff);
 const Color AppColor_green = const Color(0xff157700);
 const Color AppColor_red = const Color(0xffF00404);
 const Color AppColor_grey = const Color(0xff606060);
+const Color navbarColor = const Color(0xffD2DFFF);
 const Color AppColor_White = Colors.white;
