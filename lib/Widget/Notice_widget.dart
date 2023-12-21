@@ -25,8 +25,8 @@ class _NoticeWidgetState extends State<NoticeWidget> {
         borderRadius: BorderRadius.circular(10.0),
 
       ),
-      padding: EdgeInsets.only(top: ScreenWidth/51.2, left: ScreenWidth/76.8, right: ScreenWidth/76.8, bottom: ScreenWidth/51.2),
-      margin: EdgeInsets.only(top: ScreenWidth/51.2),
+      padding: EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 30),
+      margin: EdgeInsets.only(top: 30),
       // color: Colors.grey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class _NoticeWidgetState extends State<NoticeWidget> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: ScreenWidth/153.6,),
+          SizedBox(height: 10,),
           Text(
             widget.description,
             style: TextStyle(
@@ -48,27 +48,27 @@ class _NoticeWidgetState extends State<NoticeWidget> {
             ),
           ),
           SizedBox(
-            height: ScreenWidth/76.8,
+            height: 20,
           ),
 
           Row(
             children: [
-              Icon(Icons.calendar_month_sharp, color: AppColor_green,size: ScreenWidth/96,),
-              SizedBox(width: ScreenWidth/307.2,),
+              Icon(Icons.calendar_month_sharp, color: AppColor_green,size: 16,),
+              SizedBox(width: 5,),
               Text(
                 "Published Date: ",
                 style: TextStyle(
-                  fontSize: ScreenWidth/128,
+                  fontSize: 12,
                   color: AppColor_red,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: ScreenWidth/307.2,),
+              SizedBox(width: 5),
               Text(
                 widget.data,
                 style: TextStyle(
-                  fontSize: ScreenWidth/128,
+                  fontSize: 12,
                   color: AppColor_green,
                   fontWeight: FontWeight.bold,
                 ),
@@ -78,17 +78,17 @@ class _NoticeWidgetState extends State<NoticeWidget> {
               Text(
                 "Published Time: ",
                 style: TextStyle(
-                  fontSize: ScreenWidth/128,
+                  fontSize: 12,
                   color: AppColor_red,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: ScreenWidth/307.2,),
+              SizedBox(width: 5,),
               Text(
                 widget.time,
                 style: TextStyle(
-                  fontSize: ScreenWidth/128,
+                  fontSize: 12,
                   color: AppColor_green,
                   fontWeight: FontWeight.bold,
                 ),
