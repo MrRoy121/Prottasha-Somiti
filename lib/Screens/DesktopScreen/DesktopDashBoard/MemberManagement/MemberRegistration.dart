@@ -4,6 +4,7 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Widget/NavbarScreen.dart';
+import '../../../../Widget/PersonalInfoForm.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../Widget/SingleRow.dart';
 
@@ -57,9 +58,19 @@ class _MemberRegistrationState extends State<MemberRegistration> {
             SizedBox(
               height: 50,
             ),
+
+            
+            // PERSONAL INFORMATION SCREEN
+            PersonalInfoForm(),
+
           ],
         ),
       ),
+
+
+
+
+
       // body: Column(
       //   children: [
       //     Navbar(
