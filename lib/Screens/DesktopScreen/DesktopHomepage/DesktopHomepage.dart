@@ -147,7 +147,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                               style: TextStyle(
                                   fontSize: ScreenWidth/96,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColor_grey
+                                  color: AppColor_greyText
                               ),
                             ),
                           ],
@@ -181,7 +181,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                               style: TextStyle(
                                   fontSize: ScreenWidth/96,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColor_grey
+                                  color: AppColor_greyText
                               ),
                             ),
                           ],
@@ -216,7 +216,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                               style: TextStyle(
                                   fontSize: ScreenWidth/96,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColor_grey
+                                  color: AppColor_greyText
                               ),
                             ),
                           ],
