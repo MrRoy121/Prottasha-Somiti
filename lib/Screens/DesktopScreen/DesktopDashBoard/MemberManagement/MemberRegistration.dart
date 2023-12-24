@@ -4,6 +4,7 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Widget/ContactForm.dart';
+import '../../../../Widget/MemberImage.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/OtherInfo.dart';
 import '../../../../Widget/PersonalInfoForm.dart';
@@ -81,6 +82,17 @@ class _MemberRegistrationState extends State<MemberRegistration> {
             // OTHER'S INFORMATION
             OtherInfo(),
 
+            SizedBox(
+              height: 50,
+            ),
+
+
+            // MEMBER IMAGE
+            MemberImage(),
+
+            SizedBox(
+              height: 50,
+            ),
 
           ],
         ),
