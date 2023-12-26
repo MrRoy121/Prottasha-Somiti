@@ -13,6 +13,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Reports/DailyTransactionList.d
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/GeneralLedgerStatement.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/MemberLedger.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/MemberWiseDisburse.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SlipReprint.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseDisburse.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseMemberDepositLoan.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SanctionDetailInformation.dart';
@@ -618,20 +619,28 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              height: 40,
-                              width: 350,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Slip Reprint",
-                                    style: TextStyle(
-                                      fontSize: 12,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(SlipReprint(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 350,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Slip Reprint",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
