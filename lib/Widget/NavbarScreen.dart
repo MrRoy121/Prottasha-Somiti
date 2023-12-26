@@ -5,6 +5,7 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/Navbar.dart';
 
+import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
 
@@ -82,16 +83,21 @@ class _NavbarScreenState extends State<NavbarScreen> {
                           )
                       ),
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 10, left: 20, bottom: 10),
-                        height: 40,
-                        width: 200,
-                        child: Text(
-                          "Edit Member",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        )
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(EditMembers(appbool: widget.appbool, navbool: widget.navbool,));
+                      },
+                      child: Container(
+                          padding: EdgeInsets.only(top: 10, left: 20, bottom: 10),
+                          height: 40,
+                          width: 200,
+                          child: Text(
+                            "Edit Member",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          )
+                      ),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
