@@ -8,6 +8,7 @@ import 'package:prottashasomit/Widget/Navbar.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Reports/DailyGLSummary.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/MemberLedger.dart';
 
 class NavbarScreen extends StatefulWidget {
@@ -364,20 +365,28 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     fontSize: 12,
                                   ),
                                 )),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              height: 40,
-                              width: 350,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Daily GL Summary",
-                                    style: TextStyle(
-                                      fontSize: 12,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(DailyGLSummary(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 350,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Daily GL Summary",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
