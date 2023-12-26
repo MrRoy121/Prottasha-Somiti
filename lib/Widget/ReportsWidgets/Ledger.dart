@@ -270,11 +270,11 @@ class _LedgerState extends State<Ledger> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Select",
+                              hintText: "Enter Ledger Name/ Code",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
+                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
                             ),
                           ),
                         ),
