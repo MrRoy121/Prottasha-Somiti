@@ -83,6 +83,9 @@ class _NavbarState extends State<Navbar> {
 
           InkWell(
             onTap: () {
+              setState(() {
+                widget.toglechnage(3);
+              });
               // setState(() {
               //   widget.navbool.makeallfalse();
               //   widget.navbool.reports = true;

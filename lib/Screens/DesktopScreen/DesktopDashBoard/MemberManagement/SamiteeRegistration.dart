@@ -34,110 +34,149 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
       appBar: Appbar(
         navbool: widget.appbool,
       ),
-      body: Column(
-        children: [
-          NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
-
-          SizedBox(
-            height: 50,
-          ),
-
-          Container(
-            width: 1400,
-            height: 300,
-            // color: Colors.white,
-
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 2),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
+        
+            SizedBox(
+              height: 50,
             ),
-
-            child: Column(
-              children: [
-                Container(
-                  width: 1400,
-                  height: 40,
-                  color: navbarColor,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40.0),
-                        child: Text(
-                            "Samitee Registration",
-                          style: TextStyle(
-                            color: AppColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-
-                      Spacer(),
-
-                      Container(
-                        height: 40,
-                        width: 80,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 15),
-                          child: Text("✓ Save", style: TextStyle(color: Colors.white, fontSize: 14),),
-                        ),
-                        color: Colors.green,
-                      ),
-
-                      SizedBox(width: 10,),
-
-                      Container(
-                        height: 40,
-                        width: 130,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 3.0, left: 15),
-                          child: Row(
-                            children: [
-                              Icon(Icons.list, color: Colors.white, size: 18,),
-                              Text("Somitee List", style: TextStyle(color: Colors.white, fontSize: 14),),
-                            ],
-                          ),
-                        ),
-                        color: AppColor,
-                      ),
-
-                      SizedBox(width: 10,),
-
-                      Container(
-                        height: 40,
-                        width: 50,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20),
-                          child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
-                        ),
-                        color: Colors.red,
-                      ),
-
-                      SizedBox(width: 10,),
-
-                    ],
+        
+            Container(
+              width: 1400,
+              height: 300,
+              // color: Colors.white,
+        
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
                   ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 150),
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              RichText(
+                ],
+              ),
+        
+              child: Column(
+                children: [
+                  Container(
+                    width: 1400,
+                    height: 40,
+                    color: navbarColor,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                              "Samitee Registration",
+                            style: TextStyle(
+                              color: AppColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+        
+                        Spacer(),
+        
+                        Container(
+                          height: 40,
+                          width: 80,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 15),
+                            child: Text("✓ Save", style: TextStyle(color: Colors.white, fontSize: 14),),
+                          ),
+                          color: Colors.green,
+                        ),
+        
+                        SizedBox(width: 10,),
+        
+                        Container(
+                          height: 40,
+                          width: 130,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3.0, left: 15),
+                            child: Row(
+                              children: [
+                                Icon(Icons.list, color: Colors.white, size: 18,),
+                                Text("Somitee List", style: TextStyle(color: Colors.white, fontSize: 14),),
+                              ],
+                            ),
+                          ),
+                          color: AppColor,
+                        ),
+        
+                        SizedBox(width: 10,),
+        
+                        Container(
+                          height: 40,
+                          width: 50,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 20),
+                            child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                          ),
+                          color: Colors.red,
+                        ),
+        
+                        SizedBox(width: 10,),
+        
+                      ],
+                    ),
+                  ),
+        
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50, left: 150),
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                RichText(
+                                    text: TextSpan(
+                                      text: 'Somitee Name',
+                                      style: TextStyle(color: Colors.black, fontSize: 14),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                        TextSpan(
+                                            text: ' :',
+                                            style: TextStyle(color: Colors.black, fontSize: 14)),
+        
+                                      ],
+                                    ),
+                                ),
+        
+                                SizedBox(width: 10,),
+        
+        
+                                SizedBox(
+                                  width: 300,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ),
+        
+        
+                              ],
+                            ),
+        
+        
+                            SizedBox(
+                              height: 40,
+                            ),
+        
+                            Row(
+                              children: [
+                                RichText(
                                   text: TextSpan(
-                                    text: 'Somitee Name',
+                                    text: 'Branch Name',
                                     style: TextStyle(color: Colors.black, fontSize: 14),
                                     children: <TextSpan>[
                                       TextSpan(
@@ -145,148 +184,111 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                                       TextSpan(
                                           text: ' :',
                                           style: TextStyle(color: Colors.black, fontSize: 14)),
-
+        
                                     ],
                                   ),
-                              ),
-
-                              SizedBox(width: 10,),
-
-
-                              SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+                                ),
+        
+                                SizedBox(width: 15,),
+        
+                                SizedBox(
+                                  width: 300,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                    ),
                                   ),
                                 ),
-                              ),
-
-
-                            ],
-                          ),
-
-
-                          SizedBox(
-                            height: 40,
-                          ),
-
-                          Row(
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Branch Name',
-                                  style: TextStyle(color: Colors.black, fontSize: 14),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                                    TextSpan(
-                                        text: ' :',
-                                        style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(width: 15,),
-
-                              SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+        
+        
+                              ],
+                            ),
+                          ],
+                        ),
+        
+                        SizedBox(
+                          width: 150,
+                        ),
+        
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Phone',
+                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(color: Colors.black, fontSize: 14)),
+        
+                                    ],
                                   ),
                                 ),
-                              ),
-
-
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(
-                        width: 150,
-                      ),
-
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Phone',
-                                  style: TextStyle(color: Colors.black, fontSize: 14),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                                    TextSpan(
-                                        text: ' :',
-                                        style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(width: 80,),
-
-                              SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+        
+                                SizedBox(width: 80,),
+        
+                                SizedBox(
+                                  width: 300,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                    ),
                                   ),
                                 ),
-                              ),
-
-
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: 40,
-                          ),
-
-                          Row(
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Samitee Address',
-                                  style: TextStyle(color: Colors.black, fontSize: 14),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                                    TextSpan(
-                                        text: ' :',
-                                        style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(width: 12,),
-
-                              SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+        
+        
+                              ],
+                            ),
+        
+                            SizedBox(
+                              height: 40,
+                            ),
+        
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Samitee Address',
+                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(color: Colors.black, fontSize: 14)),
+        
+                                    ],
                                   ),
                                 ),
-                              ),
-
-
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
+        
+                                SizedBox(width: 12,),
+        
+                                SizedBox(
+                                  width: 300,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ),
+        
+        
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
       // body: Column(
       //   children: [
