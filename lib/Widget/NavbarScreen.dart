@@ -9,6 +9,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.d
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/DailyGLSummary.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Reports/DailyTransactionList.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/MemberLedger.dart';
 
 class NavbarScreen extends StatefulWidget {
@@ -354,17 +355,25 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     fontSize: 12,
                                   ),
                                 )),
-                            Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, bottom: 10),
-                                height: 40,
-                                width: 350,
-                                child: Text(
-                                  "Daily Transaction List",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                )),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(DailyTransactionList(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, bottom: 10),
+                                  height: 40,
+                                  width: 350,
+                                  child: Text(
+                                    "Daily Transaction List",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Get.to(DailyGLSummary(
