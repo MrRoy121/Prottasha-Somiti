@@ -8,6 +8,7 @@ import 'package:prottashasomit/Widget/Navbar.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Reports/MemberLedger.dart';
 
 class NavbarScreen extends StatefulWidget {
   Navbool navbool;
@@ -320,16 +321,24 @@ class _NavbarScreenState extends State<NavbarScreen> {
                         width: 350,
                         child: Column(
                           children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              height: 40,
-                              width: 350,
-                              // color: Colors.grey,
-                              child: Text(
-                                "Member Ledger",
-                                style: TextStyle(
-                                  fontSize: 12,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(MemberLedger(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 350,
+                                // color: Colors.grey,
+                                child: Text(
+                                  "Member Ledger",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
                             ),
