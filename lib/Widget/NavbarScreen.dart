@@ -18,6 +18,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseDisburse.da
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseMemberDepositLoan.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SanctionDetailInformation.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReport.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/SamiteeTransaction.dart';
 
 class NavbarScreen extends StatefulWidget {
   Navbool navbool;
@@ -238,28 +239,36 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ],
                               ),
                             ),
-                            Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 200,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Samitee Transaction",
-                                      style: TextStyle(
-                                        fontSize: 12,
+                            GestureDetector(
+                              onTap: (){
+                                Get.to(SamiteeTransaction(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Samitee Transaction",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 12,
-                                    )
-                                  ],
-                                )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 12,
+                                      )
+                                    ],
+                                  )),
+                            ),
                           ],
                         ),
                       )

@@ -5,7 +5,8 @@ import '../Constants/Constants.dart';
 class SamiteeSelection extends StatefulWidget {
 
   bool submit = true;
-  SamiteeSelection({required this.submit});
+  bool selectmember = false;
+  SamiteeSelection({required this.submit, required this.selectmember});
 
   @override
   State<SamiteeSelection> createState() => _SamiteeSelectionState();
@@ -16,7 +17,8 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
   Widget build(BuildContext context) {
     return  Container(
       width: 1400,
-      height: 350,
+      //height: 350,
+      height: widget.selectmember ? 450 : 350,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -212,6 +214,50 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
 
                       ],
                     ),
+
+                    SizedBox(height: 20,),
+
+                    widget.selectmember ? Row(
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: 'Select Samitee',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(width: 10,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColor_greyBorder),
+                              ),
+                              hintText: "Enter Somitee/ Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                            ),
+                          ),
+
+                        ),
+
+                      ],
+                    ): SizedBox(),
                   ],
                 ),
 

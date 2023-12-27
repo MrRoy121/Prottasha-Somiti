@@ -37,7 +37,7 @@ class _EditMembersState extends State<EditMembers> {
               height: 50,
             ),
         
-            SamiteeSelection(submit: false,),
+            SamiteeSelection(submit: false, selectmember: false,),
         
         
             SizedBox(

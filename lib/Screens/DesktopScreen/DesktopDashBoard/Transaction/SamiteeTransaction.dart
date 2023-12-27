@@ -6,19 +6,20 @@ import 'package:prottashasomit/Widget/NoDataFound.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
+import '../../../../Widget/TransactionWidget/TransactionInformation.dart';
 
 
-class DepositCollectionReport extends StatefulWidget {
+class SamiteeTransaction extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  DepositCollectionReport({required this.appbool, required this.navbool});
+  SamiteeTransaction({required this.appbool, required this.navbool});
 
   @override
-  State<DepositCollectionReport> createState() => _DepositCollectionReportState();
+  State<SamiteeTransaction> createState() => _SamiteeTransactionState();
 }
 
-class _DepositCollectionReportState extends State<DepositCollectionReport> {
+class _SamiteeTransactionState extends State<SamiteeTransaction> {
 
 
   @override
@@ -37,14 +38,15 @@ class _DepositCollectionReportState extends State<DepositCollectionReport> {
               height: 50,
             ),
 
-            SamiteeSelection(submit: true, selectmember: false,),
+            SamiteeSelection(submit: true, selectmember: true,),
 
 
             SizedBox(
               height: 50,
             ),
 
-            NoDataFound(title: "Member List for Deposit Posting"),
+            // TRANSACTION INFORMATION
+            TransactionInformation(),
 
 
           ],
