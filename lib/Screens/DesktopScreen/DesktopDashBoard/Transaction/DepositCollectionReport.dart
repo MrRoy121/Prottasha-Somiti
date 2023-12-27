@@ -8,17 +8,17 @@ import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 
 
-class EditMembers extends StatefulWidget {
+class DepositCollectionReport extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  EditMembers({required this.appbool, required this.navbool});
+  DepositCollectionReport({required this.appbool, required this.navbool});
 
   @override
-  State<EditMembers> createState() => _EditMembersState();
+  State<DepositCollectionReport> createState() => _DepositCollectionReportState();
 }
 
-class _EditMembersState extends State<EditMembers> {
+class _DepositCollectionReportState extends State<DepositCollectionReport> {
 
 
   @override
@@ -32,21 +32,21 @@ class _EditMembersState extends State<EditMembers> {
         child: Column(
           children: [
             NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
-        
+
             SizedBox(
               height: 50,
             ),
-        
-            SamiteeSelection(submit: false,),
-        
-        
+
+            SamiteeSelection(submit: true,),
+
+
             SizedBox(
               height: 50,
             ),
-            
-            NoDataFound(title: "Member General Report"),
-        
-        
+
+            NoDataFound(title: "Member List for Deposit Posting"),
+
+
           ],
         ),
       ),

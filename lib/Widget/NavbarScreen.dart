@@ -17,6 +17,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SlipReprint.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseDisburse.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseMemberDepositLoan.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SanctionDetailInformation.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReport.dart';
 
 class NavbarScreen extends StatefulWidget {
   Navbool navbool;
@@ -30,6 +31,7 @@ class NavbarScreen extends StatefulWidget {
 
 class _NavbarScreenState extends State<NavbarScreen> {
   var arr = [false, false, false, false, false, false, false, false, false];
+  var trasctionArr = [false, false];
 
   _toglechnage(int index) {
     setState(() {
@@ -37,6 +39,15 @@ class _NavbarScreenState extends State<NavbarScreen> {
         arr[i] = false;
       }
       arr[index] = true;
+    });
+  }
+
+  _transctionTogle_loan(int index){
+    setState(() {
+      for (int i = 0; i < trasctionArr.length; i++) {
+        trasctionArr[i] = false;
+      }
+      trasctionArr[index] = true;
     });
   }
 
@@ -176,17 +187,34 @@ class _NavbarScreenState extends State<NavbarScreen> {
                         width: 180,
                         child: Column(
                           children: [
-                            Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, bottom: 10),
-                                height: 40,
-                                width: 180,
-                                child: Text(
-                                  "Deposit",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                )),
+                            GestureDetector(
+                              onTap: () {
+                                _transctionTogle_loan(0);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, bottom: 10),
+                                  height: 40,
+                                  width: 180,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Deposit",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+
+                                      SizedBox(width: 83),
+
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 12,
+                                      ),
+                                    ],
+                                  )),
+                            ),
+
                             Container(
                               padding: EdgeInsets.only(
                                   top: 10, left: 20, right: 20, bottom: 10),
@@ -694,6 +722,56 @@ class _NavbarScreenState extends State<NavbarScreen> {
                           ],
                         ),
                       )
+                    : SizedBox(),
+
+                trasctionArr[0] ?
+                Container(
+                  margin: EdgeInsets.only(left: 0),
+                  color: Colors.blue,
+                  // height: 800,
+                  width: 200,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(DepositCollectionReport(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 200,
+                          // color: Colors.grey,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Deposit Collection Request",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 200,
+                          child: Text(
+                            "Deposit Collection Request",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          )),
+
+                    ],
+                  ),
+                )
                     : SizedBox(),
               ],
             ),
