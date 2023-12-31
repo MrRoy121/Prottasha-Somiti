@@ -38,7 +38,7 @@ class _SamiteeTransactionState extends State<SamiteeTransaction> {
               height: 50,
             ),
 
-            SamiteeSelection(submit: true, selectmember: true,),
+            SamiteeSelection(submit: true, selectmember: true, clear: true, close: true,),
 
 
             SizedBox(

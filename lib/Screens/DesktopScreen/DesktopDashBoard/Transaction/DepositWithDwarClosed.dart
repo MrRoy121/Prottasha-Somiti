@@ -14,17 +14,17 @@ import '../../../../Widget/TransactionWidget/LinkACinfo.dart';
 import '../../../../Widget/TransactionWidget/MemberDepositWithdearRequest.dart';
 
 
-class DepositWithDwarNormal extends StatefulWidget {
+class DepositWithDwarClosed extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  DepositWithDwarNormal({required this.appbool, required this.navbool});
+  DepositWithDwarClosed({required this.appbool, required this.navbool});
 
   @override
-  State<DepositWithDwarNormal> createState() => _DepositWithDwarNormalState();
+  State<DepositWithDwarClosed> createState() => _DepositWithDwarClosedState();
 }
 
-class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
+class _DepositWithDwarClosedState extends State<DepositWithDwarClosed> {
 
 
   @override
@@ -42,6 +42,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
             SizedBox(
               height: 50,
             ),
+
 
             // Member Deposit Withdraw Request
             MemberDepositWithdwar(submit: true, selectmember: false,),
@@ -61,24 +62,6 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
             // Deposit Withdraw
             DepositWithDwar(),
 
-
-            SizedBox(
-              height: 50,
-            ),
-
-            // Link A/c Information
-            Padding(
-              padding: const EdgeInsets.only(left: 70.0),
-              child: Row(
-                children: [
-                  LinkACinfo(),
-
-                  Spacer(),
-
-                  ImageMember(),
-                ],
-              ),
-            ),
 
             SizedBox(
               height: 50,

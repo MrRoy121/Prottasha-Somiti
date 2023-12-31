@@ -20,6 +20,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseMemberDepos
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SanctionDetailInformation.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReport.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReportScreen2.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositWithDwarClosed.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositWithDwarNormal.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/SamiteeTransaction.dart';
 
@@ -890,7 +891,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                       ),
                       InkWell(
                         onTap: (){
-
+                          Get.to(DepositWithDwarClosed(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
                         },
                         child: Container(
                             padding: EdgeInsets.only(

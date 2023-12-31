@@ -5,8 +5,10 @@ import '../Constants/Constants.dart';
 class SamiteeSelection extends StatefulWidget {
 
   bool submit = true;
+  bool clear = true;
+  bool close = true;
   bool selectmember = false;
-  SamiteeSelection({required this.submit, required this.selectmember});
+  SamiteeSelection({required this.submit, required this.selectmember, required this.clear, required this.close});
 
   @override
   State<SamiteeSelection> createState() => _SamiteeSelectionState();
@@ -68,7 +70,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
 
                 SizedBox(width: 10,),
 
-                Container(
+                widget.clear? Container(
                   height: 40,
                   width: 90,
                   child: Padding(
@@ -82,11 +84,11 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                     ),
                   ),
                   color: AppColor_yellow,
-                ),
+                ): Container(),
 
                 SizedBox(width: 10,),
 
-                Container(
+                widget.close? Container(
                   height: 40,
                   width: 50,
                   child: Padding(
@@ -94,7 +96,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                     child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
                   ),
                   color: Colors.red,
-                ),
+                ): Container(),
 
                 SizedBox(width: 10,),
 

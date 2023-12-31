@@ -186,18 +186,11 @@ class _DepositWithDwarState extends State<DepositWithDwar> {
                   children: [
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Deposit Amount :',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Deposit Amount :",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
                           ),
                         ),
 

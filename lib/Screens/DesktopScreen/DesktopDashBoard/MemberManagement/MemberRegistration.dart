@@ -49,8 +49,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
               height: 50,
             ),
         
-            SamiteeSelection(submit: true, selectmember: false,),
-        
+            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,),
+
             SizedBox(
               height: 50,
             ),
