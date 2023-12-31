@@ -18,6 +18,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseDisburse.da
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseMemberDepositLoan.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SanctionDetailInformation.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReport.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReportScreen2.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/SamiteeTransaction.dart';
 
 class NavbarScreen extends StatefulWidget {
@@ -766,17 +767,25 @@ class _NavbarScreenState extends State<NavbarScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                          padding: EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          height: 40,
-                          width: 200,
-                          child: Text(
-                            "Deposit Collection Request",
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          )),
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(DepositCollectionReportScreen2(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            height: 40,
+                            width: 200,
+                            child: Text(
+                              "Deposit Collection Request",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            )),
+                      ),
 
                     ],
                   ),
