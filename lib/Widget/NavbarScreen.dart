@@ -33,6 +33,7 @@ class NavbarScreen extends StatefulWidget {
 
 class _NavbarScreenState extends State<NavbarScreen> {
   var arr = [false, false, false, false, false, false, false, false, false];
+  var withdrawArr = [false, false];
   var trasctionArr = [false, false];
 
   _toglechnage(int index) {
@@ -50,6 +51,17 @@ class _NavbarScreenState extends State<NavbarScreen> {
         trasctionArr[i] = false;
       }
       trasctionArr[index] = true;
+      withdrawArr[index] = false;
+    });
+  }
+
+  _transctionTogle_withdraw(int index){
+    setState(() {
+      for (int i = 0; i < withdrawArr.length; i++) {
+        withdrawArr[i] = false;
+      }
+      withdrawArr[index] = true;
+      trasctionArr[index] = false;
     });
   }
 
@@ -217,27 +229,32 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   )),
                             ),
 
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              height: 40,
-                              width: 200,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Withdraw",
-                                    style: TextStyle(
-                                      fontSize: 12,
+                            GestureDetector(
+                              onTap: (){
+                                _transctionTogle_withdraw(0);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 200,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Withdraw",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 73,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 12,
-                                  )
-                                ],
+                                    SizedBox(
+                                      width: 73,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             GestureDetector(
@@ -781,6 +798,58 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             width: 200,
                             child: Text(
                               "Deposit Collection Request",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            )),
+                      ),
+
+                    ],
+                  ),
+                )
+                    : SizedBox(),
+
+                withdrawArr[0] ?
+                Container(
+                  margin: EdgeInsets.only(left: 0),
+                  color: Colors.blue,
+                  // height: 800,
+                  width: 250,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 250,
+                          // color: Colors.grey,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Deposit Withdwar Request (normal)",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            height: 40,
+                            width: 250,
+                            child: Text(
+                              "Deposit Withdwar Request (closed)",
                               style: TextStyle(
                                 fontSize: 12,
                               ),
