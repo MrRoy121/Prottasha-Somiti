@@ -2,26 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../Constants/Constants.dart';
 
-class SamiteeSelection extends StatefulWidget {
-
-  bool submit = true;
-  bool clear = true;
-  bool close = true;
-  bool selectmember = false;
-  bool active = true;
-  SamiteeSelection({required this.submit, required this.selectmember, required this.clear, required this.close, required this.active});
+class MemberRequestClosing extends StatefulWidget {
 
   @override
-  State<SamiteeSelection> createState() => _SamiteeSelectionState();
+  State<MemberRequestClosing> createState() => _MemberRequestClosingState();
 }
 
-class _SamiteeSelectionState extends State<SamiteeSelection> {
+class _MemberRequestClosingState extends State<MemberRequestClosing> {
   @override
   Widget build(BuildContext context) {
     return  Container(
       width: 1400,
       //height: 350,
-      height: widget.selectmember ? 450 : 350,
+      height: 530 ,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -48,7 +41,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Samitee Selection",
+                    "Member Information for Closing Request",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -57,49 +50,6 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                   ),
                 ),
 
-                Spacer(),
-
-                widget.submit? Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 15),
-                    child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 14),),
-                  ),
-                  color: Colors.green,
-                ): Container(),
-
-                SizedBox(width: 10,),
-
-                widget.clear? Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 15),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
-                    ),
-                  ),
-                  color: AppColor_yellow,
-                ): Container(),
-
-                SizedBox(width: 10,),
-
-                widget.close? Container(
-                  height: 40,
-                  width: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 20),
-                    child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
-                  ),
-                  color: Colors.red,
-                ): Container(),
-
-                SizedBox(width: 10,),
 
               ],
             ),
@@ -116,7 +66,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: 'Select Samitee',
+                            text: 'Select Member',
                             style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
@@ -129,115 +79,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                           ),
                         ),
 
-                        SizedBox(width: 10,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somitee/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
-
-                    SizedBox(height: 30,),
-
-
-
-                    Row(
-                      children: [
-                        Text(
-                          "Samitee Name :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 10,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-
-                      ],
-                    ),
-
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                       Text(
-                           "Formation Date :",
-                         style: TextStyle(
-                           fontSize: 14,
-                         ),
-                       ),
-
-                        SizedBox(width: 15,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(height: 20,),
-
-                    widget.selectmember ? Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Samitee',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 10,),
+                        SizedBox(width: 30,),
 
 
                         SizedBox(
@@ -260,12 +102,139 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                         ),
 
                       ],
-                    ): SizedBox(),
+                    ),
+
+                    SizedBox(height: 30,),
+
+
+
+                    Row(
+                      children: [
+                        Text(
+                          "Loan Pending Amount: ",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 10,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+
+                            ),
+                          ),
+
+                        ),
+
+
+                      ],
+                    ),
+
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Father Name :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 15,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 20,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Present Address :",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+
+
+                        SizedBox(width: 10,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none
+                              ),
+                            ),
+                          ),
+
+                        ),
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Mobile No :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 15,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
                   ],
                 ),
 
                 SizedBox(
-                  width: 250,
+                  width: 150,
                 ),
 
                 Column(
@@ -275,7 +244,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                       child: Row(
                         children: [
                           Text(
-                            "Samitee Address :",
+                            "Member Own Deposit :",
                             style: TextStyle(
                               fontSize: 14,
                             ),
@@ -286,12 +255,20 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                           SizedBox(
                             width: 300,
                             child: TextField(
+                              readOnly: true,
                               decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
+                                    borderSide: BorderSide.none
+                                ),
+                                hintText: "33",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
+
                           ),
 
 
@@ -303,10 +280,10 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                       height: 40,
                     ),
 
-                    widget.active? Row(
+                    Row(
                       children: [
                         Text(
-                          "Active Member :",
+                          "Mother Name :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -327,11 +304,16 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
 
 
                       ],
-                    )
-                    : Row(
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
                       children: [
                         Text(
-                          "Closed Member :",
+                          "Permanent Address :",
                           style: TextStyle(
                             fontSize: 14,
                           ),

@@ -4,22 +4,22 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/NoDataFound.dart';
 import '../../../../Constants/Constants.dart';
+import '../../../../Widget/MemberRequestOfClosing.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
-import '../../../../Widget/TransactionWidget/TransactionInformation.dart';
 
 
-class SamiteeTransaction extends StatefulWidget {
+class CloseMember extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  SamiteeTransaction({required this.appbool, required this.navbool});
+  CloseMember({required this.appbool, required this.navbool});
 
   @override
-  State<SamiteeTransaction> createState() => _SamiteeTransactionState();
+  State<CloseMember> createState() => _CloseMemberState();
 }
 
-class _SamiteeTransactionState extends State<SamiteeTransaction> {
+class _CloseMemberState extends State<CloseMember> {
 
 
   @override
@@ -38,16 +38,18 @@ class _SamiteeTransactionState extends State<SamiteeTransaction> {
               height: 50,
             ),
 
-            SamiteeSelection(submit: true, selectmember: true, clear: true, close: true,active: true,),
+            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true, active: false,),
 
 
             SizedBox(
               height: 50,
             ),
 
-            // TRANSACTION INFORMATION
-            TransactionInformation(),
+            MemberRequestClosing(),
 
+            SizedBox(
+              height: 50,
+            ),
 
           ],
         ),

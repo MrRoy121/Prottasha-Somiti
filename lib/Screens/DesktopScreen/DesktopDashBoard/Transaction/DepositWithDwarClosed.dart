@@ -53,7 +53,7 @@ class _DepositWithDwarClosedState extends State<DepositWithDwarClosed> {
             ),
 
             // Somitee Selection
-            SamiteeSelection(submit: false, selectmember: false, clear: false, close: false,),
+            SamiteeSelection(submit: false, selectmember: false, clear: false, close: false,active: true,),
 
             SizedBox(
               height: 50,

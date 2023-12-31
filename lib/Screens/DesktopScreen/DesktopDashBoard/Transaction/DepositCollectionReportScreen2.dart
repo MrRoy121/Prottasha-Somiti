@@ -38,7 +38,7 @@ class _DepositCollectionReportScreen2State extends State<DepositCollectionReport
               height: 50,
             ),
 
-            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,),
+            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,active: true,),
 
 
             SizedBox(
