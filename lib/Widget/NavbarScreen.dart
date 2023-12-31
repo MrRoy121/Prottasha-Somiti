@@ -6,6 +6,7 @@ import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/Navbar.dart';
 
 import '../Constants/Constants.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/CloseMember.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/DeadMemberInfo.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
@@ -40,6 +41,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
   var arr = [false, false, false, false, false, false, false, false, false];
   var withdrawArr = [false, false];
   var trasctionArr = [false, false];
+  var loanSectionArr = [false, false];
 
   Color itemColor = AppColor_Blue;
   Color textColor = Colors.black;
@@ -60,6 +62,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       }
       trasctionArr[index] = true;
       withdrawArr[index] = false;
+      loanSectionArr[index] = false;
     });
   }
 
@@ -69,6 +72,18 @@ class _NavbarScreenState extends State<NavbarScreen> {
         withdrawArr[i] = false;
       }
       withdrawArr[index] = true;
+      trasctionArr[index] = false;
+      loanSectionArr[index] = false;
+    });
+  }
+
+  _loanTogle_saction(int index){
+    setState(() {
+      for (int i = 0; i < loanSectionArr.length; i++) {
+        loanSectionArr[i] = false;
+      }
+      loanSectionArr[index] = true;
+      withdrawArr[index] = false;
       trasctionArr[index] = false;
     });
   }
@@ -350,28 +365,33 @@ class _NavbarScreenState extends State<NavbarScreen> {
                         width: 200,
                         child: Column(
                           children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              height: 40,
-                              width: 200,
-                              // color: Colors.grey,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Loan Saction",
-                                    style: TextStyle(
-                                      fontSize: 12,
+                            InkWell(
+                              onTap: () {
+                                _loanTogle_saction(0);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 200,
+                                // color: Colors.grey,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Loan Saction",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 75,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 12,
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 75,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
@@ -921,6 +941,74 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             width: 250,
                             child: Text(
                               "Deposit Withdwar Request (closed)",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            )),
+                      ),
+
+                    ],
+                  ),
+                )
+                    : SizedBox(),
+                loanSectionArr[0] ?
+                Container(
+                  margin: EdgeInsets.only(left: 0),
+                  color: AppColor_Blue,
+                  // height: 800,
+                  width: 250,
+                  child: Column(
+                    children: [
+                      InkWell(
+
+                        onTap: (){
+                          Get.to(LoanSanction(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
+                        },
+                        onHover: (val) {
+                          setState(() {
+                            if(val){
+                              itemColor = Colors.black;
+                              textColor = Colors.white;
+                            } else {
+                              itemColor = AppColor_Blue;
+                              textColor = Colors.black;
+                            }
+                          });
+
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 250,
+                          color: itemColor,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Sanction Limit Request",
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            height: 40,
+                            width: 250,
+                            child: Text(
+                              "Approved Sanction Reject",
                               style: TextStyle(
                                 fontSize: 12,
                               ),
