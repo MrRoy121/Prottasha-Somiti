@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color AppColor_Blue = Color.fromARGB(255, 89, 180, 255);
+const Color AppColor_Blue = const Color(0xff648FFF);
+const Color AppColor_hover1 = const Color(0xff1B5EA4);
 const Color AppColor_Black = Colors.black;
 const Color AppColor = const Color(0xff3C72FF);
 const Color AppColor_second = const Color(0xffF3F6FF);

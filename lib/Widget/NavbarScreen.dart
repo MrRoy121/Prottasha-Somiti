@@ -5,6 +5,7 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/Navbar.dart';
 
+import '../Constants/Constants.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
@@ -19,6 +20,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SamiteeWiseMemberDepos
 import '../Screens/DesktopScreen/DesktopDashBoard/Reports/SanctionDetailInformation.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReport.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionReportScreen2.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositWithDwarNormal.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/SamiteeTransaction.dart';
 
 class NavbarScreen extends StatefulWidget {
@@ -35,6 +37,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
   var arr = [false, false, false, false, false, false, false, false, false];
   var withdrawArr = [false, false];
   var trasctionArr = [false, false];
+
+  Color itemColor = AppColor_Blue;
+  Color textColor = Colors.black;
 
   _toglechnage(int index) {
     setState(() {
@@ -80,12 +85,24 @@ class _NavbarScreenState extends State<NavbarScreen> {
               children: [
                 arr[0]
                     ? Container(
-                        color: Colors.blue,
+                        color: AppColor_Blue,
                         // height: 800,
                         width: 200,
                         child: Column(
                           children: [
-                            GestureDetector(
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if(val){
+                                    itemColor = AppColor_hover1;
+                                    textColor = Colors.white;
+                                  } else {
+                                    itemColor = AppColor_Blue;
+                                    textColor = Colors.black;
+                                  }
+                                });
+
+                              },
                               onTap: () {
                                 Get.to(SamiteeRegistration(
                                   appbool: widget.appbool,
@@ -97,16 +114,29 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     top: 10, left: 20, right: 20, bottom: 10),
                                 height: 40,
                                 width: 200,
-                                // color: Colors.grey,
+                                color: itemColor,
                                 child: Text(
                                   "Samitee Registration",
                                   style: TextStyle(
+                                    color: textColor,
                                     fontSize: 12,
                                   ),
                                 ),
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if(val){
+                                    itemColor = AppColor_hover1;
+                                    textColor = Colors.white;
+                                  } else {
+                                    itemColor = AppColor_Blue;
+                                    textColor = Colors.black;
+                                  }
+                                });
+
+                              },
                               onTap: () {
                                 Get.to(MemberRegistration(
                                   appbool: widget.appbool,
@@ -118,14 +148,16 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       top: 10, left: 20, right: 20, bottom: 10),
                                   height: 40,
                                   width: 200,
+                                  color: itemColor,
                                   child: Text(
                                     "Member Registration",
                                     style: TextStyle(
+                                      color: textColor,
                                       fontSize: 12,
                                     ),
                                   )),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(EditMembers(
                                   appbool: widget.appbool,
@@ -196,12 +228,12 @@ class _NavbarScreenState extends State<NavbarScreen> {
                 arr[1]
                     ? Container(
                         margin: EdgeInsets.only(left: 180),
-                        color: Colors.blue,
+                        color: AppColor_Blue,
                         // height: 800,
                         width: 180,
                         child: Column(
                           children: [
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 _transctionTogle_loan(0);
                               },
@@ -229,7 +261,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   )),
                             ),
 
-                            GestureDetector(
+                            InkWell(
                               onTap: (){
                                 _transctionTogle_withdraw(0);
                               },
@@ -257,7 +289,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: (){
                                 Get.to(SamiteeTransaction(
                                   appbool: widget.appbool,
@@ -294,7 +326,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                 arr[2]
                     ? Container(
                         margin: EdgeInsets.only(left: 340),
-                        color: Colors.blue,
+                        color: AppColor_Blue,
                         // height: 800,
                         width: 200,
                         child: Column(
@@ -379,12 +411,12 @@ class _NavbarScreenState extends State<NavbarScreen> {
                 arr[3]
                     ? Container(
                         margin: EdgeInsets.only(left: 480),
-                        color: Colors.blue,
+                        color: AppColor_Blue,
                         // height: 800,
                         width: 350,
                         child: Column(
                           children: [
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(MemberLedger(
                                   appbool: widget.appbool,
@@ -416,7 +448,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     fontSize: 12,
                                   ),
                                 )),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(DailyTransactionList(
                                   appbool: widget.appbool,
@@ -435,7 +467,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     ),
                                   )),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(DailyGLSummary(
                                   appbool: widget.appbool,
@@ -523,7 +555,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: (){
                                 Get.to(SamiteeWiseMemberDepositeLoan(
                                   appbool: widget.appbool,
@@ -546,7 +578,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(SanctionDetailInformation(
                                   appbool: widget.appbool,
@@ -586,7 +618,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: (){
                                 Get.to(GenerallLedgerStatement(
                                   appbool: widget.appbool,
@@ -626,7 +658,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(SamiteeWiseDisburse(
                                   appbool: widget.appbool,
@@ -650,7 +682,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(MemberWiseDisburse(
                                   appbool: widget.appbool,
@@ -674,7 +706,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                             ),
-                            GestureDetector(
+                            InkWell(
                               onTap: () {
                                 Get.to(SlipReprint(
                                   appbool: widget.appbool,
@@ -754,12 +786,12 @@ class _NavbarScreenState extends State<NavbarScreen> {
                 trasctionArr[0] ?
                 Container(
                   margin: EdgeInsets.only(left: 0),
-                  color: Colors.blue,
+                  color: AppColor_Blue,
                   // height: 800,
                   width: 200,
                   child: Column(
                     children: [
-                      GestureDetector(
+                      InkWell(
                         onTap: (){
                           Get.to(DepositCollectionReport(
                             appbool: widget.appbool,
@@ -784,7 +816,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                           ),
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: (){
                           Get.to(DepositCollectionReportScreen2(
                             appbool: widget.appbool,
@@ -812,13 +844,29 @@ class _NavbarScreenState extends State<NavbarScreen> {
                 withdrawArr[0] ?
                 Container(
                   margin: EdgeInsets.only(left: 0),
-                  color: Colors.blue,
+                  color: AppColor_Blue,
                   // height: 800,
                   width: 250,
                   child: Column(
                     children: [
-                      GestureDetector(
+                      InkWell(
+
                         onTap: (){
+                          Get.to(DepositWithDwarNormal(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
+                        },
+                        onHover: (val) {
+                          setState(() {
+                            if(val){
+                              itemColor = Colors.black;
+                              textColor = Colors.white;
+                            } else {
+                              itemColor = AppColor_Blue;
+                              textColor = Colors.black;
+                            }
+                          });
 
                         },
                         child: Container(
@@ -826,12 +874,13 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               top: 10, left: 20, right: 20, bottom: 10),
                           height: 40,
                           width: 250,
-                          // color: Colors.grey,
+                          color: itemColor,
                           child: Row(
                             children: [
                               Text(
                                 "Deposit Withdwar Request (normal)",
                                 style: TextStyle(
+                                  color: textColor,
                                   fontSize: 12,
                                 ),
                               ),
@@ -839,7 +888,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                           ),
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: (){
 
                         },
