@@ -7,6 +7,7 @@ import 'package:prottashasomit/Widget/Navbar.dart';
 
 import '../Constants/Constants.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanDisbursement.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanReSchedule.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/RepaymentRequest.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/ReverseRepayment.dart';
@@ -459,20 +460,28 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     ],
                                   )),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              height: 40,
-                              width: 200,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Reschedule",
-                                    style: TextStyle(
-                                      fontSize: 12,
+                            InkWell(
+                              onTap: (){
+                                Get.to(LoanReSchedule(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 200,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Reschedule",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],
