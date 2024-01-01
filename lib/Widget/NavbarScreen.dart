@@ -8,6 +8,7 @@ import 'package:prottashasomit/Widget/Navbar.dart';
 import '../Constants/Constants.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanDisbursement.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Loan/RepaymentRequest.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/CloseMember.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/DeadMemberInfo.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
@@ -43,6 +44,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
   var withdrawArr = [false, false];
   var trasctionArr = [false, false];
   var loanSectionArr = [false, false];
+  var loanRePayArr = [false, false];
 
   Color itemColor = AppColor_Blue;
   Color textColor = Colors.black;
@@ -64,6 +66,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       trasctionArr[index] = true;
       withdrawArr[index] = false;
       loanSectionArr[index] = false;
+      loanRePayArr[index] = false;
     });
   }
 
@@ -75,6 +78,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       withdrawArr[index] = true;
       trasctionArr[index] = false;
       loanSectionArr[index] = false;
+      loanRePayArr[index] = false;
     });
   }
 
@@ -86,6 +90,19 @@ class _NavbarScreenState extends State<NavbarScreen> {
       loanSectionArr[index] = true;
       withdrawArr[index] = false;
       trasctionArr[index] = false;
+      loanRePayArr[index] = false;
+    });
+  }
+
+  _loanTogle_Repay(int index){
+    setState(() {
+      for (int i = 0; i < loanRePayArr.length; i++) {
+        loanRePayArr[i] = false;
+      }
+      loanRePayArr[index] = true;
+      withdrawArr[index] = false;
+      trasctionArr[index] = false;
+      loanSectionArr[index] = false;
     });
   }
 
@@ -414,28 +431,33 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     ),
                                   )),
                             ),
-                            Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, bottom: 10),
-                                height: 40,
-                                width: 200,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Loan Repayment",
-                                      style: TextStyle(
-                                        fontSize: 12,
+                            InkWell(
+                              onTap: (){
+                                _loanTogle_Repay(0);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Loan Repayment",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 55,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 12,
-                                    )
-                                  ],
-                                )),
+                                      SizedBox(
+                                        width: 55,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 12,
+                                      )
+                                    ],
+                                  )),
+                            ),
                             Container(
                               padding: EdgeInsets.only(
                                   top: 10, left: 20, right: 20, bottom: 10),
@@ -1018,6 +1040,74 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             width: 250,
                             child: Text(
                               "Approved Sanction Reject",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            )),
+                      ),
+
+                    ],
+                  ),
+                )
+                    : SizedBox(),
+                loanRePayArr[0] ?
+                Container(
+                  margin: EdgeInsets.only(left: 0),
+                  color: AppColor_Blue,
+                  // height: 800,
+                  width: 250,
+                  child: Column(
+                    children: [
+                      InkWell(
+
+                        onTap: (){
+                          Get.to(RepaymentRequest(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
+                        },
+                        onHover: (val) {
+                          setState(() {
+                            if(val){
+                              itemColor = Colors.black;
+                              textColor = Colors.white;
+                            } else {
+                              itemColor = AppColor_Blue;
+                              textColor = Colors.black;
+                            }
+                          });
+
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 250,
+                          color: itemColor,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Loan Repayment Request",
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            height: 40,
+                            width: 250,
+                            child: Text(
+                              "Reverse Repayment Request",
                               style: TextStyle(
                                 fontSize: 12,
                               ),

@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
+import '../../../../Widget/LoanWidgets/LastRepaymentInfo.dart';
 import '../../../../Widget/LoanWidgets/LoanDetailsWidget.dart';
 import '../../../../Widget/LoanWidgets/LoanInformation.dart';
 import '../../../../Widget/LoanWidgets/LoanOtherInfo.dart';
+import '../../../../Widget/LoanWidgets/LoanRepaymentWidget.dart';
+import '../../../../Widget/LoanWidgets/RepaymentLoanInfo.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/TransactionWidget/Image.dart';
 import '../../../../Widget/TransactionWidget/LinkACinfo.dart';
 
 
-class LoanDisbursement extends StatefulWidget {
+class RepaymentRequest extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanDisbursement({required this.appbool, required this.navbool});
+  RepaymentRequest({required this.appbool, required this.navbool});
 
   @override
-  State<LoanDisbursement> createState() => _LoanDisbursementState();
+  State<RepaymentRequest> createState() => _RepaymentRequestState();
 }
 
-class _LoanDisbursementState extends State<LoanDisbursement> {
+class _RepaymentRequestState extends State<RepaymentRequest> {
 
 
   @override
@@ -46,15 +49,15 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
               height: 20,
             ),
 
-            // Loan information
-            LoanInformation(),
+            // Loan repayment
+            LoanRepaymentWidget(),
 
             SizedBox(
               height: 30,
             ),
 
-            // Loan Other imformation
-            LoanOtherInfo(),
+            // Loan imformation
+            RepaymentLoanINfo(),
 
 
             SizedBox(
@@ -62,19 +65,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
             ),
 
 
-            // Link A/c Information
-            Padding(
-              padding: const EdgeInsets.only(left: 70.0),
-              child: Row(
-                children: [
-                  LinkACinfo(),
-
-                  Spacer(),
-
-                  ImageMember(),
-                ],
-              ),
-            ),
+            // Last Repayment Information
+            LastRepaymentInfo(),
 
             SizedBox(
               height: 50,
