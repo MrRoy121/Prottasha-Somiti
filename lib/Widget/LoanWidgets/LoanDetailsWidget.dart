@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../Constants/Constants.dart';
 
 class LoanDetailsWidget extends StatefulWidget {
+  String title;
 
+  LoanDetailsWidget({required this.title});
 
   @override
   State<LoanDetailsWidget> createState() => _LoanDetailsWidgetState();
@@ -26,7 +28,7 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 40.0),
                 child: Text(
-                  "Loan Disbursement Details",
+                  widget.title,
                   style: TextStyle(
                     color: AppColor,
                     fontWeight: FontWeight.bold,

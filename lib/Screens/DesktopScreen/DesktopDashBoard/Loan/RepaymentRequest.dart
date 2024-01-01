@@ -43,7 +43,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             ),
 
             // Loan Disbursement Details
-            LoanDetailsWidget(),
+            LoanDetailsWidget(title: 'Loan Disbursement Details',),
 
             SizedBox(
               height: 20,

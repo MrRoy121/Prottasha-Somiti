@@ -9,6 +9,7 @@ import '../Constants/Constants.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanDisbursement.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/RepaymentRequest.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Loan/ReverseRepayment.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/CloseMember.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/DeadMemberInfo.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
@@ -1099,7 +1100,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                       ),
                       InkWell(
                         onTap: (){
-
+                          Get.to(ReverseRepayment(
+                            appbool: widget.appbool,
+                            navbool: widget.navbool,
+                          ));
                         },
                         child: Container(
                             padding: EdgeInsets.only(

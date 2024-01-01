@@ -40,7 +40,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
             ),
 
             // Loan Disbursement Details
-            LoanDetailsWidget(),
+            LoanDetailsWidget(title: 'Loan Disbursement Details',),
 
             SizedBox(
               height: 20,
