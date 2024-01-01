@@ -131,6 +131,8 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                   Padding(
                     padding: const EdgeInsets.only(top: 50, left: 150),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+
                       children: [
                         Column(
                           children: [
