@@ -93,7 +93,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
                               ),
 
 
-                              SizedBox(width: 10,),
+                              SizedBox(width: 65,),
 
 
                               SizedBox(
@@ -185,7 +185,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 12,),
+                              SizedBox(width: 30,),
 
                               SizedBox(
                                 width: 300,

@@ -6,6 +6,7 @@ import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/Navbar.dart';
 
 import '../Constants/Constants.dart';
+import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanDisbursement.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/CloseMember.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/MemberManagement/DeadMemberInfo.dart';
@@ -394,17 +395,25 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                             ),
-                            Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 200,
-                                child: Text(
-                                  "Loan Disbursement",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                )),
+                            InkWell(
+                              onTap: (){
+                                Get.to(LoanDisbursement(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  child: Text(
+                                    "Loan Disbursement",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
                             Container(
                                 padding: EdgeInsets.only(
                                     top: 10, left: 20, bottom: 10),

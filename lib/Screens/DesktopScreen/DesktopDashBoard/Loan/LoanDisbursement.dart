@@ -4,25 +4,30 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/NoDataFound.dart';
 import '../../../../Constants/Constants.dart';
+import '../../../../Widget/LoanWidgets/LoanDetailsWidget.dart';
 import '../../../../Widget/LoanWidgets/LoanGuarantor.dart';
 import '../../../../Widget/LoanWidgets/LoanGuarantor_family.dart';
+import '../../../../Widget/LoanWidgets/LoanInformation.dart';
+import '../../../../Widget/LoanWidgets/LoanOtherInfo.dart';
 import '../../../../Widget/LoanWidgets/LoanSamitteSelection.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
+import '../../../../Widget/TransactionWidget/Image.dart';
+import '../../../../Widget/TransactionWidget/LinkACinfo.dart';
 import '../../../../Widget/TransactionWidget/MemberDeposit.dart';
 
 
-class LoanSanction extends StatefulWidget {
+class LoanDisbursement extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanSanction({required this.appbool, required this.navbool});
+  LoanDisbursement({required this.appbool, required this.navbool});
 
   @override
-  State<LoanSanction> createState() => _LoanSanctionState();
+  State<LoanDisbursement> createState() => _LoanDisbursementState();
 }
 
-class _LoanSanctionState extends State<LoanSanction> {
+class _LoanDisbursementState extends State<LoanDisbursement> {
 
 
   @override
@@ -41,25 +46,47 @@ class _LoanSanctionState extends State<LoanSanction> {
               height: 50,
             ),
 
-            LoanSamitteSelection(),
+            // Loan Disbursement Details
+            LoanDetailsWidget(),
 
+            SizedBox(
+              height: 20,
+            ),
+
+            // Loan information
+            LoanInformation(),
+
+            SizedBox(
+              height: 30,
+            ),
+
+            // Loan Other imformation
+            LoanOtherInfo(),
+
+
+            SizedBox(
+              height: 30,
+            ),
+
+
+            // Link A/c Information
+            Padding(
+              padding: const EdgeInsets.only(left: 70.0),
+              child: Row(
+                children: [
+                  LinkACinfo(),
+
+                  Spacer(),
+
+                  ImageMember(),
+                ],
+              ),
+            ),
 
             SizedBox(
               height: 50,
             ),
 
-            LoanGuarantor(),
-
-            SizedBox(
-              height: 50,
-            ),
-            // LoanGuarantorFamily(),
-
-            LoanGuarantor_family(),
-
-            SizedBox(
-              height: 50,
-            ),
           ],
         ),
       ),
