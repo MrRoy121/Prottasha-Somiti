@@ -50,7 +50,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
                 settings: settings);
           case 'Dashboard':
             return PageTransition(
-                child: DesktopDashBoard(appbool, navbool),
+                child: DesktopDashBoard(appbool: appbool, navbool: navbool,),
                 type: PageTransitionType.fade,
                 settings: settings);
           case 'admin_titas':

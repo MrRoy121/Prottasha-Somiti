@@ -1,23 +1,39 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../Constants/Constants.dart';
 
 class MemberImage extends StatefulWidget {
-
-
-
   @override
   State<MemberImage> createState() => _MemberImageState();
 }
 
 class _MemberImageState extends State<MemberImage> {
+  String? selectedImagePath;
+
+
+  Future<void> _selectImage() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      setState(() {
+        selectedImagePath = result.files.first.path;
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       width: 1400,
       height: 350,
-      // color: Colors.white,
-
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -29,7 +45,6 @@ class _MemberImageState extends State<MemberImage> {
           ),
         ],
       ),
-
       child: Column(
         children: [
           Container(
@@ -50,12 +65,9 @@ class _MemberImageState extends State<MemberImage> {
                     ),
                   ),
                 ),
-
-
               ],
             ),
           ),
-
           Row(
             children: [
               Padding(
@@ -74,16 +86,13 @@ class _MemberImageState extends State<MemberImage> {
                   ),
                   child: Column(
                     children: [
-
                       Container(
-
                         width: 295,
                         height: 30,
                         color: navbarColor,
-
                         child: Center(
                           child: Text(
-                            "Chose Image",
+                            "Choose Image",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -92,16 +101,13 @@ class _MemberImageState extends State<MemberImage> {
                           ),
                         ),
                       ),
-
                       Container(
                         padding: EdgeInsets.only(left: 15),
                         height: 120,
                         width: 295,
-
                         child: Row(
                           children: [
                             Container(
-
                               height: 80,
                               width: 265,
                               decoration: BoxDecoration(
@@ -115,12 +121,12 @@ class _MemberImageState extends State<MemberImage> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: 20,
-                                        left: 10,
-                                        right: 10),
+                                      top: 20,
+                                      left: 10,
+                                      right: 10,
+                                    ),
                                     child: Row(
                                       children: [
-
                                         Text(
                                           "Select an Image File",
                                           style: TextStyle(
@@ -132,24 +138,14 @@ class _MemberImageState extends State<MemberImage> {
                                           height: 30,
                                           width: 96,
                                           child: ElevatedButton(
-                                            style: ElevatedButton
-                                                .styleFrom(
-                                              primary:
-                                              Colors.white,
-                                              shape:
-                                              RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: Colors
-                                                        .blue),
-                                                borderRadius:
-                                                BorderRadius
-                                                    .circular(
-                                                    5.0),
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                side: BorderSide(color: Colors.blue),
+                                                borderRadius: BorderRadius.circular(5.0),
                                               ),
                                             ),
-                                            onPressed: () {
-
-                                            },
+                                            onPressed: _selectImage,
                                             child: Text(
                                               "Select",
                                               style: TextStyle(
@@ -167,24 +163,18 @@ class _MemberImageState extends State<MemberImage> {
                           ],
                         ),
                       ),
-
                       SizedBox(
                         width: 250,
                       ),
-
-
                     ],
                   ),
                 ),
               ),
-
               Spacer(),
-
               Container(
                 margin: EdgeInsets.only(top: 50, right: 250),
                 height: 200,
                 width: 200,
-
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -196,7 +186,6 @@ class _MemberImageState extends State<MemberImage> {
                     ),
                   ],
                 ),
-
                 child: Column(
                   children: [
                     Container(
@@ -205,7 +194,7 @@ class _MemberImageState extends State<MemberImage> {
                       color: navbarColor,
                       child: Center(
                         child: Text(
-                            "Preview Image",
+                          "Preview Image",
                           style: TextStyle(
                             color: AppColor,
                             fontSize: 14,
@@ -214,14 +203,11 @@ class _MemberImageState extends State<MemberImage> {
                         ),
                       ),
                     ),
-
                     Container(
                       margin: EdgeInsets.only(top: 25),
                       padding: EdgeInsets.only(top: 25),
                       height: 120,
                       width: 120,
-                      // color: Colors.red,
-
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.grey,
@@ -229,20 +215,20 @@ class _MemberImageState extends State<MemberImage> {
                         ),
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-
-                      child: Column(
-                        children: [
-                          Center(child: Icon(Icons.person_2_outlined, size: 58,)),
-                        ],
+                      child: selectedImagePath != null
+                          ? Image.file(
+                        File(selectedImagePath!),
+                        fit: BoxFit.cover,
+                      )
+                          : Center(
+                        child: Icon(Icons.person_2_outlined, size: 58),
                       ),
-
                     )
                   ],
                 ),
               )
             ],
-          )
-
+          ),
         ],
       ),
     );

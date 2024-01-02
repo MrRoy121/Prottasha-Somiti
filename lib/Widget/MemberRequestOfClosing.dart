@@ -123,6 +123,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -156,6 +157,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -187,6 +189,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -219,6 +222,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -294,6 +298,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -324,6 +329,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,

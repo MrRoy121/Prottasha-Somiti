@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Widget/NavbarScreen.dart';
+import '../DashBoard.dart';
 
 
 class SamiteeRegistration extends StatefulWidget {
@@ -17,19 +19,11 @@ class SamiteeRegistration extends StatefulWidget {
 }
 
 class _SamiteeRegistrationState extends State<SamiteeRegistration> {
-  var arr = [false, false, false, false, false, false, false, false, false];
 
 
   @override
   Widget build(BuildContext context) {
-    _toglechnage(int index){
-      setState(() {
-        for(int i =0;i<arr.length;i++){
-          arr[i] = false;
-        }
-        arr[index] = true;
-      });
-    }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -112,14 +106,22 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
         
                         SizedBox(width: 10,),
         
-                        Container(
-                          height: 40,
-                          width: 50,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10.0, left: 20),
-                            child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        InkWell(
+                          onTap: (){
+                            Get.to(DesktopDashBoard(
+                              appbool: widget.appbool,
+                              navbool: widget.navbool,
+                            ));
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10.0, left: 20),
+                              child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                            ),
+                            color: Colors.red,
                           ),
-                          color: Colors.red,
                         ),
         
                         SizedBox(width: 10,),

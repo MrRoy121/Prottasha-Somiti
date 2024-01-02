@@ -89,14 +89,19 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
 
                 SizedBox(width: 10,),
 
-                widget.close? Container(
-                  height: 40,
-                  width: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 20),
-                    child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                widget.close? InkWell(
+                  onTap: (){
+
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0, left: 20),
+                      child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                    ),
+                    color: Colors.red,
                   ),
-                  color: Colors.red,
                 ): Container(),
 
                 SizedBox(width: 10,),
@@ -108,10 +113,10 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
           Padding(
             padding: const EdgeInsets.only(top: 50, left: 150),
             child: Row(
+
               children: [
                 Column(
                   children: [
-
                     Row(
                       children: [
                         RichText(
@@ -173,6 +178,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -206,6 +212,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -286,6 +293,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                           SizedBox(
                             width: 300,
                             child: TextField(
+                              readOnly: true,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -317,6 +325,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -342,6 +351,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,

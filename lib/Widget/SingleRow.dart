@@ -13,6 +13,9 @@ class SingleRow extends StatefulWidget {
 }
 
 class _SingleRowState extends State<SingleRow> {
+  String? selectedValue1;
+  String? selectedValue2;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,21 +75,20 @@ class _SingleRowState extends State<SingleRow> {
                             style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                text: ' *',
+                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14),
+                              ),
                               TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
+                                text: ' :',
+                                style: TextStyle(color: Colors.black, fontSize: 14),
+                              ),
                             ],
                           ),
                         ),
-
-                        SizedBox(width: 10,),
-
-
+                        SizedBox(width: 10),
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -97,14 +99,22 @@ class _SingleRowState extends State<SingleRow> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: selectedValue1,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item 1', 'Item 2', 'Item 3'].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
-
                         ),
-
                       ],
                     ),
+
 
                   ],
                 ),
@@ -139,7 +149,7 @@ class _SingleRowState extends State<SingleRow> {
 
                           SizedBox(
                             width: 300,
-                            child: TextField(
+                            child: DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: AppColor_greyBorder,
@@ -150,10 +160,18 @@ class _SingleRowState extends State<SingleRow> {
                                 hintStyle: TextStyle(
                                   color: AppColor_greyText,
                                 ),
-                                suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                               ),
-                            ),
+                              value: selectedValue2,
+                              onChanged: (newValue) {
 
+                              },
+                              items: ['Item 1', 'Item 2', 'Item 3'].map((item) {
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                            ),
                           ),
 
                         ],

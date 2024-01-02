@@ -123,6 +123,7 @@ class _LoanInformationState extends State<LoanInformation> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -156,6 +157,7 @@ class _LoanInformationState extends State<LoanInformation> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -232,6 +234,7 @@ class _LoanInformationState extends State<LoanInformation> {
                           SizedBox(
                             width: 300,
                             child: TextField(
+                              readOnly: true,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -263,6 +266,7 @@ class _LoanInformationState extends State<LoanInformation> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,

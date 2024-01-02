@@ -12,10 +12,32 @@ class LoanSamitteSelection extends StatefulWidget {
 class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
   String? selectedGender;
+  DateTime? _selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
 
 
   @override
   Widget build(BuildContext context) {
+    String? sanctionLimit;
+    String? month;
+    String? instalment;
+    String? Selectremark;
+
+
     return  Container(
       width: 1400,
       height: 900,
@@ -177,7 +199,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -188,8 +210,17 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: sanctionLimit,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
@@ -216,6 +247,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -249,20 +281,29 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
 
                         SizedBox(
-                          width: 100,
-                          child: TextField(
+                          width: 150,
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Month",
+                              hintText: "Select",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: month,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['January', 'February', 'March ', 'April', 'May', 'June', 'July', 'August ', 'September', 'October', 'November ', 'December'].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
@@ -291,6 +332,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -333,7 +375,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -344,8 +386,17 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: instalment,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3',].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
@@ -373,6 +424,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -413,18 +465,26 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                          child: InkWell(
+                            onTap: () => _selectDate(context),
+                            child: AbsorbPointer(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText: _selectedDate != null
+                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                      : "Select a date",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: Icon(Icons.calendar_month_sharp,
+                                      color: Colors.grey),
+                                ),
                               ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.calendar_month_sharp, color: AppColor_greyText),
                             ),
                           ),
                         ),
@@ -506,6 +566,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -543,6 +604,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -578,7 +640,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -589,8 +651,17 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: Selectremark,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3',].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

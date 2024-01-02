@@ -41,6 +41,7 @@ class _LoanSanctionState extends State<LoanSanction> {
               height: 50,
             ),
 
+            // Saction limit request
             LoanSamitteSelection(),
 
 
@@ -48,6 +49,7 @@ class _LoanSanctionState extends State<LoanSanction> {
               height: 50,
             ),
 
+            // Loan Guarantor information
             LoanGuarantor(),
 
             SizedBox(

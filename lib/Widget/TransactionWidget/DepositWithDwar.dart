@@ -200,6 +200,7 @@ class _DepositWithDwarState extends State<DepositWithDwar> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,

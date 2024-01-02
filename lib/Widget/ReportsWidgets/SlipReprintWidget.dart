@@ -33,6 +33,9 @@ class _SlipReprintWidgetState extends State<SlipReprintWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    String? SelectType;
+
     return  Container(
       width: 1400,
       height: 300,
@@ -250,7 +253,7 @@ class _SlipReprintWidgetState extends State<SlipReprintWidget> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -261,8 +264,17 @@ class _SlipReprintWidgetState extends State<SlipReprintWidget> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: SelectType,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Type1 ', 'Type2', 'Type3 '].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

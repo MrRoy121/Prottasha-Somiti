@@ -123,6 +123,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,

@@ -18,6 +18,8 @@ class _ContactFormState extends State<ContactForm> {
   @override
   Widget build(BuildContext context) {
 
+    String? mobiletype;
+
     return Container(
       width: 1400,
       height: 300,
@@ -81,19 +83,28 @@ class _ContactFormState extends State<ContactForm> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Personal",
+                              hintText: "Select",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: mobiletype,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Personal', 'Office', 'Other'].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

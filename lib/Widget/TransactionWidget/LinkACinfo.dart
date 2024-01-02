@@ -119,6 +119,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                         SizedBox(
                           width: 250,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -152,6 +153,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                         SizedBox(
                           width: 250,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -182,6 +184,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                         SizedBox(
                           width: 250,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -263,6 +266,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                         SizedBox(
                           width: 250,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -295,6 +299,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                         SizedBox(
                           width: 250,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -327,6 +332,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                         SizedBox(
                           width: 250,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,

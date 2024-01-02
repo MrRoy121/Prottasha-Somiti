@@ -124,6 +124,7 @@ class _LedgerTrasactionSelectionState extends State<LedgerTrasactionSelection> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,

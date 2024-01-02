@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.1
   page_transition: ^2.0.9
+  image_picker: ^1.0.5
+  file_picker: ^6.1.1
 
 dev_dependencies:
   flutter_test:

@@ -45,6 +45,7 @@ class _CloseMemberState extends State<CloseMember> {
               height: 50,
             ),
 
+            // MEMBER REQUEST FOR CLOSING
             MemberRequestClosing(),
 
             SizedBox(

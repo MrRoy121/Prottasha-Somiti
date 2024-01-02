@@ -78,6 +78,7 @@ class _RequestInfoState extends State<RequestInfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -222,6 +223,7 @@ class _RequestInfoState extends State<RequestInfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,

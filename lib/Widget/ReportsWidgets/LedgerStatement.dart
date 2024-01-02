@@ -34,6 +34,9 @@ class _LedgerStatementState extends State<LedgerStatement> {
 
   @override
   Widget build(BuildContext context) {
+
+    String? SelectName;
+
     return  Container(
       width: 1400,
       height: 300,
@@ -144,7 +147,7 @@ class _LedgerStatementState extends State<LedgerStatement> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -155,8 +158,17 @@ class _LedgerStatementState extends State<LedgerStatement> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: SelectName,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Name 1', 'Name 2', 'Name 3 '].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

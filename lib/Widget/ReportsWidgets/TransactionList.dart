@@ -33,6 +33,8 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
+    String? SelectType;
+
     return  Container(
       width: 1400,
       height: 400,
@@ -250,7 +252,7 @@ class _TransactionListState extends State<TransactionList> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -261,8 +263,17 @@ class _TransactionListState extends State<TransactionList> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: SelectType,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3 ',].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

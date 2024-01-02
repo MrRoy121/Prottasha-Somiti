@@ -79,6 +79,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -112,6 +113,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -145,6 +147,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -175,6 +178,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -205,6 +209,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -244,6 +249,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -274,6 +280,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -303,6 +310,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -336,6 +344,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -366,6 +375,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,

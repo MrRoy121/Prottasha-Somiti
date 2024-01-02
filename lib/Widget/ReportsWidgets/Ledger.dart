@@ -13,10 +13,28 @@ class Ledger extends StatefulWidget {
 class _LedgerState extends State<Ledger> {
 
   String? selectedGender;
+  DateTime? _selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
 
 
   @override
   Widget build(BuildContext context) {
+
+    String? selectLedger;
     return  Container(
       width: 1400,
       height: 400,
@@ -127,7 +145,7 @@ class _LedgerState extends State<Ledger> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -138,8 +156,17 @@ class _LedgerState extends State<Ledger> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: selectLedger,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3',].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
@@ -174,16 +201,30 @@ class _LedgerState extends State<Ledger> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 2),
-                              hintText: "10-Oct-2023",
-                              suffixIcon: Icon(Icons.calendar_month_sharp),
+                          child: InkWell(
+                            onTap: () => _selectDate(context),
+                            child: AbsorbPointer(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText: _selectedDate != null
+                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                      : "Select a date",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: Icon(Icons.calendar_month_sharp,
+                                      color: Colors.grey),
+                                ),
+                              ),
                             ),
                           ),
-
                         ),
+
 
 
                       ],
@@ -310,16 +351,30 @@ class _LedgerState extends State<Ledger> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 2),
-                              hintText: "10-Oct-2023",
-                              suffixIcon: Icon(Icons.calendar_month_sharp),
+                          child: InkWell(
+                            onTap: () => _selectDate(context),
+                            child: AbsorbPointer(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText: _selectedDate != null
+                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                      : "Select a date",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: Icon(Icons.calendar_month_sharp,
+                                      color: Colors.grey),
+                                ),
+                              ),
                             ),
                           ),
-
                         ),
+
 
 
 

@@ -12,6 +12,8 @@ class LoanGuarantor extends StatefulWidget {
 
 class _LoanGuarantorState extends State<LoanGuarantor> {
 
+  String? SelectGuarantor;
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -97,8 +99,17 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: SelectGuarantor,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
@@ -139,23 +150,28 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
 
                         SizedBox(
                           width: 300,
-                          child: InkWell(
-                            onTap: (){},
-                            child: TextField(
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                hintText: "Select",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                suffixIcon: Icon(Icons.arrow_drop_down,
-                                    color: Colors.grey),
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColor_greyBorder),
+                              ),
+                              hintText: "Select",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
                               ),
                             ),
+                            value: SelectGuarantor,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

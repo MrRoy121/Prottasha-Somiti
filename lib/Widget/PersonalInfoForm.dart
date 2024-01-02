@@ -12,7 +12,24 @@ class PersonalInfoForm extends StatefulWidget {
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
   String? selectedGender;
+  DateTime? _selectedDate;
+  String? maritalstatus;
+  String? religion;
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +81,6 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               children: [
                 Column(
                   children: [
-
                     Row(
                       children: [
                         RichText(
@@ -258,15 +274,28 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 2),
-                              hintText: "Select Date of Birth",
-                              suffixIcon: Icon(Icons.calendar_month_sharp),
+                          child: InkWell(
+                            onTap: () => _selectDate(context),
+                            child: AbsorbPointer(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText: _selectedDate != null
+                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                      : "Select a date",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: Icon(Icons.calendar_month_sharp,
+                                      color: Colors.grey),
+                                ),
+                              ),
                             ),
                           ),
-
                         ),
 
 
@@ -330,7 +359,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -341,8 +370,17 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: maritalstatus,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Single', 'Married', 'Divorced'].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
@@ -465,7 +503,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -476,8 +514,17 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: religion,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Hinduism', 'Islam', 'Buddhism ', 'Christianity', 'Others'].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 

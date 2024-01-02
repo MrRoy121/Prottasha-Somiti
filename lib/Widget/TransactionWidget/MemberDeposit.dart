@@ -12,6 +12,8 @@ class MemberDeposit extends StatefulWidget {
 
 class _MemberDepositState extends State<MemberDeposit> {
 
+  String? selectreverce;
+
   DateTime? _selectedDate;
 
   Future<void> _selectDate(BuildContext context) async {
@@ -158,7 +160,7 @@ class _MemberDepositState extends State<MemberDeposit> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
+                          child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
@@ -169,8 +171,17 @@ class _MemberDepositState extends State<MemberDeposit> {
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
+                            value: selectreverce,
+                            onChanged: (newValue) {
+
+                            },
+                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
+                              return DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                         ),
 
