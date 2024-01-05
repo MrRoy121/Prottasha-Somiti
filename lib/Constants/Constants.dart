@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 const Color AppColor_Blue = const Color(0xff648FFF);
@@ -15,3 +17,5 @@ const Color AppColor_greyBorder = const Color(0xffE4E5E7);
 const Color AppColor_grey = const Color(0xffF2F2F2);
 const Color navbarColor = const Color(0xffD2DFFF);
 const Color AppColor_White = Colors.white;
+// double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
+// double ResponsiveHeight = MediaQuery.of(context as BuildContext).size.height;

@@ -13,7 +13,7 @@ class SamiteeManagement extends StatefulWidget {
 class _SamiteeManagementState extends State<SamiteeManagement> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Text("Samitee Management"),
     );
   }

@@ -26,6 +26,29 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
   @override
   Widget build(BuildContext context) {
 
+    var ScreenWidth =MediaQuery.of(context).size.width;
+
+    double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
+    double ResponsiveHeight = MediaQuery.of(context as BuildContext).size.height;
+
+    bool desktop = false;
+    bool tablet = false;
+    bool mobile = false;
+
+    if(ResponsiveWidth > 1400){
+      desktop = true;
+      tablet = false;
+      mobile = false;
+    } else if (ResponsiveWidth > 540){
+      tablet = true;
+      desktop = false;
+      mobile = false;
+    }else{
+      mobile = true;
+      desktop = false;
+      tablet = false;
+    }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -64,8 +87,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
 
             // Link A/c Information
             Padding(
-              padding: const EdgeInsets.only(left: 70.0),
-              child: Row(
+              padding:  EdgeInsets.only(left: ScreenWidth/21.94),
+              child: desktop? Row(
                 children: [
                   LinkACinfo(),
 
@@ -73,7 +96,18 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
 
                   ImageMember(),
                 ],
-              ),
+              ) :
+              Column(
+                children: [
+                  LinkACinfo(),
+
+                  // Spacer(),
+                  SizedBox(height: 50,),
+
+                  ImageMember(),
+                ],
+              )
+              ,
             ),
 
             SizedBox(
