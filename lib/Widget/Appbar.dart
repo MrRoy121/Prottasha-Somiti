@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/AppBarItem.dart';
+import 'package:get/get.dart';
 
 import '../Constants/Constants.dart';
 
@@ -12,77 +13,241 @@ class Appbar extends AppBar {
   State<Appbar> createState() => _NavbarState();
 }
 
-
 class _NavbarState extends State<Appbar> {
+  var arr = [
+    false,
+  ];
+  _toglechnage(int index) {
+    setState(() {
+      for (int i = 0; i < arr.length; i++) {
+        arr[i] = false;
+      }
+      arr[index] = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
       color: AppColor,
       padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
+      child: Column(
         children: [
-          Image.asset('assets/logo.png', width: 60, height: 60),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              'Prottasha Samitee Ltd.',
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
+          Row(
+            children: [
+              Image.asset('assets/logo.png', width: 60, height: 50),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Prottasha Samitee Ltd.',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+              MediaQuery.of(context).size.width > 1100
+                  ? Row(
+                      children: [
+                        buildAction('10-Oct-2023', Icons.calendar_month_sharp,
+                            () {
+                          // Date function's code
+                        }),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              widget.navbool.makeallfalse();
+                              widget.navbool.home = true;
+                            });
+                            Navigator.of(context).pushNamed('Home');
+                          },
+                          child: AppbarItem(
+                              flag: widget.navbool.dashboard,
+                              text: 'Home',
+                              icon: Icons.home),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              setState(() {
+                                widget.navbool.makeallfalse();
+                                widget.navbool.dashboard = true;
+                              });
+                              Navigator.of(context).pushNamed('Dashboard');
+                            },
+                            child: AppbarItem(
+                                flag: widget.navbool.dashboard,
+                                text: 'Dashboard',
+                                icon: Icons.bar_chart)),
+                        buildAction('Branch Code - 98765', null, () {
+                          // Branch Code function's Code
+                        }),
+                        InkWell(
+                            onTap: () {
+                              setState(() {
+                                widget.navbool.makeallfalse();
+                                widget.navbool.admin = true;
+                              });
+                              Navigator.of(context).pushNamed('admin_titas');
+                            },
+                            child: AppbarItem(
+                                flag: widget.navbool.admin,
+                                text: 'admin_titas',
+                                icon: Icons.person_2_rounded)),
+                      ],
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        Get.dialog(
+                            barrierColor: Colors.transparent,
+                            barrierDismissible: true,
+                            Dialog(alignment: Alignment.topRight, insetPadding: const EdgeInsets.only(top: 45,),
+                              child: Container(
+                                color: AppColor,
+                                // height: 800,
+                                width: 200,
+                                child: Column(
+                                  children: [
+                                    InkWell(
+                                      onHover: (val) {
+
+                                      },
+                                      onTap: () {
+                                        // Get.to(SamiteeRegistration(
+                                        //   appbool: widget.appbool,
+                                        //   navbool: widget.navbool,
+                                        // ));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            top: 10,
+                                            left: 20,
+                                            right: 20,
+                                            bottom: 10),
+                                        height: 40,
+                                        width: 200,
+                                        color: AppColor,
+                                        child: Text(
+                                          "10-OCT-2023",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+
+                                      onTap: () {
+                                        setState(() {
+                                          widget.navbool.makeallfalse();
+                                          widget.navbool.home = true;
+                                        });
+                                        Navigator.of(context).pushNamed('Home');
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: 10,
+                                              left: 20,
+                                              right: 20,
+                                              bottom: 10),
+                                          height: 40,
+                                          width: 200,
+                                          color: AppColor,
+                                          child: Text(
+                                            "Home",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                          )),
+                                    ),
+                                    InkWell(
+                                      onHover: (val) {
+
+                                      },
+                                      onTap: () {
+                                        setState(() {
+                                          widget.navbool.makeallfalse();
+                                          widget.navbool.dashboard = true;
+                                        });
+                                        Navigator.of(context).pushNamed('Dashboard');
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: 10, left: 20, bottom: 10),
+                                          height: 40,
+                                          width: 200,
+                                          color: AppColor,
+                                          child: Text(
+                                            "Dashboard",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                          )),
+                                    ),
+
+                                    InkWell(
+                                      onHover: (val) {
+
+                                      },
+                                      onTap: () {
+                                        // Get.to(EditMembers(
+                                        //   appbool: widget.appbool,
+                                        //   navbool: widget.navbool,
+                                        // ));
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: 10, left: 20, bottom: 10),
+                                          height: 40,
+                                          width: 200,
+                                          color: AppColor,
+                                          child: Text(
+                                            "Branch Code - 98765",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                          )),
+                                    ),
+
+                                    InkWell(
+                                      onHover: (val) {
+
+                                      },
+                                      onTap: () {
+                                        setState(() {
+                                          widget.navbool.makeallfalse();
+                                          widget.navbool.admin = true;
+                                        });
+                                        Navigator.of(context).pushNamed('admin_titas');
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: 10, left: 20, bottom: 10),
+                                          height: 40,
+                                          width: 200,
+                                          color: AppColor,
+                                          child: Text(
+                                            "admin_titas",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ));
+                      },
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                      )),
+            ],
           ),
-          buildAction('10-Oct-2023', Icons.calendar_month_sharp, () {
-            // Date function's code
-          }),
-
-          InkWell(
-            onTap: () {
-              setState(() {
-                widget.navbool.makeallfalse();
-                widget.navbool.home = true;
-              });
-              Navigator.of(context).pushNamed('Home');
-            },
-            child: AppbarItem(
-                flag: widget.navbool.dashboard,
-                text: 'Home',
-                icon: Icons.home),
-          ),
-
-          InkWell(
-              onTap: () {
-                setState(() {
-                  widget.navbool.makeallfalse();
-                  widget.navbool.dashboard = true;
-                });
-                Navigator.of(context).pushNamed('Dashboard');
-              },
-              child: AppbarItem(
-                  flag: widget.navbool.dashboard,
-                  text: 'Dashboard',
-                  icon: Icons.bar_chart)),
-
-          buildAction('Branch Code - 98765', null, () {
-            // Branch Code function's Code
-          }),
-
-          InkWell(
-              onTap: () {
-                setState(() {
-                  widget.navbool.makeallfalse();
-                  widget.navbool.admin = true;
-                });
-                Navigator.of(context).pushNamed('admin_titas');
-              },
-              child: AppbarItem(
-                  flag: widget.navbool.admin,
-                  text: 'admin_titas',
-                  icon: Icons.person_2_rounded)),
-
-
         ],
       ),
     );
-
   }
 
   Widget buildAction(String text, IconData? icon, VoidCallback onPressed) {
@@ -92,7 +257,10 @@ class _NavbarState extends State<Appbar> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
           children: [
-            Icon(icon, color: Colors.white,),
+            Icon(
+              icon,
+              color: Colors.white,
+            ),
             SizedBox(width: 4),
             Text(text, style: TextStyle(fontSize: 12, color: Colors.white)),
           ],
@@ -100,5 +268,4 @@ class _NavbarState extends State<Appbar> {
       ),
     );
   }
-
 }
