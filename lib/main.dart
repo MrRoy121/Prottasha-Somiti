@@ -2,10 +2,13 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:prottashasomit/Screens/MobileScreen/MobileScaffold.dart';
+import 'package:prottashasomit/Screens/TabletScreen/TabletScaffold.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/route.dart';
-
+import 'package:prottashasomit/Screens/MobileScreen/MobileScaffold.dart';
+import 'package:prottashasomit/Screens/TabletScreen/TabletScaffold.dart';
 import 'Constants/responsive.dart';
 import 'Screens/DesktopScreen/Admin/admin_titas.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Accounts/Accounts.dart';
@@ -23,6 +26,7 @@ import 'Screens/DesktopScreen/DesktopDashBoard/Transaction/Transaction.dart';
 import 'Screens/DesktopScreen/DesktopHomepage/DesktopHomepage.dart';
 import 'Widget/Appbool.dart';
 import 'Widget/NavBool.dart';
+import 'Constants/responsive.dart';
 
 Future<void> main() async {
   await WidgetsFlutterBinding.ensureInitialized();
@@ -36,13 +40,10 @@ Future<void> main() async {
         appId: "1:85054437453:web:0d286f140c6f63504e0404",
         measurementId: "G-XQPZLS697J"),
   );
-
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // Responsivess responsive = Responsivess(desktop: true, tablet: false, mobile: false);
   Appbool appbool = Appbool(true, false, false);
   Navbool navbool = Navbool(true, false, false, false, false, false, false, false, false);
 
@@ -55,31 +56,39 @@ class MyApp extends StatelessWidget {
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse},
       ),
-      initialRoute:homePageRoute,
+      initialRoute: homePageRoute,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case homePageRoute:
             return PageTransition(
-              // child: DesktopHomePage(navbool:appbool,rs: widget.rs),
-                child: DesktopHomePage(navbool:appbool,),
+                // child: DesktopHomePage(navbool:appbool,rs: widget.rs),
+                child: DesktopHomePage(
+                  navbool: appbool,
+                ),
                 type: PageTransitionType.fade,
                 settings: settings);
           case dashboardPageRoute:
             return PageTransition(
-                child: DesktopDashBoard(appbool: appbool, navbool: navbool,),
+                child: DesktopDashBoard(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
                 type: PageTransitionType.fade,
                 settings: settings);
           case somiteeregistrationPageRoute:
             return PageTransition(
                 child: SamiteeRegistration(
                   appbool: appbool,
-                  navbool:navbool,
+                  navbool: navbool,
                 ),
                 type: PageTransitionType.fade,
                 settings: settings);
           case somiteelistPageRoute:
             return PageTransition(
-                child: ShamiteeList(appbool: appbool, navbool: navbool,),
+                child: ShamiteeList(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
                 type: PageTransitionType.fade,
                 settings: settings);
           case 'admin_titas':
@@ -88,7 +97,7 @@ class MyApp extends StatelessWidget {
                 type: PageTransitionType.fade,
                 settings: settings);
 
-        // 2nd navbar
+          // 2nd navbar
           case 'Member Management':
             return PageTransition(
                 child: MemberManagement(navbool),
@@ -135,19 +144,17 @@ class MyApp extends StatelessWidget {
                 type: PageTransitionType.fade,
                 settings: settings);
 
-
-        // case 'FoodView':
-        //   return PageTransition(
-        //       child: FoodView(sideNavbool),
-        //       type: PageTransitionType.fade,
-        //       settings: settings);
+          // case 'FoodView':
+          //   return PageTransition(
+          //       child: FoodView(sideNavbool),
+          //       type: PageTransitionType.fade,
+          //       settings: settings);
         }
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-
     );
   }
 }

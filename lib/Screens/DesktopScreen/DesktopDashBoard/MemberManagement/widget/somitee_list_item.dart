@@ -14,6 +14,7 @@ class SomiteeListItem extends StatefulWidget {
     required this.cst,
     required this.index,
     required this.onEditSomitee,
+
   });
 
   @override
@@ -37,10 +38,10 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                   margin: EdgeInsets.only(left: 30),
                   child: Text(
                     (widget.cst.sl + 1).toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -53,7 +54,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -66,7 +67,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -79,7 +80,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -92,7 +93,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -105,7 +106,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: const TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -118,7 +119,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -131,7 +132,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
@@ -144,7 +145,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                     style: TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
-                        fontFamily: 'inter'),
+                        ),
                   ),
                 ),
               ),
