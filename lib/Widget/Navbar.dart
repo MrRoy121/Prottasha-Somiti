@@ -35,7 +35,6 @@ class _NavbarState extends State<Navbar> {
               onTap: (){
                 setState(() {
                   widget.toglechnage(0);
-
                 });
               },
               child: NavbarItem(

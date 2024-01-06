@@ -4,6 +4,7 @@ import 'package:prottashasomit/Widget/AppBarItem.dart';
 import 'package:get/get.dart';
 
 import '../Constants/Constants.dart';
+import '../route.dart';
 
 class Appbar extends AppBar {
   Appbool navbool;
@@ -56,7 +57,7 @@ class _NavbarState extends State<Appbar> {
                               widget.navbool.makeallfalse();
                               widget.navbool.home = true;
                             });
-                            Navigator.of(context).pushNamed('Home');
+                            Get.toNamed(homePageRoute);
                           },
                           child: AppbarItem(
                               flag: widget.navbool.dashboard,
@@ -69,7 +70,7 @@ class _NavbarState extends State<Appbar> {
                                 widget.navbool.makeallfalse();
                                 widget.navbool.dashboard = true;
                               });
-                              Navigator.of(context).pushNamed('Dashboard');
+                              Get.toNamed(dashboardPageRoute);
                             },
                             child: AppbarItem(
                                 flag: widget.navbool.dashboard,
@@ -139,7 +140,7 @@ class _NavbarState extends State<Appbar> {
                                           widget.navbool.makeallfalse();
                                           widget.navbool.home = true;
                                         });
-                                        Navigator.of(context).pushNamed('Home');
+                                       Get.toNamed(homePageRoute);
                                       },
                                       child: Container(
                                           padding: EdgeInsets.only(
@@ -167,7 +168,7 @@ class _NavbarState extends State<Appbar> {
                                           widget.navbool.makeallfalse();
                                           widget.navbool.dashboard = true;
                                         });
-                                        Navigator.of(context).pushNamed('Dashboard');
+                                        Get.toNamed(dashboardPageRoute);
                                       },
                                       child: Container(
                                           padding: EdgeInsets.only(

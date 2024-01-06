@@ -30,6 +30,7 @@ import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositCollectionR
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositWithDwarClosed.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/DepositWithDwarNormal.dart';
 import '../Screens/DesktopScreen/DesktopDashBoard/Transaction/SamiteeTransaction.dart';
+import '../route.dart';
 
 class NavbarScreen extends StatefulWidget {
   Navbool navbool;
@@ -88,17 +89,22 @@ class _NavbarScreenState extends State<NavbarScreen> {
   Color itemColor19 = AppColor_Blue;
   Color textColor19 = Colors.black;
 
-
   _toglechnage(int index) {
     setState(() {
-      for (int i = 0; i < arr.length; i++) {
-        arr[i] = false;
+      if (!arr[index]) {
+        for (int i = 0; i < arr.length; i++) {
+          arr[i] = false;
+        }
+        arr[index] = true;
+      } else {
+        for (int i = 0; i < arr.length; i++) {
+          arr[i] = false;
+        }
       }
-      arr[index] = true;
     });
   }
 
-  _transctionTogle_loan(int index){
+  _transctionTogle_loan(int index) {
     setState(() {
       for (int i = 0; i < trasctionArr.length; i++) {
         trasctionArr[i] = false;
@@ -110,7 +116,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
     });
   }
 
-  _transctionTogle_withdraw(int index){
+  _transctionTogle_withdraw(int index) {
     setState(() {
       for (int i = 0; i < withdrawArr.length; i++) {
         withdrawArr[i] = false;
@@ -122,7 +128,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
     });
   }
 
-  _loanTogle_saction(int index){
+  _loanTogle_saction(int index) {
     setState(() {
       for (int i = 0; i < loanSectionArr.length; i++) {
         loanSectionArr[i] = false;
@@ -134,7 +140,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
     });
   }
 
-  _loanTogle_Repay(int index){
+  _loanTogle_Repay(int index) {
     setState(() {
       for (int i = 0; i < loanRePayArr.length; i++) {
         loanRePayArr[i] = false;
@@ -169,7 +175,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor1 = AppColor_hover1;
                                     textColor1 = Colors.white;
                                   } else {
@@ -177,13 +183,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor1 = Colors.black;
                                   }
                                 });
-
                               },
                               onTap: () {
-                                Get.to(SamiteeRegistration(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(somiteeregistrationPageRoute);
                               },
                               child: Container(
                                 padding: EdgeInsets.only(
@@ -203,7 +205,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor2 = AppColor_hover1;
                                     textColor2 = Colors.white;
                                   } else {
@@ -211,7 +213,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor2 = Colors.black;
                                   }
                                 });
-
                               },
                               onTap: () {
                                 Get.to(MemberRegistration(
@@ -236,7 +237,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor3 = AppColor_hover1;
                                     textColor3 = Colors.white;
                                   } else {
@@ -244,7 +245,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor3 = Colors.black;
                                   }
                                 });
-
                               },
                               onTap: () {
                                 Get.to(EditMembers(
@@ -269,7 +269,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor4 = AppColor_hover1;
                                     textColor4 = Colors.white;
                                   } else {
@@ -277,9 +277,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor4 = Colors.black;
                                   }
                                 });
-
                               },
-                              onTap: (){
+                              onTap: () {
                                 Get.to(CloseMember(
                                   appbool: widget.appbool,
                                   navbool: widget.navbool,
@@ -314,7 +313,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor5 = AppColor_hover1;
                                     textColor5 = Colors.white;
                                   } else {
@@ -322,7 +321,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor5 = Colors.black;
                                   }
                                 });
-
                               },
                               onTap: () {
                                 Get.to(DeadMemberInfo(
@@ -370,7 +368,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor1 = AppColor_hover1;
                                     textColor1 = Colors.white;
                                   } else {
@@ -378,7 +376,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor1 = Colors.black;
                                   }
                                 });
-
                               },
                               onTap: () {
                                 _transctionTogle_loan(0);
@@ -398,9 +395,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                           fontSize: 12,
                                         ),
                                       ),
-
                                       SizedBox(width: 83),
-
                                       Icon(
                                         Icons.arrow_forward_ios,
                                         size: 12,
@@ -408,11 +403,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     ],
                                   )),
                             ),
-
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor2 = AppColor_hover1;
                                     textColor2 = Colors.white;
                                   } else {
@@ -420,9 +414,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor2 = Colors.black;
                                   }
                                 });
-
                               },
-                              onTap: (){
+                              onTap: () {
                                 _transctionTogle_withdraw(0);
                               },
                               child: Container(
@@ -454,7 +447,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor3 = AppColor_hover1;
                                     textColor3 = Colors.white;
                                   } else {
@@ -462,9 +455,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor3 = Colors.black;
                                   }
                                 });
-
                               },
-                              onTap: (){
+                              onTap: () {
                                 Get.to(SamiteeTransaction(
                                   appbool: widget.appbool,
                                   navbool: widget.navbool,
@@ -510,7 +502,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor1 = AppColor_hover1;
                                     textColor1 = Colors.white;
                                   } else {
@@ -518,7 +510,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor1 = Colors.black;
                                   }
                                 });
-
                               },
                               onTap: () {
                                 _loanTogle_saction(0);
@@ -552,7 +543,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor2 = AppColor_hover1;
                                     textColor2 = Colors.white;
                                   } else {
@@ -560,9 +551,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor2 = Colors.black;
                                   }
                                 });
-
                               },
-                              onTap: (){
+                              onTap: () {
                                 Get.to(LoanDisbursement(
                                   appbool: widget.appbool,
                                   navbool: widget.navbool,
@@ -585,7 +575,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor3 = AppColor_hover1;
                                     textColor3 = Colors.white;
                                   } else {
@@ -593,9 +583,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor3 = Colors.black;
                                   }
                                 });
-
                               },
-                              onTap: (){
+                              onTap: () {
                                 _loanTogle_Repay(0);
                               },
                               child: Container(
@@ -626,7 +615,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             InkWell(
                               onHover: (val) {
                                 setState(() {
-                                  if(val){
+                                  if (val) {
                                     itemColor4 = AppColor_hover1;
                                     textColor4 = Colors.white;
                                   } else {
@@ -634,9 +623,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                     textColor4 = Colors.black;
                                   }
                                 });
-
                               },
-                              onTap: (){
+                              onTap: () {
                                 Get.to(LoanReSchedule(
                                   appbool: widget.appbool,
                                   navbool: widget.navbool,
@@ -667,17 +655,17 @@ class _NavbarScreenState extends State<NavbarScreen> {
                     : SizedBox(),
                 arr[3]
                     ? Container(
-                          margin: EdgeInsets.only(left: 480),
-                          color: AppColor_Blue,
-                          // height: 800,
-                          width: 350,
-                          child: SingleChildScrollView(
-                            child: Column(
+                        margin: EdgeInsets.only(left: 480),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 350,
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor1 = AppColor_hover1;
                                       textColor1 = Colors.white;
                                     } else {
@@ -685,7 +673,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor1 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(MemberLedger(
@@ -709,10 +696,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){},
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor2 = AppColor_hover1;
                                       textColor2 = Colors.white;
                                     } else {
@@ -720,11 +707,13 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor2 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                     padding: EdgeInsets.only(
-                                        top: 10, left: 20, right: 20, bottom: 10),
+                                        top: 10,
+                                        left: 20,
+                                        right: 20,
+                                        bottom: 10),
                                     height: 40,
                                     width: 350,
                                     color: itemColor2,
@@ -739,7 +728,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor3 = AppColor_hover1;
                                       textColor3 = Colors.white;
                                     } else {
@@ -747,7 +736,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor3 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(DailyTransactionList(
@@ -772,7 +760,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor4 = AppColor_hover1;
                                       textColor4 = Colors.white;
                                     } else {
@@ -780,7 +768,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor4 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(DailyGLSummary(
@@ -808,12 +795,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor5 = AppColor_hover1;
                                       textColor5 = Colors.white;
                                     } else {
@@ -821,7 +806,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor5 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -843,12 +827,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor6 = AppColor_hover1;
                                       textColor6 = Colors.white;
                                     } else {
@@ -856,7 +838,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor6 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -878,12 +859,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor7 = AppColor_hover1;
                                       textColor7 = Colors.white;
                                     } else {
@@ -891,7 +870,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor7 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -913,12 +891,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor8 = AppColor_hover1;
                                       textColor8 = Colors.white;
                                     } else {
@@ -926,7 +902,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor8 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -950,7 +925,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor9 = AppColor_hover1;
                                       textColor9 = Colors.white;
                                     } else {
@@ -958,16 +933,16 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor9 = Colors.black;
                                     }
                                   });
-
                                 },
-                                onTap: (){
+                                onTap: () {
                                   Get.to(SamiteeWiseMemberDepositeLoan(
                                     appbool: widget.appbool,
                                     navbool: widget.navbool,
                                   ));
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
                                   height: 40,
                                   width: 350,
                                   color: itemColor9,
@@ -987,7 +962,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor10 = AppColor_hover1;
                                       textColor10 = Colors.white;
                                     } else {
@@ -995,7 +970,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor10 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(SanctionDetailInformation(
@@ -1023,12 +997,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor11 = AppColor_hover1;
                                       textColor11 = Colors.white;
                                     } else {
@@ -1036,7 +1008,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor11 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1060,7 +1031,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor12 = AppColor_hover1;
                                       textColor12 = Colors.white;
                                     } else {
@@ -1068,9 +1039,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor12 = Colors.black;
                                     }
                                   });
-
                                 },
-                                onTap: (){
+                                onTap: () {
                                   Get.to(GenerallLedgerStatement(
                                     appbool: widget.appbool,
                                     navbool: widget.navbool,
@@ -1096,12 +1066,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor13 = AppColor_hover1;
                                       textColor13 = Colors.white;
                                     } else {
@@ -1109,7 +1077,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor13 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1133,7 +1100,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor14 = AppColor_hover1;
                                       textColor14 = Colors.white;
                                     } else {
@@ -1141,7 +1108,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor14 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(SamiteeWiseDisburse(
@@ -1171,7 +1137,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor15 = AppColor_hover1;
                                       textColor15 = Colors.white;
                                     } else {
@@ -1179,7 +1145,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor15 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(MemberWiseDisburse(
@@ -1209,7 +1174,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor16 = AppColor_hover1;
                                       textColor16 = Colors.white;
                                     } else {
@@ -1217,7 +1182,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor16 = Colors.black;
                                     }
                                   });
-
                                 },
                                 onTap: () {
                                   Get.to(SlipReprint(
@@ -1245,12 +1209,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor17 = AppColor_hover1;
                                       textColor17 = Colors.white;
                                     } else {
@@ -1258,7 +1220,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor17 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1271,21 +1232,17 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       Text(
                                         "Member Service Charge Waiver",
                                         style: TextStyle(
-                                          fontSize: 12,
-                                          color: textColor17
-                                        ),
+                                            fontSize: 12, color: textColor17),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor18 = AppColor_hover1;
                                       textColor18 = Colors.white;
                                     } else {
@@ -1293,7 +1250,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor18 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1315,12 +1271,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
-
-                                },
+                                onTap: () {},
                                 onHover: (val) {
                                   setState(() {
-                                    if(val){
+                                    if (val) {
                                       itemColor19 = AppColor_hover1;
                                       textColor19 = Colors.white;
                                     } else {
@@ -1328,7 +1282,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       textColor19 = Colors.black;
                                     }
                                   });
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1352,344 +1305,326 @@ class _NavbarScreenState extends State<NavbarScreen> {
                             ],
                           ),
                         ),
-                    )
+                      )
                     : SizedBox(),
-
-                trasctionArr[0] ?
-                Container(
-                  margin: EdgeInsets.only(left: 0),
-                  color: AppColor_Blue,
-                  // height: 800,
-                  width: 200,
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor6 = AppColor_hover2;
-                              textColor6 = Colors.white;
-                            } else {
-                              itemColor6 = AppColor_Blue;
-                              textColor6 = Colors.black;
-                            }
-                          });
-
-                        },
-                        onTap: (){
-                          Get.to(DepositCollectionReport(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          height: 40,
-                          width: 200,
-                          color: itemColor6,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Deposit Collection Request",
-                                style: TextStyle(
-                                  color: textColor6,
-                                  fontSize: 12,
+                trasctionArr[0]
+                    ? Container(
+                        margin: EdgeInsets.only(left: 0),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 200,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor6 = AppColor_hover2;
+                                    textColor6 = Colors.white;
+                                  } else {
+                                    itemColor6 = AppColor_Blue;
+                                    textColor6 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.to(DepositCollectionReport(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 200,
+                                color: itemColor6,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Deposit Collection Request",
+                                      style: TextStyle(
+                                        color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor5 = AppColor_hover2;
+                                    textColor5 = Colors.white;
+                                  } else {
+                                    itemColor5 = AppColor_Blue;
+                                    textColor5 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.to(DepositCollectionReportScreen2(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  color: itemColor5,
+                                  child: Text(
+                                    "Deposit Collection Request",
+                                    style: TextStyle(
+                                      color: textColor5,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
+                          ],
                         ),
-                      ),
-                      InkWell(
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor5 = AppColor_hover2;
-                              textColor5 = Colors.white;
-                            } else {
-                              itemColor5 = AppColor_Blue;
-                              textColor5 = Colors.black;
-                            }
-                          });
-
-                        },
-                        onTap: (){
-                          Get.to(DepositCollectionReportScreen2(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            height: 40,
-                            width: 200,
-                            color: itemColor5,
-                            child: Text(
-                              "Deposit Collection Request",
-                              style: TextStyle(
-                                color: textColor5,
-                                fontSize: 12,
-                              ),
-                            )),
-                      ),
-
-                    ],
-                  ),
-                )
+                      )
                     : SizedBox(),
-
-                withdrawArr[0] ?
-                Container(
-                  margin: EdgeInsets.only(left: 0),
-                  color: AppColor_Blue,
-                  // height: 800,
-                  width: 250,
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor6 = AppColor_hover2;
-                              textColor6 = Colors.white;
-                            } else {
-                              itemColor6 = AppColor_Blue;
-                              textColor6 = Colors.black;
-                            }
-                          });
-
-                        },
-                        onTap: (){
-                          Get.to(DepositWithDwarNormal(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          height: 40,
-                          width: 250,
-                          color: itemColor6,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Deposit Withdwar Request (normal)",
-                                style: TextStyle(
-                                  color: textColor6,
-                                  fontSize: 12,
+                withdrawArr[0]
+                    ? Container(
+                        margin: EdgeInsets.only(left: 0),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 250,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor6 = AppColor_hover2;
+                                    textColor6 = Colors.white;
+                                  } else {
+                                    itemColor6 = AppColor_Blue;
+                                    textColor6 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.to(DepositWithDwarNormal(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor6,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Deposit Withdwar Request (normal)",
+                                      style: TextStyle(
+                                        color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor5 = AppColor_hover2;
+                                    textColor5 = Colors.white;
+                                  } else {
+                                    itemColor5 = AppColor_Blue;
+                                    textColor5 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.to(DepositWithDwarClosed(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 250,
+                                  color: itemColor5,
+                                  child: Text(
+                                    "Deposit Withdwar Request (closed)",
+                                    style: TextStyle(
+                                      color: textColor5,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
+                          ],
                         ),
-                      ),
-                      InkWell(
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor5 = AppColor_hover2;
-                              textColor5 = Colors.white;
-                            } else {
-                              itemColor5 = AppColor_Blue;
-                              textColor5 = Colors.black;
-                            }
-                          });
-
-                        },
-                        onTap: (){
-                          Get.to(DepositWithDwarClosed(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            height: 40,
-                            width: 250,
-                            color: itemColor5,
-                            child: Text(
-                              "Deposit Withdwar Request (closed)",
-                              style: TextStyle(
-                                color: textColor5,
-                                fontSize: 12,
-                              ),
-                            )),
-                      ),
-
-                    ],
-                  ),
-                )
+                      )
                     : SizedBox(),
-                loanSectionArr[0] ?
-                Container(
-                  margin: EdgeInsets.only(left: 0),
-                  color: AppColor_Blue,
-                  // height: 800,
-                  width: 250,
-                  child: Column(
-                    children: [
-                      InkWell(
-
-                        onTap: (){
-                          Get.to(LoanSanction(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor6 = AppColor_hover2;
-                              textColor6 = Colors.white;
-                            } else {
-                              itemColor6 = AppColor_Blue;
-                              textColor6 = Colors.black;
-                            }
-                          });
-
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          height: 40,
-                          width: 250,
-                          color: itemColor6,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Sanction Limit Request",
-                                style: TextStyle(
-                                  color: textColor6,
-                                  fontSize: 12,
+                loanSectionArr[0]
+                    ? Container(
+                        margin: EdgeInsets.only(left: 0),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 250,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.to(LoanSanction(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor6 = AppColor_hover2;
+                                    textColor6 = Colors.white;
+                                  } else {
+                                    itemColor6 = AppColor_Blue;
+                                    textColor6 = Colors.black;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor6,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Sanction Limit Request",
+                                      style: TextStyle(
+                                        color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor5 = AppColor_hover2;
+                                    textColor5 = Colors.white;
+                                  } else {
+                                    itemColor5 = AppColor_Blue;
+                                    textColor5 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {},
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 250,
+                                  color: itemColor5,
+                                  child: Text(
+                                    "Approved Sanction Reject",
+                                    style: TextStyle(
+                                      color: textColor5,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
+                          ],
                         ),
-                      ),
-                      InkWell(
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor5 = AppColor_hover2;
-                              textColor5 = Colors.white;
-                            } else {
-                              itemColor5 = AppColor_Blue;
-                              textColor5 = Colors.black;
-                            }
-                          });
-
-                        },
-                        onTap: (){
-
-                        },
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            height: 40,
-                            width: 250,
-                            color: itemColor5,
-                            child: Text(
-                              "Approved Sanction Reject",
-                              style: TextStyle(
-                                color: textColor5,
-                                fontSize: 12,
-                              ),
-                            )),
-                      ),
-
-                    ],
-                  ),
-                )
+                      )
                     : SizedBox(),
-                loanRePayArr[0] ?
-                Container(
-                  margin: EdgeInsets.only(left: 0),
-                  color: AppColor_Blue,
-                  // height: 800,
-                  width: 250,
-                  child: Column(
-                    children: [
-                      InkWell(
-
-                        onTap: (){
-                          Get.to(RepaymentRequest(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor6 = AppColor_hover2;
-                              textColor6 = Colors.white;
-                            } else {
-                              itemColor6 = AppColor_Blue;
-                              textColor6 = Colors.black;
-                            }
-                          });
-
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          height: 40,
-                          width: 250,
-                          color: itemColor6,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Loan Repayment Request",
-                                style: TextStyle(
-                                  color: textColor6,
-                                  fontSize: 12,
+                loanRePayArr[0]
+                    ? Container(
+                        margin: EdgeInsets.only(left: 0),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 250,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.to(RepaymentRequest(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor6 = AppColor_hover2;
+                                    textColor6 = Colors.white;
+                                  } else {
+                                    itemColor6 = AppColor_Blue;
+                                    textColor6 = Colors.black;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor6,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Loan Repayment Request",
+                                      style: TextStyle(
+                                        color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor5 = AppColor_hover2;
+                                    textColor5 = Colors.white;
+                                  } else {
+                                    itemColor5 = AppColor_Blue;
+                                    textColor5 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.to(ReverseRepayment(
+                                  appbool: widget.appbool,
+                                  navbool: widget.navbool,
+                                ));
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 250,
+                                  color: itemColor5,
+                                  child: Text(
+                                    "Reverse Repayment Request",
+                                    style: TextStyle(
+                                      color: textColor5,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
+                          ],
                         ),
-                      ),
-                      InkWell(
-                        onHover: (val) {
-                          setState(() {
-                            if(val){
-                              itemColor5 = AppColor_hover2;
-                              textColor5 = Colors.white;
-                            } else {
-                              itemColor5 = AppColor_Blue;
-                              textColor5 = Colors.black;
-                            }
-                          });
-
-                        },
-                        onTap: (){
-                          Get.to(ReverseRepayment(
-                            appbool: widget.appbool,
-                            navbool: widget.navbool,
-                          ));
-                        },
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            height: 40,
-                            width: 250,
-                            color: itemColor5,
-                            child: Text(
-                              "Reverse Repayment Request",
-                              style: TextStyle(
-                                color: textColor5,
-                                fontSize: 12,
-                              ),
-                            )),
-                      ),
-
-                    ],
-                  ),
-                )
+                      )
                     : SizedBox(),
               ],
             ),
