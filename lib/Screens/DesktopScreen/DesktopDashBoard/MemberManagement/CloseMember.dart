@@ -38,7 +38,7 @@ class _CloseMemberState extends State<CloseMember> {
               height: 50,
             ),
 
-            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true, active: false,),
+           // SamiteeSelection(submit: true, selectmember: false, clear: true, close: true, active: false,onsubmit: (){}),
 
 
             SizedBox(

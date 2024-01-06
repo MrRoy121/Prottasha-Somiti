@@ -17,6 +17,7 @@ import 'Screens/DesktopScreen/DesktopDashBoard/DashBoard.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Employee/Employee.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Loan/Loan.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberManagement.dart';
+import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeList.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Reports/Reports.dart';
@@ -78,6 +79,15 @@ class MyApp extends StatelessWidget {
           case somiteeregistrationPageRoute:
             return PageTransition(
                 child: SamiteeRegistration(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
+
+          case memberegistrationPageRoute:
+            return PageTransition(
+                child: MemberRegistration(
                   appbool: appbool,
                   navbool: navbool,
                 ),

@@ -215,10 +215,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.to(MemberRegistration(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(memberegistrationPageRoute);
                               },
                               child: Container(
                                   padding: EdgeInsets.only(

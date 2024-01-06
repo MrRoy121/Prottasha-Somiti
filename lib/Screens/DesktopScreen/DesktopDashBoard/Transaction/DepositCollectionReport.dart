@@ -37,7 +37,7 @@ class _DepositCollectionReportState extends State<DepositCollectionReport> {
               height: 50,
             ),
 
-            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,active: true,),
+        //    SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,active: true,onsubmit: (){}),
 
 
             SizedBox(
