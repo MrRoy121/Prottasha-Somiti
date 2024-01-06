@@ -142,7 +142,7 @@ class _SomiteeListItemState extends State<SomiteeListItem> {
                   margin: EdgeInsets.only(left: 7),
                   child: Text(
                     widget.cst.active.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 12,
                         color: AppColor_Black,
                         ),
