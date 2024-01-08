@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../Widget/ContactForm.dart';
@@ -12,7 +16,6 @@ import '../../../../Widget/OtherInfo.dart';
 import '../../../../Widget/PersonalInfoForm.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../Widget/SingleRow.dart';
-
 
 class MemberRegistration extends StatefulWidget {
   Navbool navbool;
@@ -27,13 +30,51 @@ class MemberRegistration extends StatefulWidget {
 class _MemberRegistrationState extends State<MemberRegistration> {
   List<Somitee> somitee = [];
   var selectedsomiti;
+  var selectedmebertype;
+  var selectedocupation;
+  var _firstname = TextEditingController();
+  var _lastname = TextEditingController();
+  var _fathername = TextEditingController();
+  var _mothername = TextEditingController();
+  var _nidnumber = TextEditingController();
+  var _birthreginumber = TextEditingController();
+  var _age = TextEditingController();
+  var _dependablemember = TextEditingController();
+  var _education = TextEditingController();
+  String? selectedGender;
+  String? religion;
+  DateTime? _selectedDate;
+  String? maritalstatus;
+  String? mobiletype;
+  var _mobileno = TextEditingController();
+  var _preseentaddress = TextEditingController();
+  var _parmaaddress = TextEditingController();
+  String? selectedfamilyhead;
+  String? selectedownhomestead;
+  var _livingperiod = TextEditingController();
+  var _annualincome = TextEditingController();
+  var _nomaleearner = TextEditingController();
+  var _nofemaleearner = TextEditingController();
+  var _relationwithhead = TextEditingController();
+  var _landdesc = TextEditingController();
+  var _housedesc = TextEditingController();
+  var _remarks = TextEditingController();
+  late Uint8List pickedImage;
 
   @override
   void initState() {
+    _loadImage();
     // TODO: implement initState
     super.initState();
     fetch();
-  }
+
+    }
+
+    Future<void> _loadImage() async {
+      ByteData data = await rootBundle.load('Assets/person.jpg');
+      pickedImage = data.buffer.asUint8List();
+    }
+
 
   Future<void> fetch() async {
     await FirebaseFirestore.instance
@@ -55,8 +96,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
     });
   }
 
-
-  void _save(){
+  void _save() {
     // String name = _consomitiname.text;
     // String phone = _conphone.text;
     // String branch = _conbranchname.text;
@@ -107,11 +147,42 @@ class _MemberRegistrationState extends State<MemberRegistration> {
     //         borderRadius: 0);
     //   }).catchError((error) => print("Failed to add user: $error"));
     // }
+  }  bool img = false;
+  Future<void> _selectImage() async {
+    final fromPicker = await ImagePickerWeb.getImageAsBytes();
+    if (fromPicker != null) {
+      setState(() {
+        pickedImage = fromPicker;
+        img = true;
+      });
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
 
+  @override
+  Widget build(BuildContext context) {var ScreenWidth = MediaQuery.of(context).size.width;
+
+  double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
+  double ResponsiveHeight =
+      MediaQuery.of(context as BuildContext).size.height;
+
+  bool desktop = false;
+  bool tablet = false;
+  bool mobile = false;
+
+  if (ResponsiveWidth > 1400) {
+    desktop = true;
+    tablet = false;
+    mobile = false;
+  } else if (ResponsiveWidth > 540) {
+    tablet = true;
+    desktop = false;
+    mobile = false;
+  } else {
+    mobile = true;
+    desktop = false;
+    tablet = false;
+  }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -119,62 +190,735 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
-        
-            SizedBox(
-              height: 50,
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
             ),
-        
-            SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,active: true,onsubmit: _save, somitee: somitee,selectedsomitee: selectedsomiti),
 
             SizedBox(
               height: 50,
             ),
-        
+
+            SamiteeSelection(
+                submit: true,
+                selectmember: false,
+                clear: true,
+                close: true,
+                active: true,
+                onsubmit: _save,
+                somitee: somitee,
+                selectedsomitee: selectedsomiti),
+
+            SizedBox(
+              height: 50,
+            ),
+
             // BASIC INFO SCREEN
-            SingleRow(heading: 'Basic Information', field1: 'Member Type:', field2: 'Main Occuoation:',),
+            SingleRow(
+              heading: 'Basic Information',
+              field1: 'Member Type:',
+              field2: 'Main Occupation:',
+              membertype: selectedmebertype,
+              ocupation: selectedocupation,
+            ),
 
             SizedBox(
               height: 50,
             ),
-
 
             // PERSONAL INFORMATION SCREEN
-            PersonalInfoForm(),
+            PersonalInfoForm(
+                firstname: _firstname,
+                selectedGender: selectedGender,
+                religion: religion,
+                selectedDate: _selectedDate,
+                maritalstatus: maritalstatus,
+                lastname: _lastname,
+                fathername: _fathername,
+                mothername: _mothername,
+                nidnumber: _nidnumber,
+                birthreginumber: _birthreginumber,
+                age: _age,
+                dependablemember: _dependablemember,
+                education: _education),
 
             SizedBox(
               height: 50,
             ),
-
 
             // CONTACT INFORMATION SCREEN
-            ContactForm(),
+            ContactForm(
+                mobiletype: mobiletype,
+                mobileno: _mobileno,
+                preseentaddress: _preseentaddress,
+                parmaaddress: _parmaaddress),
 
             SizedBox(
               height: 50,
             ),
-
 
             // OTHER'S INFORMATION
-            OtherInfo(),
+            OtherInfo(
+                selectedfamilyhead: selectedfamilyhead,
+                selectedownhomestead: selectedownhomestead,
+                livingperiod: _livingperiod,
+                annualincome: _annualincome,
+                nomaleearner: _nomaleearner,
+                nofemaleearner: _nofemaleearner,
+                relationwithhead: _relationwithhead,
+                landdesc: _landdesc,
+                housedesc: _housedesc,
+                remarks: _remarks),
 
             SizedBox(
               height: 50,
             ),
-
 
             // MEMBER IMAGE
-            MemberImage(),
+            desktop
+                ? Container(
+              width: 1400,
+              height: 350,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 1400,
+                    height: 40,
+                    color: navbarColor,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            "Member’s Image",
+                            style: TextStyle(
+                              color: AppColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50, left: 250),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 295,
+                                height: 30,
+                                color: navbarColor,
+                                child: Center(
+                                  child: Text(
+                                    "Choose Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                height: 120,
+                                width: 295,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 80,
+                                      width: 265,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 0.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(5.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              top: 20,
+                                              left: 10,
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Select an Image File",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 96,
+                                                  child: ElevatedButton(
+                                                    style:
+                                                    ElevatedButton.styleFrom(
+                                                      primary: Colors.white,
+                                                      shape:
+                                                      RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                            color: Colors.blue),
+                                                        borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                      ),
+                                                    ),
+                                                    onPressed: _selectImage,
+                                                    child: Text(
+                                                      "Select",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(top: 50, right: 250),
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 200,
+                              height: 30,
+                              color: navbarColor,
+                              child: Center(
+                                child: Text(
+                                  "Preview Image",
+                                  style: TextStyle(
+                                    color: AppColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 25),
+                              padding: EdgeInsets.only(top: 25),
+                              height: 120,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: img
+                                  ? Image.memory(
+                                pickedImage,
+                                fit: BoxFit.cover,
+                              )
+                                  : Center(
+                                child:
+                                Icon(Icons.person_2_outlined, size: 58),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+                : tablet
+                ? Container(
+              width: 1400,
+              height: 650,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 1400,
+                    height: 40,
+                    color: navbarColor,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            "Member’s Image",
+                            style: TextStyle(
+                              color: AppColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 50, left: ScreenWidth / 6.144),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 295,
+                                height: 30,
+                                color: navbarColor,
+                                child: Center(
+                                  child: Text(
+                                    "Choose Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                height: 120,
+                                width: 295,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 80,
+                                      width: 265,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 0.5,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(5.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              top: 20,
+                                              left: 10,
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Select an Image File",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 96,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary: Colors.white,
+                                                      shape:
+                                                      RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                            color:
+                                                            Colors.blue),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            5.0),
+                                                      ),
+                                                    ),
+                                                    onPressed: _selectImage,
+                                                    child: Text(
+                                                      "Select",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 50, left: ScreenWidth / 11.82),
+                        child: Container(
+                          // margin: EdgeInsets.only(top: 50, right: 250),
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 200,
+                                height: 30,
+                                color: navbarColor,
+                                child: Center(
+                                  child: Text(
+                                    "Preview Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 25),
+                                padding: EdgeInsets.only(top: 25),
+                                height: 120,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: img
+                                    ? Image.memory(
+                                  pickedImage,
+                                  fit: BoxFit.cover,
+                                )
+                                    : Center(
+                                  child: Icon(Icons.person_2_outlined,
+                                      size: 58),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+                : Container(
+              width: 1400,
+              height: 650,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 1400,
+                    height: 40,
+                    color: navbarColor,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            "Member’s Image",
+                            style: TextStyle(
+                              color: AppColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 50, left: ScreenWidth / 6.144),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 295,
+                                height: 30,
+                                color: navbarColor,
+                                child: Center(
+                                  child: Text(
+                                    "Choose Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                height: 120,
+                                width: 295,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 80,
+                                      width: 265,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 0.5,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(5.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              top: 20,
+                                              left: 10,
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Select an Image File",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 96,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary: Colors.white,
+                                                      shape:
+                                                      RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                            color:
+                                                            Colors.blue),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            5.0),
+                                                      ),
+                                                    ),
+                                                    onPressed: _selectImage,
+                                                    child: Text(
+                                                      "Select",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 50, left: ScreenWidth / 11.82),
+                        child: Container(
+                          // margin: EdgeInsets.only(top: 50, right: 250),
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 200,
+                                height: 30,
+                                color: navbarColor,
+                                child: Center(
+                                  child: Text(
+                                    "Preview Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 25),
+                                padding: EdgeInsets.only(top: 25),
+                                height: 120,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: img
+                                    ? Image.memory(
+                                  pickedImage,
+                                  fit: BoxFit.cover,
+                                )
+                                    : Center(
+                                  child: Icon(Icons.person_2_outlined,
+                                      size: 58),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
 
             SizedBox(
               height: 50,
             ),
-
           ],
         ),
       ),
-
-
     );
   }
 }
