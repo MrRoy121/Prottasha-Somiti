@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Constants/Constants.dart';
+import '../Constants/values.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   var firstname;
@@ -37,7 +38,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: widget.selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1900),
       lastDate: DateTime(2101),
     );
 
@@ -415,7 +416,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                   ),
                                   value: widget.maritalstatus,
                                   onChanged: (newValue) {},
-                                  items: ['Single', 'Married', 'Divorced']
+                                  items: MaritalstatusList
                                       .map((item) {
                                     return DropdownMenuItem(
                                       value: item,
@@ -552,13 +553,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                   ),
                                   value: widget.religion,
                                   onChanged: (newValue) {},
-                                  items: [
-                                    'Hinduism',
-                                    'Islam',
-                                    'Buddhism ',
-                                    'Christianity',
-                                    'Others'
-                                  ].map((item) {
+                                  items: ReligionList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
                                       child: Text(item),
@@ -1019,7 +1014,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                       ),
                                       value: widget.maritalstatus,
                                       onChanged: (newValue) {},
-                                      items: ['Single', 'Married', 'Divorced']
+                                      items: MaritalstatusList
                                           .map((item) {
                                         return DropdownMenuItem(
                                           value: item,
@@ -1159,13 +1154,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                       ),
                                       value: widget.religion,
                                       onChanged: (newValue) {},
-                                      items: [
-                                        'Hinduism',
-                                        'Islam',
-                                        'Buddhism ',
-                                        'Christianity',
-                                        'Others'
-                                      ].map((item) {
+                                      items: ReligionList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
@@ -1630,7 +1619,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                       ),
                                       value: widget.maritalstatus,
                                       onChanged: (newValue) {},
-                                      items: ['Single', 'Married', 'Divorced']
+                                      items: MaritalstatusList
                                           .map((item) {
                                         return DropdownMenuItem(
                                           value: item,
@@ -1770,13 +1759,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                       ),
                                       value: widget.religion,
                                       onChanged: (newValue) {},
-                                      items: [
-                                        'Hinduism',
-                                        'Islam',
-                                        'Buddhism ',
-                                        'Christianity',
-                                        'Others'
-                                      ].map((item) {
+                                      items: ReligionList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),

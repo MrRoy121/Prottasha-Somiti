@@ -2,13 +2,9 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Screens/MobileScreen/MobileScaffold.dart';
-import 'package:prottashasomit/Screens/TabletScreen/TabletScaffold.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/route.dart';
-import 'package:prottashasomit/Screens/MobileScreen/MobileScaffold.dart';
-import 'package:prottashasomit/Screens/TabletScreen/TabletScaffold.dart';
 import 'Constants/responsive.dart';
 import 'Screens/DesktopScreen/Admin/admin_titas.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Accounts/Accounts.dart';

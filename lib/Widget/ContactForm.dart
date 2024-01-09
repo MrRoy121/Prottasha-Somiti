@@ -4,6 +4,7 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Widget/NavbarScreen.dart';
+import '../Constants/values.dart';
 
 class ContactForm extends StatefulWidget {
   String? mobiletype;
@@ -123,7 +124,7 @@ class _ContactFormState extends State<ContactForm> {
                                   ),
                                   value: widget.mobiletype,
                                   onChanged: (newValue) {},
-                                  items: ['Personal', 'Office', 'Other']
+                                  items: MobileTypeList
                                       .map((item) {
                                     return DropdownMenuItem(
                                       value: item,
@@ -318,7 +319,7 @@ class _ContactFormState extends State<ContactForm> {
                                       ),
                                       value: widget.mobiletype,
                                       onChanged: (newValue) {},
-                                      items: ['Personal', 'Office', 'Other']
+                                      items: MobileTypeList
                                           .map((item) {
                                         return DropdownMenuItem(
                                           value: item,
@@ -514,7 +515,7 @@ class _ContactFormState extends State<ContactForm> {
                                       ),
                                       value: widget.mobiletype,
                                       onChanged: (newValue) {},
-                                      items: ['Personal', 'Office', 'Other']
+                                      items: MobileTypeList
                                           .map((item) {
                                         return DropdownMenuItem(
                                           value: item,

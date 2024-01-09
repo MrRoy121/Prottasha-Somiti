@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../Constants/Constants.dart';
+import '../Constants/values.dart';
 
 class SingleRow extends StatefulWidget {
   final String heading;
   final String field1;
   final String field2;
   var membertype;
+  void Function(int) setupmembertype;
+  void Function(int) setupoccupationtype;
   var ocupation;
   SingleRow(
       {required this.field1,
       required this.membertype,
+      required this.setupmembertype,
+      required this.setupoccupationtype,
       required this.ocupation,
       required this.field2,
       required this.heading});
@@ -117,8 +122,14 @@ class _SingleRowState extends State<SingleRow> {
                                 ),
                               ),
                               SizedBox(width: 10),
-                              SizedBox(
+                              Container(
                                 width: 300,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  color: AppColor_greyBorder,
+                                  border:
+                                      Border.all(color: AppColor_greyBorder),
+                                ),
                                 child: DropdownButtonFormField<String>(
                                   decoration: InputDecoration(
                                     filled: true,
@@ -132,17 +143,23 @@ class _SingleRowState extends State<SingleRow> {
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: widget.membertype,
-                                  onChanged: (newValue) {},
-                                  items: ['General Member', 'Item 2', 'Item 3']
-                                      .map((item) {
+                                  value: widget.ocupation,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      widget.membertype = newValue!;
+                                      widget.setupmembertype(
+                                          MemberTypeList.indexOf(
+                                              newValue.toString()));
+                                    });
+                                  },
+                                  items: MemberTypeList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
                                       child: Text(item),
                                     );
                                   }).toList(),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ],
@@ -182,7 +199,7 @@ class _SingleRowState extends State<SingleRow> {
                                 SizedBox(
                                   width: 300,
                                   child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       filled: true,
                                       fillColor: AppColor_greyBorder,
                                       border: OutlineInputBorder(
@@ -195,9 +212,15 @@ class _SingleRowState extends State<SingleRow> {
                                       ),
                                     ),
                                     value: widget.ocupation,
-                                    onChanged: (newValue) {},
-                                    items: ['Item 1', 'Item 2', 'Item 3']
-                                        .map((item) {
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.ocupation = newValue!;
+                                        widget.setupoccupationtype(
+                                            OcupationList.indexOf(
+                                                newValue.toString()));
+                                      });
+                                    },
+                                    items: OcupationList.map((item) {
                                       return DropdownMenuItem(
                                         value: item,
                                         child: Text(item),
@@ -289,8 +312,14 @@ class _SingleRowState extends State<SingleRow> {
                                     ),
                                   ),
                                   SizedBox(width: 30),
-                                  SizedBox(
+                                  Container(
                                     width: 300,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: AppColor_greyBorder,
+                                      border: Border.all(
+                                          color: AppColor_greyBorder),
+                                    ),
                                     child: DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
                                         filled: true,
@@ -304,17 +333,23 @@ class _SingleRowState extends State<SingleRow> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: widget.membertype,
-                                      onChanged: (newValue) {},
-                                      items: ['General Member', 'Item 2', 'Item 3']
-                                          .map((item) {
+                                      value: widget.ocupation,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          widget.membertype = newValue!;
+                                          widget.setupmembertype(
+                                              MemberTypeList.indexOf(
+                                                  newValue.toString()));
+                                        });
+                                      },
+                                      items: MemberTypeList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
                                         );
                                       }).toList(),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ],
@@ -365,9 +400,15 @@ class _SingleRowState extends State<SingleRow> {
                                         ),
                                       ),
                                       value: widget.ocupation,
-                                      onChanged: (newValue) {},
-                                      items: ['Item 1', 'Item 2', 'Item 3']
-                                          .map((item) {
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          widget.ocupation = newValue!;
+                                          widget.setupoccupationtype(
+                                              OcupationList.indexOf(
+                                                  newValue.toString()));
+                                        });
+                                      },
+                                      items: OcupationList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
@@ -456,8 +497,14 @@ class _SingleRowState extends State<SingleRow> {
                                     ),
                                   ),
                                   SizedBox(width: 30),
-                                  SizedBox(
+                                  Container(
                                     width: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: AppColor_greyBorder,
+                                      border: Border.all(
+                                          color: AppColor_greyBorder),
+                                    ),
                                     child: DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
                                         filled: true,
@@ -469,20 +516,25 @@ class _SingleRowState extends State<SingleRow> {
                                         hintText: "Select",
                                         hintStyle: TextStyle(
                                           color: AppColor_greyText,
-                                          fontSize: 8,
                                         ),
                                       ),
-                                      value: widget.membertype,
-                                      onChanged: (newValue) {},
-                                      items: ['General Member', 'Item 2', 'Item 3']
-                                          .map((item) {
+                                      value: widget.ocupation,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          widget.membertype = newValue!;
+                                          widget.setupmembertype(
+                                              MemberTypeList.indexOf(
+                                                  newValue.toString()));
+                                        });
+                                      },
+                                      items: MemberTypeList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
                                         );
                                       }).toList(),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ],
@@ -520,7 +572,7 @@ class _SingleRowState extends State<SingleRow> {
                                   SizedBox(
                                     width: 200,
                                     child: DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         filled: true,
                                         fillColor: AppColor_greyBorder,
                                         border: OutlineInputBorder(
@@ -533,9 +585,15 @@ class _SingleRowState extends State<SingleRow> {
                                         ),
                                       ),
                                       value: widget.ocupation,
-                                      onChanged: (newValue) {},
-                                      items: ['Item 1', 'Item 2', 'Item 3']
-                                          .map((item) {
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          widget.ocupation = newValue!;
+                                          widget.setupoccupationtype(
+                                              OcupationList.indexOf(
+                                                  newValue.toString()));
+                                        });
+                                      },
+                                      items: OcupationList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),

@@ -140,7 +140,7 @@ class OtherInfoState extends State<OtherInfo> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(controller: widget.nofemaleearner,
+                                child: TextField(controller: widget.nomaleearner,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding:
@@ -488,7 +488,7 @@ class OtherInfoState extends State<OtherInfo> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: TextField(controller: widget.nofemaleearner,
+                                    child: TextField(controller: widget.nomaleearner,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding:
@@ -856,7 +856,7 @@ class OtherInfoState extends State<OtherInfo> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: TextField(controller: widget.nofemaleearner,
+                                    child: TextField(controller: widget.nomaleearner,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding:

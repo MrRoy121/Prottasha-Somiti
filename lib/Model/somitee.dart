@@ -1,7 +1,7 @@
 class Somitee {
-  String name, phone, branch, address, id;
-  double active;
-  int sl;
+  String? name, phone, branch, address, id;
+  double? active;
+  int? sl;
 
   Somitee(
       {required this.name,
@@ -14,5 +14,5 @@ class Somitee {
       required this.formation,
       required this.lastupdated});
 
-  DateTime formation, lastupdated;
+  DateTime? formation, lastupdated;
 }
