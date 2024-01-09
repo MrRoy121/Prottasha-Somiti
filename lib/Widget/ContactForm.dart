@@ -11,10 +11,11 @@ class ContactForm extends StatefulWidget {
   var mobileno = TextEditingController();
   var preseentaddress = TextEditingController();
   var parmaaddress = TextEditingController();
+  void Function(int) setupmobileType;
 
   ContactForm(
       {required this.mobiletype,
-      required this.mobileno,
+      required this.mobileno,required this.setupmobileType,
       required this.preseentaddress,
       required this.parmaaddress});
 
@@ -123,7 +124,11 @@ class _ContactFormState extends State<ContactForm> {
                                     ),
                                   ),
                                   value: widget.mobiletype,
-                                  onChanged: (newValue) {},
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      widget.setupmobileType(MobileTypeList.indexOf(newValue!));
+                                    });
+                                  },
                                   items: MobileTypeList
                                       .map((item) {
                                     return DropdownMenuItem(
@@ -318,7 +323,11 @@ class _ContactFormState extends State<ContactForm> {
                                         ),
                                       ),
                                       value: widget.mobiletype,
-                                      onChanged: (newValue) {},
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          widget.setupmobileType(MobileTypeList.indexOf(newValue!));
+                                        });
+                                      },
                                       items: MobileTypeList
                                           .map((item) {
                                         return DropdownMenuItem(
@@ -514,7 +523,11 @@ class _ContactFormState extends State<ContactForm> {
                                         ),
                                       ),
                                       value: widget.mobiletype,
-                                      onChanged: (newValue) {},
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          widget.setupmobileType(MobileTypeList.indexOf(newValue!));
+                                        });
+                                      },
                                       items: MobileTypeList
                                           .map((item) {
                                         return DropdownMenuItem(

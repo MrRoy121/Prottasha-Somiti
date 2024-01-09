@@ -39,6 +39,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
   bool img = false;
+  DateTime _selectedDate = DateTime.now();
   var selectedsomiti;
   var sselectedsomiti;
   var selectedmebertype;
@@ -52,16 +53,15 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   var _age = TextEditingController();
   var _dependablemember = TextEditingController();
   var _education = TextEditingController();
-  String? selectedGender;
-  String? selectedreligion;
-  DateTime? _selectedDate;
-  String? maritalstatus;
-  String? mobiletype;
+  var selectedGender;
+  var selectedreligion;
+  var maritalstatus;
+  var mobiletype;
   var _mobileno = TextEditingController();
   var _preseentaddress = TextEditingController();
   var _parmaaddress = TextEditingController();
-  String? selectedfamilyhead;
-  String? selectedownhomestead;
+  var selectedfamilyhead ="";
+  var selectedownhomestead ="";
   var _livingperiod = TextEditingController();
   var _annualincome = TextEditingController();
   var _nomaleearner = TextEditingController();
@@ -108,38 +108,39 @@ class _MemberRegistrationState extends State<MemberRegistration> {
 
   void _onclear() {
     setState(() {
-      selectedsomiti = null;
-      sselectedsomiti = "";
-      selectedmebertype = "";
-      selectedocupation = "";
-      // _firstname = TextEditingController(text: "");
-      // _lastname = TextEditingController(text: "");
-      // _fathername = TextEditingController(text: "");
-      // _mothername = TextEditingController(text: "");
-      // _nidnumber = TextEditingController(text: "");
-      // _birthreginumber = TextEditingController(text: "");
-      // _age = TextEditingController(text: "");
-      // _dependablemember = TextEditingController(text: "");
-      // _education = TextEditingController(text: "");
-      // selectedGender = "";
-      // selectedreligion = "";
-      // _selectedDate = DateTime.now();
-      // maritalstatus = "";
-      // mobiletype = "";
-      // _mobileno = TextEditingController(text: "");
-      // _preseentaddress = TextEditingController(text: "");
-      // _parmaaddress = TextEditingController(text: "");
-      // selectedfamilyhead = "";
-      // selectedownhomestead = "";
-      // _livingperiod = TextEditingController(text: "");
-      // _annualincome = TextEditingController(text: "");
-      // _nomaleearner = TextEditingController(text: "");
-      // _nofemaleearner = TextEditingController(text: "");
-      // _relationwithhead = TextEditingController(text: "");
-      // _landdesc = TextEditingController(text: "");
-      // _housedesc = TextEditingController(text: "");
-      // _remarks = TextEditingController(text: "");
-      // img = false;
+      var ss;
+      selectedsomiti = ss;
+      sselectedsomiti = ss;
+      selectedmebertype = ss;
+      selectedocupation = ss;
+      _firstname = TextEditingController(text: "");
+      _lastname = TextEditingController(text: "");
+      _fathername = TextEditingController(text: "");
+      _mothername = TextEditingController(text: "");
+      _nidnumber = TextEditingController(text: "");
+      _birthreginumber = TextEditingController(text: "");
+      _age = TextEditingController(text: "");
+      _dependablemember = TextEditingController(text: "");
+      _education = TextEditingController(text: "");
+      selectedGender = ss;
+      selectedreligion = ss;
+      _selectedDate = DateTime.now();
+      maritalstatus = ss;
+      mobiletype = ss;
+      _mobileno = TextEditingController(text: "");
+      _preseentaddress = TextEditingController(text: "");
+      _parmaaddress = TextEditingController(text: "");
+      selectedfamilyhead = ss;
+      selectedownhomestead = ss;
+      _livingperiod = TextEditingController(text: "");
+      _annualincome = TextEditingController(text: "");
+      _nomaleearner = TextEditingController(text: "");
+      _nofemaleearner = TextEditingController(text: "");
+      _relationwithhead = TextEditingController(text: "");
+      _landdesc = TextEditingController(text: "");
+      _housedesc = TextEditingController(text: "");
+      _remarks = TextEditingController(text: "");
+      img = false;
     });
   }
 
@@ -168,14 +169,6 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         _livingperiod.text.isEmpty ||
         _mobileno.text.isEmpty ||
         _nidnumber.text.isEmpty) {
-      print( 'Gender${selectedGender}');
-      print('Religion${selectedreligion}');
-      print( 'Date Of Birth${_selectedDate}');
-      print('Marital Status${maritalstatus}');
-      print('Mobile No Type${mobiletype}');
-      print('Head Family${selectedfamilyhead}');
-      print(   'Own HomeStead${selectedownhomestead}');
-
       Get.snackbar(
           "Member Registration Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
@@ -195,7 +188,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       });
       if (img) {
         final photoRef = FirebaseStorage.instance.ref(
-            "Products/$memberid.jpeg");
+            "MembersImage/$memberid.jpeg");
         UploadTask uploadTask = photoRef.putData(
             pickedImage,
             SettableMetadata(
@@ -346,7 +339,53 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         selectedocupation = OcupationList[ins];
       });
     }
+    void _setupmaritalstatus(int ins){
+      setState(() {
+        maritalstatus = MaritalstatusList[ins];
+      });
+    }
+    void _setupgender(int ins){
+      setState(() {
+        if(ins == 1){
+          selectedGender = 'Male';
+        }else if(ins == 2){
+          selectedGender = 'Female';
+        }else{
+          selectedGender = 'Others';
+        }
+      });
+    }
+    void _setupfamilyhead(int ins){
+      setState(() {
+        if(ins == 1){
+         selectedfamilyhead  = 'Yes';
+        }else{
+          selectedfamilyhead  = 'No';
+        }
+      });
+    }
 
+
+    void _setupownhomestead(int ins){
+      setState(() {
+        if(ins == 1){
+          selectedownhomestead  = 'Yes';
+        }else{
+          selectedownhomestead  = 'No';
+        }
+      });
+    }
+
+    void _setupreligion(int ins){
+      setState(() {
+        selectedreligion = ReligionList[ins];
+      });
+    }
+    void _setupmobileType(int ins){
+      setState(() {
+        mobiletype = MobileTypeList[ins];
+      });
+    }
     if (ResponsiveWidth > 1400) {
       desktop = true;
       tablet = false;
@@ -413,9 +452,9 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                 religion: selectedreligion,
                 selectedDate: _selectedDate,
                 maritalstatus: maritalstatus,
-                lastname: _lastname,
-                fathername: _fathername,
-                mothername: _mothername,
+                lastname: _lastname,setupmaritalstatus: _setupmaritalstatus,
+                fathername: _fathername,setupreligion: _setupreligion,
+                mothername: _mothername,setupgender: _setupgender,
                 nidnumber: _nidnumber,
                 birthreginumber: _birthreginumber,
                 age: _age,
@@ -429,7 +468,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
             // CONTACT INFORMATION SCREEN
             ContactForm(
                 mobiletype: mobiletype,
-                mobileno: _mobileno,
+                mobileno: _mobileno,setupmobileType: _setupmobileType,
                 preseentaddress: _preseentaddress,
                 parmaaddress: _parmaaddress),
 
@@ -442,8 +481,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                 selectedfamilyhead: selectedfamilyhead,
                 selectedownhomestead: selectedownhomestead,
                 livingperiod: _livingperiod,
-                annualincome: _annualincome,
-                nomaleearner: _nomaleearner,
+                annualincome: _annualincome,setupownhomestead: _setupownhomestead,
+                nomaleearner: _nomaleearner,setupfamilyhead: _setupfamilyhead,
                 nofemaleearner: _nofemaleearner,
                 relationwithhead: _relationwithhead,
                 landdesc: _landdesc,

@@ -13,16 +13,25 @@ class PersonalInfoForm extends StatefulWidget {
   var age;
   var dependablemember;
   var education;
-  String? selectedGender;
-  String? religion;
-  DateTime? selectedDate;
-  String? maritalstatus;
+
+  void Function(int) setupmaritalstatus;
+  void Function(int) setupgender;
+  void Function(int) setupreligion;
+  var selectedGender;
+  var religion;
+  DateTime selectedDate;
+  var maritalstatus;
 
   PersonalInfoForm(
-      {required this.firstname,required this.selectedGender,required this.religion,required this.selectedDate,required this.maritalstatus,
+      {required this.firstname,required this.selectedGender,required this.religion,
+        required this.selectedDate,
+        required this.maritalstatus,
+        required this.setupreligion,
       required this.lastname,
       required this.fathername,
       required this.mothername,
+        required this.setupmaritalstatus,
+        required this.setupgender,
       required this.nidnumber,
       required this.birthreginumber,
       required this.age,
@@ -99,11 +108,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   width: 1400,
                   height: 40,
                   color: navbarColor,
-                  child: Row(
+                  child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 40.0),
+                        padding: EdgeInsets.only(left: 40.0),
                         child: Text(
                           "Personal Info",
                           style: TextStyle(
@@ -125,7 +134,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           Row(
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   text: 'First Name',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14),
@@ -149,7 +158,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               SizedBox(
                                 width: 300,
                                 child: TextField(controller: widget.firstname,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding:
                                         EdgeInsets.symmetric(vertical: 2),
@@ -164,7 +173,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           Row(
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   text: 'Father Name',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14),
@@ -188,7 +197,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               SizedBox(
                                 width: 300,
                                 child: TextField(controller: widget.fathername,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding:
                                         EdgeInsets.symmetric(vertical: 2),
@@ -200,10 +209,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           SizedBox(
                             height: 40,
                           ),
+
                           Row(
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   text: 'Gender',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14),
@@ -227,26 +237,40 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               Row(
                                 children: [
                                   Radio(
-                                    value: 'male',
+                                    value: 'Male',
                                     groupValue: widget.selectedGender,
                                     onChanged: (value) {
                                       setState(() {
                                         widget.selectedGender = value.toString();
+                                        widget.setupgender(1);
                                       });
                                     },
                                   ),
                                   Text('Male'),
                                   SizedBox(width: 10),
                                   Radio(
-                                    value: 'female',
+                                    value: 'Female',
                                     groupValue: widget.selectedGender,
                                     onChanged: (value) {
                                       setState(() {
                                         widget.selectedGender = value.toString();
+                                        widget.setupgender(2);
                                       });
                                     },
                                   ),
                                   Text('Female'),
+                                  SizedBox(width: 10),
+                                  Radio(
+                                    value: 'Others',
+                                    groupValue: widget.selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        widget.selectedGender = value.toString();
+                                        widget.setupgender(3);
+                                      });
+                                    },
+                                  ),
+                                  Text('Others'),
                                 ],
                               ),
                             ],
@@ -415,7 +439,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                     ),
                                   ),
                                   value: widget.maritalstatus,
-                                  onChanged: (newValue) {},
+                                  onChanged: (newValue) {setState(() {
+                                    widget.setupmaritalstatus(MaritalstatusList.indexOf(newValue!));
+                                  });},
                                   items: MaritalstatusList
                                       .map((item) {
                                     return DropdownMenuItem(
@@ -552,7 +578,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                     ),
                                   ),
                                   value: widget.religion,
-                                  onChanged: (newValue) {},
+                                  onChanged: (newValue) {setState(() {
+                                    widget.setupreligion(ReligionList.indexOf(newValue!));
+                                  });},
                                   items: ReligionList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
@@ -794,10 +822,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               SizedBox(
                                 height: 40,
                               ),
+
                               Row(
                                 children: [
                                   RichText(
-                                    text: TextSpan(
+                                    text: const TextSpan(
                                       text: 'Gender',
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 14),
@@ -812,8 +841,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                         TextSpan(
                                           text: ' :',
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                              color: Colors.black, fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -822,26 +850,40 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                   Row(
                                     children: [
                                       Radio(
-                                        value: 'male',
+                                        value: 'Male',
                                         groupValue: widget.selectedGender,
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedGender = value.toString();
+                                            widget.setupgender(1);
                                           });
                                         },
                                       ),
                                       Text('Male'),
                                       SizedBox(width: 10),
                                       Radio(
-                                        value: 'female',
+                                        value: 'Female',
                                         groupValue: widget.selectedGender,
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedGender = value.toString();
+                                            widget.setupgender(2);
                                           });
                                         },
                                       ),
                                       Text('Female'),
+                                      SizedBox(width: 10),
+                                      Radio(
+                                        value: 'Others',
+                                        groupValue: widget.selectedGender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            widget.selectedGender = value.toString();
+                                            widget.setupgender(3);
+                                          });
+                                        },
+                                      ),
+                                      Text('Others'),
                                     ],
                                   ),
                                 ],
@@ -1013,7 +1055,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                         ),
                                       ),
                                       value: widget.maritalstatus,
-                                      onChanged: (newValue) {},
+                                      onChanged: (newValue) {setState(() {
+                                        widget.setupmaritalstatus(MaritalstatusList.indexOf(newValue!));
+                                      });},
                                       items: MaritalstatusList
                                           .map((item) {
                                         return DropdownMenuItem(
@@ -1153,7 +1197,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                         ),
                                       ),
                                       value: widget.religion,
-                                      onChanged: (newValue) {},
+                                      onChanged: (newValue) {setState(() {
+                                        widget.setupreligion(ReligionList.indexOf(newValue!));
+                                      });},
                                       items: ReligionList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
@@ -1395,57 +1441,68 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                               SizedBox(
                                 height: 40,
                               ),
+
                               Row(
                                 children: [
                                   RichText(
-                                    text: TextSpan(
+                                    text: const TextSpan(
                                       text: 'Gender',
                                       style: TextStyle(
-                                          color: Colors.black, fontSize: 8),
+                                          color: Colors.black, fontSize: 14),
                                       children: <TextSpan>[
                                         TextSpan(
                                           text: ' *',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.red,
-                                              fontSize: 8),
+                                              fontSize: 14),
                                         ),
                                         TextSpan(
                                           text: ' :',
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 8),
+                                              color: Colors.black, fontSize: 14),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width: 100),
+                                  SizedBox(width: 180),
                                   Row(
                                     children: [
                                       Radio(
-                                        value: 'male',
+                                        value: 'Male',
                                         groupValue: widget.selectedGender,
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedGender = value.toString();
+                                            widget.setupgender(1);
                                           });
                                         },
                                       ),
-                                      Text(
-                                        'Male',
-                                        style: TextStyle(fontSize: 8),
-                                      ),
+                                      Text('Male'),
                                       SizedBox(width: 10),
                                       Radio(
-                                        value: 'female',
+                                        value: 'Female',
                                         groupValue: widget.selectedGender,
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedGender = value.toString();
+                                            widget.setupgender(2);
                                           });
                                         },
                                       ),
-                                      Text('Female',
-                                          style: TextStyle(fontSize: 8)),
+                                      Text('Female'),
+                                      SizedBox(width: 10),
+                                      Radio(
+                                        value: 'Others',
+                                        groupValue: widget.selectedGender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            widget.selectedGender = value.toString();
+                                            widget.setupgender(3);
+                                          });
+                                        },
+                                      ),
+                                      Text('Others'),
                                     ],
                                   ),
                                 ],
@@ -1618,7 +1675,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                         ),
                                       ),
                                       value: widget.maritalstatus,
-                                      onChanged: (newValue) {},
+                                      onChanged: (newValue) {setState(() {
+                                        widget.setupmaritalstatus(MaritalstatusList.indexOf(newValue!));
+                                      });},
                                       items: MaritalstatusList
                                           .map((item) {
                                         return DropdownMenuItem(
@@ -1758,7 +1817,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                         ),
                                       ),
                                       value: widget.religion,
-                                      onChanged: (newValue) {},
+                                      onChanged: (newValue) {setState(() {
+                                        widget.setupreligion(ReligionList.indexOf(newValue!));
+                                      });},
                                       items: ReligionList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,

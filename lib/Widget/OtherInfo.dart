@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../Constants/Constants.dart';
 
 class OtherInfo extends StatefulWidget {
-  String? selectedfamilyhead;
-  String? selectedownhomestead;
+  var selectedfamilyhead;
+  var selectedownhomestead;
   var livingperiod;
   var annualincome;
   var nomaleearner;
@@ -12,10 +12,14 @@ class OtherInfo extends StatefulWidget {
   var relationwithhead;
   var landdesc;
   var housedesc;
+  void Function(int) setupownhomestead;
+  void Function(int) setupfamilyhead;
 
   OtherInfo(
       {required this.selectedfamilyhead,
       required this.selectedownhomestead,
+        required this.setupfamilyhead,
+        required this.setupownhomestead,
       required this.livingperiod,
       required this.annualincome,
       required this.nomaleearner,
@@ -168,6 +172,7 @@ class OtherInfoState extends State<OtherInfo> {
                                     onChanged: (value) {
                                       setState(() {
                                         widget.selectedfamilyhead = value.toString();
+                                        widget.setupfamilyhead(1);
                                       });
                                     },
                                   ),
@@ -179,6 +184,7 @@ class OtherInfoState extends State<OtherInfo> {
                                     onChanged: (value) {
                                       setState(() {
                                         widget.selectedfamilyhead = value.toString();
+                                        widget.setupfamilyhead(2);
                                       });
                                     },
                                   ),
@@ -205,6 +211,7 @@ class OtherInfoState extends State<OtherInfo> {
                                     onChanged: (value) {
                                       setState(() {
                                         widget.selectedownhomestead = value.toString();
+                                        widget.setupownhomestead(1);
                                       });
                                     },
                                   ),
@@ -216,6 +223,7 @@ class OtherInfoState extends State<OtherInfo> {
                                     onChanged: (value) {
                                       setState(() {
                                         widget.selectedownhomestead = value.toString();
+                                        widget.setupownhomestead(2);
                                       });
                                     },
                                   ),
@@ -516,6 +524,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedfamilyhead = value.toString();
+                                            widget.setupfamilyhead(1);
                                           });
                                         },
                                       ),
@@ -532,6 +541,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedfamilyhead = value.toString();
+                                            widget.setupfamilyhead(2);
                                           });
                                         },
                                       ),
@@ -563,6 +573,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedownhomestead = value.toString();
+                                            widget.setupownhomestead(1);
                                           });
                                         },
                                       ),
@@ -579,6 +590,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedownhomestead = value.toString();
+                                            widget.setupownhomestead(2);
                                           });
                                         },
                                       ),
@@ -884,6 +896,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedfamilyhead = value.toString();
+                                            widget.setupfamilyhead(1);
                                           });
                                         },
                                       ),
@@ -900,6 +913,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedfamilyhead = value.toString();
+                                            widget.setupfamilyhead(2);
                                           });
                                         },
                                       ),
@@ -931,6 +945,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedownhomestead = value.toString();
+                                            widget.setupownhomestead(1);
                                           });
                                         },
                                       ),
@@ -947,6 +962,7 @@ class OtherInfoState extends State<OtherInfo> {
                                         onChanged: (value) {
                                           setState(() {
                                             widget.selectedownhomestead = value.toString();
+                                            widget.setupownhomestead(2);
                                           });
                                         },
                                       ),

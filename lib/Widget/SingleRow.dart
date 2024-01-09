@@ -143,7 +143,7 @@ class _SingleRowState extends State<SingleRow> {
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: widget.ocupation,
+                                  value: widget.membertype,
                                   onChanged: (newValue) {
                                     setState(() {
                                       widget.membertype = newValue!;
@@ -333,7 +333,7 @@ class _SingleRowState extends State<SingleRow> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: widget.ocupation,
+                                      value: widget.membertype,
                                       onChanged: (newValue) {
                                         setState(() {
                                           widget.membertype = newValue!;
@@ -456,7 +456,7 @@ class _SingleRowState extends State<SingleRow> {
                             padding: const EdgeInsets.only(left: 40.0),
                             child: Text(
                               widget.heading,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10,
@@ -506,7 +506,7 @@ class _SingleRowState extends State<SingleRow> {
                                           color: AppColor_greyBorder),
                                     ),
                                     child: DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         filled: true,
                                         fillColor: AppColor_greyBorder,
                                         border: OutlineInputBorder(
@@ -518,7 +518,7 @@ class _SingleRowState extends State<SingleRow> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: widget.ocupation,
+                                      value: widget.membertype,
                                       onChanged: (newValue) {
                                         setState(() {
                                           widget.membertype = newValue!;

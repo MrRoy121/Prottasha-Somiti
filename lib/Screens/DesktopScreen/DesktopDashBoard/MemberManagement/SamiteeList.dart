@@ -112,7 +112,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                               ConnectionState.done) {
                             if (snapshot.hasError) {
                               return const Center(
-                                child: Text("No Customer Data Available.."),
+                                child: Text("No Somitee Data Available.."),
                               );
                             } else if (snapshot.hasData) {
                               return MediaQuery.removePadding(
@@ -218,7 +218,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                       (index) {
                                     return DataRow(
                                       cells: [
-                                        DataCell(Text((index + 1).toString(), style: TextStyle(
+                                        DataCell(Text((index + 1).toString(), style: const TextStyle(
                                           fontSize: 12,
                                         ))),
                                         DataCell(

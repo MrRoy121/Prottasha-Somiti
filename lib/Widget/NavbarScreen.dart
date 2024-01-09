@@ -244,10 +244,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.to(EditMembers(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(memberlistPageRoute);
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
