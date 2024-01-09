@@ -146,12 +146,12 @@ class _MemberRegistrationState extends State<MemberRegistration> {
 
   void _save() async {
     const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+        '1234567890';
     Random _rnd = Random();
     String getRandomString(int length) =>
         String.fromCharCodes(Iterable.generate(
             length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    String memberid = getRandomString(20);
+    String memberid = getRandomString(8);
     if (selectedsomiti == null ||
         selectedGender == null ||
         selectedmebertype == '' ||
@@ -220,7 +220,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         'Living Period': _livingperiod.text,
         'No Female Earner': _nofemaleearner.text,
         'No Male Earner': _nomaleearner.text,
-        'is': memberid,
+        'ID': memberid,
         'Head Family': selectedfamilyhead,
         'Own HomeStead': selectedownhomestead,
         'Relation With Head': _relationwithhead.text,
@@ -272,7 +272,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Living Period': _livingperiod.text,
           'No Female Earner': _nofemaleearner.text,
           'No Male Earner': _nomaleearner.text,
-          'is': memberid,
+          'ID': memberid,
           'Head Family': selectedfamilyhead,
           'Own HomeStead': selectedownhomestead,
           'Relation With Head': _relationwithhead.text,
