@@ -15,6 +15,7 @@ import 'Screens/DesktopScreen/DesktopDashBoard/Loan/Loan.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberManagement.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberRegistration.dart';
+import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberUpdate.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeList.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/SamiteeRegistration.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Reports/Reports.dart';
@@ -98,14 +99,22 @@ class MyApp extends StatelessWidget {
                 ),
                 type: PageTransitionType.fade,
                 settings: settings);
-            case memberlistPageRoute:
-          return PageTransition(
-              child: EditMembers(
-                appbool: appbool,
-                navbool: navbool,
-              ),
-              type: PageTransitionType.fade,
-              settings: settings);
+          case memberlistPageRoute:
+            return PageTransition(
+                child: EditMembers(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
+          case memberEditPageRoute:
+            return PageTransition(
+                child: MemberUpdate(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
           case 'admin_titas':
             return PageTransition(
                 child: Admin_titas(appbool),

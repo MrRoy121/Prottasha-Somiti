@@ -22,6 +22,7 @@ class Memberss {
       livingperiod,
       nomaleearner,
       nofemaleearner,
+      annualincome,
       id,
       headfamily,
       ownhomestead,
@@ -42,6 +43,7 @@ class Memberss {
       required this.firstname,
       required this.lastname,
       required this.fathername,
+      required this.annualincome,
       required this.mothername,
       required this.gender,
       required this.religion,
@@ -69,4 +71,90 @@ class Memberss {
       required this.img,
       required this.birthdate,
       required this.sl});
+
+  Map toJson() => {
+        'Somitee Name': somiteename,
+        'Somitee ID': somiteeid,
+        'Member Type': membertype,
+        'Occupation': occupation,
+        'First Name': firstname,
+        'Last Name': lastname,
+        'Father Name': fathername,
+        'Mother Name': mothername,
+        'Gender': gender,
+        'Religion': religion,
+        'National ID': nationalid,
+        'Birth Registration': birthregi,
+        'Age': age,
+        'Date Of Birth': birthdate,
+        'No of Dependent': nodepenndent,
+        'Education': education,
+        'Marital Status': maritalstatus,
+        'Mobile No Type': mobilenotype,
+        'Mobile No': mobilenno,
+        'Present Address': presentadd,
+        'Parmanent Address': parmaadd,
+        'Living Period': livingperiod,
+        'Annual Income': annualincome,
+        'No Female Earner': nofemaleearner,
+        'No Male Earner': nomaleearner,
+        'ID': id,
+        'Head Family': headfamily,
+        'Own HomeStead': ownhomestead,
+        'Relation With Head': relationwithhead,
+        'Land Desc': landdesc,
+        'House Desc': housedesc,
+        'Remarks': remarks,
+        'Image': img,
+        'ImageURL': imageurl,
+        'sl': sl
+      };
+
+  factory Memberss.fromJson(dynamic json) {
+    try {
+      print("Raw JSON String: $json");
+
+
+      return Memberss(
+          somiteename: json['Somitee Name'].toString(),
+          somiteeid: json['Somitee ID'].toString(),
+          membertype: json['Member Type'].toString(),
+          occupation: json['Occupation'].toString(),
+          firstname: json['First Name'].toString(),
+          lastname: json['Last Name'].toString(),
+          fathername: json['Father Name'].toString(),
+          mothername: json['Mother Name'].toString(),
+          gender: json['Gender'].toString(),
+          religion: json['Religion'].toString(),
+          nationalid: json['National ID'].toString(),
+          birthregi: json['Birth Registration'].toString(),
+          age: json['Age'].toString(),
+          nodepenndent: json['No of Dependent'].toString(),
+          education: json['Education'].toString(),
+          maritalstatus: json['Marital Status'].toString(),
+          mobilenotype: json['Mobile No Type'].toString(),
+          mobilenno: json['Mobile No'].toString(),
+          presentadd: json['Present Address'].toString(),
+          parmaadd: json['Parmanent Address'].toString(),
+          livingperiod: json['Living Period'].toString(),
+          nomaleearner: json['No Male Earner'].toString(),
+          nofemaleearner: json['No Female Earner'].toString(),
+          id: json['ID'].toString(),
+          headfamily: json['Head Family'].toString(),
+          ownhomestead: json['Own HomeStead'].toString(),
+          annualincome: json['Annual Income'].toString(),
+          relationwithhead: json['Relation With Head'].toString(),
+          landdesc: json['Land Desc'].toString(),
+          housedesc: json['House Desc'].toString(),
+          remarks: json['Remarks'].toString(),
+          imageurl: json['ImageURL'].toString(),
+          img: json['Image'],
+          birthdate: json['Date Of Birth'],
+          sl:  json['sl'] is int ? json['sl'] : int.parse(json['sl'].toString()));
+    } catch (e) {
+      print('Error decoding JSON: $e');
+      // Handle the error as needed, or rethrow the exception
+      rethrow;
+    }
+  }
 }

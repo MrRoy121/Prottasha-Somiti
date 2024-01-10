@@ -1,5 +1,9 @@
+
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
@@ -10,6 +14,7 @@ import '../../../../Model/member.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
+import '../../../../route.dart';
 
 class EditMembers extends StatefulWidget {
   Navbool navbool;
@@ -92,7 +97,7 @@ class _EditMembersState extends State<EditMembers> {
                 gender: element["Gender"],
                 religion: element["Religion"],
                 nationalid: element["National ID"],
-                birthregi: element["Birth Registration"],
+                birthregi: element["Birth Registration"],annualincome: element["Annual Income"],
                 age: element["Age"],
                 nodepenndent: element["No of Dependent"],
                 education: element["Education"],
@@ -384,7 +389,12 @@ class _EditMembersState extends State<EditMembers> {
                                             DataCell(
                                               Center(
                                                 child: InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Memberss sss = snapshot.data[index];
+                                                    Get.toNamed(memberEditPageRoute,arguments: {
+                                                      'Members': sss.toJson(),
+                                                    },);
+                                                  },
                                                   child: Container(
                                                       padding:
                                                           EdgeInsets.all(4.0),

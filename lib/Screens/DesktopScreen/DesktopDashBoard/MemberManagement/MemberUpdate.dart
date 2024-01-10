@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
+import '../../../../Model/member.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../Widget/ContactForm.dart';
 import '../../../../Widget/MemberImage.dart';
@@ -22,20 +24,21 @@ import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/OtherInfo.dart';
 import '../../../../Widget/PersonalInfoForm.dart';
 import '../../../../Widget/SamiteeSelection.dart';
+import '../../../../Widget/SamiteeSelectionUpdate.dart';
 import '../../../../Widget/SingleRow.dart';
 import '../../../../route.dart';
 
-class MemberRegistration extends StatefulWidget {
+class MemberUpdate extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  MemberRegistration({required this.appbool, required this.navbool});
+  MemberUpdate({required this.appbool, required this.navbool});
 
   @override
-  State<MemberRegistration> createState() => _MemberRegistrationState();
+  State<MemberUpdate> createState() => _MemberUpdateState();
 }
 
-class _MemberRegistrationState extends State<MemberRegistration> {
+class _MemberUpdateState extends State<MemberUpdate> {
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
   bool img = false;
@@ -75,7 +78,6 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   @override
   void initState() {
     _loadImage();
-    // TODO: implement initState
     super.initState();
     fetch();
   }
@@ -144,14 +146,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
     });
   }
 
-  void _save() async {
-    const _chars =
-        '1234567890';
-    Random _rnd = Random();
-    String getRandomString(int length) =>
-        String.fromCharCodes(Iterable.generate(
-            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    String memberid = getRandomString(8);
+  void _save(Memberss mst) async {
     if (selectedsomiti == null ||
         selectedGender == null ||
         selectedmebertype == '' ||
@@ -170,7 +165,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         _mobileno.text.isEmpty ||
         _nidnumber.text.isEmpty) {
       Get.snackbar(
-          "Member Registration Failed.", "Some Required  Fields are Empty",
+          "Member Updating Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white,
           backgroundColor: Colors.red,
@@ -182,20 +177,16 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance.collection('Somitee').doc(selectedsomiti.id).get().then((value) {
-        FirebaseFirestore.instance.collection('Somitee').doc(selectedsomiti.id).update(
-            {'Active':value['Active']+1});
-      });
       if (img) {
         final photoRef = FirebaseStorage.instance.ref(
-            "MembersImage/$memberid.jpeg");
+            "MembersImage/$mst.id.jpeg");
         UploadTask uploadTask = photoRef.putData(
             pickedImage,
             SettableMetadata(
               contentType: "image/jpeg",
             ));
         String url = await(await uploadTask).ref.getDownloadURL();
-        FirebaseFirestore.instance.collection('Member').doc(memberid).set({
+        FirebaseFirestore.instance.collection('Member').doc(mst.id).update({
         'Somitee Name': selectedsomiti.name,
         'Somitee ID': selectedsomiti.id,
         'Member Type': selectedmebertype,
@@ -220,11 +211,11 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         'Living Period': _livingperiod.text,
         'No Female Earner': _nofemaleearner.text,
         'No Male Earner': _nomaleearner.text,
-        'ID': memberid,
+          'Annual Income': _annualincome.text,
+        'ID': mst.id,
         'Head Family': selectedfamilyhead,
         'Own HomeStead': selectedownhomestead,
         'Relation With Head': _relationwithhead.text,
-          'Annual Income': _annualincome.text,
         'Land Desc': _landdesc.text,
         'House Desc': _housedesc.text,
         'Remarks': _remarks.text,
@@ -248,7 +239,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
               borderRadius: 0);
         }).catchError((error) => print("Failed to add user: $error"));
       } else {
-        FirebaseFirestore.instance.collection('Member').doc(memberid).set({
+        FirebaseFirestore.instance.collection('Member').doc(mst.id).update({
           'Somitee Name': selectedsomiti.name,
           'Somitee ID': selectedsomiti.id,
           'Member Type': selectedmebertype,
@@ -263,6 +254,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
+          'Annual Income': _annualincome.text,
           'No of Dependent': _dependablemember.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
@@ -271,10 +263,9 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Present Address': _preseentaddress.text,
           'Parmanent Address': _parmaaddress.text,
           'Living Period': _livingperiod.text,
-          'Annual Income': _annualincome.text,
           'No Female Earner': _nofemaleearner.text,
           'No Male Earner': _nomaleearner.text,
-          'ID': memberid,
+          'ID': mst.id,
           'Head Family': selectedfamilyhead,
           'Own HomeStead': selectedownhomestead,
           'Relation With Head': _relationwithhead.text,
@@ -302,6 +293,41 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         }).catchError((error) => print("Failed to add user: $error"));
       }
     }
+  }
+
+  void _addinit(Memberss cst) {
+    // selectedsomiti = ss;
+    // sselectedsomiti = ss;
+    selectedmebertype = cst.membertype;
+    selectedocupation = cst.occupation;
+    _firstname = TextEditingController(text: cst.firstname);
+    _lastname = TextEditingController(text: cst.lastname);
+    _fathername = TextEditingController(text: cst.fathername);
+    _mothername = TextEditingController(text: cst.mothername);
+    _nidnumber = TextEditingController(text: cst.nationalid);
+    _birthreginumber = TextEditingController(text: cst.birthregi);
+    _age = TextEditingController(text: cst.age);
+    _dependablemember = TextEditingController(text: cst.nodepenndent);
+    _education = TextEditingController(text: cst.education);
+    selectedGender = cst.gender;
+    selectedreligion = cst.religion;
+    _selectedDate = cst.birthdate;
+    maritalstatus = cst.maritalstatus;
+    mobiletype = cst.membertype;
+    _mobileno = TextEditingController(text: cst.mobilenno);
+    _preseentaddress = TextEditingController(text: cst.presentadd);
+    _parmaaddress = TextEditingController(text: cst.parmaadd);
+    selectedfamilyhead = cst.headfamily;
+    selectedownhomestead = cst.ownhomestead;
+    _livingperiod = TextEditingController(text: cst.livingperiod);
+    _annualincome = TextEditingController(text: cst.annualincome);
+    _nomaleearner = TextEditingController(text: cst.nomaleearner);
+    _nofemaleearner = TextEditingController(text: cst.nofemaleearner);
+    _relationwithhead = TextEditingController(text: cst.relationwithhead);
+    _landdesc = TextEditingController(text: cst.landdesc);
+    _housedesc = TextEditingController(text:cst.housedesc);
+    _remarks = TextEditingController(text: cst.remarks);
+    setState(() {});
   }
 
   Future<void> _selectImage() async {
@@ -367,7 +393,18 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       });
     }
 
+    var arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
 
+    String membersJson = arguments['Members'].toString();
+    print('Members JSON: $membersJson');
+    try {
+      Memberss mst = Memberss.fromJson(membersJson);
+    } catch (e) {
+      print(e);
+    }
+    Memberss mst = Memberss.fromJson(jsonDecode(membersJson));
+    _addinit(mst);
     void _setupownhomestead(int ins){
       setState(() {
         if(ins == 1){
@@ -417,10 +454,10 @@ class _MemberRegistrationState extends State<MemberRegistration> {
               height: 50,
             ),
 
-            SamiteeSelection(
+            SamiteeSelectionUpdate(
                 submit: true,
                 selectmember: false,
-                clear: true,
+                clear: true,mst: mst,
                 ssomitee: ssomitee,
                 close: true,setupsomiti: _setupsomiti,
                 active: true,
