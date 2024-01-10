@@ -41,7 +41,8 @@ class MemberUpdate extends StatefulWidget {
 class _MemberUpdateState extends State<MemberUpdate> {
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
-  bool img = false;
+  late String imgurl;
+  bool img = false,url = false,loading = true;
   DateTime _selectedDate = DateTime.now();
   var selectedsomiti;
   var sselectedsomiti;
@@ -56,6 +57,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
   var _age = TextEditingController();
   var _dependablemember = TextEditingController();
   var _education = TextEditingController();
+  bool somiteeselected = false;
   var selectedGender;
   var selectedreligion;
   var maritalstatus;
@@ -63,8 +65,8 @@ class _MemberUpdateState extends State<MemberUpdate> {
   var _mobileno = TextEditingController();
   var _preseentaddress = TextEditingController();
   var _parmaaddress = TextEditingController();
-  var selectedfamilyhead ="";
-  var selectedownhomestead ="";
+  var selectedfamilyhead = "";
+  var selectedownhomestead = "";
   var _livingperiod = TextEditingController();
   var _annualincome = TextEditingController();
   var _nomaleearner = TextEditingController();
@@ -105,6 +107,9 @@ class _MemberUpdateState extends State<MemberUpdate> {
             sl: 0));
         ssomitee.add(element["Name"]);
       }
+      setState(() {
+        loading = false;
+      });
     });
   }
 
@@ -164,8 +169,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
         _livingperiod.text.isEmpty ||
         _mobileno.text.isEmpty ||
         _nidnumber.text.isEmpty) {
-      Get.snackbar(
-          "Member Updating Failed.", "Some Required  Fields are Empty",
+      Get.snackbar("Member Updating Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white,
           backgroundColor: Colors.red,
@@ -178,53 +182,53 @@ class _MemberUpdateState extends State<MemberUpdate> {
           borderRadius: 0);
     } else {
       if (img) {
-        final photoRef = FirebaseStorage.instance.ref(
-            "MembersImage/$mst.id.jpeg");
+        final photoRef =
+            FirebaseStorage.instance.ref("MembersImage/$mst.id.jpeg");
         UploadTask uploadTask = photoRef.putData(
             pickedImage,
             SettableMetadata(
               contentType: "image/jpeg",
             ));
-        String url = await(await uploadTask).ref.getDownloadURL();
+        String url = await (await uploadTask).ref.getDownloadURL();
         FirebaseFirestore.instance.collection('Member').doc(mst.id).update({
-        'Somitee Name': selectedsomiti.name,
-        'Somitee ID': selectedsomiti.id,
-        'Member Type': selectedmebertype,
-        'Occupation': selectedocupation,
-        'First Name': _firstname.text,
-        'Last Name': _lastname.text,
-        'Father Name': _fathername.text,
-        'Mother Name': _mothername.text,
-        'Gender': selectedGender,
-        'Religion': selectedreligion,
-        'National ID': _nidnumber.text,
-        'Birth Registration': _birthreginumber.text,
-        'Age': _age.text,
-        'Date Of Birth': _selectedDate,
-        'No of Dependent': _dependablemember.text,
-        'Education': _education.text,
-        'Marital Status': maritalstatus,
-        'Mobile No Type': mobiletype,
-        'Mobile No': _mobileno.text,
-        'Present Address': _preseentaddress.text,
-        'Parmanent Address': _parmaaddress.text,
-        'Living Period': _livingperiod.text,
-        'No Female Earner': _nofemaleearner.text,
-        'No Male Earner': _nomaleearner.text,
+          'Somitee Name': selectedsomiti.name,
+          'Somitee ID': selectedsomiti.id,
+          'Member Type': selectedmebertype,
+          'Occupation': selectedocupation,
+          'First Name': _firstname.text,
+          'Last Name': _lastname.text,
+          'Father Name': _fathername.text,
+          'Mother Name': _mothername.text,
+          'Gender': selectedGender,
+          'Religion': selectedreligion,
+          'National ID': _nidnumber.text,
+          'Birth Registration': _birthreginumber.text,
+          'Age': _age.text,
+          'Date Of Birth': _selectedDate,
+          'No of Dependent': _dependablemember.text,
+          'Education': _education.text,
+          'Marital Status': maritalstatus,
+          'Mobile No Type': mobiletype,
+          'Mobile No': _mobileno.text,
+          'Present Address': _preseentaddress.text,
+          'Parmanent Address': _parmaaddress.text,
+          'Living Period': _livingperiod.text,
+          'No Female Earner': _nofemaleearner.text,
+          'No Male Earner': _nomaleearner.text,
           'Annual Income': _annualincome.text,
-        'ID': mst.id,
-        'Head Family': selectedfamilyhead,
-        'Own HomeStead': selectedownhomestead,
-        'Relation With Head': _relationwithhead.text,
-        'Land Desc': _landdesc.text,
-        'House Desc': _housedesc.text,
-        'Remarks': _remarks.text,
+          'ID': mst.id,
+          'Head Family': selectedfamilyhead,
+          'Own HomeStead': selectedownhomestead,
+          'Relation With Head': _relationwithhead.text,
+          'Land Desc': _landdesc.text,
+          'House Desc': _housedesc.text,
+          'Remarks': _remarks.text,
           'Image': true,
           'ImageURL': url,
         }).then((value) async {
           Get.offNamed(memberlistPageRoute);
-          Get.snackbar("Member Added Successfully.",
-              "Redirecting to Member List Page.",
+          Get.snackbar(
+              "Member Updated Successfully.", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
@@ -238,7 +242,62 @@ class _MemberUpdateState extends State<MemberUpdate> {
               ],
               borderRadius: 0);
         }).catchError((error) => print("Failed to add user: $error"));
-      } else {
+      }
+      else if (url){
+        FirebaseFirestore.instance.collection('Member').doc(mst.id).update({
+          'Somitee Name': selectedsomiti.name,
+          'Somitee ID': selectedsomiti.id,
+          'Member Type': selectedmebertype,
+          'Occupation': selectedocupation,
+          'First Name': _firstname.text,
+          'Last Name': _lastname.text,
+          'Father Name': _fathername.text,
+          'Mother Name': _mothername.text,
+          'Gender': selectedGender,
+          'Religion': selectedreligion,
+          'National ID': _nidnumber.text,
+          'Birth Registration': _birthreginumber.text,
+          'Age': _age.text,
+          'Date Of Birth': _selectedDate,
+          'Annual Income': _annualincome.text,
+          'No of Dependent': _dependablemember.text,
+          'Education': _education.text,
+          'Marital Status': maritalstatus,
+          'Mobile No Type': mobiletype,
+          'Mobile No': _mobileno.text,
+          'Present Address': _preseentaddress.text,
+          'Parmanent Address': _parmaaddress.text,
+          'Living Period': _livingperiod.text,
+          'No Female Earner': _nofemaleearner.text,
+          'No Male Earner': _nomaleearner.text,
+          'ID': mst.id,
+          'Head Family': selectedfamilyhead,
+          'Own HomeStead': selectedownhomestead,
+          'Relation With Head': _relationwithhead.text,
+          'Land Desc': _landdesc.text,
+          'House Desc': _housedesc.text,
+          'Remarks': _remarks.text,
+          'Image': true,
+          'ImageURL': mst.imageurl,
+        }).then((value) async {
+          Get.offNamed(memberlistPageRoute);
+          Get.snackbar(
+              "Member Updated Successfully.", "Redirecting to Member List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(-100, 0),
+                    blurRadius: 20),
+              ],
+              borderRadius: 0);
+        }).catchError((error) => print("Failed to add user: $error"));
+      }
+      else {
         FirebaseFirestore.instance.collection('Member').doc(mst.id).update({
           'Somitee Name': selectedsomiti.name,
           'Somitee ID': selectedsomiti.id,
@@ -276,8 +335,8 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'ImageURL': '',
         }).then((value) async {
           Get.offNamed(memberlistPageRoute);
-          Get.snackbar("Member Added Successfully.",
-              "Redirecting to Member List Page.",
+          Get.snackbar(
+              "Member Updated Successfully.", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
@@ -296,8 +355,9 @@ class _MemberUpdateState extends State<MemberUpdate> {
   }
 
   void _addinit(Memberss cst) {
-    // selectedsomiti = ss;
-    // sselectedsomiti = ss;
+    if(!loading){
+    selectedsomiti = somitee[ssomitee.indexOf(cst.somiteename)];
+    sselectedsomiti = cst.somiteename;
     selectedmebertype = cst.membertype;
     selectedocupation = cst.occupation;
     _firstname = TextEditingController(text: cst.firstname);
@@ -313,7 +373,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
     selectedreligion = cst.religion;
     _selectedDate = cst.birthdate;
     maritalstatus = cst.maritalstatus;
-    mobiletype = cst.membertype;
+    mobiletype = cst.mobilenotype;
     _mobileno = TextEditingController(text: cst.mobilenno);
     _preseentaddress = TextEditingController(text: cst.presentadd);
     _parmaaddress = TextEditingController(text: cst.parmaadd);
@@ -325,9 +385,14 @@ class _MemberUpdateState extends State<MemberUpdate> {
     _nofemaleearner = TextEditingController(text: cst.nofemaleearner);
     _relationwithhead = TextEditingController(text: cst.relationwithhead);
     _landdesc = TextEditingController(text: cst.landdesc);
-    _housedesc = TextEditingController(text:cst.housedesc);
+    _housedesc = TextEditingController(text: cst.housedesc);
     _remarks = TextEditingController(text: cst.remarks);
+    if (cst.img) {
+      imgurl = cst.imageurl;
+      url = true;
+    }
     setState(() {});
+    }
   }
 
   Future<void> _selectImage() async {
@@ -352,78 +417,113 @@ class _MemberUpdateState extends State<MemberUpdate> {
     bool tablet = false;
     bool mobile = false;
 
-    void _setupsomiti(int ins){
+    void _setupsomiti(int ins) {
       setState(() {
         selectedsomiti = somitee[ins];
       });
     }
-    void _setupmembertype(int ins){
+
+    void _setupmembertype(int ins) {
       setState(() {
         selectedmebertype = MemberTypeList[ins];
       });
     }
-    void _setupoccupationtype(int ins){
+
+    void _setupoccupationtype(int ins) {
       setState(() {
         selectedocupation = OcupationList[ins];
       });
     }
-    void _setupmaritalstatus(int ins){
+
+    void _setupmaritalstatus(int ins) {
       setState(() {
         maritalstatus = MaritalstatusList[ins];
       });
     }
-    void _setupgender(int ins){
+
+    void _setupgender(int ins) {
       setState(() {
-        if(ins == 1){
+        if (ins == 1) {
           selectedGender = 'Male';
-        }else if(ins == 2){
+        } else if (ins == 2) {
           selectedGender = 'Female';
-        }else{
+        } else {
           selectedGender = 'Others';
         }
       });
     }
-    void _setupfamilyhead(int ins){
+
+    void _setupfamilyhead(int ins) {
       setState(() {
-        if(ins == 1){
-         selectedfamilyhead  = 'Yes';
-        }else{
-          selectedfamilyhead  = 'No';
+        if (ins == 1) {
+          selectedfamilyhead = 'Yes';
+        } else {
+          selectedfamilyhead = 'No';
         }
       });
     }
 
-    var arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
-    String membersJson = arguments['Members'].toString();
-
-    try {
-      Memberss mst = Memberss.fromJson(arguments['Members']);
-    } catch (e) {
-      print(e);
-    }
-
-    Memberss mst = Memberss.fromJson(jsonDecode(membersJson));
+    var arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+    Memberss mst = Memberss(
+        somiteename: arguments['Members']["Somitee Name"],
+        somiteeid: arguments['Members']["Somitee ID"],
+        membertype: arguments['Members']["Member Type"],
+        occupation: arguments['Members']["Occupation"],
+        firstname: arguments['Members']["First Name"],
+        lastname: arguments['Members']["Last Name"],
+        fathername: arguments['Members']["Father Name"],
+        mothername: arguments['Members']["Mother Name"],
+        gender: arguments['Members']["Gender"],
+        religion: arguments['Members']["Religion"],
+        nationalid: arguments['Members']["National ID"],
+        birthregi: arguments['Members']["Birth Registration"],
+        annualincome: arguments['Members']["Annual Income"],
+        age: arguments['Members']["Age"],
+        nodepenndent: arguments['Members']["No of Dependent"],
+        education: arguments['Members']["Education"],
+        maritalstatus: arguments['Members']["Marital Status"],
+        mobilenotype: arguments['Members']["Mobile No Type"],
+        mobilenno: arguments['Members']["Mobile No"],
+        presentadd: arguments['Members']["Present Address"],
+        parmaadd: arguments['Members']["Parmanent Address"],
+        livingperiod: arguments['Members']["Living Period"],
+        nomaleearner: arguments['Members']["No Female Earner"],
+        nofemaleearner: arguments['Members']["No Male Earner"],
+        id: arguments['Members']["ID"],
+        headfamily: arguments['Members']["Head Family"],
+        ownhomestead: arguments['Members']["Own HomeStead"],
+        relationwithhead: arguments['Members']["Relation With Head"],
+        landdesc: arguments['Members']["Land Desc"],
+        housedesc: arguments['Members']["House Desc"],
+        remarks: arguments['Members']["Remarks"],
+        imageurl: arguments['Members']["ImageURL"],
+        img: arguments['Members']["Image"],
+        birthdate: arguments['Members']["Date Of Birth"],
+        sl: arguments['Members']["sl"]);
     _addinit(mst);
-    void _setupownhomestead(int ins){
+    void _setupownhomestead(int ins) {
       setState(() {
-        if(ins == 1){
-          selectedownhomestead  = 'Yes';
-        }else{
-          selectedownhomestead  = 'No';
+        if (ins == 1) {
+          selectedownhomestead = 'Yes';
+        } else {
+          selectedownhomestead = 'No';
         }
       });
     }
 
-    void _setupreligion(int ins){
+    void _setupreligion(int ins) {
       setState(() {
         selectedreligion = ReligionList[ins];
       });
     }
-    void _setupmobileType(int ins){
+
+    void _setupmobileType(int ins) {
       setState(() {
         mobiletype = MobileTypeList[ins];
       });
     }
+
     if (ResponsiveWidth > 1400) {
       desktop = true;
       tablet = false;
@@ -441,7 +541,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
       appBar: Appbar(
         navbool: widget.appbool,
       ),
-      body: SingleChildScrollView(
+      body: loading ? Center(child: CircularProgressIndicator(),):SingleChildScrollView(
         child: Column(
           children: [
             NavbarScreen(
@@ -456,9 +556,11 @@ class _MemberUpdateState extends State<MemberUpdate> {
             SamiteeSelectionUpdate(
                 submit: true,
                 selectmember: false,
-                clear: true,mst: mst,
+                clear: true,
+                mst: mst,
                 ssomitee: ssomitee,
-                close: true,setupsomiti: _setupsomiti,
+                close: true,
+                setupsomiti: _setupsomiti,
                 active: true,
                 selectedsomiteeid: selectedsomiti,
                 onsubmit: _save,
@@ -473,8 +575,10 @@ class _MemberUpdateState extends State<MemberUpdate> {
             // BASIC INFO SCREEN
             SingleRow(
               heading: 'Basic Information',
-              field1: 'Member Type:',setupoccupationtype: _setupoccupationtype,
-              field2: 'Main Occupation:',setupmembertype: _setupmembertype,
+              field1: 'Member Type:',
+              setupoccupationtype: _setupoccupationtype,
+              field2: 'Main Occupation:',
+              setupmembertype: _setupmembertype,
               membertype: selectedmebertype,
               ocupation: selectedocupation,
             ),
@@ -490,9 +594,12 @@ class _MemberUpdateState extends State<MemberUpdate> {
                 religion: selectedreligion,
                 selectedDate: _selectedDate,
                 maritalstatus: maritalstatus,
-                lastname: _lastname,setupmaritalstatus: _setupmaritalstatus,
-                fathername: _fathername,setupreligion: _setupreligion,
-                mothername: _mothername,setupgender: _setupgender,
+                lastname: _lastname,
+                setupmaritalstatus: _setupmaritalstatus,
+                fathername: _fathername,
+                setupreligion: _setupreligion,
+                mothername: _mothername,
+                setupgender: _setupgender,
                 nidnumber: _nidnumber,
                 birthreginumber: _birthreginumber,
                 age: _age,
@@ -506,7 +613,8 @@ class _MemberUpdateState extends State<MemberUpdate> {
             // CONTACT INFORMATION SCREEN
             ContactForm(
                 mobiletype: mobiletype,
-                mobileno: _mobileno,setupmobileType: _setupmobileType,
+                mobileno: _mobileno,
+                setupmobileType: _setupmobileType,
                 preseentaddress: _preseentaddress,
                 parmaaddress: _parmaaddress),
 
@@ -519,8 +627,10 @@ class _MemberUpdateState extends State<MemberUpdate> {
                 selectedfamilyhead: selectedfamilyhead,
                 selectedownhomestead: selectedownhomestead,
                 livingperiod: _livingperiod,
-                annualincome: _annualincome,setupownhomestead: _setupownhomestead,
-                nomaleearner: _nomaleearner,setupfamilyhead: _setupfamilyhead,
+                annualincome: _annualincome,
+                setupownhomestead: _setupownhomestead,
+                nomaleearner: _nomaleearner,
+                setupfamilyhead: _setupfamilyhead,
                 nofemaleearner: _nofemaleearner,
                 relationwithhead: _relationwithhead,
                 landdesc: _landdesc,
@@ -728,7 +838,10 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                       ),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
-                                    child: img
+                                    child: url ?Image.network(
+                                      imgurl,
+                                      fit: BoxFit.cover,
+                                    ) :img
                                         ? Image.memory(
                                             pickedImage,
                                             fit: BoxFit.cover,
@@ -949,7 +1062,10 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          child: img
+                                          child: url ?Image.network(
+                                            imgurl,
+                                            fit: BoxFit.cover,
+                                          ) :img
                                               ? Image.memory(
                                                   pickedImage,
                                                   fit: BoxFit.cover,
@@ -1171,7 +1287,10 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          child: img
+                                          child: url ?Image.network(
+                                            imgurl,
+                                            fit: BoxFit.cover,
+                                          ) :img
                                               ? Image.memory(
                                                   pickedImage,
                                                   fit: BoxFit.cover,

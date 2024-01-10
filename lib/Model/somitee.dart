@@ -15,4 +15,8 @@ class Somitee {
       required this.lastupdated});
 
   DateTime formation, lastupdated;
+  bool filterFn(String query) {
+    return name.toLowerCase().contains(query.toLowerCase()) ||
+        id.toLowerCase().contains(query.toLowerCase());
+  }
 }

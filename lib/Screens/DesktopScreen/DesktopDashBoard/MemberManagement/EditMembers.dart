@@ -429,6 +429,9 @@ class _EditMembersState extends State<EditMembers> {
                 ],
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),

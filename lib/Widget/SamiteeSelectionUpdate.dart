@@ -41,7 +41,6 @@ class SamiteeSelectionUpdate extends StatefulWidget {
 }
 
 class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
-  bool somiteeselected = false;
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -122,7 +121,7 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10.0, left: 15),
                             child: Text(
-                              "✓ Submit",
+                              "✓ Update",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 14),
                             ),
@@ -137,9 +136,6 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                     ? InkWell(
                         onTap: () {
                           widget.onclear();
-                          setState(() {
-                            somiteeselected = false;
-                          });
                         },
                         child: Container(
                           height: 40,
@@ -203,101 +199,100 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
               children: [
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: const TextSpan(
-                            text: 'Select Samitee',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                      fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 14)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                            width: 300,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<String>(
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context, String item,
-                                    bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
-                                ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
-                                  ),
-                                ),
-                              ),
-                              dropdownDecoratorProps:
-                                  const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.transparent),
-                                  ),
-                                ),
-                              ),
-                              dropdownBuilder: (context, selectedItem) {
-                                if (selectedItem == null) {
-                                  return const Text(
-                                    "Enter Somitee/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    selectedItem,
-                                  );
-                                }
-                              },
-                              onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedsomitee = newValue;
-                                  widget.selectedsomiteeid = widget.somitee[
-                                      widget.ssomitee.indexOf(newValue!)];
-                                  widget.setupsomiti(
-                                      widget.ssomitee.indexOf(newValue));
-                                  somiteeselected = true;
-                                });
-                              },
-                              items: widget.ssomitee,
-                              selectedItem: widget.selectedsomitee,
-                            )),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     RichText(
+                    //       text: const TextSpan(
+                    //         text: 'Select Samitee',
+                    //         style: TextStyle(color: Colors.black, fontSize: 14),
+                    //         children: <TextSpan>[
+                    //           TextSpan(
+                    //               text: ' *',
+                    //               style: TextStyle(
+                    //                   fontWeight: FontWeight.bold,
+                    //                   color: Colors.red,
+                    //                   fontSize: 14)),
+                    //           TextSpan(
+                    //               text: ' :',
+                    //               style: TextStyle(
+                    //                   color: Colors.black, fontSize: 14)),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 10,
+                    //     ),
+                    //     Container(
+                    //         width: 300,
+                    //         padding: EdgeInsets.symmetric(horizontal: 20),
+                    //         decoration: BoxDecoration(
+                    //           color: AppColor_greyBorder,
+                    //           border: Border.all(color: AppColor_Black),
+                    //         ),
+                    //         child: DropdownSearch<String>(
+                    //           popupProps: PopupProps.menu(
+                    //             showSearchBox: true,
+                    //             itemBuilder: (BuildContext context, String item,
+                    //                 bool isSelected) {
+                    //               return Container(
+                    //                 padding: EdgeInsets.all(15),
+                    //                 child: Text(
+                    //                   item,
+                    //                 ),
+                    //               );
+                    //             },
+                    //             fit: FlexFit.loose,
+                    //             showSelectedItems: false,
+                    //             menuProps: const MenuProps(
+                    //               backgroundColor: Colors.white,
+                    //               elevation: 100,
+                    //             ),
+                    //             searchFieldProps: const TextFieldProps(
+                    //               style: TextStyle(fontSize: 12),
+                    //               decoration: InputDecoration(
+                    //                 isDense: true,
+                    //                 hintText: "Search...",
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           dropdownDecoratorProps:
+                    //               const DropDownDecoratorProps(
+                    //             dropdownSearchDecoration: InputDecoration(
+                    //               enabledBorder: UnderlineInputBorder(
+                    //                 borderSide:
+                    //                     BorderSide(color: Colors.transparent),
+                    //               ),
+                    //               focusedBorder: UnderlineInputBorder(
+                    //                 borderSide:
+                    //                     BorderSide(color: Colors.transparent),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           dropdownBuilder: (context, selectedItem) {
+                    //             if (selectedItem == null) {
+                    //               return const Text(
+                    //                 "Enter Somitee/Code",
+                    //               );
+                    //             } else {
+                    //               return Text(
+                    //                 selectedItem,
+                    //               );
+                    //             }
+                    //           },
+                    //           onChanged: (newValue) {
+                    //             setState(() {
+                    //               widget.selectedsomitee = newValue;
+                    //               widget.selectedsomiteeid = widget.somitee[
+                    //                   widget.ssomitee.indexOf(newValue!)];
+                    //               widget.setupsomiti(
+                    //                   widget.ssomitee.indexOf(newValue));
+                    //             });
+                    //           },
+                    //           items: widget.ssomitee,
+                    //           selectedItem: widget.selectedsomitee,
+                    //         )),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 30,
                     ),
@@ -315,7 +310,7 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                         SizedBox(
                           width: 300,
                           child: Text(
-                            somiteeselected
+                            widget.selectedsomiteeid !=null
                                 ? widget.selectedsomiteeid.name
                                 : "",
                           ),
@@ -339,7 +334,7 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                         SizedBox(
                           width: 300,
                           child: Text(
-                            somiteeselected
+                            widget.selectedsomiteeid !=null
                                 ? DateFormat.yMMMd().format(widget.selectedsomiteeid.formation)
                                 : "",
                           ),
@@ -470,7 +465,7 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                           SizedBox(
                             width: 300,
                             child: Text(
-                              somiteeselected
+                              widget.selectedsomiteeid !=null
                                   ? widget.selectedsomiteeid.address
                                   : "",
                             ),
@@ -496,7 +491,7 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  somiteeselected
+                                  widget.selectedsomiteeid !=null
                                       ? widget.selectedsomiteeid.active.toString()
                                       : "",
                                 ),

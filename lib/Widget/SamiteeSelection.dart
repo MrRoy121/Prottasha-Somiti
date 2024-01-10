@@ -230,15 +230,18 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                               color: AppColor_greyBorder,
                               border: Border.all(color: AppColor_Black),
                             ),
-                            child: DropdownSearch<String>(
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
                               popupProps: PopupProps.menu(
                                 showSearchBox: true,
-                                itemBuilder: (BuildContext context, String item,
-                                    bool isSelected) {
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
                                   return Container(
                                     padding: EdgeInsets.all(15),
                                     child: Text(
-                                      item,
+                                      item.name + " - " + item.id,
                                     ),
                                   );
                                 },
@@ -269,14 +272,14 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                                   ),
                                 ),
                               ),
-                              dropdownBuilder: (context, selectedItem) {
-                                if (selectedItem == null) {
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
                                   return const Text(
                                     "Enter Somitee/Code",
                                   );
                                 } else {
                                   return Text(
-                                    selectedItem,
+                                    item.name + " - " + item.id,
                                   );
                                 }
                               },
@@ -284,14 +287,14 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                                 setState(() {
                                   widget.selectedsomitee = newValue;
                                   widget.selectedsomiteeid = widget.somitee[
-                                      widget.ssomitee.indexOf(newValue!)];
+                                      widget.ssomitee.indexOf(newValue!.name)];
                                   widget.setupsomiti(
-                                      widget.ssomitee.indexOf(newValue));
+                                      widget.ssomitee.indexOf(newValue.name));
                                   somiteeselected = true;
                                 });
                               },
-                              items: widget.ssomitee,
-                              selectedItem: widget.selectedsomitee,
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
                             )),
                       ],
                     ),
@@ -337,7 +340,8 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                           width: 300,
                           child: Text(
                             somiteeselected
-                                ? DateFormat.yMMMd().format(widget.selectedsomiteeid.formation)
+                                ? DateFormat.yMMMd()
+                                    .format(widget.selectedsomiteeid.formation)
                                 : "",
                           ),
                         ),
@@ -494,7 +498,8 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                                 width: 300,
                                 child: Text(
                                   somiteeselected
-                                      ? widget.selectedsomiteeid.active.toString()
+                                      ? widget.selectedsomiteeid.active
+                                          .toString()
                                       : "",
                                 ),
                               ),
