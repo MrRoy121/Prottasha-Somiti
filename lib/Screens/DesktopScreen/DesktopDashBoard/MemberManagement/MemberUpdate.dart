@@ -393,16 +393,15 @@ class _MemberUpdateState extends State<MemberUpdate> {
       });
     }
 
-    var arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-
+    var arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     String membersJson = arguments['Members'].toString();
-    print('Members JSON: $membersJson');
+
     try {
-      Memberss mst = Memberss.fromJson(membersJson);
+      Memberss mst = Memberss.fromJson(arguments['Members']);
     } catch (e) {
       print(e);
     }
+
     Memberss mst = Memberss.fromJson(jsonDecode(membersJson));
     _addinit(mst);
     void _setupownhomestead(int ins){

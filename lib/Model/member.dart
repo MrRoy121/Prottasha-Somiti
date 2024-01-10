@@ -110,11 +110,7 @@ class Memberss {
         'sl': sl
       };
 
-  factory Memberss.fromJson(dynamic json) {
-    try {
-      print("Raw JSON String: $json");
-
-
+  factory Memberss.fromJson(Map<String, dynamic> json) {
       return Memberss(
           somiteename: json['Somitee Name'].toString(),
           somiteeid: json['Somitee ID'].toString(),
@@ -150,11 +146,6 @@ class Memberss {
           imageurl: json['ImageURL'].toString(),
           img: json['Image'],
           birthdate: json['Date Of Birth'],
-          sl:  json['sl'] is int ? json['sl'] : int.parse(json['sl'].toString()));
-    } catch (e) {
-      print('Error decoding JSON: $e');
-      // Handle the error as needed, or rethrow the exception
-      rethrow;
-    }
+          sl:  json['sl']);
   }
 }
