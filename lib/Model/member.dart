@@ -148,4 +148,8 @@ class Memberss {
           birthdate: json['Date Of Birth'],
           sl:  json['sl']);
   }
+  bool filterFn(String query) {
+    return firstname.toLowerCase().contains(query.toLowerCase()) || lastname.toLowerCase().contains(query.toLowerCase()) ||
+        id.toLowerCase().contains(query.toLowerCase());
+  }
 }

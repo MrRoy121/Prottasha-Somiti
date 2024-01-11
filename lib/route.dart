@@ -7,3 +7,6 @@ const   somiteelistPageRoute = "/somiteelist";
 const   memberegistrationPageRoute = "/memberregistration";
 const   memberlistPageRoute = "/memberlist";
 const   memberEditPageRoute = "/memberedit";
+
+
+const   sanctionloanrequestPageRoute = "/sanctionloanrequestPageRoute";
