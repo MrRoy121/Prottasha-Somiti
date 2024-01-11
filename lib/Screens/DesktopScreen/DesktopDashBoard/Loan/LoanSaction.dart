@@ -34,6 +34,8 @@ class _LoanSanctionState extends State<LoanSanction> {
   var sselectedsomiti;
   var selectedmemberss;
   var sselectedmemberss;
+  var selectedgrantor1;
+  var selectedgrantor2;
 
   @override
   void initState() {
@@ -144,7 +146,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             LoanSamitteSelection(
                 ssomitee: ssomitee,
                 setupsomiti: _setupsomiti,
-                selectedsomiteeid: selectedsomiti,
+                selectedsomiteeid: selectedsomiti,allmemberss: allmemberss,
                 setupmemberss: _setupmemberss,
                 onsubmit: _save,memberssselected: memberselection,
                 selectedmemberssid: sselectedmemberss,
@@ -159,7 +161,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             ),
 
             // Loan Guarantor information
-            LoanGuarantor(),
+            LoanGuarantor(allmemberss: allmemberss,selectedgrantor1: selectedgrantor1, selectedgrantor2: selectedgrantor2),
 
             SizedBox(
               height: 50,

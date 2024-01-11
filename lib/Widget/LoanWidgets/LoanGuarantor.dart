@@ -1,19 +1,28 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../Constants/Constants.dart';
+import '../../Model/member.dart';
 
 
 class LoanGuarantor extends StatefulWidget {
 
 
+  List<Memberss> allmemberss = [];
+  var selectedgrantor1;
+  var selectedgrantor2;
+
+  LoanGuarantor(
+      {required this.selectedgrantor1,
+        required this.selectedgrantor2,
+        required this.allmemberss,
+  });
   @override
   State<LoanGuarantor> createState() => _LoanGuarantorState();
 }
 
 class _LoanGuarantorState extends State<LoanGuarantor> {
-
-  String? SelectGuarantor;
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -111,32 +120,82 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                         SizedBox(width: 60,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                            value: SelectGuarantor,
-                            onChanged: (newValue) {
-
-                            },
-                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedgrantor1 = newValue;
+                                });
+                              },
+                              items: widget.allmemberss,
+                              selectedItem: widget.selectedgrantor1,
+                            )),
 
 
                       ],
@@ -173,32 +232,82 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                         SizedBox(width: 80,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                            value: SelectGuarantor,
-                            onChanged: (newValue) {
-
-                            },
-                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedgrantor2 = newValue;
+                                });
+                              },
+                              items: widget.allmemberss,
+                              selectedItem: widget.selectedgrantor2,
+                            )),
 
 
                       ],
@@ -281,32 +390,83 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                         SizedBox(width: 60,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                            ),
-                            value: SelectGuarantor,
-                            onChanged: (newValue) {
 
-                            },
-                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
+                            ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedgrantor1 = newValue;
+                                });
+                              },
+                              items: widget.allmemberss,
+                              selectedItem: widget.selectedgrantor1,
+                            )),
 
 
                       ],
@@ -343,32 +503,82 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                         SizedBox(width: 60,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                            value: SelectGuarantor,
-                            onChanged: (newValue) {
-
-                            },
-                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedgrantor2 = newValue;
+                                });
+                              },
+                              items: widget.allmemberss,
+                              selectedItem: widget.selectedgrantor2,
+                            )),
 
 
                       ],
@@ -451,33 +661,82 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                         SizedBox(width: 50,),
 
 
-                        SizedBox(
-                          width: 200,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: AppColor_greyText,
-                              ),
+                        Container(
+                            width: 200,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                            value: SelectGuarantor,
-                            onChanged: (newValue) {
-
-                            },
-                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedgrantor1 = newValue;
+                                });
+                              },
+                              items: widget.allmemberss,
+                              selectedItem: widget.selectedgrantor1,
+                            )),
 
 
                       ],
@@ -514,33 +773,82 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                         SizedBox(width: 50,),
 
 
-                        SizedBox(
-                          width: 200,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: AppColor_greyText,
-                              ),
+                        Container(
+                            width: 200,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                            value: SelectGuarantor,
-                            onChanged: (newValue) {
-
-                            },
-                            items: ['Item1', 'Item2', 'Item3 '].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedgrantor2 = newValue;
+                                });
+                              },
+                              items: widget.allmemberss,
+                              selectedItem: widget.selectedgrantor2,
+                            )),
 
 
                       ],

@@ -11,6 +11,7 @@ class LoanSamitteSelection extends StatefulWidget {
   var selectedsomitee;
   var selectedsomiteeid;
   List<Memberss> memberss = [];
+  List<Memberss> allmemberss = [];
   var selectedmemberss;
   var selectedmemberssid;
   void Function() onsubmit;
@@ -23,6 +24,7 @@ class LoanSamitteSelection extends StatefulWidget {
       required this.setupsomiti,
       required this.setupmemberss,
       required this.memberssselected,
+      required this.allmemberss,
       required this.somitee,
       required this.memberss,
       required this.ssomitee,
@@ -366,12 +368,10 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
+                                child: Text(widget.selectedmemberss != null?widget.selectedmemberss.mobilenno:'',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ),
@@ -709,16 +709,16 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedmemberss = newValue;
-                                        widget.selectedmemberssid =
-                                            widget.somitee[widget.memberss
-                                                .indexOf(newValue!)];
-                                        widget.setupmemberss(widget.memberss
-                                            .indexOf(newValue));
+                                        widget.selectedmemberssid = widget
+                                                .somitee[
+                                            widget.memberss.indexOf(newValue!)];
+                                        widget.setupmemberss(
+                                            widget.memberss.indexOf(newValue));
                                         widget.memberssselected = true;
                                       });
                                     },
                                     items: widget.memberss,
-                                    selectedItem: widget.selectedmemberssid,
+                                    selectedItem: widget.selectedmemberss,
                                   )),
                             ],
                           ),
