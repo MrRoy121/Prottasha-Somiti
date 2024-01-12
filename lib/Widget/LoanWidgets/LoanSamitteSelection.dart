@@ -1,7 +1,9 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../Constants/Constants.dart';
+import '../../Constants/values.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
 
@@ -9,7 +11,9 @@ class LoanSamitteSelection extends StatefulWidget {
   List<Somitee> somitee;
   List<String> ssomitee;
   var selectedsomitee;
+  var consanctionlimit;
   var selectedsomiteeid;
+  var selectedinstalment;var selectedloanperiod;
   List<Memberss> memberss = [];
   List<Memberss> allmemberss = [];
   var selectedmemberss;
@@ -23,6 +27,9 @@ class LoanSamitteSelection extends StatefulWidget {
       {required this.onclear,
       required this.setupsomiti,
       required this.setupmemberss,
+        required this.selectedloanperiod,
+      required this.consanctionlimit,
+      required this.selectedinstalment,
       required this.memberssselected,
       required this.allmemberss,
       required this.somitee,
@@ -85,9 +92,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
       tablet = false;
     }
 
-    String? sanctionLimit;
-    String? month;
-    String? instalment;
     String? Selectremark;
 
     return desktop
@@ -325,28 +329,29 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: DropdownButtonFormField<String>(
+                                child: TextFormField(
+                                  controller: widget.consanctionlimit,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Sanction Value",
+                                    fillColor: Colors.grey.shade200,
                                     filled: true,
-                                    fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Select",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
                                   ),
-                                  value: sanctionLimit,
-                                  onChanged: (newValue) {},
-                                  items:
-                                      ['Item1', 'Item2', 'Item3 '].map((item) {
-                                    return DropdownMenuItem(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  }).toList(),
                                 ),
                               ),
                             ],
@@ -366,9 +371,18 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               SizedBox(
                                 width: 90,
                               ),
-                              SizedBox(
+                              Container(
                                 width: 300,
-                                child: Text(widget.selectedmemberss != null?widget.selectedmemberss.mobilenno:'',
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 7, vertical: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    border: Border.all(
+                                        width: 1, color: Colors.black)),
+                                child: Text(
+                                  widget.selectedmemberss != null
+                                      ? widget.selectedmemberss.mobilenno
+                                      : '',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 14,
@@ -390,15 +404,16 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 300,
+                                width: 260,
                               ),
                               SizedBox(
                                 width: 150,
                                 child: DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    filled: true,
+                                  isDense: true,
+                                  decoration: const InputDecoration(
                                     fillColor: AppColor_greyBorder,
                                     border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
                                       borderSide: BorderSide(
                                           color: AppColor_greyBorder),
                                     ),
@@ -407,7 +422,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: month,
+                                  padding: EdgeInsets.symmetric(vertical: 0),
+                                  value: widget.selectedloanperiod,
                                   onChanged: (newValue) {},
                                   items: [
                                     'January',
@@ -504,13 +520,9 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: instalment,
+                                  value: widget.selectedinstalment,
                                   onChanged: (newValue) {},
-                                  items: [
-                                    'Item1',
-                                    'Item2',
-                                    'Item3',
-                                  ].map((item) {
+                                  items: InstallmentFrequencyList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
                                       child: Text(item),
@@ -1083,28 +1095,29 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: DropdownButtonFormField<String>(
+                                    child: TextFormField(
+                                      controller: widget.consanctionlimit,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                              BorderSide(color: Colors.black),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                              BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Sanction Value",
+                                        fillColor: Colors.grey.shade200,
                                         filled: true,
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Select",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                        ),
                                       ),
-                                      value: sanctionLimit,
-                                      onChanged: (newValue) {},
-                                      items: ['Item1', 'Item2', 'Item3 ']
-                                          .map((item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        );
-                                      }).toList(),
                                     ),
                                   ),
                                 ],
@@ -1156,7 +1169,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     width: 150,
                                     child: DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
-                                        filled: true,
                                         fillColor: AppColor_greyBorder,
                                         border: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -1167,7 +1179,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: month,
+                                      value: widget.selectedloanperiod,
                                       onChanged: (newValue) {},
                                       items: [
                                         'January',
@@ -1265,13 +1277,10 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: instalment,
+                                      value: widget.selectedinstalment,
                                       onChanged: (newValue) {},
-                                      items: [
-                                        'Item1',
-                                        'Item2',
-                                        'Item3',
-                                      ].map((item) {
+                                      items:
+                                          InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
@@ -1781,29 +1790,29 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: DropdownButtonFormField<String>(
+                                    child: TextFormField(
+                                      controller: widget.consanctionlimit,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                              BorderSide(color: Colors.black),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                              BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Sanction Value",
+                                        fillColor: Colors.grey.shade200,
                                         filled: true,
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Select",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                          fontSize: 8,
-                                        ),
                                       ),
-                                      value: sanctionLimit,
-                                      onChanged: (newValue) {},
-                                      items: ['Item1', 'Item2', 'Item3 ']
-                                          .map((item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        );
-                                      }).toList(),
                                     ),
                                   ),
                                 ],
@@ -1855,7 +1864,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     width: 150,
                                     child: DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
-                                        filled: true,
                                         fillColor: AppColor_greyBorder,
                                         border: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -1866,7 +1874,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: month,
+                                      value: widget.selectedloanperiod,
                                       onChanged: (newValue) {},
                                       items: [
                                         'January',
@@ -1965,13 +1973,10 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           fontSize: 8,
                                         ),
                                       ),
-                                      value: instalment,
+                                      value: widget.selectedinstalment,
                                       onChanged: (newValue) {},
-                                      items: [
-                                        'Item1',
-                                        'Item2',
-                                        'Item3',
-                                      ].map((item) {
+                                      items:
+                                          InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),

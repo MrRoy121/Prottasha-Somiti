@@ -34,8 +34,11 @@ class _LoanSanctionState extends State<LoanSanction> {
   var sselectedsomiti;
   var selectedmemberss;
   var sselectedmemberss;
+  var _selectedinstalment;
+  var _selectedloanperiod;
   var selectedgrantor1;
   var selectedgrantor2;
+  var _consanctionlimit = TextEditingController();
 
   @override
   void initState() {
@@ -116,7 +119,9 @@ class _LoanSanctionState extends State<LoanSanction> {
       setState(() {
         selectedsomiti = somitee[ins];
         memberselection = true;
-        memberss = allmemberss.where((member) => member.somiteeid == somitee[ins].id).toList();
+        memberss = allmemberss
+            .where((member) => member.somiteeid == somitee[ins].id)
+            .toList();
       });
     }
 
@@ -146,9 +151,12 @@ class _LoanSanctionState extends State<LoanSanction> {
             LoanSamitteSelection(
                 ssomitee: ssomitee,
                 setupsomiti: _setupsomiti,
-                selectedsomiteeid: selectedsomiti,allmemberss: allmemberss,
-                setupmemberss: _setupmemberss,
-                onsubmit: _save,memberssselected: memberselection,
+                consanctionlimit: _consanctionlimit,
+                selectedsomiteeid: selectedsomiti,
+                allmemberss: allmemberss,selectedinstalment: _selectedinstalment,
+                setupmemberss: _setupmemberss,selectedloanperiod: _selectedloanperiod,
+                onsubmit: _save,
+                memberssselected: memberselection,
                 selectedmemberssid: sselectedmemberss,
                 somitee: somitee,
                 selectedmemberss: selectedmemberss,
@@ -161,7 +169,10 @@ class _LoanSanctionState extends State<LoanSanction> {
             ),
 
             // Loan Guarantor information
-            LoanGuarantor(allmemberss: allmemberss,selectedgrantor1: selectedgrantor1, selectedgrantor2: selectedgrantor2),
+            LoanGuarantor(
+                allmemberss: allmemberss,
+                selectedgrantor1: selectedgrantor1,
+                selectedgrantor2: selectedgrantor2),
 
             SizedBox(
               height: 50,

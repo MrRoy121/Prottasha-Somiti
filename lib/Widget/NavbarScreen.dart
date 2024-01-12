@@ -1543,10 +1543,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Get.to(RepaymentRequest(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(repaymentrequestPageRoute);
                               },
                               onHover: (val) {
                                 setState(() {
