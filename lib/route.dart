@@ -11,3 +11,4 @@ const   memberEditPageRoute = "/memberedit";
 
 const   sanctionloanrequestPageRoute = "/sanctionloanrequestPageRoute";
 const   loandisbursementPageRoute = "/loandisbursementPageRoute";
+const   repaymentrequestPageRoute = "/repaymentrequestPageRoute";
