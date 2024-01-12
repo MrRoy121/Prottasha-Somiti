@@ -12,6 +12,7 @@ import 'Screens/DesktopScreen/DesktopDashBoard/Calculators/Calculators.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/DashBoard.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Employee/Employee.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Loan/Loan.dart';
+import 'Screens/DesktopScreen/DesktopDashBoard/Loan/LoanDisbursement.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/EditMembers.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/MemberManagement/MemberManagement.dart';
@@ -119,6 +120,14 @@ class MyApp extends StatelessWidget {
           case sanctionloanrequestPageRoute:
             return PageTransition(
                 child: LoanSanction(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
+          case loandisbursementPageRoute:
+            return PageTransition(
+                child: LoanDisbursement(
                   appbool: appbool,
                   navbool: navbool,
                 ),

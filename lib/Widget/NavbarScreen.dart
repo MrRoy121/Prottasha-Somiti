@@ -547,10 +547,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.to(LoanDisbursement(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(loandisbursementPageRoute);
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
