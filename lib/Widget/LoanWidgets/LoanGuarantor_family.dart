@@ -5,6 +5,13 @@ import '../../Constants/Constants.dart';
 
 class LoanGuarantor_family extends StatefulWidget {
 
+  var  congrname;
+  var  congrfname;
+  var  congrrelation;
+  var  congrmobile;
+
+  LoanGuarantor_family(
+      {required this.congrname,required this.congrfname,required this.congrmobile,required this.congrrelation});
   @override
   State<LoanGuarantor_family> createState() => _LoanGuarantor_familyState();
 }
@@ -121,7 +128,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrname,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -151,7 +158,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrrelation,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -184,7 +191,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrfname,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -201,7 +208,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Guarantor Mobile No :",
                                 style: TextStyle(
                                   color: Colors.black,
@@ -212,7 +219,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrmobile,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -319,7 +326,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrname,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -349,7 +356,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrrelation,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -382,7 +389,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrfname,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -410,7 +417,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextField(controller: widget.congrmobile,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -517,7 +524,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 200,
-                                child: TextField(
+                                child: TextField(controller: widget.congrname,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -547,7 +554,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 200,
-                                child: TextField(
+                                child: TextField(controller: widget.congrrelation,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -580,7 +587,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 200,
-                                child: TextField(
+                                child: TextField(controller: widget.congrfname,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
@@ -608,7 +615,7 @@ class _LoanGuarantor_familyState extends State<LoanGuarantor_family> {
 
                               SizedBox(
                                 width: 200,
-                                child: TextField(
+                                child: TextField(controller: widget.congrmobile,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),

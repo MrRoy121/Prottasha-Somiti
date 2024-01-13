@@ -12,9 +12,13 @@ class LoanGuarantor extends StatefulWidget {
   var selectedgrantor1;
   var selectedgrantor2;
 
+  void Function(int) setupgrantor1;
+  void Function(int) setupgrantor2;
   LoanGuarantor(
       {required this.selectedgrantor1,
         required this.selectedgrantor2,
+        required this.setupgrantor1,
+        required this.setupgrantor2,
         required this.allmemberss,
   });
   @override
@@ -189,11 +193,9 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                                 }
                               },
                               onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedgrantor1 = newValue;
-                                });
+                                  widget.setupgrantor1(widget.allmemberss.indexOf(newValue!));
                               },
-                              items: widget.allmemberss,
+                              items:widget.allmemberss ,
                               selectedItem: widget.selectedgrantor1,
                             )),
 
@@ -300,10 +302,9 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                                   );
                                 }
                               },
+
                               onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedgrantor2 = newValue;
-                                });
+                                widget.setupgrantor2(widget.allmemberss.indexOf(newValue!));
                               },
                               items: widget.allmemberss,
                               selectedItem: widget.selectedgrantor2,
@@ -460,9 +461,7 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                                 }
                               },
                               onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedgrantor1 = newValue;
-                                });
+                                widget.setupgrantor1(widget.allmemberss.indexOf(newValue!));
                               },
                               items: widget.allmemberss,
                               selectedItem: widget.selectedgrantor1,
@@ -571,10 +570,9 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                                   );
                                 }
                               },
+
                               onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedgrantor2 = newValue;
-                                });
+                                widget.setupgrantor2(widget.allmemberss.indexOf(newValue!));
                               },
                               items: widget.allmemberss,
                               selectedItem: widget.selectedgrantor2,
@@ -730,9 +728,7 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                                 }
                               },
                               onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedgrantor1 = newValue;
-                                });
+                                widget.setupgrantor1(widget.allmemberss.indexOf(newValue!));
                               },
                               items: widget.allmemberss,
                               selectedItem: widget.selectedgrantor1,
@@ -841,10 +837,9 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
                                   );
                                 }
                               },
+
                               onChanged: (newValue) {
-                                setState(() {
-                                  widget.selectedgrantor2 = newValue;
-                                });
+                                widget.setupgrantor2(widget.allmemberss.indexOf(newValue!));
                               },
                               items: widget.allmemberss,
                               selectedItem: widget.selectedgrantor2,

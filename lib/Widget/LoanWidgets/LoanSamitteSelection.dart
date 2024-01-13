@@ -1,6 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../Constants/Constants.dart';
 import '../../Constants/values.dart';
@@ -13,10 +15,11 @@ class LoanSamitteSelection extends StatefulWidget {
   var selectedsomitee;
   var consanctionlimit;
   var selectedsomiteeid;
-  var conservicecharge, conamount;
+  var conservicecharge;
+  double serviceamount;
   var selectedinstalment;
   var selectedloanperiod;
-  var coninstallmentno, conremarks,coninstallmentamount;
+  var coninstallmentno, conremarks, coninstallmentamount;
   List<Memberss> memberss = [];
   List<Memberss> allmemberss = [];
   var selectedmemberss;
@@ -27,17 +30,21 @@ class LoanSamitteSelection extends StatefulWidget {
   void Function(int) setupsomiti;
   bool memberssselected;
   void Function(int) setupmemberss;
+  void Function(int) setupinstallment;
+  void Function(int) setuplloanperiod;
   LoanSamitteSelection(
       {required this.onclear,
       required this.setupsomiti,
-        required this.coninstallmentno,
-        required this.selectedDate,
-        required this.conremarks,
-        required this.coninstallmentamount,
+      required this.coninstallmentno,
+      required this.setupinstallment,
+      required this.setuplloanperiod,
+      required this.selectedDate,
+      required this.conremarks,
+      required this.coninstallmentamount,
       required this.setupmemberss,
       required this.selectedloanperiod,
       required this.conservicecharge,
-      required this.conamount,
+      required this.serviceamount,
       required this.consanctionlimit,
       required this.selectedinstalment,
       required this.memberssselected,
@@ -57,7 +64,6 @@ class LoanSamitteSelection extends StatefulWidget {
 
 class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
   bool somiteeselected = false;
-
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -100,7 +106,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
       tablet = false;
     }
 
-
     return desktop
         ? Container(
             width: 1400,
@@ -140,60 +145,77 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                         ),
                       ),
                       Spacer(),
-                      Container(
-                        height: 40,
-                        width: 90,
-                        color: Colors.green,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 15),
-                          child: Text(
-                            "✓ Submit",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                      InkWell(
+                        onTap: () {
+                          widget.onsubmit();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 90,
+                          color: Colors.green,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 15),
+                            child: Text(
+                              "✓ Submit",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height:40,
-                        width: 90,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 3.0, left: 15),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.clear_all_sharp,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Clear",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                              ),
-                            ],
+                      InkWell(
+                        onTap: () {
+                          widget.onclear();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 90,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3.0, left: 15),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.clear_all_sharp,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Clear",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ],
+                            ),
                           ),
+                          color: AppColor_yellow,
                         ),
-                        color: AppColor_yellow,
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height: 40,
-                        width: 50,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20),
-                          child: Text(
-                            "X",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 50,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 20),
+                            child: Text(
+                              "X",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
                           ),
+                          color: Colors.red,
                         ),
-                        color: Colors.red,
                       ),
                       SizedBox(
                         width: 10,
@@ -431,21 +453,11 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   padding: EdgeInsets.symmetric(vertical: 0),
                                   value: widget.selectedloanperiod,
-                                  onChanged: (newValue) {},
-                                  items: [
-                                    'January',
-                                    'February',
-                                    'March ',
-                                    'April',
-                                    'May',
-                                    'June',
-                                    'July',
-                                    'August ',
-                                    'September',
-                                    'October',
-                                    'November ',
-                                    'December'
-                                  ].map((item) {
+                                  onChanged: (newValue) {
+                                    widget.setuplloanperiod(
+                                        LoanPeriodList.indexOf(newValue!));
+                                  },
+                                  items: LoanPeriodList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
                                       child: Text(item),
@@ -497,7 +509,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                           SizedBox(
@@ -525,7 +536,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width:40,
+                                width: 40,
                               ),
                               SizedBox(
                                 width: 300,
@@ -533,7 +544,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   decoration: const InputDecoration(
                                     filled: true,
                                     fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.zero,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
                                       borderSide: BorderSide(
                                           color: AppColor_greyBorder),
                                     ),
@@ -542,8 +554,9 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: widget.selectedinstalment,
-                                  onChanged: (newValue) {},
+                                  value: widget.selectedinstalment, onChanged: (newValue) {
+                                  widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
+                                },
                                   items: InstallmentFrequencyList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
@@ -583,12 +596,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Installment No",
                                     fillColor: Colors.white,
@@ -634,7 +647,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.zero,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
                                           borderSide:
                                               BorderSide(color: Colors.grey),
                                         ),
@@ -785,30 +799,19 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               SizedBox(
                                 width: 90,
                               ),
-                              SizedBox(
+                              Container(
                                 width: 300,
-                                child: TextFormField(
-                                  controller: widget.conamount,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'[0-9]')),
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide:
-                                      BorderSide(color: Colors.black),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide:
-                                      BorderSide(color: Colors.black),
-                                    ),
-                                    hintText: "Amount Value",
-                                    fillColor: Colors.white,
-                                    filled: true,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 7, vertical: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    border: Border.all(
+                                        width: 1, color: Colors.black)),
+                                child: Text(
+                                  widget.serviceamount.toString(),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ),
@@ -843,12 +846,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Amount Value",
                                     fillColor: Colors.white,
@@ -871,28 +874,22 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width:85,
+                                width: 85,
                               ),
                               SizedBox(
                                 width: 300,
                                 child: TextFormField(
                                   controller: widget.conremarks,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'[0-9]')),
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Remarks",
                                     fillColor: Colors.white,
@@ -949,65 +946,80 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ),
                           ),
                           Spacer(),
-                          Container(
-                            height: 40,
-                            width: 90,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 15),
-                              child: Text(
-                                "✓ Submit",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
+                          InkWell(
+                            onTap: () {
+                              widget.onsubmit();
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 90,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10.0, left: 15),
+                                child: Text(
+                                  "✓ Submit",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
                               ),
+                              color: Colors.green,
                             ),
-                            color: Colors.green,
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            height: 40,
-                            width: 90,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 3.0, left: 15),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.clear_all_sharp,
-                                    color: Colors.white,
-                                    size: 18,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Clear",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ],
+                          InkWell(
+                            onTap: () {
+                              widget.onclear();
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 90,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 3.0, left: 15),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.clear_all_sharp,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Clear",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14),
+                                    ),
+                                  ],
+                                ),
                               ),
+                              color: AppColor_yellow,
                             ),
-                            color: AppColor_yellow,
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            height: 40,
-                            width: 50,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 20),
-                              child: Text(
-                                "X",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 50,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10.0, left: 20),
+                                child: Text(
+                                  "X",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
                               ),
+                              color: Colors.red,
                             ),
-                            color: Colors.red,
                           ),
                           SizedBox(
                             width: 10,
@@ -1199,14 +1211,21 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   SizedBox(
                                     width: 80,
                                   ),
-                                  SizedBox(
+                                  Container(
                                     width: 300,
-                                    child: TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 7, vertical: 15),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        border: Border.all(
+                                            width: 1, color: Colors.black)),
+                                    child: Text(
+                                      widget.selectedmemberss != null
+                                          ? widget.selectedmemberss.mobilenno
+                                          : '',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ),
@@ -1242,21 +1261,11 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         ),
                                       ),
                                       value: widget.selectedloanperiod,
-                                      onChanged: (newValue) {},
-                                      items: [
-                                        'January',
-                                        'February',
-                                        'March ',
-                                        'April',
-                                        'May',
-                                        'June',
-                                        'July',
-                                        'August ',
-                                        'September',
-                                        'October',
-                                        'November ',
-                                        'December'
-                                      ].map((item) {
+                                      onChanged: (newValue) {
+                                        widget.setuplloanperiod(
+                                            LoanPeriodList.indexOf(newValue!));
+                                      },
+                                      items: LoanPeriodList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
@@ -1330,7 +1339,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.zero,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
                                           borderSide: BorderSide(
                                               color: AppColor_greyBorder),
                                         ),
@@ -1339,8 +1349,9 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: widget.selectedinstalment,
-                                      onChanged: (newValue) {},
+                                      value: widget.selectedinstalment, onChanged: (newValue) {
+                                      widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
+                                    },
                                       items:
                                           InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(
@@ -1381,12 +1392,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         hintText: "Installment No",
                                         fillColor: Colors.white,
@@ -1433,11 +1444,13 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           decoration: InputDecoration(
                                             filled: true,
                                             fillColor: Colors.white,
-                                            border: OutlineInputBorder(borderRadius: BorderRadius.zero,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.zero,
                                               borderSide: BorderSide(
                                                   color: Colors.grey),
                                             ),
-                                            hintText: widget.selectedDate != null
+                                            hintText: widget.selectedDate !=
+                                                    null
                                                 ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                                 : "Select a date",
                                             hintStyle: TextStyle(
@@ -1521,30 +1534,19 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   SizedBox(
                                     width: 80,
                                   ),
-                                  SizedBox(
+                                  Container(
                                     width: 300,
-                                    child: TextFormField(
-                                      controller: widget.conamount,
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.zero,
-                                          borderSide:
-                                          BorderSide(color: Colors.black),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.zero,
-                                          borderSide:
-                                          BorderSide(color: Colors.black),
-                                        ),
-                                        hintText: "Amount Value",
-                                        fillColor: Colors.white,
-                                        filled: true,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 7, vertical: 15),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        border: Border.all(
+                                            width: 1, color: Colors.black)),
+                                    child: Text(
+                                      widget.serviceamount.toString(),
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ),
@@ -1579,12 +1581,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         hintText: "Amount Value",
                                         fillColor: Colors.white,
@@ -1617,12 +1619,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         hintText: "Remarks",
                                         fillColor: Colors.white,
@@ -1678,65 +1680,80 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ),
                           ),
                           Spacer(),
-                          Container(
-                            height: 30,
-                            width: 90,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 15),
-                              child: Text(
-                                "✓ Submit",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 8),
+                          InkWell(
+                            onTap: () {
+                              widget.onsubmit();
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 90,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10.0, left: 15),
+                                child: Text(
+                                  "✓ Submit",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 8),
+                                ),
                               ),
+                              color: Colors.green,
                             ),
-                            color: Colors.green,
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            height: 30,
-                            width: 90,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 3.0, left: 15),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.clear_all_sharp,
-                                    color: Colors.white,
-                                    size: 12,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Clear",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 8),
-                                  ),
-                                ],
+                          InkWell(
+                            onTap: () {
+                              widget.onclear();
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 90,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 3.0, left: 15),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.clear_all_sharp,
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Clear",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 8),
+                                    ),
+                                  ],
+                                ),
                               ),
+                              color: AppColor_yellow,
                             ),
-                            color: AppColor_yellow,
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            height: 30,
-                            width: 50,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 20),
-                              child: Text(
-                                "X",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 8),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 50,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10.0, left: 20),
+                                child: Text(
+                                  "X",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 8),
+                                ),
                               ),
+                              color: Colors.red,
                             ),
-                            color: Colors.red,
                           ),
                           SizedBox(
                             width: 10,
@@ -1928,14 +1945,21 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   SizedBox(
                                     width: 40,
                                   ),
-                                  SizedBox(
-                                    width: 200,
-                                    child: TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
+                                  Container(
+                                    width: 300,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 7, vertical: 15),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        border: Border.all(
+                                            width: 1, color: Colors.black)),
+                                    child: Text(
+                                      widget.selectedmemberss != null
+                                          ? widget.selectedmemberss.mobilenno
+                                          : '',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ),
@@ -1971,21 +1995,11 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         ),
                                       ),
                                       value: widget.selectedloanperiod,
-                                      onChanged: (newValue) {},
-                                      items: [
-                                        'January',
-                                        'February',
-                                        'March ',
-                                        'April',
-                                        'May',
-                                        'June',
-                                        'July',
-                                        'August ',
-                                        'September',
-                                        'October',
-                                        'November ',
-                                        'December'
-                                      ].map((item) {
+                                      onChanged: (newValue) {
+                                        widget.setuplloanperiod(
+                                            LoanPeriodList.indexOf(newValue!));
+                                      },
+                                      items: LoanPeriodList.map((item) {
                                         return DropdownMenuItem(
                                           value: item,
                                           child: Text(item),
@@ -2059,7 +2073,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.zero,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
                                           borderSide: BorderSide(
                                               color: AppColor_greyBorder),
                                         ),
@@ -2069,8 +2084,9 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           fontSize: 8,
                                         ),
                                       ),
-                                      value: widget.selectedinstalment,
-                                      onChanged: (newValue) {},
+                                      value: widget.selectedinstalment, onChanged: (newValue) {
+                                      widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
+                                    },
                                       items:
                                           InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(
@@ -2111,12 +2127,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         hintText: "Installment No",
                                         fillColor: Colors.white,
@@ -2163,11 +2179,13 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           decoration: InputDecoration(
                                             filled: true,
                                             fillColor: Colors.white,
-                                            border: OutlineInputBorder(borderRadius: BorderRadius.zero,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.zero,
                                               borderSide: BorderSide(
                                                   color: Colors.grey),
                                             ),
-                                            hintText: widget.selectedDate != null
+                                            hintText: widget.selectedDate !=
+                                                    null
                                                 ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                                 : "Select a date",
                                             hintStyle: TextStyle(
@@ -2252,31 +2270,21 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   SizedBox(
                                     width: 30,
                                   ),
-                                  SizedBox(
-                                    width: 200,   child: TextFormField(
-                                    controller: widget.conamount,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp(r'[0-9]')),
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.zero,
-                                        borderSide:
-                                        BorderSide(color: Colors.black),
+                                  Container(
+                                    width: 300,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 7, vertical: 15),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        border: Border.all(
+                                            width: 1, color: Colors.black)),
+                                    child: Text(
+                                      widget.serviceamount.toString(),
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
                                       ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.zero,
-                                        borderSide:
-                                        BorderSide(color: Colors.black),
-                                      ),
-                                      hintText: "Amount Value",
-                                      fillColor: Colors.white,
-                                      filled: true,
                                     ),
-                                  ),
                                   ),
                                 ],
                               ),
@@ -2309,12 +2317,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         hintText: "Amount Value",
                                         fillColor: Colors.white,
@@ -2347,12 +2355,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
                                           borderSide:
-                                          BorderSide(color: Colors.black),
+                                              BorderSide(color: Colors.black),
                                         ),
                                         hintText: "Amount Value",
                                         fillColor: Colors.white,

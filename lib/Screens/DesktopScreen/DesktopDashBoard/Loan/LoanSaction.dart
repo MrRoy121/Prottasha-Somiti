@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
@@ -5,7 +7,9 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/NoDataFound.dart';
 import '../../../../Constants/Constants.dart';
+import '../../../../Constants/values.dart';
 import '../../../../Model/member.dart';
+import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../Widget/LoanWidgets/LoanGuarantor.dart';
 import '../../../../Widget/LoanWidgets/LoanGuarantor_family.dart';
@@ -13,6 +17,7 @@ import '../../../../Widget/LoanWidgets/LoanSamitteSelection.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../Widget/TransactionWidget/MemberDeposit.dart';
+import '../../../../route.dart';
 
 class LoanSanction extends StatefulWidget {
   Navbool navbool;
@@ -38,13 +43,17 @@ class _LoanSanctionState extends State<LoanSanction> {
   var _selectedloanperiod;
   DateTime selectedDate = DateTime.now();
   var selectedgrantor1;
-  var coninstallmentno = TextEditingController();
   var selectedgrantor2;
+  var congrname = TextEditingController();
+  var congrfname = TextEditingController();
+  var congrrelation = TextEditingController();
+  var congrmobile = TextEditingController();
+  var coninstallmentno = TextEditingController();
   var conremarks = TextEditingController();
   var coninstallmentamount = TextEditingController();
-  var _consanctionlimit = TextEditingController();
-  var conservicecharge = TextEditingController(),
-      conamount = TextEditingController();
+  var consanctionlimit = TextEditingController();
+  var conservicecharge = TextEditingController();
+  double serviceamount = 0;
   @override
   void initState() {
     super.initState();
@@ -115,9 +124,103 @@ class _LoanSanctionState extends State<LoanSanction> {
     });
   }
 
-  void _onclear() {}
+  void _onclear() {
+    setState(() {
+      var ss;
+      selectedsomiti = ss;
+      selectedsomiti = ss;
+      selectedmemberss = ss;
+      selectedgrantor1 = ss;
+      selectedgrantor2 = ss;
+      _selectedinstalment = ss;
+      _selectedloanperiod = ss;
+      consanctionlimit.text = "";
+      conservicecharge.text = "";
+      coninstallmentno.text = "";
+      coninstallmentamount.text = "";
+      serviceamount = 0;
+      conremarks.text = "";
+      congrname.text = "";
+      congrfname.text = "";
+      congrrelation.text = "";
+      congrmobile.text = "";
+    });
+  }
 
-  void _save() async {}
+  void _save() async {
+    const _chars = '1234567890';
+    Random _rnd = Random();
+    String getRandomString(int length) =>
+        String.fromCharCodes(Iterable.generate(
+            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+    String sanctionloanrequestid = getRandomString(8);
+    if (selectedsomiti == null ||
+        selectedmemberss == null ||
+        selectedgrantor1 == null ||
+        selectedgrantor2 == null ||
+        consanctionlimit.text.isEmpty ||
+        _selectedinstalment == null) {
+      Get.snackbar(
+          "Load Sanction Request Failed.", "Some Required Fields are Empty",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      FirebaseFirestore.instance
+          .collection('LoanSanction')
+          .doc(sanctionloanrequestid)
+          .set({
+        'Somitee Name': selectedsomiti.name,
+        'Somitee ID': selectedsomiti.id,
+        'Member Name':
+            selectedmemberss.firstname + " " + selectedmemberss.lastname,
+        'Member ID': selectedmemberss.id,
+        'Member Phone': selectedmemberss.mobilenno,
+        "Sanction Limit": consanctionlimit.text,
+        "Installment Frequency": _selectedinstalment,
+        "Section Date": selectedDate,
+        "Loan Period": _selectedloanperiod,
+        "Service Charge": conservicecharge.text,
+        "Installment No": coninstallmentno.text,
+        "Installment Amount": coninstallmentamount.text,
+        "Remarks": conremarks.text,
+        "Service Amount": serviceamount,
+        'Grantor 1 Name':
+            selectedgrantor1.firstname + " " + selectedgrantor1.lastname,
+        'Grantor 1 ID': selectedgrantor1.id,
+        'Grantor 2 Name':
+            selectedgrantor2.firstname + " " + selectedgrantor2.lastname,
+        'Grantor 2 ID': selectedgrantor2.id,
+        "Grantor F Name": congrname.text,
+        "Status": "Requested",
+        "Grantor F FatherName": congrfname.text,
+        "Grantor F Relation": congrrelation.text,
+        "Grantor F Mobile": congrmobile.text,
+      }).then((value) async {
+        Get.offNamed(loanrequestlistPageRoute);
+        Get.snackbar("Loan Sanction Added Successfully.",
+            "Redirecting to Loan Sanction List Page.",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.green,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      }).catchError((error) => print("Failed to add user: $error"));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     void _setupsomiti(int ins) {
@@ -133,6 +236,30 @@ class _LoanSanctionState extends State<LoanSanction> {
     void _setupmemberss(int ins) {
       setState(() {
         selectedmemberss = memberss[ins];
+      });
+    }
+
+    void _setupinstallment(int ins) {
+      setState(() {
+        _selectedinstalment = InstallmentFrequencyList[ins];
+      });
+    }
+
+    void _setuplloanperiod(int ins) {
+      setState(() {
+        _selectedloanperiod = LoanPeriodList[ins];
+      });
+    }
+
+    void _setupgrantor1(int ins) {
+      setState(() {
+        selectedgrantor1 = allmemberss[ins];
+      });
+    }
+
+    void _setupgrantor2(int ins) {
+      setState(() {
+        selectedgrantor2 = allmemberss[ins];
       });
     }
 
@@ -152,17 +279,19 @@ class _LoanSanctionState extends State<LoanSanction> {
               height: 50,
             ),
 
-            // Saction limit request
             LoanSamitteSelection(
                 ssomitee: ssomitee,
                 setupsomiti: _setupsomiti,
                 conremarks: conremarks,
-                consanctionlimit: _consanctionlimit,
+                consanctionlimit: consanctionlimit,
                 coninstallmentamount: coninstallmentamount,
                 coninstallmentno: coninstallmentno,
                 selectedsomiteeid: selectedsomiti,
-                conamount: conamount,
-                conservicecharge: conservicecharge,selectedDate: selectedDate,
+                serviceamount: serviceamount,
+                conservicecharge: conservicecharge,
+                setupinstallment: _setupinstallment,
+                setuplloanperiod: _setuplloanperiod,
+                selectedDate: selectedDate,
                 allmemberss: allmemberss,
                 selectedinstalment: _selectedinstalment,
                 setupmemberss: _setupmemberss,
@@ -183,6 +312,8 @@ class _LoanSanctionState extends State<LoanSanction> {
             // Loan Guarantor information
             LoanGuarantor(
                 allmemberss: allmemberss,
+                setupgrantor1: _setupgrantor1,
+                setupgrantor2: _setupgrantor2,
                 selectedgrantor1: selectedgrantor1,
                 selectedgrantor2: selectedgrantor2),
 
@@ -191,7 +322,11 @@ class _LoanSanctionState extends State<LoanSanction> {
             ),
             // LoanGuarantorFamily(),
 
-            LoanGuarantor_family(),
+            LoanGuarantor_family(
+                congrname: congrname,
+                congrfname: congrfname,
+                congrmobile: congrmobile,
+                congrrelation: congrrelation),
 
             SizedBox(
               height: 50,
