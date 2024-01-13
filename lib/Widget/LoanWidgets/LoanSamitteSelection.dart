@@ -13,11 +13,15 @@ class LoanSamitteSelection extends StatefulWidget {
   var selectedsomitee;
   var consanctionlimit;
   var selectedsomiteeid;
-  var selectedinstalment;var selectedloanperiod;
+  var conservicecharge, conamount;
+  var selectedinstalment;
+  var selectedloanperiod;
+  var coninstallmentno, conremarks,coninstallmentamount;
   List<Memberss> memberss = [];
   List<Memberss> allmemberss = [];
   var selectedmemberss;
   var selectedmemberssid;
+  DateTime selectedDate;
   void Function() onsubmit;
   void Function() onclear;
   void Function(int) setupsomiti;
@@ -26,8 +30,14 @@ class LoanSamitteSelection extends StatefulWidget {
   LoanSamitteSelection(
       {required this.onclear,
       required this.setupsomiti,
+        required this.coninstallmentno,
+        required this.selectedDate,
+        required this.conremarks,
+        required this.coninstallmentamount,
       required this.setupmemberss,
-        required this.selectedloanperiod,
+      required this.selectedloanperiod,
+      required this.conservicecharge,
+      required this.conamount,
       required this.consanctionlimit,
       required this.selectedinstalment,
       required this.memberssselected,
@@ -48,20 +58,18 @@ class LoanSamitteSelection extends StatefulWidget {
 class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
   bool somiteeselected = false;
 
-  String? selectedGender;
-  DateTime? _selectedDate;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
+      initialDate: widget.selectedDate ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
 
-    if (picked != null && picked != _selectedDate) {
+    if (picked != null && picked != widget.selectedDate) {
       setState(() {
-        _selectedDate = picked;
+        widget.selectedDate = picked;
       });
     }
   }
@@ -92,12 +100,11 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
       tablet = false;
     }
 
-    String? Selectremark;
 
     return desktop
         ? Container(
             width: 1400,
-            height: 900,
+            height: 630,
             // color: Colors.white,
 
             decoration: BoxDecoration(
@@ -136,6 +143,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                       Container(
                         height: 40,
                         width: 90,
+                        color: Colors.green,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10.0, left: 15),
                           child: Text(
@@ -143,13 +151,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ),
-                        color: Colors.green,
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Container(
-                        height: 40,
+                        height:40,
                         width: 90,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 3.0, left: 15),
@@ -301,7 +308,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -357,7 +364,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -392,7 +399,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -449,7 +456,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -465,21 +472,36 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
+                                child: TextFormField(
+                                  controller: widget.conservicecharge,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Service Charge (%)",
+                                    fillColor: Colors.white,
+                                    filled: true,
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -503,15 +525,15 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 70,
+                                width:40,
                               ),
                               SizedBox(
                                 width: 300,
                                 child: DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.zero,
                                       borderSide: BorderSide(
                                           color: AppColor_greyBorder),
                                     ),
@@ -533,7 +555,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -549,21 +571,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
+                                child: TextFormField(
+                                  controller: widget.coninstallmentno,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
                                     ),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 2),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Installment No",
+                                    fillColor: Colors.white,
+                                    filled: true,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -587,7 +623,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 120,
+                                width: 90,
                               ),
                               SizedBox(
                                 width: 300,
@@ -598,12 +634,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
-                                        border: OutlineInputBorder(
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.zero,
                                           borderSide:
                                               BorderSide(color: Colors.grey),
                                         ),
-                                        hintText: _selectedDate != null
-                                            ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                        hintText: widget.selectedDate != null
+                                            ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                             : "Select a date",
                                         hintStyle: TextStyle(
                                           color: Colors.grey,
@@ -735,7 +771,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 420,
+                            height: 260,
                           ),
                           Row(
                             children: [
@@ -747,25 +783,39 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 80,
+                                width: 90,
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
+                                child: TextFormField(
+                                  controller: widget.conamount,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
                                     ),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 2),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Amount Value",
+                                    fillColor: Colors.white,
+                                    filled: true,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 20,
                           ),
                           Row(
                             children: [
@@ -777,25 +827,39 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 120,
+                                width: 15,
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
+                                child: TextFormField(
+                                  controller: widget.coninstallmentamount,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Amount Value",
+                                    fillColor: Colors.white,
+                                    filled: true,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 20,
                           ),
                           Row(
                             children: [
@@ -807,35 +871,33 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 120,
+                                width:85,
                               ),
                               SizedBox(
                                 width: 300,
-                                child: DropdownButtonFormField<String>(
+                                child: TextFormField(
+                                  controller: widget.conremarks,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Remarks",
+                                    fillColor: Colors.white,
                                     filled: true,
-                                    fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Select",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
                                   ),
-                                  value: Selectremark,
-                                  onChanged: (newValue) {},
-                                  items: [
-                                    'Item1',
-                                    'Item2',
-                                    'Item3',
-                                  ].map((item) {
-                                    return DropdownMenuItem(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  }).toList(),
                                 ),
                               ),
                             ],
@@ -1066,7 +1128,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1123,7 +1185,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1151,7 +1213,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1205,7 +1267,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1235,7 +1297,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1268,7 +1330,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.zero,
                                           borderSide: BorderSide(
                                               color: AppColor_greyBorder),
                                         ),
@@ -1291,7 +1353,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1307,21 +1369,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: TextField(
-                                      readOnly: true,
+                                    child: TextFormField(
+                                      controller: widget.coninstallmentno,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
                                         ),
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 2),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Installment No",
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1357,12 +1433,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           decoration: InputDecoration(
                                             filled: true,
                                             fillColor: Colors.white,
-                                            border: OutlineInputBorder(
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.zero,
                                               borderSide: BorderSide(
                                                   color: Colors.grey),
                                             ),
-                                            hintText: _selectedDate != null
-                                                ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                            hintText: widget.selectedDate != null
+                                                ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                                 : "Select a date",
                                             hintStyle: TextStyle(
                                               color: Colors.grey,
@@ -1447,21 +1523,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: TextField(
-                                      readOnly: true,
+                                    child: TextFormField(
+                                      controller: widget.conamount,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
                                         ),
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 2),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Amount Value",
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1477,21 +1567,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: TextField(
-                                      readOnly: true,
+                                    child: TextFormField(
+                                      controller: widget.coninstallmentamount,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
                                         ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Amount Value",
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1507,31 +1611,23 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: DropdownButtonFormField<String>(
+                                    child: TextFormField(
+                                      controller: widget.conremarks,
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Remarks",
+                                        fillColor: Colors.white,
                                         filled: true,
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Select",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                        ),
                                       ),
-                                      value: Selectremark,
-                                      onChanged: (newValue) {},
-                                      items: [
-                                        'Item1',
-                                        'Item2',
-                                        'Item3',
-                                      ].map((item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        );
-                                      }).toList(),
                                     ),
                                   ),
                                 ],
@@ -1761,7 +1857,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1818,7 +1914,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1846,7 +1942,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1900,7 +1996,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1930,7 +2026,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1963,7 +2059,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.zero,
                                           borderSide: BorderSide(
                                               color: AppColor_greyBorder),
                                         ),
@@ -1987,7 +2083,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -2003,21 +2099,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: TextField(
-                                      readOnly: true,
+                                    child: TextFormField(
+                                      controller: widget.coninstallmentno,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
                                         ),
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 2),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Installment No",
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -2053,12 +2163,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           decoration: InputDecoration(
                                             filled: true,
                                             fillColor: Colors.white,
-                                            border: OutlineInputBorder(
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.zero,
                                               borderSide: BorderSide(
                                                   color: Colors.grey),
                                             ),
-                                            hintText: _selectedDate != null
-                                                ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                            hintText: widget.selectedDate != null
+                                                ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                                 : "Select a date",
                                             hintStyle: TextStyle(
                                               color: Colors.grey,
@@ -2143,22 +2253,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     width: 30,
                                   ),
                                   SizedBox(
-                                    width: 200,
-                                    child: TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 2),
+                                    width: 200,   child: TextFormField(
+                                    controller: widget.conamount,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.zero,
+                                        borderSide:
+                                        BorderSide(color: Colors.black),
                                       ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.zero,
+                                        borderSide:
+                                        BorderSide(color: Colors.black),
+                                      ),
+                                      hintText: "Amount Value",
+                                      fillColor: Colors.white,
+                                      filled: true,
                                     ),
+                                  ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -2174,21 +2297,35 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: TextField(
-                                      readOnly: true,
+                                    child: TextFormField(
+                                      controller: widget.coninstallmentamount,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
                                         ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Amount Value",
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -2204,32 +2341,23 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: DropdownButtonFormField<String>(
+                                    child: TextFormField(
+                                      controller: widget.conremarks,
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          borderSide:
+                                          BorderSide(color: Colors.black),
+                                        ),
+                                        hintText: "Amount Value",
+                                        fillColor: Colors.white,
                                         filled: true,
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Select",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                          fontSize: 8,
-                                        ),
                                       ),
-                                      value: Selectremark,
-                                      onChanged: (newValue) {},
-                                      items: [
-                                        'Item1',
-                                        'Item2',
-                                        'Item3',
-                                      ].map((item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        );
-                                      }).toList(),
                                     ),
                                   ),
                                 ],

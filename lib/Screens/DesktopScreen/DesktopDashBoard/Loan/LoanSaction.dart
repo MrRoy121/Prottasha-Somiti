@@ -36,10 +36,15 @@ class _LoanSanctionState extends State<LoanSanction> {
   var sselectedmemberss;
   var _selectedinstalment;
   var _selectedloanperiod;
+  DateTime selectedDate = DateTime.now();
   var selectedgrantor1;
+  var coninstallmentno = TextEditingController();
   var selectedgrantor2;
+  var conremarks = TextEditingController();
+  var coninstallmentamount = TextEditingController();
   var _consanctionlimit = TextEditingController();
-
+  var conservicecharge = TextEditingController(),
+      conamount = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -151,10 +156,17 @@ class _LoanSanctionState extends State<LoanSanction> {
             LoanSamitteSelection(
                 ssomitee: ssomitee,
                 setupsomiti: _setupsomiti,
+                conremarks: conremarks,
                 consanctionlimit: _consanctionlimit,
+                coninstallmentamount: coninstallmentamount,
+                coninstallmentno: coninstallmentno,
                 selectedsomiteeid: selectedsomiti,
-                allmemberss: allmemberss,selectedinstalment: _selectedinstalment,
-                setupmemberss: _setupmemberss,selectedloanperiod: _selectedloanperiod,
+                conamount: conamount,
+                conservicecharge: conservicecharge,selectedDate: selectedDate,
+                allmemberss: allmemberss,
+                selectedinstalment: _selectedinstalment,
+                setupmemberss: _setupmemberss,
+                selectedloanperiod: _selectedloanperiod,
                 onsubmit: _save,
                 memberssselected: memberselection,
                 selectedmemberssid: sselectedmemberss,
