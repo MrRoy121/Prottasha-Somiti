@@ -1503,6 +1503,40 @@ class _NavbarScreenState extends State<NavbarScreen> {
                               ),
                             ),
                             InkWell(
+                              onTap: () {
+                                Get.toNamed(loanrequestlistPageRoute);
+                              },
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor7 = AppColor_hover2;
+                                    textColor7 = Colors.white;
+                                  } else {
+                                    itemColor7 = AppColor_Blue;
+                                    textColor7 = Colors.black;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor7,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Sanction Request List",
+                                      style: TextStyle(
+                                        color: textColor7,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
                               onHover: (val) {
                                 setState(() {
                                   if (val) {
