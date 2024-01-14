@@ -16,6 +16,7 @@ class LoanSamitteSelection extends StatefulWidget {
   var consanctionlimit;
   var selectedsomiteeid;
   var conservicecharge;
+  var selectedloanpurpose;
   double serviceamount;
   var selectedinstalment;
   var selectedloanperiod;
@@ -30,13 +31,15 @@ class LoanSamitteSelection extends StatefulWidget {
   void Function(int) setupsomiti;
   bool memberssselected;
   void Function(int) setupmemberss;
+  void Function(int) setuploanpurpose;
   void Function(int) setupinstallment;
   void Function(int) setuplloanperiod;
   LoanSamitteSelection(
       {required this.onclear,
       required this.setupsomiti,
       required this.coninstallmentno,
-      required this.setupinstallment,
+        required this.setuploanpurpose,
+      required this.setupinstallment,required this.selectedloanpurpose,
       required this.setuplloanperiod,
       required this.selectedDate,
       required this.conremarks,
@@ -697,7 +700,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width: 90,
+                                width:40,
                               ),
                               Container(
                                   width: 300,
@@ -785,7 +788,104 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 260,
+                            height: 180,
+                          ),
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: "Loan Purpose ",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+
+                              Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: AppColor_greyBorder,
+                                    border: Border.all(color: AppColor_Black),
+                                  ),
+                                  child: DropdownSearch<String>(
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      itemBuilder: (BuildContext context,
+                                          String item, bool isSelected) {
+                                        return Container(
+                                          padding: EdgeInsets.all(15),
+                                          child: Text(
+                                            item,
+                                          ),
+                                        );
+                                      },
+                                      fit: FlexFit.loose,
+                                      showSelectedItems: false,
+                                      menuProps: const MenuProps(
+                                        backgroundColor: Colors.white,
+                                        elevation: 100,
+                                      ),
+                                      searchFieldProps: const TextFieldProps(
+                                        style: TextStyle(fontSize: 12),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: "Search...",
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                    const DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownBuilder: (context, item) {
+                                      if (item == null) {
+                                        return const Text(
+                                          "Enter Loan Purpose",
+                                        );
+                                      } else {
+                                        return Text(
+                                          item,
+                                        );
+                                      }
+                                    },
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.selectedloanpurpose = newValue;
+                                        widget.setuploanpurpose(LoanPurposeList
+                                            .indexOf(newValue!));
+                                      });
+                                    },
+                                    items: LoanPurposeList,
+                                    selectedItem: widget.selectedloanpurpose,
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -818,7 +918,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Row(
                             children: [
@@ -862,7 +962,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Row(
                             children: [

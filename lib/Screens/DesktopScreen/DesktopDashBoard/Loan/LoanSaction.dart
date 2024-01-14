@@ -36,6 +36,7 @@ class _LoanSanctionState extends State<LoanSanction> {
   List<Memberss> memberss = [];
   bool memberselection = false;
   var selectedsomiti;
+  var selectedloanpurpose;
   var sselectedsomiti;
   var selectedmemberss;
   var sselectedmemberss;
@@ -131,7 +132,7 @@ class _LoanSanctionState extends State<LoanSanction> {
       selectedsomiti = ss;
       selectedmemberss = ss;
       selectedgrantor1 = ss;
-      selectedgrantor2 = ss;
+      selectedgrantor2 = ss;selectedloanpurpose = ss;
       _selectedinstalment = ss;
       _selectedloanperiod = ss;
       consanctionlimit.text = "";
@@ -156,7 +157,7 @@ class _LoanSanctionState extends State<LoanSanction> {
     String sanctionloanrequestid = getRandomString(8);
     if (selectedsomiti == null ||
         selectedmemberss == null ||
-        selectedgrantor1 == null ||
+        selectedgrantor1 == null ||selectedloanpurpose == null||
         selectedgrantor2 == null ||
         consanctionlimit.text.isEmpty ||
         _selectedinstalment == null) {
@@ -173,7 +174,7 @@ class _LoanSanctionState extends State<LoanSanction> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance
+     FirebaseFirestore.instance
           .collection('LoanSanction')
           .doc(sanctionloanrequestid)
           .set({
@@ -186,6 +187,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Sanction Limit": double.parse(consanctionlimit.text),
         "Installment Frequency": _selectedinstalment,
         "Sanction Date": selectedDate,
+       "Loan Purpose":selectedloanpurpose,
         "Loan Period": _selectedloanperiod,
         "Service Charge": double.parse(conservicecharge.text),
         "Installment No": double.parse(coninstallmentno.text),
@@ -263,6 +265,11 @@ class _LoanSanctionState extends State<LoanSanction> {
         selectedgrantor2 = allmemberss[ins];
       });
     }
+    void _setuploanpurpose(int ins) {
+      setState(() {
+        selectedloanpurpose = LoanPurposeList[ins];
+      });
+    }
 
     return Scaffold(
       appBar: Appbar(
@@ -287,9 +294,9 @@ class _LoanSanctionState extends State<LoanSanction> {
                 consanctionlimit: consanctionlimit,
                 coninstallmentamount: coninstallmentamount,
                 coninstallmentno: coninstallmentno,
-                selectedsomiteeid: selectedsomiti,
+                selectedsomiteeid: selectedsomiti,setuploanpurpose: _setuploanpurpose,
                 serviceamount: serviceamount,
-                conservicecharge: conservicecharge,
+                conservicecharge: conservicecharge,selectedloanpurpose: selectedloanpurpose,
                 setupinstallment: _setupinstallment,
                 setuplloanperiod: _setuplloanperiod,
                 selectedDate: selectedDate,

@@ -10,6 +10,7 @@ class LoanSanction {
       status,
       grantor1name,
       grantor2name,
+      loanpurpose,
       grantor1id,
       grantor2id,
       grantorfname,
@@ -28,6 +29,7 @@ class LoanSanction {
   LoanSanction(
       {required this.somiteename,
       required this.somiteeid,
+        required this.loanpurpose,
       required this.membername,
       required this.memberid,
       required this.memberphone,
@@ -73,7 +75,7 @@ class LoanSanction {
         'Grantor 2 ID': grantor2id,
         "Grantor F Name": grantorfname,
         "Status": status,
-        'ID': id,
+        'ID': id,"Loan Purpose":loanpurpose,
         "Grantor F FatherName": grantorffname,
         "Grantor F Relation": grantorfrelation,
         "Grantor F Mobile": grantorfmobile,
@@ -83,7 +85,7 @@ class LoanSanction {
   factory LoanSanction.fromJson(Map<String, dynamic> json) {
     return LoanSanction(
         somiteename: json['Somitee Name'],
-        somiteeid: json['Somitee ID'],
+        somiteeid: json['Somitee ID'],loanpurpose:json['Loan Purpose'],
         membername: json['Member Name'],
         memberid: json['Member ID'],
         memberphone: json['Member Phone'],

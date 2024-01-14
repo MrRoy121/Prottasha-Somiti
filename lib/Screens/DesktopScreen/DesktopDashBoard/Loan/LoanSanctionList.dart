@@ -41,7 +41,7 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
               somiteename: json['Somitee Name'],
               somiteeid: json['Somitee ID'],
               membername: json['Member Name'],
-              memberid: json['Member ID'],
+              memberid: json['Member ID'],loanpurpose: json["Loan Purpose"],
               memberphone: json['Member Phone'],
               sanctionlimit: json["Sanction Limit"],
               installmentfrequency: json["Installment Frequency"],

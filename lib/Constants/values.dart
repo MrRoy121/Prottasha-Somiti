@@ -25,3 +25,4 @@ const List<String> LoanPeriodList = [
   'November ',
   'December'
 ];
+const List<String> LoanPurposeList = ['Flower Farming', 'Tailor Training', 'Bee Farming'];
