@@ -289,25 +289,41 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                             )),
                                       ),
                                       DataCell(
-                                        Center(
-                                          child: InkWell(
-                                            onTap: () {
+                                        Row(children: [InkWell(
+                                          onTap: () {LoanSanction sss = snapshot.data[index];
+                                          Get.toNamed(sanctionloanapprovePageRoute,arguments: {
+                                            'LoanSanction': sss.toJson(),
+                                          },);
+                                          },
+                                          child: Container(
+                                              padding: EdgeInsets.all(4.0),
+                                              decoration: BoxDecoration(
+                                                  color: AppColor_Blue,
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      100)),
+                                              child: const Icon(
+                                                Icons.remove_red_eye_outlined,
+                                                size: 16,
+                                                color: AppColor_White,
+                                              )),
+                                        ),InkWell(
+                                          onTap: () {
 
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
-                                                child: const Icon(
-                                                  Icons.edit_outlined,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
-                                          ),
-                                        ),
+                                          },
+                                          child: Container(
+                                              padding: EdgeInsets.all(4.0),
+                                              decoration: BoxDecoration(
+                                                  color: AppColor_Blue,
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      100)),
+                                              child: const Icon(
+                                                Icons.edit_outlined,
+                                                size: 16,
+                                                color: AppColor_White,
+                                              )),
+                                        ),],)
                                       ),
                                     ],
                                   );
