@@ -10,7 +10,6 @@ import 'package:prottashasomit/Widget/NavBool.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../route.dart';
-import '../DashBoard.dart';
 
 
 class SamiteeRegistration extends StatefulWidget {
