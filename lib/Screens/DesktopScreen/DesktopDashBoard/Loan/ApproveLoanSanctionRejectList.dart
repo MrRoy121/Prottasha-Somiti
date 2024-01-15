@@ -16,17 +16,17 @@ import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../route.dart';
 
-class LoanSanctionList extends StatefulWidget {
+class ApproveLoanSanctionReject extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanSanctionList({required this.appbool, required this.navbool});
+  ApproveLoanSanctionReject({required this.appbool, required this.navbool});
 
   @override
-  State<LoanSanctionList> createState() => _LoanSanctionListState();
+  State<ApproveLoanSanctionReject> createState() => _ApproveLoanSanctionRejectState();
 }
 
-class _LoanSanctionListState extends State<LoanSanctionList> {
+class _ApproveLoanSanctionRejectState extends State<ApproveLoanSanctionReject> {
   @override
   Widget build(BuildContext context) {
     Future<List<LoanSanction>> getCust() async {
@@ -37,35 +37,34 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
-         if(json["Status"]=="Requested"){
-           somitee.add(LoanSanction(
-               somiteename: json['Somitee Name'],
-               somiteeid: json['Somitee ID'],
-               membername: json['Member Name'],
-               memberid: json['Member ID'],loanpurpose: json["Loan Purpose"],
-               memberphone: json['Member Phone'],
-               sanctionlimit: json["Sanction Limit"],
-               installmentfrequency: json["Installment Frequency"],
-               sanctiondate: json["Sanction Date"].toDate(),
-               loanperiod: json["Loan Period"],
-               servicecharge: json["Service Charge"],
-               installmentno: json["Installment No"],
-               installmentamount: json["Installment Amount"],
-               remarks: json["Remarks"],
-               serviceamount: json["Service Amount"],
-               grantor1name: json['Grantor 1 Name'],
-               grantor1id: json['Grantor 1 ID'],
-               grantor2name: json['Grantor 2 Name'],
-               grantor2id: json['Grantor 2 ID'],
-               grantorfname: json["Grantor F Name"],
-               status: json["Status"],
-               id: json['ID'],
-               grantorffname: json["Grantor F FatherName"],
-               grantorfrelation: json["Grantor F Relation"],
-               grantorfmobile: json["Grantor F Mobile"],
-               sl: s));
-           s++;
-         }
+          if(json["Status"]!="Requested"){
+          somitee.add(LoanSanction(
+              somiteename: json['Somitee Name'],
+              somiteeid: json['Somitee ID'],
+              membername: json['Member Name'],
+              memberid: json['Member ID'],loanpurpose: json["Loan Purpose"],
+              memberphone: json['Member Phone'],
+              sanctionlimit: json["Sanction Limit"],
+              installmentfrequency: json["Installment Frequency"],
+              sanctiondate: json["Sanction Date"].toDate(),
+              loanperiod: json["Loan Period"],
+              servicecharge: json["Service Charge"],
+              installmentno: json["Installment No"],
+              installmentamount: json["Installment Amount"],
+              remarks: json["Remarks"],
+              serviceamount: json["Service Amount"],
+              grantor1name: json['Grantor 1 Name'],
+              grantor1id: json['Grantor 1 ID'],
+              grantor2name: json['Grantor 2 Name'],
+              grantor2id: json['Grantor 2 ID'],
+              grantorfname: json["Grantor F Name"],
+              status: json["Status"],
+              id: json['ID'],
+              grantorffname: json["Grantor F FatherName"],
+              grantorfrelation: json["Grantor F Relation"],
+              grantorfmobile: json["Grantor F Mobile"],
+              sl: s));
+          s++;}
         }
       });
       return somitee;
@@ -113,7 +112,7 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                         Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                            "All Requested Sanction List",
+                            "All Sanction List",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,

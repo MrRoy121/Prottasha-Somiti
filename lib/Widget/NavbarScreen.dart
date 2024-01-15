@@ -1548,7 +1548,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   }
                                 });
                               },
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(sanctionloanapprovelistPageRoute);
+                              },
                               child: Container(
                                   padding: EdgeInsets.only(
                                       top: 10, left: 20, right: 20, bottom: 10),

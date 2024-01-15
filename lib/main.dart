@@ -11,6 +11,7 @@ import 'Screens/DesktopScreen/DesktopDashBoard/Accounts/Accounts.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Calculators/Calculators.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/DashBoard.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Employee/Employee.dart';
+import 'Screens/DesktopScreen/DesktopDashBoard/Loan/ApproveLoanSanctionRejectList.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Loan/Loan.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Loan/LoanDisbursement.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Loan/LoanSaction.dart';
@@ -131,6 +132,14 @@ class MyApp extends StatelessWidget {
           case sanctionloanapprovePageRoute:
             return PageTransition(
                 child: LoanSanctionApprove(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
+          case sanctionloanapprovelistPageRoute:
+            return PageTransition(
+                child: ApproveLoanSanctionReject(
                   appbool: appbool,
                   navbool: navbool,
                 ),
