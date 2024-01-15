@@ -6,7 +6,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/route.dart';
 import 'Constants/responsive.dart';
-import 'Screens/DesktopScreen/Admin/admin_titas.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Accounts/Accounts.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/Calculators/Calculators.dart';
 import 'Screens/DesktopScreen/DesktopDashBoard/DashBoard.dart';
@@ -169,12 +168,6 @@ class MyApp extends StatelessWidget {
                 ),
                 type: PageTransitionType.fade,
                 settings: settings);
-          case 'admin_titas':
-            return PageTransition(
-                child: Admin_titas(appbool),
-                type: PageTransitionType.fade,
-                settings: settings);
-
           // 2nd navbar
           case 'Member Management':
             return PageTransition(
