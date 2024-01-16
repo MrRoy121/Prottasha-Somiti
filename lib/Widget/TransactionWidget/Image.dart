@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../Constants/Constants.dart';
 
-
 class ImageMember extends StatefulWidget {
+  String imgurl;
 
+  ImageMember({required this.imgurl});
 
   @override
   State<ImageMember> createState() => _ImageMemberState();
@@ -17,7 +18,6 @@ class _ImageMemberState extends State<ImageMember> {
       margin: EdgeInsets.only(right: 70),
       height: 450,
       width: 450,
-
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -29,7 +29,6 @@ class _ImageMemberState extends State<ImageMember> {
           ),
         ],
       ),
-
       child: Column(
         children: [
           Container(
@@ -47,7 +46,6 @@ class _ImageMemberState extends State<ImageMember> {
               ),
             ),
           ),
-
           Container(
             margin: EdgeInsets.only(top: 25),
             padding: EdgeInsets.only(top: 75),
@@ -65,10 +63,18 @@ class _ImageMemberState extends State<ImageMember> {
 
             child: Column(
               children: [
-                Center(child: Icon(Icons.person_2_outlined, size: 200,)),
+                widget.imgurl == ""
+                    ? Center(
+                        child: Icon(
+                        Icons.person_2_outlined,
+                        size: 200,
+                      ))
+                    : Image.network(
+                        widget.imgurl,
+                        width: 200,
+                      ),
               ],
             ),
-
           )
         ],
       ),

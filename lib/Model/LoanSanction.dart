@@ -81,7 +81,10 @@ class LoanSanction {
         "Grantor F Mobile": grantorfmobile,
         'sl': sl
       };
-
+  bool filterFn(String query) {
+    return
+        id.toLowerCase().contains(query.toLowerCase());
+  }
   factory LoanSanction.fromJson(Map<String, dynamic> json) {
     return LoanSanction(
         somiteename: json['Somitee Name'],

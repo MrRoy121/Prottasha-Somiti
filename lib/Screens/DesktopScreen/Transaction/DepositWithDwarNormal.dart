@@ -98,7 +98,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
 
                   Spacer(),
 
-                  ImageMember(),
+                  ImageMember(imgurl: ""),
                 ],
               ) :
               Column(
@@ -108,7 +108,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                   // Spacer(),
                   SizedBox(height: 50,),
 
-                  ImageMember(),
+                  ImageMember(imgurl: ""),
                 ],
               )
               ,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
@@ -8,6 +9,7 @@ import '../../../../Widget/LoanWidgets/LoanOtherInfo.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/TransactionWidget/Image.dart';
 import '../../../../Widget/TransactionWidget/LinkACinfo.dart';
+import '../../../Model/LoanSanction.dart';
 
 class LoanDisbursement extends StatefulWidget {
   Navbool navbool;
@@ -20,6 +22,58 @@ class LoanDisbursement extends StatefulWidget {
 }
 
 class _LoanDisbursementState extends State<LoanDisbursement> {
+  List<LoanSanction> sanction = [];
+  List<String> ssanction = [];
+  bool bsanction = false;
+  String imgurl = '';
+  var selectedsanction;
+  var selectedsanctionid;
+  @override
+  void initState() {
+    super.initState();
+    fetch();
+  }
+
+  Future<void> fetch() async {
+    await FirebaseFirestore.instance
+        .collection('LoanSanction')
+        .get()
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        if (json["Status"] == "Approved") {
+          sanction.add(LoanSanction(
+              somiteename: json['Somitee Name'],
+              somiteeid: json['Somitee ID'],
+              membername: json['Member Name'],
+              memberid: json['Member ID'],
+              loanpurpose: json["Loan Purpose"],
+              memberphone: json['Member Phone'],
+              sanctionlimit: json["Sanction Limit"],
+              installmentfrequency: json["Installment Frequency"],
+              sanctiondate: json["Sanction Date"].toDate(),
+              loanperiod: json["Loan Period"],
+              servicecharge: json["Service Charge"],
+              installmentno: json["Installment No"],
+              installmentamount: json["Installment Amount"],
+              remarks: json["Remarks"],
+              serviceamount: json["Service Amount"],
+              grantor1name: json['Grantor 1 Name'],
+              grantor1id: json['Grantor 1 ID'],
+              grantor2name: json['Grantor 2 Name'],
+              grantor2id: json['Grantor 2 ID'],
+              grantorfname: json["Grantor F Name"],
+              status: json["Status"],
+              id: json['ID'],
+              grantorffname: json["Grantor F FatherName"],
+              grantorfrelation: json["Grantor F Relation"],
+              grantorfmobile: json["Grantor F Mobile"],
+              sl: 0));
+          ssanction.add(json['ID']);
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -44,6 +98,23 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
       mobile = true;
       desktop = false;
       tablet = false;
+    }
+    void _setupsanction(int ins) {
+      selectedsanction = sanction[ins];
+      bsanction = true;
+
+      FirebaseFirestore.instance
+          .collection('Member')
+          .doc(selectedsanction.memberid)
+          .get()
+          .then((element) {
+        if (element["Image"]) {
+          imgurl = element["ImageURL"];
+          setState(() {});
+        }
+      });
+
+      setState(() {});
     }
 
     return Scaffold(
@@ -72,14 +143,21 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
             ),
 
             // Loan information
-            LoanInformation(),
+            LoanInformation(
+                sanction: sanction,
+                bsanction: bsanction,
+                selectedsanction: selectedsanction,
+                selectedsanctionid: selectedsanctionid,
+                setupsanction: _setupsanction,
+                ssanction: ssanction),
 
             SizedBox(
               height: 30,
             ),
 
             // Loan Other imformation
-            LoanOtherInfo(),
+            LoanOtherInfo(
+                bsanction: bsanction, selectedsanction: selectedsanction),
 
             SizedBox(
               height: 30,
@@ -93,7 +171,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                       children: [
                         LinkACinfo(),
                         Spacer(),
-                        ImageMember(),
+                        ImageMember(imgurl: imgurl),
                       ],
                     )
                   : Column(
@@ -105,7 +183,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                           height: 50,
                         ),
 
-                        ImageMember(),
+                        ImageMember(imgurl: imgurl),
                       ],
                     ),
             ),

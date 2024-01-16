@@ -157,6 +157,16 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                   ),
                                   DataColumn(
                                     label: Text(
+                                      'Sanction ID',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
                                       'Somitee Code',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -240,6 +250,12 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                           style: const TextStyle(
                                             fontSize: 12,
                                           ))),
+                                      DataCell(
+                                        Text( snapshot.data[index].id,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
+                                      ),
                                       DataCell(
                                         Text( snapshot.data[index].somiteename+
                                         " " +snapshot.data[index].somiteeid,

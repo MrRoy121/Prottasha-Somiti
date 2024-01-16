@@ -4,6 +4,14 @@ import '../../Constants/Constants.dart';
 
 class LoanOtherInfo extends StatefulWidget {
 
+  var selectedsanction;
+
+  bool bsanction;
+
+  LoanOtherInfo(
+      {
+        required this.bsanction,
+        required this.selectedsanction});
 
   @override
   State<LoanOtherInfo> createState() => _LoanOtherInfoState();
@@ -102,15 +110,8 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.somiteeid : "",
                           ),
 
                         ),
@@ -136,15 +137,11 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
 
-                            ),
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.servicecharge.toString() : "",
                           ),
+
 
                         ),
 
@@ -170,14 +167,11 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.installmentamount.toString() : "",
                           ),
+
                         ),
 
 
@@ -232,17 +226,10 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.installmentno.toString() : "",
                           ),
+
 
                         ),
 
@@ -305,14 +292,11 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.loanperiod : "",
                           ),
+
+
                         ),
 
 

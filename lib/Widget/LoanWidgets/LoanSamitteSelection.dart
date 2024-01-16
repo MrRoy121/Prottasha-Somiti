@@ -13,8 +13,8 @@ class LoanSamitteSelection extends StatefulWidget {
   List<Somitee> somitee;
   List<String> ssomitee;
   var selectedsomitee;
-  var consanctionlimit;
   var selectedsomiteeid;
+  var consanctionlimit;
   var conservicecharge;
   var selectedloanpurpose;
   double serviceamount;
