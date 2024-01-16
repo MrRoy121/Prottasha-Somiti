@@ -311,6 +311,10 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                               )),
                                         ),InkWell(
                                           onTap: () {
+                                            LoanSanction sss = snapshot.data[index];
+                                            Get.toNamed(sanctionloaneditPageRoute,arguments: {
+                                              'LoanSanction': sss.toJson(),
+                                            },);
 
                                           },
                                           child: Container(

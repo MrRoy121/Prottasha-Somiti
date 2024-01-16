@@ -131,7 +131,10 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                         ),
                         InkWell(
                           onTap: () {
-
+                            Get.back();
+                            Get.toNamed(sanctionloaneditPageRoute,arguments: {
+                              'LoanSanction': lst.toJson(),
+                            },);
                           },
                           child: Container(
                             height: 40,
