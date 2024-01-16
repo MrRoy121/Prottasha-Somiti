@@ -113,7 +113,6 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           setState(() {});
         }
       });
-
       setState(() {});
     }
 
