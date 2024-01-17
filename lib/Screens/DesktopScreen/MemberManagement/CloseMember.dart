@@ -44,7 +44,8 @@ class _CloseMemberState extends State<CloseMember> {
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
         somitee.add(Somitee(
-            address: element["Address"],closed: element["Closed"],
+            address: element["Address"],
+            closed: element["Closed"],
             id: element.id,
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
@@ -61,42 +62,44 @@ class _CloseMemberState extends State<CloseMember> {
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
-          allmemberss.add(Memberss(
-              somiteename: element["Somitee Name"],
-              somiteeid: element["Somitee ID"],
-              membertype: element["Member Type"],
-              occupation: element["Occupation"],
-              firstname: element["First Name"],
-              lastname: element["Last Name"],
-              fathername: element["Father Name"],
-              mothername: element["Mother Name"],
-              gender: element["Gender"],
-              religion: element["Religion"],
-              nationalid: element["National ID"],
-              birthregi: element["Birth Registration"],
-              annualincome: element["Annual Income"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
-              age: element["Age"],
-              nodepenndent: element["No of Dependent"],
-              education: element["Education"],
-              maritalstatus: element["Marital Status"],
-              mobilenotype: element["Mobile No Type"],
-              mobilenno: element["Mobile No"],
-              presentadd: element["Present Address"],
-              parmaadd: element["Parmanent Address"],
-              livingperiod: element["Living Period"],
-              nomaleearner: element["No Female Earner"],
-              nofemaleearner: element["No Male Earner"],
-              id: element.id,
-              headfamily: element["Head Family"],
-              ownhomestead: element["Own HomeStead"],
-              relationwithhead: element["Relation With Head"],
-              landdesc: element["Land Desc"],
-              housedesc: element["House Desc"],
-              remarks: element["Remarks"],
-              imageurl: element["ImageURL"],
-              img: element["Image"],
-              birthdate: element["Date Of Birth"].toDate(),
-              sl: 0));
+        allmemberss.add(Memberss(
+            somiteename: element["Somitee Name"],
+            somiteeid: element["Somitee ID"],
+            membertype: element["Member Type"],
+            occupation: element["Occupation"],
+            firstname: element["First Name"],
+            lastname: element["Last Name"],
+            fathername: element["Father Name"],
+            mothername: element["Mother Name"],
+            gender: element["Gender"],
+            religion: element["Religion"],
+            nationalid: element["National ID"],
+            birthregi: element["Birth Registration"],
+            annualincome: element["Annual Income"],
+            loanpendingamount: element["Loan Pending Amount"],
+            owndepositamount: element["Own deposit Amount"],
+            age: element["Age"],
+            nodepenndent: element["No of Dependent"],
+            education: element["Education"],
+            maritalstatus: element["Marital Status"],
+            mobilenotype: element["Mobile No Type"],
+            mobilenno: element["Mobile No"],
+            presentadd: element["Present Address"],
+            parmaadd: element["Parmanent Address"],
+            livingperiod: element["Living Period"],
+            nomaleearner: element["No Female Earner"],
+            nofemaleearner: element["No Male Earner"],
+            id: element.id,
+            headfamily: element["Head Family"],
+            ownhomestead: element["Own HomeStead"],
+            relationwithhead: element["Relation With Head"],
+            landdesc: element["Land Desc"],
+            housedesc: element["House Desc"],
+            remarks: element["Remarks"],
+            imageurl: element["ImageURL"],
+            img: element["Image"],
+            birthdate: element["Date Of Birth"].toDate(),
+            sl: 0));
       }
     });
   }
@@ -121,12 +124,12 @@ class _CloseMemberState extends State<CloseMember> {
       });
     }
 
-
     void _setupmemberss(int ins) {
       setState(() {
         selectedmemberss = memberss[ins];
       });
     }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -163,11 +166,12 @@ class _CloseMemberState extends State<CloseMember> {
 
             // MEMBER REQUEST FOR CLOSING
             MemberRequestClosing(
-                setupmemberss: _setupmemberss,
-                memberssselected: memberselection,
-                selectedmemberssid: sselectedmemberss,
-                selectedmemberss: selectedmemberss,
-                memberss: memberss,),
+              setupmemberss: _setupmemberss,
+              memberssselected: memberselection,
+              selectedmemberssid: sselectedmemberss,
+              selectedmemberss: selectedmemberss,
+              memberss: memberss,
+            ),
 
             SizedBox(
               height: 50,
