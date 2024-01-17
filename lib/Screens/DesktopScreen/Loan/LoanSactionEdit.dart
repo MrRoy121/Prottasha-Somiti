@@ -72,7 +72,8 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       for (var element in querySnapshot.docs) {
         somitee.add(Somitee(
             address: element["Address"],
-            id: element.id,closed: element["Closed"],
+            id: element.id,
+            closed: element["Closed"],
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
             active: element["Active"],
@@ -88,42 +89,47 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
-        allmemberss.add(Memberss(
-            somiteename: element["Somitee Name"],
-            somiteeid: element["Somitee ID"],
-            membertype: element["Member Type"],
-            occupation: element["Occupation"],
-            firstname: element["First Name"],
-            lastname: element["Last Name"],
-            fathername: element["Father Name"],
-            mothername: element["Mother Name"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
-            gender: element["Gender"],
-            religion: element["Religion"],
-            nationalid: element["National ID"],
-            birthregi: element["Birth Registration"],
-            annualincome: element["Annual Income"],
-            age: element["Age"],
-            nodepenndent: element["No of Dependent"],
-            education: element["Education"],
-            maritalstatus: element["Marital Status"],
-            mobilenotype: element["Mobile No Type"],
-            mobilenno: element["Mobile No"],
-            presentadd: element["Present Address"],
-            parmaadd: element["Parmanent Address"],
-            livingperiod: element["Living Period"],
-            nomaleearner: element["No Female Earner"],
-            nofemaleearner: element["No Male Earner"],
-            id: element.id,
-            headfamily: element["Head Family"],
-            ownhomestead: element["Own HomeStead"],
-            relationwithhead: element["Relation With Head"],
-            landdesc: element["Land Desc"],
-            housedesc: element["House Desc"],
-            remarks: element["Remarks"],
-            imageurl: element["ImageURL"],
-            img: element["Image"],
-            birthdate: element["Date Of Birth"].toDate(),
-            sl: 0));
+        if (element["Status"]) {
+          allmemberss.add(Memberss(
+              somiteename: element["Somitee Name"],
+              somiteeid: element["Somitee ID"],
+              membertype: element["Member Type"],
+              occupation: element["Occupation"],
+              firstname: element["First Name"],
+              lastname: element["Last Name"],
+              fathername: element["Father Name"],
+              sts: element["Status"],
+              mothername: element["Mother Name"],
+              loanpendingamount: element["Loan Pending Amount"],
+              owndepositamount: element["Own deposit Amount"],
+              gender: element["Gender"],
+              religion: element["Religion"],
+              nationalid: element["National ID"],
+              birthregi: element["Birth Registration"],
+              annualincome: element["Annual Income"],
+              age: element["Age"],
+              nodepenndent: element["No of Dependent"],
+              education: element["Education"],
+              maritalstatus: element["Marital Status"],
+              mobilenotype: element["Mobile No Type"],
+              mobilenno: element["Mobile No"],
+              presentadd: element["Present Address"],
+              parmaadd: element["Parmanent Address"],
+              livingperiod: element["Living Period"],
+              nomaleearner: element["No Female Earner"],
+              nofemaleearner: element["No Male Earner"],
+              id: element.id,
+              headfamily: element["Head Family"],
+              ownhomestead: element["Own HomeStead"],
+              relationwithhead: element["Relation With Head"],
+              landdesc: element["Land Desc"],
+              housedesc: element["House Desc"],
+              remarks: element["Remarks"],
+              imageurl: element["ImageURL"],
+              img: element["Image"],
+              birthdate: element["Date Of Birth"].toDate(),
+              sl: 0));
+        }
       }
       _addinit();
     });
@@ -221,33 +227,34 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
     }
   }
 
-  void _addinit() {setState(() {
-    print(cst.toJson());
-    selectedsomiti = somitee[ssomitee.indexOf(cst.somiteename)];
-    sselectedsomiti = cst.somiteename;
-    memberselection = true;
-    memberss = allmemberss
-        .where((member) => member.somiteeid == selectedsomiti.id)
-        .toList();
-    selectedmemberss =
-        memberss.firstWhere((member) => member.id == cst.memberid);
-    selectedgrantor1 =
-        allmemberss.firstWhere((member) => member.id == cst.grantor1id);
-    selectedgrantor2 =
-        allmemberss.firstWhere((member) => member.id == cst.grantor2id);
-    selectedloanpurpose = cst.loanpurpose;
-    _selectedinstalment = cst.installmentfrequency;
-    _selectedloanperiod = cst.loanperiod;
-    consanctionlimit.text = cst.sanctionlimit.toString();
-    conservicecharge.text = cst.servicecharge.toString();
-    coninstallmentno.text = cst.installmentno.toString();
-    coninstallmentamount.text = cst.installmentamount.toString();
-    serviceamount = cst.serviceamount;
-    conremarks.text = cst.remarks;
-    congrname.text = cst.grantorfname;
-    congrfname.text = cst.grantorffname;
-    congrrelation.text = cst.grantorfrelation;
-    congrmobile.text = cst.grantorfmobile;
+  void _addinit() {
+    setState(() {
+      print(cst.toJson());
+      selectedsomiti = somitee[ssomitee.indexOf(cst.somiteename)];
+      sselectedsomiti = cst.somiteename;
+      memberselection = true;
+      memberss = allmemberss
+          .where((member) => member.somiteeid == selectedsomiti.id)
+          .toList();
+      selectedmemberss =
+          memberss.firstWhere((member) => member.id == cst.memberid);
+      selectedgrantor1 =
+          allmemberss.firstWhere((member) => member.id == cst.grantor1id);
+      selectedgrantor2 =
+          allmemberss.firstWhere((member) => member.id == cst.grantor2id);
+      selectedloanpurpose = cst.loanpurpose;
+      _selectedinstalment = cst.installmentfrequency;
+      _selectedloanperiod = cst.loanperiod;
+      consanctionlimit.text = cst.sanctionlimit.toString();
+      conservicecharge.text = cst.servicecharge.toString();
+      coninstallmentno.text = cst.installmentno.toString();
+      coninstallmentamount.text = cst.installmentamount.toString();
+      serviceamount = cst.serviceamount;
+      conremarks.text = cst.remarks;
+      congrname.text = cst.grantorfname;
+      congrfname.text = cst.grantorffname;
+      congrrelation.text = cst.grantorfrelation;
+      congrmobile.text = cst.grantorfmobile;
     });
   }
 

@@ -474,7 +474,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
         lastname: arguments['Members']["Last Name"],
         fathername: arguments['Members']["Father Name"],
         mothername: arguments['Members']["Mother Name"],
-        gender: arguments['Members']["Gender"],
+        gender: arguments['Members']["Gender"],sts: arguments['Members']["Status"],
         religion: arguments['Members']["Religion"],
         nationalid: arguments['Members']["National ID"],
         birthregi: arguments['Members']["Birth Registration"],

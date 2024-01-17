@@ -8,12 +8,14 @@ class MemberRequestClosing extends StatefulWidget {
   List<Memberss> memberss = [];
   var selectedmemberss;
   var selectedmemberssid;
+  bool mem;
   bool memberssselected;
   void Function(int) setupmemberss;
   MemberRequestClosing(
       {required this.setupmemberss,
       required this.memberssselected,
       required this.memberss,
+        required this.mem,
       required this.selectedmemberss,
       required this.selectedmemberssid});
   @override
@@ -21,7 +23,6 @@ class MemberRequestClosing extends StatefulWidget {
 }
 
 class _MemberRequestClosingState extends State<MemberRequestClosing> {
-  bool mem = false;
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -195,7 +196,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                                         widget.setupmemberss(
                                             widget.memberss.indexOf(newValue));
                                         widget.memberssselected = true;
-                                        mem = true;
+                                        widget.mem = true;
                                       });
                                     },
                                     items: widget.memberss,
@@ -220,7 +221,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  mem
+                                  widget.mem
                                       ? widget.selectedmemberss.loanpendingamount
                                       .toString()
                                       : "",
@@ -245,7 +246,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  mem
+                                  widget.mem
                                       ? widget.selectedmemberss.fathername
                                           .toString()
                                       : "",
@@ -271,7 +272,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  mem
+                                  widget.mem
                                       ? widget.selectedmemberss.presentadd
                                           .toString()
                                       : "",
@@ -296,7 +297,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  mem
+                                  widget.mem
                                       ? widget.selectedmemberss.mobilenno
                                           .toString()
                                       : "",
@@ -327,7 +328,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                                 SizedBox(
                                   width: 300,
                                   child: Text(
-                                    mem
+                                    widget.mem
                                         ? widget.selectedmemberss.owndepositamount
                                         .toString()
                                         : "",
@@ -353,7 +354,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  mem
+                                  widget.mem
                                       ? widget.selectedmemberss.mothername
                                           .toString()
                                       : "",
@@ -378,7 +379,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  mem
+                                  widget.mem
                                       ? widget.selectedmemberss.parmaadd
                                           .toString()
                                       : "",

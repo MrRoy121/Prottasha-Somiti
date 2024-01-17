@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,18 +15,18 @@ import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../route.dart';
 
-class EditMembers extends StatefulWidget {
+class ClosedMembersList extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  EditMembers({required this.appbool, required this.navbool});
+  ClosedMembersList({required this.appbool, required this.navbool});
 
   @override
-  State<EditMembers> createState() => _EditMembersState();
+  State<ClosedMembersList> createState() => _ClosedMembersListState();
 }
 
-class _EditMembersState extends State<EditMembers> {
-  List<Somitee> somitee = [];
+class _ClosedMembersListState extends State<ClosedMembersList> {
+  List<Memberss> somitee = [];
   List<String> ssomitee = [];
   var selectedsomiti;
   var sselectedsomiti;
@@ -40,22 +39,59 @@ class _EditMembersState extends State<EditMembers> {
   }
 
   Future<void> fetch() async {
+    int s = 0;
+
     await FirebaseFirestore.instance
-        .collection('Somitee')
+        .collection('ClosedMemberRequest')
         .get()
-        .then((querySnapshot) {
-      for (var element in querySnapshot.docs) {
-        somitee.add(Somitee(
-            address: element["Address"],
-            id: element.id,
-            lastupdated: element["Last Edited"].toDate(),closed: element["Closed"],
-            name: element["Name"],
-            active: element["Active"],
-            formation: element["Formation Date"].toDate(),
-            phone: element["Phone"],
-            branch: element["Branch"],
-            sl: 0));
-        ssomitee.add(element["Name"]);
+        .then((qs) async {
+      for (var ele in qs.docs) {
+        await FirebaseFirestore.instance
+            .collection('Member')
+            .doc(ele.id)
+            .get()
+            .then((element) {
+          somitee.add(Memberss(
+              somiteename: element["Somitee Name"],
+              somiteeid: element["Somitee ID"],
+              membertype: element["Member Type"],
+              occupation: element["Occupation"],
+              firstname: element["First Name"],
+              lastname: element["Last Name"],
+              fathername: element["Father Name"],
+              mothername: element["Mother Name"],
+              loanpendingamount: element["Loan Pending Amount"],
+              owndepositamount: element["Own deposit Amount"],
+              gender: element["Gender"],
+              religion: element["Religion"],
+              sts: element["Status"],
+              nationalid: element["National ID"],
+              birthregi: element["Birth Registration"],
+              annualincome: element["Annual Income"],
+              age: element["Age"],
+              nodepenndent: element["No of Dependent"],
+              education: element["Education"],
+              maritalstatus: element["Marital Status"],
+              mobilenotype: element["Mobile No Type"],
+              mobilenno: element["Mobile No"],
+              presentadd: element["Present Address"],
+              parmaadd: element["Parmanent Address"],
+              livingperiod: element["Living Period"],
+              nomaleearner: element["No Female Earner"],
+              nofemaleearner: element["No Male Earner"],
+              id: element.id,
+              headfamily: element["Head Family"],
+              ownhomestead: element["Own HomeStead"],
+              relationwithhead: element["Relation With Head"],
+              landdesc: element["Land Desc"],
+              housedesc: element["House Desc"],
+              remarks: element["Remarks"],
+              imageurl: element["ImageURL"],
+              img: element["Image"],
+              birthdate: element["Date Of Birth"].toDate(),
+              sl: s));
+          s++;
+        });
       }
     });
   }
@@ -77,53 +113,6 @@ class _EditMembersState extends State<EditMembers> {
     }
 
     Future<List<Memberss>> getCust() async {
-      List<Memberss> somitee = [];
-      int s = 1;
-      await FirebaseFirestore.instance
-          .collection('Member')
-          .get()
-          .then((querySnapshot) {
-        for (var element in querySnapshot.docs) {
-          if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
-            somitee.add(Memberss(
-                somiteename: element["Somitee Name"],
-                somiteeid: element["Somitee ID"],
-                membertype: element["Member Type"],
-                occupation: element["Occupation"],
-                firstname: element["First Name"],
-                lastname: element["Last Name"],
-                fathername: element["Father Name"],
-                mothername: element["Mother Name"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
-                gender: element["Gender"],
-                religion: element["Religion"],sts: element["Status"],
-                nationalid: element["National ID"],
-                birthregi: element["Birth Registration"],annualincome: element["Annual Income"],
-                age: element["Age"],
-                nodepenndent: element["No of Dependent"],
-                education: element["Education"],
-                maritalstatus: element["Marital Status"],
-                mobilenotype: element["Mobile No Type"],
-                mobilenno: element["Mobile No"],
-                presentadd: element["Present Address"],
-                parmaadd: element["Parmanent Address"],
-                livingperiod: element["Living Period"],
-                nomaleearner: element["No Female Earner"],
-                nofemaleearner: element["No Male Earner"],
-                id: element.id,
-                headfamily: element["Head Family"],
-                ownhomestead: element["Own HomeStead"],
-                relationwithhead: element["Relation With Head"],
-                landdesc: element["Land Desc"],
-                housedesc: element["House Desc"],
-                remarks: element["Remarks"],
-                imageurl: element["ImageURL"],
-                img: element["Image"],
-                birthdate: element["Date Of Birth"].toDate(),
-                sl: s));
-            s++;
-          }
-        }
-      });
       return somitee;
     }
 
@@ -138,22 +127,6 @@ class _EditMembersState extends State<EditMembers> {
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),
-            SizedBox(
-              height: 50,
-            ),
-            SamiteeSelection(
-                submit: false,
-                selectmember: false,
-                clear: true,
-                ssomitee: ssomitee,
-                close: true,
-                setupsomiti: _setupsomiti,
-                active: true,
-                selectedsomiteeid: selectedsomiti,
-                onsubmit: () {},
-                somitee: somitee,
-                onclear: _onclear,
-                selectedsomitee: sselectedsomiti),
             SizedBox(
               height: 50,
             ),
@@ -185,7 +158,7 @@ class _EditMembersState extends State<EditMembers> {
                         Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                            "Member General Report",
+                            "Closing Member Request",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -390,10 +363,14 @@ class _EditMembersState extends State<EditMembers> {
                                               Center(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    Memberss sss = snapshot.data[index];
-                                                    Get.toNamed(memberEditPageRoute,arguments: {
-                                                      'Members': sss.toJson(),
-                                                    },);
+                                                    Memberss sss =
+                                                        snapshot.data[index];
+                                                    Get.toNamed(
+                                                      memberEditPageRoute,
+                                                      arguments: {
+                                                        'Members': sss.toJson(),
+                                                      },
+                                                    );
                                                   },
                                                   child: Container(
                                                       padding:

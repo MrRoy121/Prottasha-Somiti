@@ -85,6 +85,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
+        if(element["Status"]){
         allmemberss.add(Memberss(
             somiteename: element["Somitee Name"],
             somiteeid: element["Somitee ID"],
@@ -98,7 +99,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             religion: element["Religion"],
             nationalid: element["National ID"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
             birthregi: element["Birth Registration"],
-            annualincome: element["Annual Income"],
+            annualincome: element["Annual Income"],sts: element["Status"],
             age: element["Age"],
             nodepenndent: element["No of Dependent"],
             education: element["Education"],
@@ -120,7 +121,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             imageurl: element["ImageURL"],
             img: element["Image"],
             birthdate: element["Date Of Birth"].toDate(),
-            sl: 0));
+            sl: 0));}
       }
     });
   }

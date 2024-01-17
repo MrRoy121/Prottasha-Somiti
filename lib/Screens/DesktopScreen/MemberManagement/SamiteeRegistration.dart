@@ -11,7 +11,6 @@ import '../../../../Constants/Constants.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../route.dart';
 
-
 class SamiteeRegistration extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
@@ -28,34 +27,30 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
   final _conbranchname = TextEditingController();
   final _conaddress = TextEditingController();
 
-
-  void _save(){
+  void _save() {
     String name = _consomitiname.text;
     String phone = _conphone.text;
     String branch = _conbranchname.text;
     String address = _conaddress.text;
 
-    if(name.isEmpty || phone.isEmpty|| branch.isEmpty||address.isEmpty){
-      Get.snackbar("Somitee Registration Failed.",
-          "All Fields are Required",
+    if (name.isEmpty || phone.isEmpty || branch.isEmpty || address.isEmpty) {
+      Get.snackbar("Somitee Registration Failed.", "All Fields are Required",
           snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white,
           backgroundColor: Colors.red,
           margin: EdgeInsets.zero,
           duration: const Duration(milliseconds: 2000),
           boxShadows: [
-            BoxShadow(color: Colors.grey,offset: Offset(-100,0),blurRadius: 20),
+            BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
           ],
           borderRadius: 0);
-    }else{
-      const _chars =
-          '1234567890';
+    } else {
+      const _chars = '1234567890';
       Random _rnd = Random();
       String getRandomString(int length) =>
           String.fromCharCodes(Iterable.generate(
-              length,
-                  (_) => _chars.codeUnitAt(
-                  _rnd.nextInt(_chars.length))));
+              length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
       String ss = getRandomString(8);
       FirebaseFirestore.instance.collection('Somitee').doc(ss).set({
         'Name': name,
@@ -68,21 +63,21 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
         'Last Edited': DateTime.now(),
       }).then((value) {
         Get.offNamed(somiteelistPageRoute);
-        Get.snackbar("Somitee Added Successfully.",
-            "Redirecting to Somitee List Page.",
+        Get.snackbar(
+            "Somitee Added Successfully.", "Redirecting to Somitee List Page.",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
             backgroundColor: Colors.green,
             margin: EdgeInsets.zero,
             duration: const Duration(milliseconds: 2000),
             boxShadows: [
-              const BoxShadow(color: Colors.grey,offset: Offset(-100,0),blurRadius: 20),
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
             ],
             borderRadius: 0);
       }).catchError((error) => print("Failed to add user: $error"));
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,17 +88,18 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
-        
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
             const SizedBox(
               height: 50,
             ),
-        
             Container(
               width: 1400,
               height: 300,
               // color: Colors.white,
-        
+
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -115,7 +111,7 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                   ),
                 ],
               ),
-        
+
               child: Column(
                 children: [
                   Container(
@@ -128,7 +124,7 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                         const Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                              "Samitee Registration",
+                            "Samitee Registration",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -136,32 +132,47 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                             ),
                           ),
                         ),
-        
                         Spacer(),
-        
-                        InkWell(onTap: (){
-                          _save();
-                        },
+                        InkWell(
+                          onTap: () {
+                            _save();
+                          },
                           child: Container(
                             height: 40,
                             width: 80,
                             color: Colors.green,
-                           alignment: Alignment.center,
+                            alignment: Alignment.center,
                             child: const Padding(
-                              padding:  EdgeInsets.only(top: 10.0),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                                children: [Icon(Icons.check,color: Colors.white,size: 14,),SizedBox(width: 3,),
-                                  Text("Save", style: TextStyle(color: Colors.white, fontSize: 14),),SizedBox(width: 2,),
+                              padding: EdgeInsets.only(top: 10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 14,
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    "Save",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-        
-                        SizedBox(width: 10,),
-        
+                        SizedBox(
+                          width: 10,
+                        ),
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Get.offNamed(somiteelistPageRoute);
                           },
                           child: Container(
@@ -172,18 +183,26 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                               padding: EdgeInsets.only(top: 3.0, left: 15),
                               child: Row(
                                 children: [
-                                  Icon(Icons.list, color: Colors.white, size: 18,),
-                                  Text("Somitee List", style: TextStyle(color: Colors.white, fontSize: 14),),
+                                  Icon(
+                                    Icons.list,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                  Text(
+                                    "Somitee List",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-        
-                        SizedBox(width: 10,),
-        
+                        SizedBox(
+                          width: 10,
+                        ),
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Get.back();
                           },
                           child: Container(
@@ -191,102 +210,109 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                             width: 50,
                             color: Colors.red,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 10.0, left: 20),
-                              child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                              padding:
+                                  const EdgeInsets.only(top: 10.0, left: 20),
+                              child: Text(
+                                "X",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
                             ),
                           ),
                         ),
-        
-                        SizedBox(width: 10,),
-        
+                        SizedBox(
+                          width: 10,
+                        ),
                       ],
                     ),
                   ),
-        
                   Padding(
                     padding: const EdgeInsets.only(top: 50, left: 150),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
-
                       children: [
                         Column(
                           children: [
                             Row(
                               children: [
                                 RichText(
-                                    text: const TextSpan(
-                                      text: 'Somitee Name',
-                                      style: TextStyle(color: Colors.black, fontSize: 14),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                                        TextSpan(
-                                            text: ' :',
-                                            style: TextStyle(color: Colors.black, fontSize: 14)),
-        
-                                      ],
-                                    ),
+                                  text: const TextSpan(
+                                    text: 'Somitee Name',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
                                 ),
-        
-                                SizedBox(width: 10,),
-        
-        
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 SizedBox(
                                   width: 300,
-                                  child: TextField(controller: _consomitiname,
+                                  child: TextField(
+                                    controller: _consomitiname,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
                                 ),
-        
-        
                               ],
                             ),
-        
-        
                             SizedBox(
                               height: 40,
                             ),
-        
                             Row(
                               children: [
                                 RichText(
                                   text: TextSpan(
                                     text: 'Branch Name',
-                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
                                       TextSpan(
                                           text: ' :',
-                                          style: TextStyle(color: Colors.black, fontSize: 14)),
-        
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
                                     ],
                                   ),
                                 ),
-        
-                                SizedBox(width: 15,),
-        
+                                SizedBox(
+                                  width: 15,
+                                ),
                                 SizedBox(
                                   width: 300,
-                                  child: TextField(controller: _conbranchname,
+                                  child: TextField(
+                                    controller: _conbranchname,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
                                 ),
-        
-        
                               ],
                             ),
                           ],
                         ),
-        
                         SizedBox(
                           width: 150,
                         ),
-        
                         Column(
                           children: [
                             Row(
@@ -294,26 +320,34 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                                 RichText(
                                   text: TextSpan(
                                     text: 'Phone',
-                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
                                       TextSpan(
                                           text: ' :',
-                                          style: TextStyle(color: Colors.black, fontSize: 14)),
-        
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
                                     ],
                                   ),
                                 ),
-        
-                                SizedBox(width: 80,),
-        
+                                SizedBox(
+                                  width: 80,
+                                ),
                                 SizedBox(
                                   width: 300,
-                                  child: TextField(controller: _conphone,
+                                  child: TextField(
+                                    controller: _conphone,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
                                     decoration: InputDecoration(
@@ -321,44 +355,45 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                                     ),
                                   ),
                                 ),
-        
-        
                               ],
                             ),
-        
                             SizedBox(
                               height: 40,
                             ),
-        
                             Row(
                               children: [
                                 RichText(
                                   text: const TextSpan(
                                     text: 'Samitee Address',
-                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
                                       TextSpan(
                                           text: ' :',
-                                          style: TextStyle(color: Colors.black, fontSize: 14)),
-        
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
                                     ],
                                   ),
                                 ),
-        
-                                SizedBox(width: 12,),
-        
+                                SizedBox(
+                                  width: 12,
+                                ),
                                 SizedBox(
                                   width: 300,
-                                  child: TextField(controller: _conaddress,
+                                  child: TextField(
+                                    controller: _conaddress,
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
                                 ),
-        
-        
                               ],
                             ),
                           ],

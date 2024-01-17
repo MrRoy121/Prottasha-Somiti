@@ -19,6 +19,7 @@ import 'Screens/DesktopScreen/Loan/LoanSactionEdit.dart';
 import 'Screens/DesktopScreen/Loan/LoanSanctionList.dart';
 import 'Screens/DesktopScreen/Loan/RepaymentRequest.dart';
 import 'Screens/DesktopScreen/MemberManagement/CloseMember.dart';
+import 'Screens/DesktopScreen/MemberManagement/ClosedMembersList.dart';
 import 'Screens/DesktopScreen/MemberManagement/EditMembers.dart';
 import 'Screens/DesktopScreen/MemberManagement/MemberManagement.dart';
 import 'Screens/DesktopScreen/MemberManagement/MemberRegistration.dart';
@@ -110,6 +111,14 @@ class MyApp extends StatelessWidget {
           case memberclosingPageRoute:
             return PageTransition(
                 child: CloseMember(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
+          case closingmemberrequestPageRoute:
+            return PageTransition(
+                child: ClosedMembersList(
                   appbool: appbool,
                   navbool: navbool,
                 ),

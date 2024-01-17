@@ -31,7 +31,7 @@ class Memberss {
       housedesc,
       remarks,
       imageurl;
-  bool img;
+  bool img, sts;
   DateTime birthdate;
   double loanpendingamount, owndepositamount;
   int sl;
@@ -51,6 +51,7 @@ class Memberss {
       required this.gender,
       required this.religion,
       required this.nationalid,
+        required this.sts,
       required this.birthregi,
       required this.age,
       required this.nodepenndent,
@@ -111,6 +112,7 @@ class Memberss {
         'House Desc': housedesc,
         'Remarks': remarks,
         'Image': img,
+    'Status': sts,
         'ImageURL': imageurl,
         'sl': sl
       };
@@ -119,7 +121,7 @@ class Memberss {
     return Memberss(
         somiteename: json['Somitee Name'].toString(),
         somiteeid: json['Somitee ID'].toString(),
-        membertype: json['Member Type'].toString(),
+        membertype: json['Member Type'].toString(),sts:json['Status'],
         occupation: json['Occupation'].toString(),
         firstname: json['First Name'].toString(),
         lastname: json['Last Name'].toString(),
