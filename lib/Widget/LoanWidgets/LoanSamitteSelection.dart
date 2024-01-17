@@ -38,8 +38,9 @@ class LoanSamitteSelection extends StatefulWidget {
       {required this.onclear,
       required this.setupsomiti,
       required this.coninstallmentno,
-        required this.setuploanpurpose,
-      required this.setupinstallment,required this.selectedloanpurpose,
+      required this.setuploanpurpose,
+      required this.setupinstallment,
+      required this.selectedloanpurpose,
       required this.setuplloanperiod,
       required this.selectedDate,
       required this.conremarks,
@@ -557,9 +558,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: widget.selectedinstalment, onChanged: (newValue) {
-                                  widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
-                                },
+                                  value: widget.selectedinstalment,
+                                  onChanged: (newValue) {
+                                    widget.setupinstallment(
+                                        InstallmentFrequencyList.indexOf(
+                                            newValue!));
+                                  },
                                   items: InstallmentFrequencyList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
@@ -700,7 +704,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                 ),
                               ),
                               SizedBox(
-                                width:40,
+                                width: 40,
                               ),
                               Container(
                                   width: 300,
@@ -814,7 +818,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               SizedBox(
                                 width: 40,
                               ),
-
                               Container(
                                   width: 300,
                                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -849,7 +852,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                       ),
                                     ),
                                     dropdownDecoratorProps:
-                                    const DropDownDecoratorProps(
+                                        const DropDownDecoratorProps(
                                       dropdownSearchDecoration: InputDecoration(
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -875,8 +878,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedloanpurpose = newValue;
-                                        widget.setuploanpurpose(LoanPurposeList
-                                            .indexOf(newValue!));
+                                        widget.setuploanpurpose(
+                                            LoanPurposeList.indexOf(newValue!));
                                       });
                                     },
                                     items: LoanPurposeList,
@@ -1449,9 +1452,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: widget.selectedinstalment, onChanged: (newValue) {
-                                      widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
-                                    },
+                                      value: widget.selectedinstalment,
+                                      onChanged: (newValue) {
+                                        widget.setupinstallment(
+                                            InstallmentFrequencyList.indexOf(
+                                                newValue!));
+                                      },
                                       items:
                                           InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(
@@ -2184,9 +2190,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                           fontSize: 8,
                                         ),
                                       ),
-                                      value: widget.selectedinstalment, onChanged: (newValue) {
-                                      widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
-                                    },
+                                      value: widget.selectedinstalment,
+                                      onChanged: (newValue) {
+                                        widget.setupinstallment(
+                                            InstallmentFrequencyList.indexOf(
+                                                newValue!));
+                                      },
                                       items:
                                           InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(

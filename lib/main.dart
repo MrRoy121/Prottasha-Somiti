@@ -18,6 +18,7 @@ import 'Screens/DesktopScreen/Loan/LoanSactionApprove.dart';
 import 'Screens/DesktopScreen/Loan/LoanSactionEdit.dart';
 import 'Screens/DesktopScreen/Loan/LoanSanctionList.dart';
 import 'Screens/DesktopScreen/Loan/RepaymentRequest.dart';
+import 'Screens/DesktopScreen/MemberManagement/CloseMember.dart';
 import 'Screens/DesktopScreen/MemberManagement/EditMembers.dart';
 import 'Screens/DesktopScreen/MemberManagement/MemberManagement.dart';
 import 'Screens/DesktopScreen/MemberManagement/MemberRegistration.dart';
@@ -50,7 +51,8 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
-  Navbool navbool = Navbool(true, false, false, false, false, false, false, false, false);
+  Navbool navbool =
+      Navbool(true, false, false, false, false, false, false, false, false);
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,14 @@ class MyApp extends StatelessWidget {
           case memberegistrationPageRoute:
             return PageTransition(
                 child: MemberRegistration(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+                type: PageTransitionType.fade,
+                settings: settings);
+          case memberclosingPageRoute:
+            return PageTransition(
+                child: CloseMember(
                   appbool: appbool,
                   navbool: navbool,
                 ),

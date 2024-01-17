@@ -270,10 +270,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.to(CloseMember(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(memberclosingPageRoute);
                               },
                               child: Container(
                                 padding: EdgeInsets.only(
