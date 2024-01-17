@@ -72,7 +72,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       for (var element in querySnapshot.docs) {
         somitee.add(Somitee(
             address: element["Address"],
-            id: element.id,
+            id: element.id,closed: element["Closed"],
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
             active: element["Active"],

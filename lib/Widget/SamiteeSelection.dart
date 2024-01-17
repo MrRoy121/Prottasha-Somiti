@@ -505,9 +505,9 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                               ),
                             ],
                           )
-                        : const Row(
+                        : Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Closed Member :",
                                 style: TextStyle(
                                   fontSize: 14,
@@ -518,13 +518,11 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                                child: Text(
+                                  somiteeselected
+                                      ? widget.selectedsomiteeid.closed
+                                      .toString()
+                                      : "",
                                 ),
                               ),
                             ],

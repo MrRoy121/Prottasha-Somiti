@@ -33,7 +33,6 @@ class _CloseMemberState extends State<CloseMember> {
   var sselectedmemberss;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetch();
   }
@@ -45,7 +44,7 @@ class _CloseMemberState extends State<CloseMember> {
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
         somitee.add(Somitee(
-            address: element["Address"],
+            address: element["Address"],closed: element["Closed"],
             id: element.id,
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
@@ -151,7 +150,7 @@ class _CloseMemberState extends State<CloseMember> {
                 ssomitee: ssomitee,
                 close: true,
                 setupsomiti: _setupsomiti,
-                active: true,
+                active: false,
                 selectedsomiteeid: selectedsomiti,
                 onsubmit: () {},
                 somitee: somitee,

@@ -72,7 +72,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             id: element.id,
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
-            active: element["Active"],
+            active: element["Active"],closed: element["Closed"],
             formation: element["Formation Date"].toDate(),
             phone: element["Phone"],
             branch: element["Branch"],

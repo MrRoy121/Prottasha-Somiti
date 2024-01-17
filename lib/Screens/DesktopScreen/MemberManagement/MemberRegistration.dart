@@ -94,7 +94,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         somitee.add(Somitee(
             address: element["Address"],
             id: element.id,
-            lastupdated: element["Last Edited"].toDate(),
+            lastupdated: element["Last Edited"].toDate(),closed: element["Closed"],
             name: element["Name"],
             active: element["Active"],
             formation: element["Formation Date"].toDate(),

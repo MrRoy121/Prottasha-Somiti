@@ -63,6 +63,7 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
         'Branch': branch,
         'Address': address,
         'Active': 0,
+        'Closed': 0,
         'Formation Date': DateTime.now(),
         'Last Edited': DateTime.now(),
       }).then((value) {

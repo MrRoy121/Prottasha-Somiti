@@ -1,6 +1,6 @@
 class Somitee {
   String name, phone, branch, address, id;
-  double active;
+  double active,closed;
   int sl;
 
   Somitee(
@@ -9,6 +9,7 @@ class Somitee {
       required this.branch,
       required this.id,
       required this.address,
+        required this.closed,
       required this.active,
       required this.sl,
       required this.formation,

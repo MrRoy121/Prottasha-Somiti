@@ -35,7 +35,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
             address: element["Address"],
             id: element.id,
             lastupdated: element["Last Edited"].toDate(),
-            name: element["Name"],
+            name: element["Name"],closed: element["Closed"],
             active: element["Active"],
             formation: element["Formation Date"].toDate(),
             phone: element["Phone"],

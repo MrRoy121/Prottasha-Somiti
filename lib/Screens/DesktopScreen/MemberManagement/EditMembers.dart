@@ -48,7 +48,7 @@ class _EditMembersState extends State<EditMembers> {
         somitee.add(Somitee(
             address: element["Address"],
             id: element.id,
-            lastupdated: element["Last Edited"].toDate(),
+            lastupdated: element["Last Edited"].toDate(),closed: element["Closed"],
             name: element["Name"],
             active: element["Active"],
             formation: element["Formation Date"].toDate(),

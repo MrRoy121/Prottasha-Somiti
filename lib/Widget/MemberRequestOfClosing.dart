@@ -21,6 +21,7 @@ class MemberRequestClosing extends StatefulWidget {
 }
 
 class _MemberRequestClosingState extends State<MemberRequestClosing> {
+  bool mem = false;
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -127,7 +128,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                                     border: Border.all(color: AppColor_Black),
                                   ),
                                   child: DropdownSearch<Memberss>(
-                                    //enabled: widget.selectedmemberss,
+                                    enabled: widget.memberssselected,
                                     popupProps: PopupProps.menu(
                                       showSearchBox: true,
                                       itemBuilder: (BuildContext context,
@@ -194,6 +195,7 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                                         widget.setupmemberss(
                                             widget.memberss.indexOf(newValue));
                                         widget.memberssselected = true;
+                                        mem = true;
                                       });
                                     },
                                     items: widget.memberss,
@@ -244,13 +246,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                                child: Text(
+                                  mem
+                                      ? widget.selectedmemberss.fathername
+                                          .toString()
+                                      : "",
                                 ),
                               ),
                             ],
@@ -272,14 +272,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none),
-                                  ),
+                                child: Text(
+                                  mem
+                                      ? widget.selectedmemberss.presentadd
+                                          .toString()
+                                      : "",
                                 ),
                               ),
                             ],
@@ -300,13 +297,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                                child: Text(
+                                  mem
+                                      ? widget.selectedmemberss.mobilenno
+                                          .toString()
+                                      : "",
                                 ),
                               ),
                             ],
@@ -366,13 +361,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                                child: Text(
+                                  mem
+                                      ? widget.selectedmemberss.mothername
+                                          .toString()
+                                      : "",
                                 ),
                               ),
                             ],
@@ -393,13 +386,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                                child: Text(
+                                  mem
+                                      ? widget.selectedmemberss.parmaadd
+                                          .toString()
+                                      : "",
                                 ),
                               ),
                             ],
