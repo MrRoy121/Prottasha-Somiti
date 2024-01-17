@@ -219,13 +219,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                                child: Text(
+                                  mem
+                                      ? widget.selectedmemberss.loanpendingamount
+                                      .toString()
+                                      : "",
                                 ),
                               ),
                             ],
@@ -328,18 +326,11 @@ class _MemberRequestClosingState extends State<MemberRequestClosing> {
                                 ),
                                 SizedBox(
                                   width: 300,
-                                  child: TextField(
-                                    readOnly: true,
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none),
-                                      hintText: "33",
-                                      hintStyle: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                                  child: Text(
+                                    mem
+                                        ? widget.selectedmemberss.owndepositamount
+                                        .toString()
+                                        : "",
                                   ),
                                 ),
                               ],

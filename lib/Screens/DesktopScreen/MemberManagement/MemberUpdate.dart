@@ -470,7 +470,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
         somiteeid: arguments['Members']["Somitee ID"],
         membertype: arguments['Members']["Member Type"],
         occupation: arguments['Members']["Occupation"],
-        firstname: arguments['Members']["First Name"],
+        firstname: arguments['Members']["First Name"],loanpendingamount: arguments['Members']["Loan Pending Amount"],owndepositamount: arguments['Members']["Own deposit Amount"],
         lastname: arguments['Members']["Last Name"],
         fathername: arguments['Members']["Father Name"],
         mothername: arguments['Members']["Mother Name"],

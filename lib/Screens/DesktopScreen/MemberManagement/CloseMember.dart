@@ -74,7 +74,7 @@ class _CloseMemberState extends State<CloseMember> {
               religion: element["Religion"],
               nationalid: element["National ID"],
               birthregi: element["Birth Registration"],
-              annualincome: element["Annual Income"],
+              annualincome: element["Annual Income"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
               age: element["Age"],
               nodepenndent: element["No of Dependent"],
               education: element["Education"],

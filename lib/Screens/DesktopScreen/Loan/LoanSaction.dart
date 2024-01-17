@@ -96,7 +96,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             mothername: element["Mother Name"],
             gender: element["Gender"],
             religion: element["Religion"],
-            nationalid: element["National ID"],
+            nationalid: element["National ID"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
             birthregi: element["Birth Registration"],
             annualincome: element["Annual Income"],
             age: element["Age"],

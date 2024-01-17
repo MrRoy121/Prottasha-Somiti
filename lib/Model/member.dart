@@ -33,6 +33,7 @@ class Memberss {
       imageurl;
   bool img;
   DateTime birthdate;
+  double loanpendingamount, owndepositamount;
   int sl;
 
   Memberss(
@@ -40,6 +41,8 @@ class Memberss {
       required this.somiteeid,
       required this.membertype,
       required this.occupation,
+        required this.loanpendingamount,
+        required this.owndepositamount,
       required this.firstname,
       required this.lastname,
       required this.fathername,
@@ -96,6 +99,8 @@ class Memberss {
         'Parmanent Address': parmaadd,
         'Living Period': livingperiod,
         'Annual Income': annualincome,
+    'Loan Pending Amount': loanpendingamount,
+    'Own deposit Amount': owndepositamount,
         'No Female Earner': nofemaleearner,
         'No Male Earner': nomaleearner,
         'ID': id,
@@ -130,6 +135,8 @@ class Memberss {
           maritalstatus: json['Marital Status'].toString(),
           mobilenotype: json['Mobile No Type'].toString(),
           mobilenno: json['Mobile No'].toString(),
+          loanpendingamount : json['Loan Pending Amount'] ,
+          owndepositamount : json[ 'Own deposit Amount'] ,
           presentadd: json['Present Address'].toString(),
           parmaadd: json['Parmanent Address'].toString(),
           livingperiod: json['Living Period'].toString(),
