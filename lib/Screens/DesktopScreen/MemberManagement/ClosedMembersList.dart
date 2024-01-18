@@ -332,7 +332,32 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                         Center(
                                           child: InkWell(
                                             onTap: () {
-
+                                              FirebaseFirestore.instance
+                                                  .collection('Member').doc(snapshot.data[index].id).update(
+                                                  {'Status':false});
+                                              FirebaseFirestore.instance
+                                                  .collection('Somitee').doc(snapshot.data[index].somiteeid).get().then((value) {
+                                                FirebaseFirestore.instance
+                                                    .collection('Somitee').doc(snapshot.data[index].somiteeid).update({
+                                                  'Closed': value['Closed'] +1,
+                                                });
+                                              });
+                                              FirebaseFirestore.instance.collection('ClosedMemberRequest').doc(snapshot.data[index].id).delete();
+                                              Get.snackbar("Member Closed Successfully.",
+                                                  "Redirecting to Member Closing List Page.",
+                                                  snackPosition: SnackPosition.BOTTOM,
+                                                  colorText: Colors.white,
+                                                  backgroundColor: Colors.green,
+                                                  margin: EdgeInsets.zero,
+                                                  duration: const Duration(milliseconds: 2000),
+                                                  boxShadows: [
+                                                    const BoxShadow(
+                                                        color: Colors.grey,
+                                                        offset: Offset(-100, 0),
+                                                        blurRadius: 20),
+                                                  ],
+                                                  borderRadius: 0);
+                                              setState(() {});
                                             },
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),
@@ -351,7 +376,8 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                         Center(
                                           child: InkWell(
                                             onTap: () {
-
+                                              FirebaseFirestore.instance.collection('ClosedMemberRequest').doc(snapshot.data[index].id).delete();
+                                              setState(() {});
                                             },
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),
