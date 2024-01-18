@@ -6,31 +6,32 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/route.dart';
 import 'Constants/responsive.dart';
-import 'Screens/DesktopScreen/Accounts/Accounts.dart';
-import 'Screens/DesktopScreen/Calculators/Calculators.dart';
-import 'Screens/DesktopScreen/DesktopDashBoard/DashBoard.dart';
-import 'Screens/DesktopScreen/Employee/Employee.dart';
-import 'Screens/DesktopScreen/Loan/ApproveLoanSanctionRejectList.dart';
-import 'Screens/DesktopScreen/Loan/Loan.dart';
-import 'Screens/DesktopScreen/Loan/LoanDisbursement.dart';
-import 'Screens/DesktopScreen/Loan/LoanSaction.dart';
-import 'Screens/DesktopScreen/Loan/LoanSactionApprove.dart';
-import 'Screens/DesktopScreen/Loan/LoanSactionEdit.dart';
-import 'Screens/DesktopScreen/Loan/LoanSanctionList.dart';
-import 'Screens/DesktopScreen/Loan/RepaymentRequest.dart';
-import 'Screens/DesktopScreen/MemberManagement/CloseMember.dart';
-import 'Screens/DesktopScreen/MemberManagement/ClosedMembersList.dart';
-import 'Screens/DesktopScreen/MemberManagement/EditMembers.dart';
-import 'Screens/DesktopScreen/MemberManagement/MemberManagement.dart';
-import 'Screens/DesktopScreen/MemberManagement/MemberRegistration.dart';
-import 'Screens/DesktopScreen/MemberManagement/MemberUpdate.dart';
-import 'Screens/DesktopScreen/MemberManagement/SamiteeList.dart';
-import 'Screens/DesktopScreen/MemberManagement/SamiteeRegistration.dart';
-import 'Screens/DesktopScreen/Reports/Reports.dart';
-import 'Screens/DesktopScreen/Samitee Management/SamiteeManagement.dart';
-import 'Screens/DesktopScreen/Special Consideration/SpecialConsideration.dart';
-import 'Screens/DesktopScreen/Transaction/Transaction.dart';
-import 'Screens/DesktopScreen/DesktopHomepage/DesktopHomepage.dart';
+import 'Screens/Accounts/Accounts.dart';
+import 'Screens/Calculators/Calculators.dart';
+import 'Screens/DesktopDashBoard/DashBoard.dart';
+import 'Screens/Employee/Employee.dart';
+import 'Screens/Loan/ApproveLoanSanctionRejectList.dart';
+import 'Screens/Loan/Loan.dart';
+import 'Screens/Loan/LoanDisbursement.dart';
+import 'Screens/Loan/LoanSaction.dart';
+import 'Screens/Loan/LoanSactionApprove.dart';
+import 'Screens/Loan/LoanSactionEdit.dart';
+import 'Screens/Loan/LoanSanctionList.dart';
+import 'Screens/Loan/RepaymentRequest.dart';
+import 'Screens/MemberManagement/CloseMember.dart';
+import 'Screens/MemberManagement/ClosedMembersList.dart';
+import 'Screens/MemberManagement/EditMembers.dart';
+import 'Screens/MemberManagement/MemberManagement.dart';
+import 'Screens/MemberManagement/MemberRegistration.dart';
+import 'Screens/MemberManagement/MemberUpdate.dart';
+import 'Screens/MemberManagement/SamiteeList.dart';
+import 'Screens/MemberManagement/SamiteeRegistration.dart';
+import 'Screens/Reports/Reports.dart';
+import 'Screens/Samitee Management/SamiteeManagement.dart';
+import 'Screens/Special Consideration/SpecialConsideration.dart';
+import 'Screens/Transaction/Transaction.dart';
+import 'Screens/DesktopHomepage/DesktopHomepage.dart';
+import 'Screens/authentication/authentication.dart';
 import 'Widget/Appbool.dart';
 import 'Widget/NavBool.dart';
 import 'Constants/responsive.dart';
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse},
       ),
-      initialRoute: homePageRoute,
+      initialRoute: authenticationPageRoute,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case homePageRoute:
@@ -73,6 +74,11 @@ class MyApp extends StatelessWidget {
                 child: DesktopHomePage(
                   navbool: appbool,
                 ),
+                type: PageTransitionType.fade,
+                settings: settings);
+          case authenticationPageRoute:
+            return PageTransition(
+                child: AuthenticationPage(),
                 type: PageTransitionType.fade,
                 settings: settings);
           case dashboardPageRoute:

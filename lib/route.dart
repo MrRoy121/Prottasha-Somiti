@@ -2,6 +2,7 @@
 
 const   homePageRoute = "/home";
 const   dashboardPageRoute = "/dashboard";
+const authenticationPageRoute = '/authentication';
 const   somiteeregistrationPageRoute = "/somiteeregistration";
 const   somiteelistPageRoute = "/somiteelist";
 const   memberegistrationPageRoute = "/memberregistration";

@@ -322,78 +322,104 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                             )),
                                       ),
                                       DataCell(
-                                        Text(
-                                            sss[index],
+                                        Text(sss[index],
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(Row(children: [
-                                        Center(
-                                          child: InkWell(
-                                            onTap: () {
-                                              FirebaseFirestore.instance
-                                                  .collection('Member').doc(snapshot.data[index].id).update(
-                                                  {'Status':false});
-                                              FirebaseFirestore.instance
-                                                  .collection('Somitee').doc(snapshot.data[index].somiteeid).get().then((value) {
+                                      DataCell(Row(
+                                        children: [
+                                          Center(
+                                            child: InkWell(
+                                              onTap: () {
                                                 FirebaseFirestore.instance
-                                                    .collection('Somitee').doc(snapshot.data[index].somiteeid).update({
-                                                  'Closed': value['Closed'] +1,
+                                                    .collection('Member')
+                                                    .doc(
+                                                        snapshot.data[index].id)
+                                                    .update({'Status': false});
+                                                FirebaseFirestore.instance
+                                                    .collection('Somitee')
+                                                    .doc(snapshot
+                                                        .data[index].somiteeid)
+                                                    .get()
+                                                    .then((value) {
+                                                  FirebaseFirestore.instance
+                                                      .collection('Somitee')
+                                                      .doc(snapshot.data[index]
+                                                          .somiteeid)
+                                                      .update({
+                                                    'Closed':
+                                                        value['Closed'] + 1,
+                                                  });
                                                 });
-                                              });
-                                              FirebaseFirestore.instance.collection('ClosedMemberRequest').doc(snapshot.data[index].id).delete();
-                                              Get.snackbar("Member Closed Successfully.",
-                                                  "Redirecting to Member Closing List Page.",
-                                                  snackPosition: SnackPosition.BOTTOM,
-                                                  colorText: Colors.white,
-                                                  backgroundColor: Colors.green,
-                                                  margin: EdgeInsets.zero,
-                                                  duration: const Duration(milliseconds: 2000),
-                                                  boxShadows: [
-                                                    const BoxShadow(
-                                                        color: Colors.grey,
-                                                        offset: Offset(-100, 0),
-                                                        blurRadius: 20),
-                                                  ],
-                                                  borderRadius: 0);
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        100)),
-                                                child: const Icon(
-                                                  Icons.check,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                        'ClosedMemberRequest')
+                                                    .doc(
+                                                        snapshot.data[index].id)
+                                                    .delete();
+                                                Get.snackbar(
+                                                    "Member Closed Successfully.",
+                                                    "Redirecting to Member Closing List Page.",
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    colorText: Colors.white,
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    margin: EdgeInsets.zero,
+                                                    duration: const Duration(
+                                                        milliseconds: 2000),
+                                                    boxShadows: [
+                                                      const BoxShadow(
+                                                          color: Colors.grey,
+                                                          offset:
+                                                              Offset(-100, 0),
+                                                          blurRadius: 20),
+                                                    ],
+                                                    borderRadius: 0);
+                                                setState(() {});
+                                              },
+                                              child: Container(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  decoration: BoxDecoration(
+                                                      color: AppColor_Blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100)),
+                                                  child: const Icon(
+                                                    Icons.check,
+                                                    size: 16,
+                                                    color: AppColor_White,
+                                                  )),
+                                            ),
                                           ),
-                                        ),
-                                        Center(
-                                          child: InkWell(
-                                            onTap: () {
-                                              FirebaseFirestore.instance.collection('ClosedMemberRequest').doc(snapshot.data[index].id).delete();
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        100)),
-                                                child: const Icon(
-                                                  Icons.close,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
+                                          Center(
+                                            child: InkWell(
+                                              onTap: () {
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                        'ClosedMemberRequest')
+                                                    .doc(
+                                                        snapshot.data[index].id)
+                                                    .delete();
+                                                setState(() {});
+                                              },
+                                              child: Container(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  decoration: BoxDecoration(
+                                                      color: AppColor_Blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100)),
+                                                  child: const Icon(
+                                                    Icons.close,
+                                                    size: 16,
+                                                    color: AppColor_White,
+                                                  )),
+                                            ),
                                           ),
-                                        ),],)
-                                      ),
+                                        ],
+                                      )),
                                     ],
                                   );
                                 }),
