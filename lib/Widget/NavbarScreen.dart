@@ -43,6 +43,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
   var arr = [false, false, false, false, false, false, false, false, false];
   var withdrawArr = [false, false];
   var trasctionArr = [false, false];
+  var closedArr = [false, false];
   var loanSectionArr = [false, false];
   var loanRePayArr = [false, false];
 
@@ -121,6 +122,19 @@ class _NavbarScreenState extends State<NavbarScreen> {
       withdrawArr[index] = true;
       trasctionArr[index] = false;
       loanSectionArr[index] = false;
+      loanRePayArr[index] = false;
+    });
+  }
+
+  _closeTogle_saction(int index) {
+    setState(() {
+      for (int i = 0; i < closedArr.length; i++) {
+        closedArr[i] = false;
+      }
+      closedArr[index] = true;
+      loanSectionArr[index] = false;
+      withdrawArr[index] = false;
+      trasctionArr[index] = false;
       loanRePayArr[index] = false;
     });
   }
@@ -270,7 +284,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.toNamed(memberclosingPageRoute);
+                                _closeTogle_saction(0);
                               },
                               child: Container(
                                 padding: EdgeInsets.only(
@@ -340,6 +354,86 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       )
                                     ],
                                   )),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(),
+                closedArr[0]
+                    ? Container(
+                        margin: EdgeInsets.only(left: 0),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 250,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(memberclosingPageRoute);
+                              },
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor6 = AppColor_hover2;
+                                    textColor6 = Colors.white;
+                                  } else {
+                                    itemColor6 = AppColor_Blue;
+                                    textColor6 = Colors.black;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor6,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Add Closed Member",
+                                      style: TextStyle(
+                                        color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(closingmemberrequestPageRoute);
+                              },
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor7 = AppColor_hover2;
+                                    textColor7 = Colors.white;
+                                  } else {
+                                    itemColor7 = AppColor_Blue;
+                                    textColor7 = Colors.black;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor7,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Closed Member List",
+                                      style: TextStyle(
+                                        color: textColor7,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),

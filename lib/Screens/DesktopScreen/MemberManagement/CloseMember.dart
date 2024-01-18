@@ -151,6 +151,7 @@ class _CloseMemberState extends State<CloseMember> {
           'Name': selectedmemberss.firstname + " " + selectedmemberss.lastname,
           'Loan Pending Amount': selectedmemberss.loanpendingamount,
           'Own Deposit': selectedmemberss.owndepositamount,
+          'Type':"Close",
           'Somitee Name': selectedsomiti.name,
           'Somitee ID': selectedsomiti.id,
         }).then((value) {
@@ -189,6 +190,7 @@ class _CloseMemberState extends State<CloseMember> {
     void _setupmemberss(int ins) {
       setState(() {
         selectedmemberss = memberss[ins];
+        mem = true;
       });
     }
 

@@ -51,7 +51,7 @@ class Memberss {
       required this.gender,
       required this.religion,
       required this.nationalid,
-        required this.sts,
+      required this.sts,
       required this.birthregi,
       required this.age,
       required this.nodepenndent,
@@ -112,7 +112,7 @@ class Memberss {
         'House Desc': housedesc,
         'Remarks': remarks,
         'Image': img,
-    'Status': sts,
+        'Status': sts,
         'ImageURL': imageurl,
         'sl': sl
       };
@@ -121,7 +121,8 @@ class Memberss {
     return Memberss(
         somiteename: json['Somitee Name'].toString(),
         somiteeid: json['Somitee ID'].toString(),
-        membertype: json['Member Type'].toString(),sts:json['Status'],
+        membertype: json['Member Type'].toString(),
+        sts: json['Status'],
         occupation: json['Occupation'].toString(),
         firstname: json['First Name'].toString(),
         lastname: json['Last Name'].toString(),
