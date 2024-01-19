@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../Model/User.dart';
+import '../../helpers/auth_service.dart';
+import '../../route.dart';
+
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({super.key});
 
@@ -14,6 +18,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   var conid = TextEditingController();
   var conpass = TextEditingController();
   bool sts = false;
+
+  void handleLogin(User usr) {
+    AuthService.to.updateAuthenticationStatus(true, true, usr,sts);
+    Get.offAllNamed(homePageRoute);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +177,72 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     height: 10,
                   ),
                   InkWell(
-                    onTap: () async {},
+                    onTap: () async {
+                      String cid = conid.text;
+                      String cpass = conpass.text;
+                      if (cid.length == 0 || cpass.length == 0) {
+                        Get.snackbar("Login Failed.",
+                            "ID Password Is Cannot Be Empty!!",
+                            snackPosition: SnackPosition.BOTTOM,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
+                            margin: EdgeInsets.zero,
+                            duration: const Duration(milliseconds: 2000),
+                            boxShadows: [
+                              const BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(-100, 0),
+                                  blurRadius: 20),
+                            ],
+                            borderRadius: 0);
+                      } else {
+                        try {
+                          var querySnapshot = await FirebaseFirestore
+                              .instance
+                              .collection('User')
+                              .where("ID", isEqualTo: cid)
+                              .where("Password", isEqualTo: cpass)
+                              .limit(1)
+                              .get();
+
+                          if (querySnapshot.docs.isNotEmpty) {
+                            var element = querySnapshot.docs.first.data();
+                            User user = User(
+                              id: element["ID"],
+                              sts: element["Admin"],
+                              type: element["Type"],
+                              lastlogin: element["Last Login"].toDate(),
+                              lastlogout: element["Last Logout"].toDate(),
+                              pass: element["Password"],
+                            );
+
+                            FirebaseFirestore.instance
+                                .collection('User')
+                                .doc(user.id)
+                                .update({'Last Login': DateTime.now()});
+                            handleLogin(user);
+                          } else {
+                            Get.snackbar("Login Failed.",
+                                "ID Didn't Matched Password Is Not Found!!",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                                margin: EdgeInsets.zero,
+                                duration:
+                                const Duration(milliseconds: 2000),
+                                boxShadows: [
+                                  const BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(-100, 0),
+                                      blurRadius: 20),
+                                ],
+                                borderRadius: 0);
+                          }
+                        } catch (e) {
+                          print("Error fetching user data: $e");
+                        }
+                      }
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.blueAccent,
@@ -176,7 +250,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       alignment: Alignment.center,
                       width: double.maxFinite,
                       padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Text(
+                      child: const Text(
                         "SIGN IN",
                         style: TextStyle(
                           color: Colors.white,
