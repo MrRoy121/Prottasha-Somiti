@@ -10,15 +10,13 @@ class AuthService extends GetxController {
   static AuthService get to => Get.find();
 
   RxBool isAuthenticated = false.obs;
-  RxBool admin = false.obs;
+  String type = '';
   User? _user;
   RxBool isfirsttime = true.obs;
 
-
-  void setisfirsttime(){
+  void setisfirsttime() {
     isfirsttime = false.obs;
   }
-
 
   User? get user => _user;
   @override
@@ -27,31 +25,59 @@ class AuthService extends GetxController {
     loadAuthenticationStatus();
   }
 
-  void updateAuthenticationStatus(bool status1, bool status2, User usr,bool reme) {
-    isAuthenticated.value = status1;
-    admin.value = status2;
-    if(reme){
-      saveAuthenticationStatus(status1, status2, usr);
-    }_user=usr;
+  void updateAuthenticationStatus(User usr, bool reme) {
+    isAuthenticated.value = true;
+    type = usr.type;
+    if (reme) {
+      saveAuthenticationStatus(usr);
+    }
+    _user = usr;
+  }
+
+  bool isSuperAdmin() {
+    if (type == "Super Admin") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   bool isAdmin() {
-    return admin.value;
+    if (type == "Admin") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool isBranchManeger() {
+    if (type == "Branch Manager") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool isFieldOfficer() {
+    if (type == "Field Officer") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<void> Logout() async {
     isAuthenticated.value = false;
-    admin.value = false;
+    type = '';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('isAuthenticated');
-    await prefs.remove('Admin');
     await prefs.remove('dataee');
   }
 
   Future<void> loadAuthenticationStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool savedStatus = prefs.getBool('isAuthenticated') ?? false;
-    bool adminStatus = prefs.getBool('Admin') ?? false;
+    String admintype = prefs.getString('Type') ?? '';
 
     String jsonString = prefs.getString('dataee') ?? '';
     if (jsonString.isNotEmpty) {
@@ -63,14 +89,13 @@ class AuthService extends GetxController {
     }
 
     isAuthenticated.value = savedStatus;
-    admin.value = adminStatus;
+    type = admintype;
   }
-  Future<void> saveAuthenticationStatus(bool status1, bool status2, User usr) async {
+
+  Future<void> saveAuthenticationStatus(User usr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.setBool('isAuthenticated', status1);
-    await prefs.setBool('Admin', status2);
+    await prefs.setBool('isAuthenticated', true);
     await prefs.setString('dataee', json.encode(usr.toJson()));
-
   }
 }

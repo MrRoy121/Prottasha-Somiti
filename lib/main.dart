@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:get/get.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -66,6 +68,18 @@ class MyApp extends StatelessWidget {
         dragDevices: {PointerDeviceKind.mouse},
       ),
       initialRoute: authenticationPageRoute,
+
+    //   getPages: [
+    //   GetPage(
+    //   name: authenticationPageRoute,
+    //   page: () => AuthenticationPage(),
+    // ),
+    // GetPage(
+    // name: dashboardPageRoute,
+    // page: () => OverviewPage(
+    // nn: nn,
+    // ),],
+    // middlewares: [AuthMiddleware()]),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case homePageRoute:

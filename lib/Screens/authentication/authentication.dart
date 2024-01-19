@@ -20,7 +20,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   bool sts = false;
 
   void handleLogin(User usr) {
-    AuthService.to.updateAuthenticationStatus(true, true, usr,sts);
+    AuthService.to.updateAuthenticationStatus(usr,sts);
     Get.offAllNamed(homePageRoute);
   }
 
@@ -209,7 +209,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                             var element = querySnapshot.docs.first.data();
                             User user = User(
                               id: element["ID"],
-                              sts: element["Admin"],
+                              sts: element["Status"],
                               type: element["Type"],
                               lastlogin: element["Last Login"].toDate(),
                               lastlogout: element["Last Logout"].toDate(),
