@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
+import '../../../Constants/Constants.dart';
 
-class LastRepaymentInfo extends StatefulWidget {
+class LoanRepaymentWidget extends StatefulWidget {
 
 
   @override
-  State<LastRepaymentInfo> createState() => _LastRepaymentInfoState();
+  State<LoanRepaymentWidget> createState() => _LoanRepaymentWidgetState();
 }
 
-class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
+class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
   @override
   Widget build(BuildContext context) {
-
     var ScreenWidth =MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
@@ -39,7 +38,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
     return desktop? Container(
       width: 1400,
       //height: 350,
-      height: 400,
+      height: 450,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -66,7 +65,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Last Repayment Information",
+                    "Loan Repayment",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -84,32 +83,42 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
             child: Row(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
-                        Text(
-                          "Total Paid Amount :",
-                          style: TextStyle(
-                            fontSize: 14,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Samitee Code',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-
-                        SizedBox(width: 20,),
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Samitee Name/Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -125,7 +134,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                     Row(
                       children: [
                         Text(
-                          "Last Paid Amount :",
+                          "Transaction Date :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -159,65 +168,97 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
 
                     Row(
                       children: [
-                        Text(
-                          "Amount for Close Today :",
-                          style: TextStyle(
-                            fontSize: 14,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Narration',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 45,),
+                        SizedBox(width: 70,),
+
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Loan Repayment",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              
                             ),
                           ),
-                        ),
 
+                        ),
 
                       ],
                     ),
+
 
                   ],
                 ),
 
                 SizedBox(
-                  width: 100,
+                  width: 200,
                 ),
 
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
+                    SizedBox(
+                      height: 60,
+                    ),
                     Row(
                       children: [
-                        Text(
-                          "Last Repayment Date :",
-                          style: TextStyle(
-                            fontSize: 14,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Select Member',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 120,),
+                        SizedBox(width: 40,),
+
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Member Name/Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
-                        ),
 
+                        ),
 
                       ],
                     ),
@@ -229,29 +270,37 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                     Row(
                       children: [
                         Text(
-                          "Amount :",
+                          "Pay Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 70,),
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Amount",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+
                             ),
                           ),
+
                         ),
 
 
                       ],
                     ),
+
 
                   ],
                 )
@@ -264,7 +313,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
     : tablet? Container(
       width: 1400,
       //height: 350,
-      height: 700,
+      height: 650,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -291,7 +340,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Last Repayment Information",
+                    "Loan Repayment",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -309,32 +358,42 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
             child: Column(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
-                        Text(
-                          "Total Paid Amount :",
-                          style: TextStyle(
-                            fontSize: 14,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Samitee Code',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-
-                        SizedBox(width: 20,),
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Samitee Name/Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -350,7 +409,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                     Row(
                       children: [
                         Text(
-                          "Last Paid Amount :",
+                          "Transaction Date :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -384,30 +443,46 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
 
                     Row(
                       children: [
-                        Text(
-                          "Amount for Close Today :",
-                          style: TextStyle(
-                            fontSize: 14,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Narration',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 25,),
+                        SizedBox(width: 70,),
+
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Loan Repayment",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+
                             ),
                           ),
-                        ),
 
+                        ),
 
                       ],
                     ),
+
 
                   ],
                 ),
@@ -417,32 +492,45 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                 ),
 
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Row(
                       children: [
-                        Text(
-                          "Last Repayment Date :",
-                          style: TextStyle(
-                            fontSize: 14,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Select Member',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
                         SizedBox(width: 40,),
 
+
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Member Name/Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
-                        ),
 
+                        ),
 
                       ],
                     ),
@@ -454,29 +542,37 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                     Row(
                       children: [
                         Text(
-                          "Amount :",
+                          "Pay Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 70,),
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Amount",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+
                             ),
                           ),
+
                         ),
 
 
                       ],
                     ),
+
 
                   ],
                 )
@@ -516,7 +612,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Last Repayment Information",
+                    "Loan Repayment",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -534,32 +630,43 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
             child: Column(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
-                        Text(
-                          "Total Paid Amount :",
-                          style: TextStyle(
-                            fontSize: 8,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Samitee Code',
+                            style: TextStyle(color: Colors.black, fontSize: 8),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 8)),
+
+                            ],
                           ),
                         ),
 
-
-                        SizedBox(width: 20,),
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
                           width: 200,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Samitee Name/Code",
+                              hintStyle: TextStyle(
+                                fontSize: 8,
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -575,7 +682,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                     Row(
                       children: [
                         Text(
-                          "Last Paid Amount :",
+                          "Transaction Date :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -609,30 +716,47 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
 
                     Row(
                       children: [
-                        Text(
-                          "Amount for Close Today :",
-                          style: TextStyle(
-                            fontSize: 8,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Narration',
+                            style: TextStyle(color: Colors.black, fontSize: 8),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 8)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 25,),
+                        SizedBox(width: 70,),
+
 
                         SizedBox(
                           width: 200,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Loan Repayment",
+                              hintStyle: TextStyle(
+                                fontSize: 8,
+                                color: AppColor_greyText,
+                              ),
+
                             ),
                           ),
-                        ),
 
+                        ),
 
                       ],
                     ),
+
 
                   ],
                 ),
@@ -642,32 +766,46 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                 ),
 
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Row(
                       children: [
-                        Text(
-                          "Last Repayment Date :",
-                          style: TextStyle(
-                            fontSize: 8,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Select Member',
+                            style: TextStyle(color: Colors.black, fontSize: 8),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 8)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 35,),
+                        SizedBox(width: 40,),
+
 
                         SizedBox(
                           width: 200,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Member Name/Code",
+                              hintStyle: TextStyle(
+                                fontSize: 8,
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
-                        ),
 
+                        ),
 
                       ],
                     ),
@@ -679,29 +817,38 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                     Row(
                       children: [
                         Text(
-                          "Amount :",
+                          "Pay Amount :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 50,),
 
                         SizedBox(
                           width: 200,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
+                              hintText: "Enter Amount",
+                              hintStyle: TextStyle(
+                                fontSize: 8,
+                                color: AppColor_greyText,
+                              ),
+
                             ),
                           ),
+
                         ),
 
 
                       ],
                     ),
+
 
                   ],
                 )

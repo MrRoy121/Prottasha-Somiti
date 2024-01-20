@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanDetailsWidget.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/ReScheduleLoanInfo.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/RequestInfo.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
-import 'package:prottashasomit/Widget/SamiteeSelection.dart';
-import '../../../../Widget/LoanWidgets/LastRepaymentInfo.dart';
-import '../../../../Widget/LoanWidgets/LedgerTransactionSelection.dart';
-import '../../../../Widget/LoanWidgets/LoanDetailsWidget.dart';
-import '../../../../Widget/LoanWidgets/LoanRepaymentWidget.dart';
-import '../../../../Widget/LoanWidgets/ReScheduleLoanInfo.dart';
-import '../../../../Widget/LoanWidgets/RepaymentLoanInfo.dart';
-import '../../../../Widget/LoanWidgets/RequestInfo.dart';
 import '../../../../Widget/NavbarScreen.dart';
 
 

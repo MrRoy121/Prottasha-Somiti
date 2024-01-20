@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
+import '../../../Constants/Constants.dart';
 
-class RepaymentLoanINfo extends StatefulWidget {
+class LastRepaymentInfo extends StatefulWidget {
 
 
   @override
-  State<RepaymentLoanINfo> createState() => _RepaymentLoanINfoState();
+  State<LastRepaymentInfo> createState() => _LastRepaymentInfoState();
 }
 
-class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
+class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
   @override
   Widget build(BuildContext context) {
 
@@ -36,11 +36,10 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
       tablet = false;
     }
 
-
     return desktop? Container(
       width: 1400,
       //height: 350,
-      height: 600,
+      height: 400,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -67,7 +66,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Information",
+                    "Last Repayment Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -91,7 +90,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Member Name :",
+                          "Total Paid Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -126,7 +125,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Service Charge (%) :",
+                          "Last Paid Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -161,7 +160,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Sanction ID :",
+                          "Amount for Close Today :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -185,70 +184,6 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                       ],
                     ),
 
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Installment Amount :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(height: 20,),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Open Date :",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
                   ],
                 ),
 
@@ -263,7 +198,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Loan Amount :",
+                          "Last Repayment Date :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -294,108 +229,13 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Loan Period :",
+                          "Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
                         SizedBox(width: 40,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(height: 40,),
-
-                    Row(
-                      children: [
-                        Text(
-                          "No of Installment :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Disbursed Status :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Created By :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
 
                         SizedBox(
                           width: 300,
@@ -421,10 +261,10 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
         ],
       ),
     )
-    : tablet?  Container(
+    : tablet? Container(
       width: 1400,
       //height: 350,
-      height: 1200,
+      height: 700,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -451,7 +291,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Information",
+                    "Last Repayment Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -475,7 +315,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Member Name :",
+                          "Total Paid Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -510,7 +350,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Service Charge (%) :",
+                          "Last Paid Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -545,38 +385,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Sanction ID :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 45,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Installment Amount :",
+                          "Amount for Close Today :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -600,39 +409,6 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                       ],
                     ),
 
-                    SizedBox(height: 20,),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Open Date :",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
                   ],
                 ),
 
@@ -647,38 +423,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Loan Amount :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 60,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Loan Period :",
+                          "Last Repayment Date :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -702,84 +447,20 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                       ],
                     ),
 
-                    SizedBox(height: 40,),
+                    SizedBox(
+                      height: 40,
+                    ),
 
                     Row(
                       children: [
                         Text(
-                          "No of Installment :",
+                          "Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
                         SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Disbursed Status :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Created By :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
 
                         SizedBox(
                           width: 300,
@@ -805,10 +486,10 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
         ],
       ),
     )
-    :  Container(
+    : Container(
       width: 1400,
       //height: 350,
-      height: 1000,
+      height: 650,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -835,7 +516,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Information",
+                    "Last Repayment Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -859,7 +540,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Member Name :",
+                          "Total Paid Amount :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -894,7 +575,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Service Charge (%) :",
+                          "Last Paid Amount :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -929,38 +610,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Sanction ID :",
-                          style: TextStyle(
-                            fontSize: 8,
-                          ),
-                        ),
-
-                        SizedBox(width: 45,),
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Installment Amount :",
+                          "Amount for Close Today :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -984,39 +634,6 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                       ],
                     ),
 
-                    SizedBox(height: 20,),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Open Date :",
-                          style: TextStyle(
-                            fontSize: 8,
-                            color: Colors.black,
-                          ),
-                        ),
-
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
                   ],
                 ),
 
@@ -1031,13 +648,13 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Loan Amount :",
+                          "Last Repayment Date :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 60,),
+                        SizedBox(width: 35,),
 
                         SizedBox(
                           width: 200,
@@ -1062,108 +679,13 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Loan Period :",
+                          "Amount :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
                         ),
 
                         SizedBox(width: 40,),
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(height: 40,),
-
-                    Row(
-                      children: [
-                        Text(
-                          "No of Installment :",
-                          style: TextStyle(
-                            fontSize: 8,
-                          ),
-                        ),
-
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Disbursed Status :",
-                          style: TextStyle(
-                            fontSize: 8,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          "Created By :",
-                          style: TextStyle(
-                            fontSize: 8,
-                          ),
-                        ),
-
-                        SizedBox(width: 25,),
 
                         SizedBox(
                           width: 200,

@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
+import '../../../Constants/Constants.dart';
 
-class LoanOtherInfo extends StatefulWidget {
+class RepaymentLoanINfo extends StatefulWidget {
 
-  var selectedsanction;
-
-  bool bsanction;
-
-  LoanOtherInfo(
-      {
-        required this.bsanction,
-        required this.selectedsanction});
 
   @override
-  State<LoanOtherInfo> createState() => _LoanOtherInfoState();
+  State<RepaymentLoanINfo> createState() => _RepaymentLoanINfoState();
 }
 
-class _LoanOtherInfoState extends State<LoanOtherInfo> {
+class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
   @override
   Widget build(BuildContext context) {
 
@@ -48,7 +40,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
     return desktop? Container(
       width: 1400,
       //height: 350,
-      height: 540,
+      height: 600,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -75,7 +67,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Other Information",
+                    "Loan Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -93,12 +85,13 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
             child: Row(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Samitee Code :",
+                          "Member Name :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -110,8 +103,15 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: Text(
-                            widget.bsanction ? widget.selectedsanction.somiteeid : "",
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
                           ),
 
                         ),
@@ -137,11 +137,15 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
 
-                          child: Text(
-                            widget.bsanction ? widget.selectedsanction.servicecharge.toString() : "",
+                            ),
                           ),
-
 
                         ),
 
@@ -157,7 +161,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Installment Amount :",
+                          "Sanction ID :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -167,11 +171,14 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-
-                          child: Text(
-                            widget.bsanction ? widget.selectedsanction.installmentamount.toString() : "",
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
                           ),
-
                         ),
 
 
@@ -185,7 +192,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Manager Name :",
+                          "Installment Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -214,7 +221,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "No of Installment :",
+                          "Open Date :",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.black,
@@ -226,10 +233,17 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: Text(
-                            widget.bsanction ? widget.selectedsanction.installmentno.toString() : "",
-                          ),
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
 
+                            ),
+                          ),
 
                         ),
 
@@ -243,36 +257,34 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                 ),
 
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 50,),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Granted Amount :",
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                    Row(
+                      children: [
+                        Text(
+                          "Loan Amount :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
+                        ),
 
-                          SizedBox(width: 120,),
+                        SizedBox(width: 120,),
 
-                          SizedBox(
-                            width: 300,
-                            child: TextField(
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
                               ),
                             ),
                           ),
+                        ),
 
 
-                        ],
-                      ),
+                      ],
                     ),
 
                     SizedBox(
@@ -292,11 +304,14 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
 
                         SizedBox(
                           width: 300,
-                          child: Text(
-                            widget.bsanction ? widget.selectedsanction.loanperiod : "",
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
                           ),
-
-
                         ),
 
 
@@ -308,7 +323,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Death Risk (%) :",
+                          "No of Installment :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -343,7 +358,38 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Approved Date :",
+                          "Disbursed Status :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 25,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Created By :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -375,10 +421,10 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
         ],
       ),
     )
-    : tablet? Container(
+    : tablet?  Container(
       width: 1400,
       //height: 350,
-      height: 1040,
+      height: 1200,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -405,7 +451,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Other Information",
+                    "Loan Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -423,12 +469,13 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
             child: Column(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Samitee Code :",
+                          "Member Name :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -498,7 +545,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Installment Amount :",
+                          "Sanction ID :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -529,7 +576,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Manager Name :",
+                          "Installment Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -558,7 +605,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "No of Installment :",
+                          "Open Date :",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.black,
@@ -594,18 +641,19 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                 ),
 
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Granted Amount :",
+                          "Loan Amount :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 70,),
+                        SizedBox(width: 60,),
 
                         SizedBox(
                           width: 300,
@@ -659,7 +707,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Death Risk (%) :",
+                          "No of Installment :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -694,7 +742,38 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Approved Date :",
+                          "Disbursed Status :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 25,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Created By :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -726,10 +805,10 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
         ],
       ),
     )
-    : Container(
+    :  Container(
       width: 1400,
       //height: 350,
-      height: 1040,
+      height: 1000,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -756,7 +835,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Other Information",
+                    "Loan Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -774,12 +853,13 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
             child: Column(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Samitee Code :",
+                          "Member Name :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -849,7 +929,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Installment Amount :",
+                          "Sanction ID :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -880,7 +960,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Manager Name :",
+                          "Installment Amount :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -909,7 +989,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "No of Installment :",
+                          "Open Date :",
                           style: TextStyle(
                             fontSize: 8,
                             color: Colors.black,
@@ -945,18 +1025,19 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                 ),
 
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Granted Amount :",
+                          "Loan Amount :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 55,),
+                        SizedBox(width: 60,),
 
                         SizedBox(
                           width: 200,
@@ -1010,7 +1091,7 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Death Risk (%) :",
+                          "No of Installment :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
@@ -1045,7 +1126,38 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                     Row(
                       children: [
                         Text(
-                          "Approved Date :",
+                          "Disbursed Status :",
+                          style: TextStyle(
+                            fontSize: 8,
+                          ),
+                        ),
+
+                        SizedBox(width: 25,),
+
+                        SizedBox(
+                          width: 200,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Created By :",
                           style: TextStyle(
                             fontSize: 8,
                           ),

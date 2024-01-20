@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
+import '../../../Constants/Constants.dart';
 
-class RequestInfo extends StatefulWidget {
+class LoanOtherInfo extends StatefulWidget {
 
+  var selectedsanction;
+
+  bool bsanction;
+
+  LoanOtherInfo(
+      {
+        required this.bsanction,
+        required this.selectedsanction});
 
   @override
-  State<RequestInfo> createState() => _RequestInfoState();
+  State<LoanOtherInfo> createState() => _LoanOtherInfoState();
 }
 
-class _RequestInfoState extends State<RequestInfo> {
+class _LoanOtherInfoState extends State<LoanOtherInfo> {
   @override
   Widget build(BuildContext context) {
 
@@ -36,10 +44,11 @@ class _RequestInfoState extends State<RequestInfo> {
       tablet = false;
     }
 
+
     return desktop? Container(
       width: 1400,
       //height: 350,
-      height: 380,
+      height: 540,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -66,7 +75,7 @@ class _RequestInfoState extends State<RequestInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Request Information",
+                    "Loan Other Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -84,37 +93,25 @@ class _RequestInfoState extends State<RequestInfo> {
             child: Row(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Request Date :",
+                          "Samitee Code :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 10,),
+
+                        SizedBox(width: 20,),
 
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                              hintText: "12-OCT-2021",
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.somiteeid : "",
                           ),
 
                         ),
@@ -128,42 +125,23 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Samitee',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Service Charge (%) :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Samitee Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
-                            ),
+
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.servicecharge.toString() : "",
                           ),
+
 
                         ),
 
@@ -178,41 +156,20 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Reschedule Term',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Installment Amount :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
-
+                        SizedBox(width: 45,),
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
-                            ),
+
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.installmentamount.toString() : "",
                           ),
 
                         ),
@@ -221,27 +178,143 @@ class _RequestInfoState extends State<RequestInfo> {
                       ],
                     ),
 
+                    SizedBox(
+                      height: 40,
+                    ),
 
-                  ],
-                ),
-
-                SizedBox(
-                  width: 250,
-                ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
                     Row(
                       children: [
                         Text(
-                          "Reschedule Date :",
+                          "Manager Name :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 10,),
+                        SizedBox(width: 25,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 20,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "No of Installment :",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.installmentno.toString() : "",
+                          ),
+
+
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+
+                SizedBox(
+                  width: 100,
+                ),
+
+                Column(
+                  children: [
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 50,),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Granted Amount :",
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+
+                          SizedBox(width: 120,),
+
+                          SizedBox(
+                            width: 300,
+                            child: TextField(
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Loan Period :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
+
+                        SizedBox(
+                          width: 300,
+                          child: Text(
+                            widget.bsanction ? widget.selectedsanction.loanperiod : "",
+                          ),
+
+
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 40,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Death Risk (%) :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
@@ -254,11 +327,7 @@ class _RequestInfoState extends State<RequestInfo> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
-                              hintText: "12-OCT-2021",
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+
                             ),
                           ),
 
@@ -273,52 +342,31 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Account No',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Approved Date :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
-
+                        SizedBox(width: 25,),
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Select Member",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
                             ),
                           ),
-
                         ),
 
 
                       ],
                     ),
 
-                    SizedBox(
-                      height: 100,
-                    ),
                   ],
                 )
               ],
@@ -330,7 +378,7 @@ class _RequestInfoState extends State<RequestInfo> {
     : tablet? Container(
       width: 1400,
       //height: 350,
-      height: 680,
+      height: 1040,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -357,7 +405,7 @@ class _RequestInfoState extends State<RequestInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Request Information",
+                    "Loan Other Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -375,19 +423,19 @@ class _RequestInfoState extends State<RequestInfo> {
             child: Column(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Request Date :",
+                          "Samitee Code :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 10,),
+
+                        SizedBox(width: 20,),
 
 
                         SizedBox(
@@ -399,11 +447,6 @@ class _RequestInfoState extends State<RequestInfo> {
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
-                              ),
-                              hintText: "12-OCT-2021",
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -419,40 +462,25 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Samitee',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Service Charge (%) :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Samitee Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+
                             ),
                           ),
 
@@ -469,70 +497,75 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Reschedule Term',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Installment Amount :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
-
+                        SizedBox(width: 45,),
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
                           ),
-
                         ),
 
 
                       ],
                     ),
 
+                    SizedBox(
+                      height: 40,
+                    ),
 
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
-                ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
                     Row(
                       children: [
                         Text(
-                          "Reschedule Date :",
+                          "Manager Name :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 10,),
+                        SizedBox(width: 25,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 20,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "No of Installment :",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
@@ -545,11 +578,107 @@ class _RequestInfoState extends State<RequestInfo> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
-                              hintText: "12-OCT-2021",
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+
+                            ),
+                          ),
+
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+
+                SizedBox(
+                  height: 50,
+                ),
+
+                Column(
+                  children: [
+
+                    Row(
+                      children: [
+                        Text(
+                          "Granted Amount :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 70,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
                               ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Loan Period :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 40,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Death Risk (%) :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+
                             ),
                           ),
 
@@ -564,52 +693,31 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Account No',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Approved Date :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
-
+                        SizedBox(width: 25,),
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Select Member",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
                             ),
                           ),
-
                         ),
 
 
                       ],
                     ),
 
-                    SizedBox(
-                      height: 100,
-                    ),
                   ],
                 )
               ],
@@ -621,7 +729,7 @@ class _RequestInfoState extends State<RequestInfo> {
     : Container(
       width: 1400,
       //height: 350,
-      height: 680,
+      height: 1040,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -648,7 +756,7 @@ class _RequestInfoState extends State<RequestInfo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Request Information",
+                    "Loan Other Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -666,19 +774,19 @@ class _RequestInfoState extends State<RequestInfo> {
             child: Column(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
 
                     Row(
                       children: [
                         Text(
-                          "Request Date :",
+                          "Samitee Code :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 10,),
+
+                        SizedBox(width: 20,),
 
 
                         SizedBox(
@@ -690,12 +798,6 @@ class _RequestInfoState extends State<RequestInfo> {
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
-                              ),
-                              hintText: "12-OCT-2021",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -711,41 +813,25 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Samitee',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
+                        Text(
+                          "Service Charge (%) :",
+                          style: TextStyle(
+                            fontSize: 8,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
                           width: 200,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Samitee Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                                fontSize: 8,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+
                             ),
                           ),
 
@@ -762,71 +848,75 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Reschedule Term',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
+                        Text(
+                          "Installment Amount :",
+                          style: TextStyle(
+                            fontSize: 8,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
-
+                        SizedBox(width: 45,),
 
                         SizedBox(
                           width: 200,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                                fontSize: 8,
-                              ),
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
                           ),
-
                         ),
 
 
                       ],
                     ),
 
+                    SizedBox(
+                      height: 40,
+                    ),
 
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
-                ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
                     Row(
                       children: [
                         Text(
-                          "Reschedule Date :",
+                          "Manager Name :",
                           style: TextStyle(
                             fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 10,),
+                        SizedBox(width: 25,),
+
+                        SizedBox(
+                          width: 200,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 20,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "No of Installment :",
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Colors.black,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
 
 
                         SizedBox(
@@ -839,12 +929,107 @@ class _RequestInfoState extends State<RequestInfo> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                               ),
-                              hintText: "12-OCT-2021",
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 8,
-                                fontWeight: FontWeight.bold,
+
+                            ),
+                          ),
+
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+
+                SizedBox(
+                  height: 50,
+                ),
+
+                Column(
+                  children: [
+
+                    Row(
+                      children: [
+                        Text(
+                          "Granted Amount :",
+                          style: TextStyle(
+                            fontSize: 8,
+                          ),
+                        ),
+
+                        SizedBox(width: 55,),
+
+                        SizedBox(
+                          width: 200,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
                               ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Loan Period :",
+                          style: TextStyle(
+                            fontSize: 8,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
+
+                        SizedBox(
+                          width: 200,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(height: 40,),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Death Risk (%) :",
+                          style: TextStyle(
+                            fontSize: 8,
+                          ),
+                        ),
+
+                        SizedBox(width: 40,),
+
+
+                        SizedBox(
+                          width: 200,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+
                             ),
                           ),
 
@@ -859,53 +1044,31 @@ class _RequestInfoState extends State<RequestInfo> {
 
                     Row(
                       children: [
-
-                        RichText(
-                          text: TextSpan(
-                            text: 'Account No',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
+                        Text(
+                          "Approved Date :",
+                          style: TextStyle(
+                            fontSize: 8,
                           ),
                         ),
 
-
-                        SizedBox(width: 10,),
-
+                        SizedBox(width: 25,),
 
                         SizedBox(
                           width: 200,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Select Member",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
                             ),
                           ),
-
                         ),
 
 
                       ],
                     ),
 
-                    SizedBox(
-                      height: 100,
-                    ),
                   ],
                 )
               ],

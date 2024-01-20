@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
+import '../../../Constants/Constants.dart';
 
-class LoanRepaymentWidget extends StatefulWidget {
+class RequestInfo extends StatefulWidget {
 
 
   @override
-  State<LoanRepaymentWidget> createState() => _LoanRepaymentWidgetState();
+  State<RequestInfo> createState() => _RequestInfoState();
 }
 
-class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
+class _RequestInfoState extends State<RequestInfo> {
   @override
   Widget build(BuildContext context) {
+
     var ScreenWidth =MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
@@ -38,7 +39,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
     return desktop? Container(
       width: 1400,
       //height: 350,
-      height: 450,
+      height: 380,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -65,7 +66,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Repayment",
+                    "Request Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -83,42 +84,36 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
             child: Row(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
 
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Samitee Code',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Request Date :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: AppColor_greyBorder,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Samitee Name/Code",
+                              hintText: "12-OCT-2021",
                               hintStyle: TextStyle(
-                                color: AppColor_greyText,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -133,44 +128,10 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
-                        Text(
-                          "Transaction Date :",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
 
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
-                          ),
-
-                        ),
-
-
-                      ],
-                    ),
-
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
                         RichText(
                           text: TextSpan(
-                            text: 'Narration',
+                            text: 'Select Samitee',
                             style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
@@ -183,7 +144,8 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                           ),
                         ),
 
-                        SizedBox(width: 70,),
+
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
@@ -195,62 +157,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Loan Repayment",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  width: 200,
-                ),
-
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 60,
-                    ),
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Member',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 40,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Member Name/Code",
+                              hintText: "Enter Samitee Name/ Code",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
@@ -260,8 +167,10 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                         ),
 
+
                       ],
                     ),
+
 
                     SizedBox(
                       height: 40,
@@ -269,29 +178,40 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
-                        Text(
-                          "Pay Amount :",
-                          style: TextStyle(
-                            fontSize: 14,
+
+                        RichText(
+                          text: TextSpan(
+                            text: 'Reschedule Term',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 70,),
+
+                        SizedBox(width: 10,),
+
 
                         SizedBox(
                           width: 300,
                           child: TextField(
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Enter Amount",
+                              hintText: "Select",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-
+                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
                           ),
 
@@ -302,6 +222,103 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                     ),
 
 
+                  ],
+                ),
+
+                SizedBox(
+                  width: 250,
+                ),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Reschedule Date :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+
+                        SizedBox(width: 10,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              hintText: "12-OCT-2021",
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+                        ),
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    Row(
+                      children: [
+
+                        RichText(
+                          text: TextSpan(
+                            text: 'Account No',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
+                          ),
+                        ),
+
+
+                        SizedBox(width: 10,),
+
+
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColor_greyBorder),
+                              ),
+                              hintText: "Select Member",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
+                            ),
+                          ),
+
+                        ),
+
+
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 100,
+                    ),
                   ],
                 )
               ],
@@ -313,7 +330,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
     : tablet? Container(
       width: 1400,
       //height: 350,
-      height: 650,
+      height: 680,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -340,7 +357,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Repayment",
+                    "Request Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -358,42 +375,36 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
             child: Column(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
 
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Samitee Code',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Request Date :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: AppColor_greyBorder,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Samitee Name/Code",
+                              hintText: "12-OCT-2021",
                               hintStyle: TextStyle(
-                                color: AppColor_greyText,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -408,25 +419,40 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
-                        Text(
-                          "Transaction Date :",
-                          style: TextStyle(
-                            fontSize: 14,
+
+                        RichText(
+                          text: TextSpan(
+                            text: 'Select Samitee',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-
+                              hintText: "Enter Samitee Name/ Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -443,9 +469,10 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
+
                         RichText(
                           text: TextSpan(
-                            text: 'Narration',
+                            text: 'Reschedule Term',
                             style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
@@ -458,7 +485,8 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                           ),
                         ),
 
-                        SizedBox(width: 70,),
+
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
@@ -470,15 +498,16 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Loan Repayment",
+                              hintText: "Select",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-
+                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
                           ),
 
                         ),
+
 
                       ],
                     ),
@@ -492,41 +521,35 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                 ),
 
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Member',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                        Text(
+                          "Reschedule Date :",
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 300,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: AppColor_greyBorder,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Member Name/Code",
+                              hintText: "12-OCT-2021",
                               hintStyle: TextStyle(
-                                color: AppColor_greyText,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -541,29 +564,40 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
-                        Text(
-                          "Pay Amount :",
-                          style: TextStyle(
-                            fontSize: 14,
+
+                        RichText(
+                          text: TextSpan(
+                            text: 'Account No',
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 70,),
+
+                        SizedBox(width: 10,),
+
 
                         SizedBox(
                           width: 300,
                           child: TextField(
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Enter Amount",
+                              hintText: "Select Member",
                               hintStyle: TextStyle(
                                 color: AppColor_greyText,
                               ),
-
+                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
                             ),
                           ),
 
@@ -573,7 +607,9 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                       ],
                     ),
 
-
+                    SizedBox(
+                      height: 100,
+                    ),
                   ],
                 )
               ],
@@ -585,7 +621,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
     : Container(
       width: 1400,
       //height: 350,
-      height: 650,
+      height: 680,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -612,7 +648,7 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Loan Repayment",
+                    "Request Information",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -630,43 +666,37 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
             child: Column(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
 
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Samitee Code',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
+                        Text(
+                          "Request Date :",
+                          style: TextStyle(
+                            fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 200,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: AppColor_greyBorder,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Samitee Name/Code",
+                              hintText: "12-OCT-2021",
                               hintStyle: TextStyle(
                                 fontSize: 8,
-                                color: AppColor_greyText,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -681,25 +711,41 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
-                        Text(
-                          "Transaction Date :",
-                          style: TextStyle(
-                            fontSize: 8,
+
+                        RichText(
+                          text: TextSpan(
+                            text: 'Select Samitee',
+                            style: TextStyle(color: Colors.black, fontSize: 8),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 8)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 200,
                           child: TextField(
-                            readOnly: true,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-
+                              hintText: "Enter Samitee Name/ Code",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                                fontSize: 8,
+                              ),
+                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -716,9 +762,10 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
+
                         RichText(
                           text: TextSpan(
-                            text: 'Narration',
+                            text: 'Reschedule Term',
                             style: TextStyle(color: Colors.black, fontSize: 8),
                             children: <TextSpan>[
                               TextSpan(
@@ -731,7 +778,8 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                           ),
                         ),
 
-                        SizedBox(width: 70,),
+
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
@@ -743,16 +791,17 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Loan Repayment",
+                              hintText: "Select",
                               hintStyle: TextStyle(
-                                fontSize: 8,
                                 color: AppColor_greyText,
+                                fontSize: 8,
                               ),
-
+                              suffixIcon: Icon(Icons.arrow_drop_down, color: AppColor_greyText),
                             ),
                           ),
 
                         ),
+
 
                       ],
                     ),
@@ -766,42 +815,36 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                 ),
 
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Member',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
+                        Text(
+                          "Reschedule Date :",
+                          style: TextStyle(
+                            fontSize: 8,
                           ),
                         ),
 
-                        SizedBox(width: 40,),
+                        SizedBox(width: 10,),
 
 
                         SizedBox(
                           width: 200,
                           child: TextField(
+                            readOnly: true,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: AppColor_greyBorder,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                                borderSide: BorderSide.none,
                               ),
-                              hintText: "Enter Member Name/Code",
+                              hintText: "12-OCT-2021",
                               hintStyle: TextStyle(
+                                color: Colors.black,
                                 fontSize: 8,
-                                color: AppColor_greyText,
+                                fontWeight: FontWeight.bold,
                               ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
                             ),
                           ),
 
@@ -816,30 +859,41 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
 
                     Row(
                       children: [
-                        Text(
-                          "Pay Amount :",
-                          style: TextStyle(
-                            fontSize: 8,
+
+                        RichText(
+                          text: TextSpan(
+                            text: 'Account No',
+                            style: TextStyle(color: Colors.black, fontSize: 8),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
+                              TextSpan(
+                                  text: ' :',
+                                  style: TextStyle(color: Colors.black, fontSize: 8)),
+
+                            ],
                           ),
                         ),
 
-                        SizedBox(width: 50,),
+
+                        SizedBox(width: 10,),
+
 
                         SizedBox(
                           width: 200,
                           child: TextField(
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: AppColor_greyBorder),
                               ),
-                              hintText: "Enter Amount",
+                              hintText: "Select Member",
                               hintStyle: TextStyle(
                                 fontSize: 8,
                                 color: AppColor_greyText,
                               ),
-
+                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
                             ),
                           ),
 
@@ -849,7 +903,9 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                       ],
                     ),
 
-
+                    SizedBox(
+                      height: 100,
+                    ),
                   ],
                 )
               ],

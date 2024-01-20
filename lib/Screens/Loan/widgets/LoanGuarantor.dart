@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
-import '../../Model/member.dart';
+import '../../../Constants/Constants.dart';
+import '../../../Model/member.dart';
 
 
 class LoanGuarantor extends StatefulWidget {

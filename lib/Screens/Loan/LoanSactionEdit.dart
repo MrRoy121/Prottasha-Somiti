@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor_family.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanSamitteSelectionUpdate.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
@@ -11,15 +14,11 @@ import '../../../../Constants/values.dart';
 import '../../../../Model/member.dart';
 import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
-import '../../../../Widget/LoanWidgets/LoanGuarantor.dart';
-import '../../../../Widget/LoanWidgets/LoanGuarantor_family.dart';
-import '../../../../Widget/LoanWidgets/LoanSamitteSelection.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../Widget/TransactionWidget/MemberDeposit.dart';
 import '../../../../route.dart';
 import '../../../Model/LoanSanction.dart';
-import '../../../Widget/LoanWidgets/LoanSamitteSelectionUpdate.dart';
 
 class LoanSanctionEdit extends StatefulWidget {
   Navbool navbool;

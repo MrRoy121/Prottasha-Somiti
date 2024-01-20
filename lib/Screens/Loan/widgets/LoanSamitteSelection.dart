@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:prottashasomit/Model/LoanSanction.dart';
 
-import '../../Constants/Constants.dart';
-import '../../Constants/values.dart';
-import '../../Model/member.dart';
-import '../../Model/somitee.dart';
+import '../../../Constants/Constants.dart';
+import '../../../Constants/values.dart';
+import '../../../Model/member.dart';
+import '../../../Model/somitee.dart';
 
-class LoanSamitteSelectionUpdate extends StatefulWidget {
+class LoanSamitteSelection extends StatefulWidget {
   List<Somitee> somitee;
   List<String> ssomitee;
   var selectedsomitee;
-  var consanctionlimit;
-  LoanSanction mst;
   var selectedsomiteeid;
+  var consanctionlimit;
   var conservicecharge;
   var selectedloanpurpose;
   double serviceamount;
@@ -28,7 +26,7 @@ class LoanSamitteSelectionUpdate extends StatefulWidget {
   var selectedmemberss;
   var selectedmemberssid;
   DateTime selectedDate;
-  void Function(LoanSanction) onsubmit;
+  void Function() onsubmit;
   void Function() onclear;
   void Function(int) setupsomiti;
   bool memberssselected;
@@ -36,13 +34,14 @@ class LoanSamitteSelectionUpdate extends StatefulWidget {
   void Function(int) setuploanpurpose;
   void Function(int) setupinstallment;
   void Function(int) setuplloanperiod;
-  LoanSamitteSelectionUpdate(
+  LoanSamitteSelection(
       {required this.onclear,
       required this.setupsomiti,
       required this.coninstallmentno,
-        required this.setuploanpurpose,
-      required this.setupinstallment,required this.selectedloanpurpose,
-      required this.setuplloanperiod,    required this.mst,
+      required this.setuploanpurpose,
+      required this.setupinstallment,
+      required this.selectedloanpurpose,
+      required this.setuplloanperiod,
       required this.selectedDate,
       required this.conremarks,
       required this.coninstallmentamount,
@@ -64,10 +63,11 @@ class LoanSamitteSelectionUpdate extends StatefulWidget {
       required this.onsubmit});
 
   @override
-  State<LoanSamitteSelectionUpdate> createState() => _LoanSamitteSelectionUpdateState();
+  State<LoanSamitteSelection> createState() => _LoanSamitteSelectionState();
 }
 
-class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate> {
+class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
+  bool somiteeselected = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -151,7 +151,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          widget.onsubmit(widget.mst);
+                          widget.onsubmit();
                         },
                         child: Container(
                           height: 40,
@@ -160,7 +160,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10.0, left: 15),
                             child: Text(
-                              "✓ Update",
+                              "✓ Submit",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 14),
                             ),
@@ -325,6 +325,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                                 .indexOf(newValue!.name)];
                                         widget.setupsomiti(widget.ssomitee
                                             .indexOf(newValue.name));
+                                        somiteeselected = true;
                                       });
                                     },
                                     items: widget.somitee,
@@ -557,9 +558,12 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                       color: AppColor_greyText,
                                     ),
                                   ),
-                                  value: widget.selectedinstalment, onChanged: (newValue) {
-                                  widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
-                                },
+                                  value: widget.selectedinstalment,
+                                  onChanged: (newValue) {
+                                    widget.setupinstallment(
+                                        InstallmentFrequencyList.indexOf(
+                                            newValue!));
+                                  },
                                   items: InstallmentFrequencyList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
@@ -700,7 +704,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                 ),
                               ),
                               SizedBox(
-                                width:40,
+                                width: 40,
                               ),
                               Container(
                                   width: 300,
@@ -814,7 +818,6 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                               SizedBox(
                                 width: 40,
                               ),
-
                               Container(
                                   width: 300,
                                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -849,7 +852,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                       ),
                                     ),
                                     dropdownDecoratorProps:
-                                    const DropDownDecoratorProps(
+                                        const DropDownDecoratorProps(
                                       dropdownSearchDecoration: InputDecoration(
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -875,8 +878,8 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedloanpurpose = newValue;
-                                        widget.setuploanpurpose(LoanPurposeList
-                                            .indexOf(newValue!));
+                                        widget.setuploanpurpose(
+                                            LoanPurposeList.indexOf(newValue!));
                                       });
                                     },
                                     items: LoanPurposeList,
@@ -1048,7 +1051,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                           Spacer(),
                           InkWell(
                             onTap: () {
-                              widget.onsubmit(widget.mst);
+                              widget.onsubmit();
                             },
                             child: Container(
                               height: 40,
@@ -1231,6 +1234,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                                     .indexOf(newValue!.name)];
                                             widget.setupsomiti(widget.ssomitee
                                                 .indexOf(newValue.name));
+                                            somiteeselected = true;
                                           });
                                         },
                                         items: widget.somitee,
@@ -1448,9 +1452,12 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                           color: AppColor_greyText,
                                         ),
                                       ),
-                                      value: widget.selectedinstalment, onChanged: (newValue) {
-                                      widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
-                                    },
+                                      value: widget.selectedinstalment,
+                                      onChanged: (newValue) {
+                                        widget.setupinstallment(
+                                            InstallmentFrequencyList.indexOf(
+                                                newValue!));
+                                      },
                                       items:
                                           InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(
@@ -1781,7 +1788,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                           Spacer(),
                           InkWell(
                             onTap: () {
-                              widget.onsubmit(widget.mst);
+                              widget.onsubmit();
                             },
                             child: Container(
                               height: 30,
@@ -1964,6 +1971,7 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                                     .indexOf(newValue!.name)];
                                             widget.setupsomiti(widget.ssomitee
                                                 .indexOf(newValue.name));
+                                            somiteeselected = true;
                                           });
                                         },
                                         items: widget.somitee,
@@ -2182,9 +2190,12 @@ class _LoanSamitteSelectionUpdateState extends State<LoanSamitteSelectionUpdate>
                                           fontSize: 8,
                                         ),
                                       ),
-                                      value: widget.selectedinstalment, onChanged: (newValue) {
-                                      widget.setupinstallment(InstallmentFrequencyList.indexOf(newValue!));
-                                    },
+                                      value: widget.selectedinstalment,
+                                      onChanged: (newValue) {
+                                        widget.setupinstallment(
+                                            InstallmentFrequencyList.indexOf(
+                                                newValue!));
+                                      },
                                       items:
                                           InstallmentFrequencyList.map((item) {
                                         return DropdownMenuItem(

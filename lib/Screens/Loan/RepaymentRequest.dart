@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LastRepaymentInfo.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanDetailsWidget.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanRepaymentWidget.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/RepaymentLoanInfo.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
-import '../../../../Widget/LoanWidgets/LastRepaymentInfo.dart';
-import '../../../../Widget/LoanWidgets/LoanDetailsWidget.dart';
-import '../../../../Widget/LoanWidgets/LoanInformation.dart';
-import '../../../../Widget/LoanWidgets/LoanOtherInfo.dart';
-import '../../../../Widget/LoanWidgets/LoanRepaymentWidget.dart';
-import '../../../../Widget/LoanWidgets/RepaymentLoanInfo.dart';
 import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/TransactionWidget/Image.dart';
 import '../../../../Widget/TransactionWidget/LinkACinfo.dart';

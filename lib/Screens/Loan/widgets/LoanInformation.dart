@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-import '../../Constants/Constants.dart';
-import '../../Model/LoanSanction.dart';
+import '../../../Constants/Constants.dart';
+import '../../../Model/LoanSanction.dart';
 
 class LoanInformation extends StatefulWidget {
   List<LoanSanction> sanction;
