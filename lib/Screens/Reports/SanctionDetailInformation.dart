@@ -27,6 +27,8 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
   @override
   Widget build(BuildContext context) {
 
+
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,

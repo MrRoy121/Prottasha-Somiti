@@ -151,7 +151,7 @@ class _LedgerState extends State<Ledger> {
                         RichText(
                           text: TextSpan(
                             text: 'Ledger Type',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
+                            style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
                                   text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
@@ -867,7 +867,7 @@ class _LedgerState extends State<Ledger> {
                         RichText(
                           text: TextSpan(
                             text: 'Ledger Type',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
+                            style: TextStyle(color: Colors.black, fontSize: 8),
                             children: <TextSpan>[
                               TextSpan(
                                   text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
@@ -936,7 +936,7 @@ class _LedgerState extends State<Ledger> {
                           ),
                         ),
 
-                        SizedBox(width: 80,),
+                        SizedBox(width: 70,),
 
 
                         SizedBox(
@@ -956,8 +956,9 @@ class _LedgerState extends State<Ledger> {
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
+                                    fontSize: 8,
                                   ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp,
+                                  suffixIcon: Icon(Icons.calendar_month_sharp, size: 10,
                                       color: Colors.grey),
                                 ),
                               ),
@@ -983,7 +984,7 @@ class _LedgerState extends State<Ledger> {
                             fontSize: 8,
                           ),
                         ),
-                        SizedBox(width: 180),
+                        SizedBox(width: 150),
                         Row(
                           children: [
                             Radio(
@@ -1091,7 +1092,7 @@ class _LedgerState extends State<Ledger> {
                           ),
                         ),
 
-                        SizedBox(width: 80,),
+                        SizedBox(width: 70,),
 
 
                         SizedBox(
