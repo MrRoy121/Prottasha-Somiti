@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -48,7 +47,8 @@ class _EditMembersState extends State<EditMembers> {
         somitee.add(Somitee(
             address: element["Address"],
             id: element.id,
-            lastupdated: element["Last Edited"].toDate(),closed: element["Closed"],
+            lastupdated: element["Last Edited"].toDate(),
+            closed: element["Closed"],
             name: element["Name"],
             active: element["Active"],
             formation: element["Formation Date"].toDate(),
@@ -93,11 +93,15 @@ class _EditMembersState extends State<EditMembers> {
                 firstname: element["First Name"],
                 lastname: element["Last Name"],
                 fathername: element["Father Name"],
-                mothername: element["Mother Name"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
+                mothername: element["Mother Name"],
+                loanpendingamount: element["Loan Pending Amount"],
+                owndepositamount: element["Own deposit Amount"],
                 gender: element["Gender"],
-                religion: element["Religion"],sts: element["Status"],
+                religion: element["Religion"],
+                sts: element["Status"],
                 nationalid: element["National ID"],
-                birthregi: element["Birth Registration"],annualincome: element["Annual Income"],
+                birthregi: element["Birth Registration"],
+                annualincome: element["Annual Income"],
                 age: element["Age"],
                 nodepenndent: element["No of Dependent"],
                 education: element["Education"],
@@ -132,305 +136,323 @@ class _EditMembersState extends State<EditMembers> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreen(
-              appbool: widget.appbool,
-              navbool: widget.navbool,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            SamiteeSelection(
-                submit: false,
-                selectmember: false,
-                clear: true,
-                ssomitee: ssomitee,
-                close: true,
-                setupsomiti: _setupsomiti,
-                active: true,
-                selectedsomiteeid: selectedsomiti,
-                onsubmit: () {},
-                somitee: somitee,
-                onclear: _onclear,
-                selectedsomitee: sselectedsomiti),
-            SizedBox(
-              height: 50,
-            ),
-            Container(
-              width: 1400,
-              // color: Colors.white,
-
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-
+            Container(width: MediaQuery.of(context).size.width,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 100,
+                  ),
+                  SamiteeSelection(
+                      submit: false,
+                      selectmember: false,
+                      clear: true,
+                      ssomitee: ssomitee,
+                      close: true,
+                      setupsomiti: _setupsomiti,
+                      active: true,
+                      selectedsomiteeid: selectedsomiti,
+                      onsubmit: () {},
+                      somitee: somitee,
+                      onclear: _onclear,
+                      selectedsomitee: sselectedsomiti),
+                  SizedBox(
+                    height: 50,
+                  ),
                   Container(
                     width: 1400,
-                    height: 40,
-                    color: navbarColor,
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    // color: Colors.white,
+
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+
+                    child: Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 40.0),
-                          child: Text(
-                            "Member General Report",
-                            style: TextStyle(
-                              color: AppColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                        Container(
+                          width: 1400,
+                          height: 40,
+                          color: navbarColor,
+                          child: const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 40.0),
+                                child: Text(
+                                  "Member General Report",
+                                  style: TextStyle(
+                                    color: AppColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          child: selectedsomiti == null
+                              ? Center(
+                                  child: Text("No Somitee Is Selected.."),
+                                )
+                              : FutureBuilder(
+                                  builder: (ctx, AsyncSnapshot snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasError) {
+                                        return const Center(
+                                          child:
+                                              Text("No Member Data Available.."),
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return MediaQuery.removePadding(
+                                          context: context,
+                                          removeTop: true,
+                                          child: DataTable(
+                                            showCheckboxColumn: false,
+                                            border: TableBorder.all(
+                                                color: Colors.black26, width: 1),
+                                            headingRowColor:
+                                                MaterialStateProperty.all<Color>(
+                                                    AppColor_Blue),
+                                            columns: const [
+                                              DataColumn(
+                                                label: Text(
+                                                  'SL',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              DataColumn(
+                                                label: Text(
+                                                  'Member Code',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              DataColumn(
+                                                label: Text('Member Name',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    )),
+                                              ),
+                                              DataColumn(
+                                                label: Text('Mobile No',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    )),
+                                              ),
+                                              DataColumn(
+                                                label: Text(
+                                                  'Member Type',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              DataColumn(
+                                                  label: Text(
+                                                'National ID',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                              DataColumn(
+                                                label: Text('Father Name',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    )),
+                                              ),
+                                              DataColumn(
+                                                label: Text('Date Of Birth',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    )),
+                                              ),
+                                              DataColumn(
+                                                label: Text('Present Address',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    )),
+                                              ),
+                                              DataColumn(
+                                                label: Text('ACTION',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    )),
+                                              ),
+                                            ],
+                                            rows: List.generate(
+                                                snapshot.data.length, (index) {
+                                              return DataRow(
+                                                cells: [
+                                                  DataCell(
+                                                      Text((index + 1).toString(),
+                                                          style: const TextStyle(
+                                                            fontSize: 12,
+                                                          ))),
+                                                  DataCell(
+                                                    Text(snapshot.data[index].id,
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                        )),
+                                                  ),
+                                                  DataCell(Text(
+                                                      snapshot.data[index]
+                                                              .firstname +
+                                                          " " +
+                                                          snapshot.data[index]
+                                                              .lastname,
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                      ))),
+                                                  DataCell(
+                                                    Text(
+                                                        snapshot.data[index]
+                                                            .mobilenno,
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                        )),
+                                                  ),
+                                                  DataCell(
+                                                    Text(
+                                                        snapshot.data[index]
+                                                            .membertype,
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                        )),
+                                                  ),
+                                                  DataCell(
+                                                    Text(
+                                                        snapshot.data[index]
+                                                            .nationalid,
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
+                                                        )),
+                                                  ),
+                                                  DataCell(
+                                                    Text(
+                                                        snapshot.data[index]
+                                                            .fathername,
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
+                                                        )),
+                                                  ),
+                                                  DataCell(
+                                                    Center(
+                                                      child: Text(
+                                                          DateFormat.yMMMd()
+                                                              .format(snapshot
+                                                                  .data[index]
+                                                                  .birthdate)
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    Text(
+                                                        snapshot.data[index]
+                                                            .presentadd,
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                        )),
+                                                  ),
+                                                  DataCell(
+                                                    Center(
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Memberss sss = snapshot
+                                                              .data[index];
+                                                          Get.toNamed(
+                                                            memberEditPageRoute,
+                                                            arguments: {
+                                                              'Members':
+                                                                  sss.toJson(),
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    4.0),
+                                                            decoration: BoxDecoration(
+                                                                color:
+                                                                    AppColor_Blue,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            100)),
+                                                            child: const Icon(
+                                                              Icons.edit_outlined,
+                                                              size: 16,
+                                                              color:
+                                                                  AppColor_White,
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            }),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                  future: getCust(),
+                                ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: selectedsomiti == null
-                        ? Center(
-                            child: Text("No Somitee Is Selected.."),
-                          )
-                        : FutureBuilder(
-                            builder: (ctx, AsyncSnapshot snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                if (snapshot.hasError) {
-                                  return const Center(
-                                    child: Text("No Member Data Available.."),
-                                  );
-                                } else if (snapshot.hasData) {
-                                  return MediaQuery.removePadding(
-                                    context: context,
-                                    removeTop: true,
-                                    child: DataTable(
-                                      showCheckboxColumn: false,
-                                      border: TableBorder.all(
-                                          color: Colors.black26, width: 1),
-                                      headingRowColor:
-                                          MaterialStateProperty.all<Color>(
-                                              AppColor_Blue),
-                                      columns: const [
-                                        DataColumn(
-                                          label: Text(
-                                            'SL',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: Text(
-                                            'Member Code',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Member Name',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Mobile No',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                        DataColumn(
-                                          label: Text(
-                                            'Member Type',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                            label: Text(
-                                          'National ID',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        )),
-                                        DataColumn(
-                                          label: Text('Father Name',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Date Of Birth',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Present Address',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                        DataColumn(
-                                          label: Text('ACTION',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                      ],
-                                      rows: List.generate(snapshot.data.length,
-                                          (index) {
-                                        return DataRow(
-                                          cells: [
-                                            DataCell(
-                                                Text((index + 1).toString(),
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                    ))),
-                                            DataCell(
-                                              Text(snapshot.data[index].id,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(Text(
-                                                snapshot.data[index].firstname +
-                                                    " " +
-                                                    snapshot
-                                                        .data[index].lastname,
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                ))),
-                                            DataCell(
-                                              Text(
-                                                  snapshot
-                                                      .data[index].mobilenno,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(
-                                              Text(
-                                                  snapshot
-                                                      .data[index].membertype,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(
-                                              Text(
-                                                  snapshot
-                                                      .data[index].nationalid,
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(
-                                              Text(
-                                                  snapshot
-                                                      .data[index].fathername,
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(
-                                              Center(
-                                                child: Text(
-                                                    DateFormat.yMMMd()
-                                                        .format(snapshot
-                                                            .data[index]
-                                                            .birthdate)
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                    )),
-                                              ),
-                                            ),
-                                            DataCell(
-                                              Text(
-                                                  snapshot
-                                                      .data[index].presentadd,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(
-                                              Center(
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    Memberss sss = snapshot.data[index];
-                                                    Get.toNamed(memberEditPageRoute,arguments: {
-                                                      'Members': sss.toJson(),
-                                                    },);
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4.0),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColor_Blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100)),
-                                                      child: const Icon(
-                                                        Icons.edit_outlined,
-                                                        size: 16,
-                                                        color: AppColor_White,
-                                                      )),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }),
-                                    ),
-                                  );
-                                }
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                            future: getCust(),
-                          ),
+                  SizedBox(
+                    height: 30,
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 30,
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
             ),
           ],
         ),
