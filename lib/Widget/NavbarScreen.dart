@@ -92,11 +92,18 @@ class _NavbarScreenState extends State<NavbarScreen> {
       if (!arr[index]) {
         for (int i = 0; i < arr.length; i++) {
           arr[i] = false;
+
         }
         arr[index] = true;
+        withdrawArr[index] = false;
+        trasctionArr[index] = false;
+        closedArr[index] = false;
+        loanSectionArr[index] = false;
+        loanRePayArr[index] = false;
       } else {
         for (int i = 0; i < arr.length; i++) {
           arr[i] = false;
+
         }
       }
     });
@@ -111,6 +118,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       withdrawArr[index] = false;
       loanSectionArr[index] = false;
       loanRePayArr[index] = false;
+      closedArr[index] = false;
     });
   }
 
@@ -123,6 +131,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       trasctionArr[index] = false;
       loanSectionArr[index] = false;
       loanRePayArr[index] = false;
+      closedArr[index] = false;
     });
   }
 
@@ -148,6 +157,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       withdrawArr[index] = false;
       trasctionArr[index] = false;
       loanRePayArr[index] = false;
+      closedArr[index] = false;
     });
   }
 
@@ -160,6 +170,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
       withdrawArr[index] = false;
       trasctionArr[index] = false;
       loanSectionArr[index] = false;
+      closedArr[index] = false;
     });
   }
 

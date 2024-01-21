@@ -29,22 +29,21 @@ class _DeadMemberInfoState extends State<DeadMemberInfo> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
 
-            SizedBox(
-              height: 50,
-            ),
+
 
            // SamiteeSelection(submit: true, selectmember: false, clear: true, close: true,active: true,onsubmit: (){}),
 
 
-            SizedBox(
-              height: 50,
+
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 50),
+                child: NoDataFound(title: "Dead Member Report")
             ),
 
-            NoDataFound(title: "Dead Member Report"),
+            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
 
 
           ],

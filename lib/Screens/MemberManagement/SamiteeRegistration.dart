@@ -86,16 +86,12 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreen(
-              appbool: widget.appbool,
-              navbool: widget.navbool,
-            ),
-            const SizedBox(
-              height: 50,
-            ),
+
+            
             Container(
+              margin: EdgeInsets.only(top: 100, left: 50),
               width: 1400,
               height: 300,
               // color: Colors.white,
@@ -113,7 +109,10 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
               ),
 
               child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  
                   Container(
                     width: 1400,
                     height: 40,
@@ -403,7 +402,11 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                   ),
                 ],
               ),
-            )
+            ),
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
           ],
         ),
       ),

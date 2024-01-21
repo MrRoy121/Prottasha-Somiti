@@ -56,16 +56,10 @@ class _ShamiteeListState extends State<ShamiteeList> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 160,
-          child: Column(
+          child: Stack(
             children: [
-              NavbarScreen(
-                appbool: widget.appbool,
-                navbool: widget.navbool,
-              ),
-              SizedBox(
-                height: 50,
-              ),
               Container(
+                margin: EdgeInsets.only(top: 100, left: 50),
                 width: 1400,
                 // color: Colors.white,
 
@@ -303,6 +297,10 @@ class _ShamiteeListState extends State<ShamiteeList> {
                     ),
                   ],
                 ),
+              ),
+              NavbarScreen(
+                appbool: widget.appbool,
+                navbool: widget.navbool,
               ),
             ],
           ),

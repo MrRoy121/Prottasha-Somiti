@@ -95,350 +95,349 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 50),
+              child: Container(
+                // color: Colors.white,
+
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+
+                child: Column(
+                  children: [
+                    Container(
+                      height: 40,
+                      color: navbarColor,
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 40.0),
+                            child: Text(
+                              "Closing Member Request",
+                              style: TextStyle(
+                                color: AppColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: FutureBuilder(
+                        builder: (ctx, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Text("No Member Data Available.."),
+                              );
+                            } else if (snapshot.hasData) {
+                              return MediaQuery.removePadding(
+                                context: context,
+                                removeTop: true,
+                                child: DataTable(
+                                  showCheckboxColumn: false,
+                                  border: TableBorder.all(
+                                      color: Colors.black26, width: 1),
+                                  headingRowColor:
+                                      MaterialStateProperty.all<Color>(
+                                          AppColor_Blue),
+                                  columns: const [
+                                    DataColumn(
+                                      label: Text(
+                                        'SL',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Member Code',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Member Name',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Somitee Code',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Somitee Name',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Member Type',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Father Name',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Loan Pending Amount',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Own Deposit',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text('Type',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    DataColumn(
+                                      label: Text('ACTION',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                  ],
+                                  rows: List.generate(snapshot.data.length,
+                                      (index) {
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(Text((index + 1).toString(),
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                            ))),
+                                        DataCell(
+                                          Text(snapshot.data[index].id,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(Text(
+                                            snapshot.data[index].firstname +
+                                                " " +
+                                                snapshot.data[index].lastname,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ))),
+                                        DataCell(
+                                          Text(snapshot.data[index].somiteeid,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(snapshot.data[index].somiteename,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(snapshot.data[index].membertype,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(snapshot.data[index].fathername,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                              snapshot
+                                                  .data[index].loanpendingamount
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                              snapshot
+                                                  .data[index].owndepositamount
+                                                  .toString(),
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(sss[index],
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(Row(
+                                          children: [
+                                            Center(
+                                              child: InkWell(
+                                                onTap: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection('Member')
+                                                      .doc(
+                                                          snapshot.data[index].id)
+                                                      .update({'Status': false});
+                                                  FirebaseFirestore.instance
+                                                      .collection('Somitee')
+                                                      .doc(snapshot
+                                                          .data[index].somiteeid)
+                                                      .get()
+                                                      .then((value) {
+                                                    FirebaseFirestore.instance
+                                                        .collection('Somitee')
+                                                        .doc(snapshot.data[index]
+                                                            .somiteeid)
+                                                        .update({
+                                                      'Closed':
+                                                          value['Closed'] + 1,
+                                                    });
+                                                  });
+                                                  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'ClosedMemberRequest')
+                                                      .doc(
+                                                          snapshot.data[index].id)
+                                                      .delete();
+                                                  Get.snackbar(
+                                                      "Member Closed Successfully.",
+                                                      "Redirecting to Member Closing List Page.",
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      colorText: Colors.white,
+                                                      backgroundColor:
+                                                          Colors.green,
+                                                      margin: EdgeInsets.zero,
+                                                      duration: const Duration(
+                                                          milliseconds: 2000),
+                                                      boxShadows: [
+                                                        const BoxShadow(
+                                                            color: Colors.grey,
+                                                            offset:
+                                                                Offset(-100, 0),
+                                                            blurRadius: 20),
+                                                      ],
+                                                      borderRadius: 0);
+                                                  setState(() {});
+                                                },
+                                                child: Container(
+                                                    padding: EdgeInsets.all(4.0),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColor_Blue,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                100)),
+                                                    child: const Icon(
+                                                      Icons.check,
+                                                      size: 16,
+                                                      color: AppColor_White,
+                                                    )),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: InkWell(
+                                                onTap: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'ClosedMemberRequest')
+                                                      .doc(
+                                                          snapshot.data[index].id)
+                                                      .delete();
+                                                  setState(() {});
+                                                },
+                                                child: Container(
+                                                    padding: EdgeInsets.all(4.0),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColor_Blue,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                100)),
+                                                    child: const Icon(
+                                                      Icons.close,
+                                                      size: 16,
+                                                      color: AppColor_White,
+                                                    )),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                      ],
+                                    );
+                                  }),
+                                ),
+                              );
+                            }
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        future: getCust(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            
             NavbarScreen(
               appbool: widget.appbool,
               navbool: widget.navbool,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Container(
-              // color: Colors.white,
-
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-
-              child: Column(
-                children: [
-                  Container(
-                    height: 40,
-                    color: navbarColor,
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 40.0),
-                          child: Text(
-                            "Closing Member Request",
-                            style: TextStyle(
-                              color: AppColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: FutureBuilder(
-                      builder: (ctx, AsyncSnapshot snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          if (snapshot.hasError) {
-                            return const Center(
-                              child: Text("No Member Data Available.."),
-                            );
-                          } else if (snapshot.hasData) {
-                            return MediaQuery.removePadding(
-                              context: context,
-                              removeTop: true,
-                              child: DataTable(
-                                showCheckboxColumn: false,
-                                border: TableBorder.all(
-                                    color: Colors.black26, width: 1),
-                                headingRowColor:
-                                    MaterialStateProperty.all<Color>(
-                                        AppColor_Blue),
-                                columns: const [
-                                  DataColumn(
-                                    label: Text(
-                                      'SL',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Member Code',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Member Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Somitee Code',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Somitee Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Member Type',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Father Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Loan Pending Amount',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Own Deposit',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Type',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('ACTION',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                ],
-                                rows: List.generate(snapshot.data.length,
-                                    (index) {
-                                  return DataRow(
-                                    cells: [
-                                      DataCell(Text((index + 1).toString(),
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                          ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].id,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(Text(
-                                          snapshot.data[index].firstname +
-                                              " " +
-                                              snapshot.data[index].lastname,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].somiteeid,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(snapshot.data[index].somiteename,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(snapshot.data[index].membertype,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(snapshot.data[index].fathername,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                            snapshot
-                                                .data[index].loanpendingamount
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                            snapshot
-                                                .data[index].owndepositamount
-                                                .toString(),
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(sss[index],
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(Row(
-                                        children: [
-                                          Center(
-                                            child: InkWell(
-                                              onTap: () {
-                                                FirebaseFirestore.instance
-                                                    .collection('Member')
-                                                    .doc(
-                                                        snapshot.data[index].id)
-                                                    .update({'Status': false});
-                                                FirebaseFirestore.instance
-                                                    .collection('Somitee')
-                                                    .doc(snapshot
-                                                        .data[index].somiteeid)
-                                                    .get()
-                                                    .then((value) {
-                                                  FirebaseFirestore.instance
-                                                      .collection('Somitee')
-                                                      .doc(snapshot.data[index]
-                                                          .somiteeid)
-                                                      .update({
-                                                    'Closed':
-                                                        value['Closed'] + 1,
-                                                  });
-                                                });
-                                                FirebaseFirestore.instance
-                                                    .collection(
-                                                        'ClosedMemberRequest')
-                                                    .doc(
-                                                        snapshot.data[index].id)
-                                                    .delete();
-                                                Get.snackbar(
-                                                    "Member Closed Successfully.",
-                                                    "Redirecting to Member Closing List Page.",
-                                                    snackPosition:
-                                                        SnackPosition.BOTTOM,
-                                                    colorText: Colors.white,
-                                                    backgroundColor:
-                                                        Colors.green,
-                                                    margin: EdgeInsets.zero,
-                                                    duration: const Duration(
-                                                        milliseconds: 2000),
-                                                    boxShadows: [
-                                                      const BoxShadow(
-                                                          color: Colors.grey,
-                                                          offset:
-                                                              Offset(-100, 0),
-                                                          blurRadius: 20),
-                                                    ],
-                                                    borderRadius: 0);
-                                                setState(() {});
-                                              },
-                                              child: Container(
-                                                  padding: EdgeInsets.all(4.0),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColor_Blue,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100)),
-                                                  child: const Icon(
-                                                    Icons.check,
-                                                    size: 16,
-                                                    color: AppColor_White,
-                                                  )),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: InkWell(
-                                              onTap: () {
-                                                FirebaseFirestore.instance
-                                                    .collection(
-                                                        'ClosedMemberRequest')
-                                                    .doc(
-                                                        snapshot.data[index].id)
-                                                    .delete();
-                                                setState(() {});
-                                              },
-                                              child: Container(
-                                                  padding: EdgeInsets.all(4.0),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColor_Blue,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100)),
-                                                  child: const Icon(
-                                                    Icons.close,
-                                                    size: 16,
-                                                    color: AppColor_White,
-                                                  )),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                    ],
-                                  );
-                                }),
-                              ),
-                            );
-                          }
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      future: getCust(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 30,
             ),
           ],
         ),

@@ -138,7 +138,8 @@ class _EditMembersState extends State<EditMembers> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(width: MediaQuery.of(context).size.width,
+            Container(
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

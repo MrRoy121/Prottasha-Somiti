@@ -199,47 +199,43 @@ class _CloseMemberState extends State<CloseMember> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 50),
+              child: SamiteeSelection(
+                  submit: true,
+                  selectmember: false,
+                  clear: true,
+                  ssomitee: ssomitee,
+                  close: true,
+                  setupsomiti: _setupsomiti,
+                  active: false,
+                  selectedsomiteeid: selectedsomiti,
+                  onsubmit: _save,
+                  somitee: somitee,
+                  onclear: _onclear,
+                  selectedsomitee: sselectedsomiti),
+            ),
+
+
+            // MEMBER REQUEST FOR CLOSING
+            Container(
+              margin: EdgeInsets.only(top: 500, left: 50, bottom: 50),
+              child: MemberRequestClosing(
+                setupmemberss: _setupmemberss,
+                mem: mem,
+                memberssselected: memberselection,
+                selectedmemberssid: sselectedmemberss,
+                selectedmemberss: selectedmemberss,
+                memberss: memberss,
+              ),
+            ),
+
             NavbarScreen(
               appbool: widget.appbool,
               navbool: widget.navbool,
-            ),
-
-            SizedBox(
-              height: 50,
-            ),
-
-            SamiteeSelection(
-                submit: true,
-                selectmember: false,
-                clear: true,
-                ssomitee: ssomitee,
-                close: true,
-                setupsomiti: _setupsomiti,
-                active: false,
-                selectedsomiteeid: selectedsomiti,
-                onsubmit: _save,
-                somitee: somitee,
-                onclear: _onclear,
-                selectedsomitee: sselectedsomiti),
-
-            SizedBox(
-              height: 50,
-            ),
-
-            // MEMBER REQUEST FOR CLOSING
-            MemberRequestClosing(
-              setupmemberss: _setupmemberss,
-              mem: mem,
-              memberssselected: memberselection,
-              selectedmemberssid: sselectedmemberss,
-              selectedmemberss: selectedmemberss,
-              memberss: memberss,
-            ),
-
-            SizedBox(
-              height: 50,
             ),
           ],
         ),
