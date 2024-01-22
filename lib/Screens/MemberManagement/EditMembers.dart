@@ -144,7 +144,7 @@ class _EditMembersState extends State<EditMembers> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   SamiteeSelection(
