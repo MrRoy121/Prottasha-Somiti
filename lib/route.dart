@@ -16,3 +16,14 @@ const sanctionloaneditPageRoute = "/sanctionloaneditlistPageRoute";
 const loanrequestlistPageRoute = "/loanrequestlistPageRoute";
 const loandisbursementPageRoute = "/loandisbursementPageRoute";
 const repaymentrequestPageRoute = "/repaymentrequestPageRoute";
+
+
+const memberledgerPageRoute = "/memberledger";
+const dailytransactionPageRoute = "/dailytransaction";
+const dailyglsummaryPageRoute = "/dailyglsummary";
+const samiteewisememberdepositPageRoute = "/samiteewisememberdeposit";
+const sanctiondetailsinformationPageRoute = "/sanctiondetailsinformation";
+const glstatementPageRoute = "/glstatement";
+const samiteewisedisbursePageRoute = "/samiteewisedisburse";
+const memberwishdisbursePageRoute = "/memberwishdisburse";
+const slipreprintPageRoute = "/slipreprint";

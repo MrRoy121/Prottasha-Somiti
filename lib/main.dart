@@ -6,6 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:prottashasomit/Screens/Reports/DailyGLSummary.dart';
+import 'package:prottashasomit/Screens/Reports/DailyTransactionList.dart';
+import 'package:prottashasomit/Screens/Reports/MemberLedger.dart';
+import 'package:prottashasomit/Screens/Reports/MemberWiseDisburse.dart';
+import 'package:prottashasomit/Screens/Reports/SamiteeWiseDisburse.dart';
+import 'package:prottashasomit/Screens/Reports/SamiteeWiseMemberDepositLoan.dart';
+import 'package:prottashasomit/Screens/Reports/SanctionDetailInformation.dart';
+import 'package:prottashasomit/Screens/Reports/SlipReprint.dart';
 import 'package:prottashasomit/route.dart';
 import 'Constants/responsive.dart';
 import 'Model/auth_middleware.dart';
@@ -29,6 +37,7 @@ import 'Screens/MemberManagement/MemberRegistration.dart';
 import 'Screens/MemberManagement/MemberUpdate.dart';
 import 'Screens/MemberManagement/SamiteeList.dart';
 import 'Screens/MemberManagement/SamiteeRegistration.dart';
+import 'Screens/Reports/GeneralLedgerStatement.dart';
 import 'Screens/Reports/Reports.dart';
 import 'Screens/Samitee Management/SamiteeManagement.dart';
 import 'Screens/Special Consideration/SpecialConsideration.dart';
@@ -61,7 +70,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
   Navbool navbool =
-      Navbool(true, false, false, false, false, false, false, false, false);
+  Navbool(true, false, false, false, false, false, false, false, false);
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +92,8 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: homePageRoute,
             page: () => DesktopHomePage(
-                  navbool: appbool,
-                ),
+              navbool: appbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: authenticationPageRoute,
@@ -196,6 +205,74 @@ class MyApp extends StatelessWidget {
               navbool: navbool,
             ),
             middlewares: [AuthMiddleware()]),
+
+
+
+        // Report's section
+        GetPage(
+            name: memberledgerPageRoute,
+            page: () => MemberLedger(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: dailytransactionPageRoute,
+            page: () => DailyTransactionList(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: dailyglsummaryPageRoute,
+            page: () => DailyGLSummary(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: samiteewisememberdepositPageRoute,
+            page: () => SamiteeWiseMemberDepositeLoan(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: sanctiondetailsinformationPageRoute,
+            page: () => SanctionDetailInformation(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: glstatementPageRoute,
+            page: () => GenerallLedgerStatement(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: samiteewisedisbursePageRoute,
+            page: () => SamiteeWiseDisburse(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: memberwishdisbursePageRoute,
+            page: () => MemberWiseDisburse(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: slipreprintPageRoute,
+            page: () => SlipReprint(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+
       ],
       // onGenerateRoute: (settings) {
       //   switch (settings.name) {

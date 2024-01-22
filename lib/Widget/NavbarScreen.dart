@@ -776,10 +776,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(MemberLedger(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(MemberLedger(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(memberledgerPageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -839,10 +840,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(DailyTransactionList(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(DailyTransactionList(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(dailytransactionPageRoute);
                                 },
                                 child: Container(
                                     padding: EdgeInsets.only(
@@ -871,10 +873,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(DailyGLSummary(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(DailyGLSummary(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(dailyglsummaryPageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1036,10 +1039,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(SamiteeWiseMemberDepositeLoan(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(SamiteeWiseMemberDepositeLoan(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(samiteewisememberdepositPageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1073,10 +1077,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(SanctionDetailInformation(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(SanctionDetailInformation(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(sanctiondetailsinformationPageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1142,10 +1147,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(GenerallLedgerStatement(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(GenerallLedgerStatement(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(glstatementPageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1211,10 +1217,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(SamiteeWiseDisburse(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(SamiteeWiseDisburse(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(samiteewisedisbursePageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1248,10 +1255,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(MemberWiseDisburse(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(MemberWiseDisburse(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(memberwishdisbursePageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
@@ -1285,10 +1293,11 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   });
                                 },
                                 onTap: () {
-                                  Get.to(SlipReprint(
-                                    appbool: widget.appbool,
-                                    navbool: widget.navbool,
-                                  ));
+                                  // Get.to(SlipReprint(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(slipreprintPageRoute);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(

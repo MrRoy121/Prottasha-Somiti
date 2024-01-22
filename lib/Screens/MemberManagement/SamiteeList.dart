@@ -49,6 +49,9 @@ class _ShamiteeListState extends State<ShamiteeList> {
 
   @override
   Widget build(BuildContext context) {
+    var ScreenWidth = MediaQuery.of(context).size.width;
+
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -99,7 +102,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding:  EdgeInsets.all(ScreenWidth/153.6),
                       child: FutureBuilder(
                         builder: (ctx, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
@@ -115,16 +118,16 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                 child: DataTable(
                                   showCheckboxColumn: false,
                                   border: TableBorder.all(
-                                      color: Colors.black26, width: 1),
+                                      color: Colors.black26, width: ScreenWidth/1536),
                                   headingRowColor:
                                       MaterialStateProperty.all<Color>(
                                           AppColor_Blue),
-                                  columns: const [
+                                  columns: [
                                     DataColumn(
                                       label: Text(
                                         'SL',
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: ScreenWidth/153.6,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
@@ -134,7 +137,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                       label: Text(
                                         'Somitee Code',
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: ScreenWidth/153.6,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
@@ -143,7 +146,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                     DataColumn(
                                       label: Text('Somitee Name',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           )),
@@ -151,7 +154,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                     DataColumn(
                                       label: Text('Branch Name',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           )),
@@ -160,7 +163,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                       label: Text(
                                         'Phone',
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: ScreenWidth/153.6,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
@@ -169,7 +172,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                     DataColumn(
                                       label: Text('Address',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           )),
@@ -178,7 +181,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                         label: Text(
                                       'Formation Date',
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: ScreenWidth/153.6,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -186,7 +189,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                     DataColumn(
                                       label: Text('Last Updated',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           )),
@@ -194,7 +197,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                     DataColumn(
                                       label: Text('Active Members',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           )),
@@ -202,7 +205,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                     DataColumn(
                                       label: Text('ACTION',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           )),
@@ -212,51 +215,51 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                       (index) {
                                     return DataRow(
                                       cells: [
-                                        DataCell(Text((index + 1).toString(), style: const TextStyle(
-                                          fontSize: 12,
+                                        DataCell(Text((index + 1).toString(), style: TextStyle(
+                                          fontSize: ScreenWidth/153.6,
                                         ))),
                                         DataCell(
                                           Text(snapshot.data[index].id, style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                           )),
                                         ),
                                         DataCell(
                                             Text(snapshot.data[index].name, style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: ScreenWidth/153.6,
                                             ))),
                                         DataCell(
                                           Text(snapshot.data[index].branch, style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                           )),
                                         ),
                                         DataCell(
                                           Text(snapshot.data[index].phone, style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                           )),
                                         ),
                                         DataCell(
                                           Text(snapshot.data[index].address, style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                           )),
                                         ),
                                         DataCell(
                                           Text(DateFormat.yMMMd().format(
                                               snapshot.data[index].formation), style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                           )),
                                         ),
                                         DataCell(
                                           Text(DateFormat.yMMMd().format(
                                               snapshot
                                                   .data[index].lastupdated), style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: ScreenWidth/153.6,
                                           )),
                                         ),
                                         DataCell(
                                           Center(
                                             child: Text(snapshot.data[index].active
                                                 .toString(), style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: ScreenWidth/153.6,
                                             )),
                                           ),
                                         ),
@@ -273,9 +276,9 @@ class _ShamiteeListState extends State<ShamiteeList> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               100)),
-                                                  child: const Icon(
+                                                  child:  Icon(
                                                     Icons.edit_outlined,
-                                                    size: 16,
+                                                    size: ScreenWidth/96,
                                                     color: AppColor_White,
                                                   )),
                                             ),

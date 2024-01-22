@@ -81,6 +81,9 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
 
   @override
   Widget build(BuildContext context) {
+
+    var ScreenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -92,7 +95,8 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
             
             Container(
               margin: EdgeInsets.only(top: 100, left: 50),
-              width: 1400,
+              // margin: EdgeInsets.only(top: 100, left: 50),
+              width: ScreenWidth/1.097,
               height: 300,
               // color: Colors.white,
 
@@ -114,20 +118,20 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                 children: [
                   
                   Container(
-                    width: 1400,
-                    height: 40,
+                    width: ScreenWidth/1.097,
+                    height: ScreenWidth/38.4,
                     color: navbarColor,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 40.0),
+                        Padding(
+                          padding: EdgeInsets.only(left: ScreenWidth/38.4),
                           child: Text(
                             "Samitee Registration",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: ScreenWidth/96,
                             ),
                           ),
                         ),
@@ -137,30 +141,30 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                             _save();
                           },
                           child: Container(
-                            height: 40,
-                            width: 80,
+                            height: ScreenWidth/38.4,
+                            width: ScreenWidth/19.2,
                             color: Colors.green,
                             alignment: Alignment.center,
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 10.0),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: ScreenWidth/153.6),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.check,
                                     color: Colors.white,
-                                    size: 14,
+                                    size: ScreenWidth/109.71,
                                   ),
                                   SizedBox(
-                                    width: 3,
+                                    width: ScreenWidth/512,
                                   ),
                                   Text(
                                     "Save",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
+                                        color: Colors.white, fontSize: ScreenWidth/109.71),
                                   ),
                                   SizedBox(
-                                    width: 2,
+                                    width: ScreenWidth/768,
                                   ),
                                 ],
                               ),
@@ -168,29 +172,29 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: ScreenWidth/153.6,
                         ),
                         InkWell(
                           onTap: () {
                             Get.offNamed(somiteelistPageRoute);
                           },
                           child: Container(
-                            height: 40,
-                            width: 130,
+                            height: ScreenWidth/38.4,
+                            width: ScreenWidth/11.81,
                             color: AppColor,
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 3.0, left: 15),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: ScreenWidth/512, left: ScreenWidth/102.4),
                               child: Row(
                                 children: [
                                   Icon(
                                     Icons.list,
                                     color: Colors.white,
-                                    size: 18,
+                                    size: ScreenWidth/85.33,
                                   ),
                                   Text(
                                     "Somitee List",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
+                                        color: Colors.white, fontSize: ScreenWidth/109.71),
                                   ),
                                 ],
                               ),
@@ -198,35 +202,34 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: ScreenWidth/153.6,
                         ),
                         InkWell(
                           onTap: () {
                             Get.back();
                           },
                           child: Container(
-                            height: 40,
-                            width: 50,
+                            height: ScreenWidth/38.4,
+                            width: ScreenWidth/30.72,
                             color: Colors.red,
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 20),
+                              padding: EdgeInsets.only(top: ScreenWidth/153.6, left: ScreenWidth/76.8),
                               child: Text(
                                 "X",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
+                                    color: Colors.white, fontSize: ScreenWidth/109.71),
                               ),
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: ScreenWidth/153.6,
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 50, left: 150),
+                    padding: EdgeInsets.only(top: ScreenWidth/30.72, left: ScreenWidth/10.24),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -235,30 +238,31 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                             Row(
                               children: [
                                 RichText(
-                                  text: const TextSpan(
+                                  text: TextSpan(
                                     text: 'Somitee Name',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: Colors.black, fontSize: ScreenWidth/109.71),
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: ' *',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.red,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                       TextSpan(
                                           text: ' :',
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: ScreenWidth/153.6,
                                 ),
                                 SizedBox(
-                                  width: 300,
+                                  width: ScreenWidth/5.12,
+                                  height: ScreenWidth/30.72,
                                   child: TextField(
                                     controller: _consomitiname,
                                     decoration: InputDecoration(
@@ -269,7 +273,7 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                               ],
                             ),
                             SizedBox(
-                              height: 40,
+                              height: ScreenWidth/38.4,
                             ),
                             Row(
                               children: [
@@ -277,27 +281,28 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                                   text: TextSpan(
                                     text: 'Branch Name',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: Colors.black, fontSize: ScreenWidth/109.71),
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: ' *',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.red,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                       TextSpan(
                                           text: ' :',
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 15,
+                                  width: ScreenWidth/102.4,
                                 ),
                                 SizedBox(
-                                  width: 300,
+                                  width: ScreenWidth/5.12,
+                                  height: ScreenWidth/30.72,
                                   child: TextField(
                                     controller: _conbranchname,
                                     decoration: InputDecoration(
@@ -310,7 +315,7 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                           ],
                         ),
                         SizedBox(
-                          width: 150,
+                          width: ScreenWidth/10.24,
                         ),
                         Column(
                           children: [
@@ -320,27 +325,28 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                                   text: TextSpan(
                                     text: 'Phone',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: Colors.black, fontSize: ScreenWidth/109.71),
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: ' *',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.red,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                       TextSpan(
                                           text: ' :',
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 80,
+                                  width: ScreenWidth/19.2,
                                 ),
                                 SizedBox(
-                                  width: 300,
+                                  width: ScreenWidth/5.12,
+                                  height: ScreenWidth/30.72,
                                   child: TextField(
                                     controller: _conphone,
                                     keyboardType: TextInputType.number,
@@ -357,35 +363,36 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                               ],
                             ),
                             SizedBox(
-                              height: 40,
+                              height: ScreenWidth/38.4,
                             ),
                             Row(
                               children: [
                                 RichText(
-                                  text: const TextSpan(
+                                  text: TextSpan(
                                     text: 'Samitee Address',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: Colors.black, fontSize: ScreenWidth/109.71),
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: ' *',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.red,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                       TextSpan(
                                           text: ' :',
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14)),
+                                              fontSize: ScreenWidth/109.71)),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 12,
+                                  width: ScreenWidth/128,
                                 ),
                                 SizedBox(
-                                  width: 300,
+                                  width: ScreenWidth/5.12,
+                                  height: ScreenWidth/30.72,
                                   child: TextField(
                                     controller: _conaddress,
                                     decoration: const InputDecoration(

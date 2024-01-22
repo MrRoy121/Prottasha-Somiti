@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../Constants/Constants.dart';
-import '../Model/somitee.dart';
+import '../../Constants/Constants.dart';
+import '../../Model/somitee.dart';
+
+
 
 class SamiteeSelection extends StatefulWidget {
   List<Somitee> somitee;
@@ -71,7 +73,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
       Container(
         width: ScreenWidth/1.097,
         //height: 350,
-        height: widget.selectmember ? 450 : 350,
+        height: widget.selectmember ? ScreenWidth/3.41 : ScreenWidth/4.39,
         // color: Colors.white,
 
         decoration: BoxDecoration(
@@ -194,8 +196,6 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                 ],
               ),
             ),
-
-
             Padding(
               padding: EdgeInsets.only(top: ScreenWidth/30.72, left: ScreenWidth/10.24),
               child: Row(
@@ -474,7 +474,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                   Column(
                     children: [
                       Padding(
-                        padding:  EdgeInsets.only(left: ScreenWidth/30.72),
+                        padding: EdgeInsets.only(left: ScreenWidth/30.72),
                         child: Row(
                           children: [
                             Text(
@@ -509,7 +509,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                           Text(
                             "Active Member :",
                             style: TextStyle(
-                              fontSize: ScreenWidth/109.71,
+                              fontSize: ScreenWidth/109.14,
                             ),
                           ),
                           SizedBox(
@@ -523,7 +523,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                                   .toString()
                                   : "",
                               style: TextStyle(
-                                fontSize: 109.71,
+                                fontSize: ScreenWidth/5.12,
                               ),
                             ),
                           ),
