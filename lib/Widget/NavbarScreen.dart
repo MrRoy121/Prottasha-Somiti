@@ -95,11 +95,22 @@ class _NavbarScreenState extends State<NavbarScreen> {
 
         }
         arr[index] = true;
-        withdrawArr[index] = false;
-        trasctionArr[index] = false;
-        closedArr[index] = false;
-        loanSectionArr[index] = false;
-        loanRePayArr[index] = false;
+        for (int i=0; i<withdrawArr.length;i++){
+          withdrawArr[i] = false;
+        }
+        for (int i=0; i<trasctionArr.length;i++){
+          trasctionArr[i] = false;
+        }
+        for (int i=0; i<closedArr.length;i++){
+          closedArr[i] = false;
+        }
+        for (int i=0; i<loanSectionArr.length;i++){
+          loanSectionArr[i] = false;
+        }
+        for (int i=0; i<loanRePayArr.length;i++){
+          loanRePayArr[i] = false;
+        }
+
       } else {
         for (int i = 0; i < arr.length; i++) {
           arr[i] = false;
