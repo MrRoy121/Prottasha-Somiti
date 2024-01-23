@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/AppBarItem.dart';
 import 'package:get/get.dart';
@@ -106,14 +107,14 @@ class _NavbarState extends State<Appbar> {
                                             height: 15,
                                           ),
                                           Text(
-                                            "Admin",
+                                            AuthService.to.user!.type,
                                             style: TextStyle(
                                               color: Colors.black87,
                                               fontSize: 12,
                                             ),
                                           ),
                                           Text(
-                                            "ID: usr?.id",
+                                            "ID: ${AuthService.to.user!.id}",
                                             style: TextStyle(
                                               color: Colors.black87,
                                               fontSize: 12,
@@ -191,7 +192,7 @@ class _NavbarState extends State<Appbar> {
                             },
                             child: AppbarItem(
                                 flag: widget.navbool.admin,
-                                text: 'admin_titas',
+                                text: AuthService.to.user!.type,
                                 icon: Icons.person_2_rounded)),
                       ],
                     )
@@ -229,7 +230,7 @@ class _NavbarState extends State<Appbar> {
                                         width: 200,
                                         color: AppColor,
                                         child: Text(
-                                          "10-OCT-2023",
+                                          DateFormat.yMMMMd().format(DateTime.now()),
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
@@ -314,8 +315,6 @@ class _NavbarState extends State<Appbar> {
                                           widget.navbool.makeallfalse();
                                           widget.navbool.admin = true;
                                         });
-                                        Navigator.of(context)
-                                            .pushNamed('admin_titas');
                                       },
                                       child: Container(
                                           padding: EdgeInsets.only(
@@ -324,7 +323,7 @@ class _NavbarState extends State<Appbar> {
                                           width: 200,
                                           color: AppColor,
                                           child: Text(
-                                            "admin_titas",
+                                            AuthService.to.user!.type,
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
