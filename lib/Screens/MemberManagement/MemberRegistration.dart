@@ -60,8 +60,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   var _mobileno = TextEditingController();
   var _preseentaddress = TextEditingController();
   var _parmaaddress = TextEditingController();
-  var selectedfamilyhead ="";
-  var selectedownhomestead ="";
+  var selectedfamilyhead = "";
+  var selectedownhomestead = "";
   var _livingperiod = TextEditingController();
   var _annualincome = TextEditingController();
   var _nomaleearner = TextEditingController();
@@ -94,7 +94,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         somitee.add(Somitee(
             address: element["Address"],
             id: element.id,
-            lastupdated: element["Last Edited"].toDate(),closed: element["Closed"],
+            lastupdated: element["Last Edited"].toDate(),
+            closed: element["Closed"],
             name: element["Name"],
             active: element["Active"],
             formation: element["Formation Date"].toDate(),
@@ -145,8 +146,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   }
 
   void _save() async {
-    const _chars =
-        '1234567890';
+    const _chars = '1234567890';
     Random _rnd = Random();
     String getRandomString(int length) =>
         String.fromCharCodes(Iterable.generate(
@@ -182,60 +182,67 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance.collection('Somitee').doc(selectedsomiti.id).get().then((value) {
-        FirebaseFirestore.instance.collection('Somitee').doc(selectedsomiti.id).update(
-            {'Active':value['Active']+1});
+      FirebaseFirestore.instance
+          .collection('Somitee')
+          .doc(selectedsomiti.id)
+          .get()
+          .then((value) {
+        FirebaseFirestore.instance
+            .collection('Somitee')
+            .doc(selectedsomiti.id)
+            .update({'Active': value['Active'] + 1});
       });
       if (img) {
-        final photoRef = FirebaseStorage.instance.ref(
-            "MembersImage/$memberid.jpeg");
+        final photoRef =
+            FirebaseStorage.instance.ref("MembersImage/$memberid.jpeg");
         UploadTask uploadTask = photoRef.putData(
             pickedImage,
             SettableMetadata(
               contentType: "image/jpeg",
             ));
-        String url = await(await uploadTask).ref.getDownloadURL();
+        String url = await (await uploadTask).ref.getDownloadURL();
         FirebaseFirestore.instance.collection('Member').doc(memberid).set({
-        'Somitee Name': selectedsomiti.name,
-        'Somitee ID': selectedsomiti.id,
-        'Member Type': selectedmebertype,
-        'Occupation': selectedocupation,
-        'First Name': _firstname.text,
-        'Last Name': _lastname.text,
-        'Father Name': _fathername.text,
+          'Somitee Name': selectedsomiti.name,
+          'Somitee ID': selectedsomiti.id,
+          'Member Type': selectedmebertype,
+          'Occupation': selectedocupation,
+          'First Name': _firstname.text,
+          'Last Name': _lastname.text,
+          'Father Name': _fathername.text,
           'Loan Pending Amount': 0,
           'Own deposit Amount': 0,
-        'Mother Name': _mothername.text,
-        'Gender': selectedGender,
-        'Religion': selectedreligion,
-        'National ID': _nidnumber.text,
-        'Birth Registration': _birthreginumber.text,
-        'Age': _age.text,
-        'Date Of Birth': _selectedDate,
-        'No of Dependent': _dependablemember.text,
-        'Education': _education.text,
-        'Marital Status': maritalstatus,
-        'Mobile No Type': mobiletype,
-        'Mobile No': _mobileno.text,
-        'Present Address': _preseentaddress.text,
-        'Parmanent Address': _parmaaddress.text,
-        'Living Period': _livingperiod.text,
-        'No Female Earner': _nofemaleearner.text,
-        'No Male Earner': _nomaleearner.text,
-        'ID': memberid,'Status': true,
-        'Head Family': selectedfamilyhead,
-        'Own HomeStead': selectedownhomestead,
-        'Relation With Head': _relationwithhead.text,
+          'Mother Name': _mothername.text,
+          'Gender': selectedGender,
+          'Religion': selectedreligion,
+          'National ID': _nidnumber.text,
+          'Birth Registration': _birthreginumber.text,
+          'Age': _age.text,
+          'Date Of Birth': _selectedDate,
+          'No of Dependent': _dependablemember.text,
+          'Education': _education.text,
+          'Marital Status': maritalstatus,
+          'Mobile No Type': mobiletype,
+          'Mobile No': _mobileno.text,
+          'Present Address': _preseentaddress.text,
+          'Parmanent Address': _parmaaddress.text,
+          'Living Period': _livingperiod.text,
+          'No Female Earner': _nofemaleearner.text,
+          'No Male Earner': _nomaleearner.text,
+          'ID': memberid,
+          'Status': true,
+          'Head Family': selectedfamilyhead,
+          'Own HomeStead': selectedownhomestead,
+          'Relation With Head': _relationwithhead.text,
           'Annual Income': _annualincome.text,
-        'Land Desc': _landdesc.text,
-        'House Desc': _housedesc.text,
-        'Remarks': _remarks.text,
+          'Land Desc': _landdesc.text,
+          'House Desc': _housedesc.text,
+          'Remarks': _remarks.text,
           'Image': true,
           'ImageURL': url,
         }).then((value) async {
           Get.offNamed(memberlistPageRoute);
-          Get.snackbar("Member Added Successfully.",
-              "Redirecting to Member List Page.",
+          Get.snackbar(
+              "Member Added Successfully.", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
@@ -261,7 +268,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Last Name': _lastname.text,
           'Father Name': _fathername.text,
           'Mother Name': _mothername.text,
-          'Gender': selectedGender,'Status': true,
+          'Gender': selectedGender,
+          'Status': true,
           'Religion': selectedreligion,
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
@@ -289,8 +297,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'ImageURL': '',
         }).then((value) async {
           Get.offNamed(memberlistPageRoute);
-          Get.snackbar("Member Added Successfully.",
-              "Redirecting to Member List Page.",
+          Get.snackbar(
+              "Member Added Successfully.", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
@@ -330,68 +338,74 @@ class _MemberRegistrationState extends State<MemberRegistration> {
     bool tablet = false;
     bool mobile = false;
 
-    void _setupsomiti(int ins){
+    void _setupsomiti(int ins) {
       setState(() {
         selectedsomiti = somitee[ins];
       });
     }
-    void _setupmembertype(int ins){
+
+    void _setupmembertype(int ins) {
       setState(() {
         selectedmebertype = MemberTypeList[ins];
       });
     }
-    void _setupoccupationtype(int ins){
+
+    void _setupoccupationtype(int ins) {
       setState(() {
         selectedocupation = OcupationList[ins];
       });
     }
-    void _setupmaritalstatus(int ins){
+
+    void _setupmaritalstatus(int ins) {
       setState(() {
         maritalstatus = MaritalstatusList[ins];
       });
     }
-    void _setupgender(int ins){
+
+    void _setupgender(int ins) {
       setState(() {
-        if(ins == 1){
+        if (ins == 1) {
           selectedGender = 'Male';
-        }else if(ins == 2){
+        } else if (ins == 2) {
           selectedGender = 'Female';
-        }else{
+        } else {
           selectedGender = 'Others';
         }
       });
     }
-    void _setupfamilyhead(int ins){
+
+    void _setupfamilyhead(int ins) {
       setState(() {
-        if(ins == 1){
-         selectedfamilyhead  = 'Yes';
-        }else{
-          selectedfamilyhead  = 'No';
+        if (ins == 1) {
+          selectedfamilyhead = 'Yes';
+        } else {
+          selectedfamilyhead = 'No';
         }
       });
     }
 
-
-    void _setupownhomestead(int ins){
+    void _setupownhomestead(int ins) {
       setState(() {
-        if(ins == 1){
-          selectedownhomestead  = 'Yes';
-        }else{
-          selectedownhomestead  = 'No';
+        if (ins == 1) {
+          selectedownhomestead = 'Yes';
+        } else {
+          selectedownhomestead = 'No';
         }
       });
     }
 
-    void _setupreligion(int ins){
+    void _setupreligion(int ins) {
       setState(() {
         selectedreligion = ReligionList[ins];
       });
     }
-    void _setupmobileType(int ins){
+
+    void _setupmobileType(int ins) {
       setState(() {
         mobiletype = MobileTypeList[ins];
       });
     }
+
     if (ResponsiveWidth > 1400) {
       desktop = true;
       tablet = false;
@@ -412,7 +426,6 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-
             Container(
               margin: EdgeInsets.only(top: 100, left: 50),
               child: SamiteeSelection(
@@ -420,7 +433,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   selectmember: false,
                   clear: true,
                   ssomitee: ssomitee,
-                  close: true,setupsomiti: _setupsomiti,
+                  close: true,
+                  setupsomiti: _setupsomiti,
                   active: true,
                   selectedsomiteeid: selectedsomiti,
                   onsubmit: _save,
@@ -434,8 +448,10 @@ class _MemberRegistrationState extends State<MemberRegistration> {
               margin: EdgeInsets.only(top: 500, left: 50),
               child: SingleRow(
                 heading: 'Basic Information',
-                field1: 'Member Type:',setupoccupationtype: _setupoccupationtype,
-                field2: 'Main Occupation:',setupmembertype: _setupmembertype,
+                field1: 'Member Type:',
+                setupoccupationtype: _setupoccupationtype,
+                field2: 'Main Occupation:',
+                setupmembertype: _setupmembertype,
                 membertype: selectedmebertype,
                 ocupation: selectedocupation,
               ),
@@ -450,9 +466,12 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   religion: selectedreligion,
                   selectedDate: _selectedDate,
                   maritalstatus: maritalstatus,
-                  lastname: _lastname,setupmaritalstatus: _setupmaritalstatus,
-                  fathername: _fathername,setupreligion: _setupreligion,
-                  mothername: _mothername,setupgender: _setupgender,
+                  lastname: _lastname,
+                  setupmaritalstatus: _setupmaritalstatus,
+                  fathername: _fathername,
+                  setupreligion: _setupreligion,
+                  mothername: _mothername,
+                  setupgender: _setupgender,
                   nidnumber: _nidnumber,
                   birthreginumber: _birthreginumber,
                   age: _age,
@@ -465,11 +484,11 @@ class _MemberRegistrationState extends State<MemberRegistration> {
               margin: EdgeInsets.only(top: 1500, left: 50),
               child: ContactForm(
                   mobiletype: mobiletype,
-                  mobileno: _mobileno,setupmobileType: _setupmobileType,
+                  mobileno: _mobileno,
+                  setupmobileType: _setupmobileType,
                   preseentaddress: _preseentaddress,
                   parmaaddress: _parmaaddress),
             ),
-
 
             // OTHER'S INFORMATION
             Container(
@@ -478,8 +497,10 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   selectedfamilyhead: selectedfamilyhead,
                   selectedownhomestead: selectedownhomestead,
                   livingperiod: _livingperiod,
-                  annualincome: _annualincome,setupownhomestead: _setupownhomestead,
-                  nomaleearner: _nomaleearner,setupfamilyhead: _setupfamilyhead,
+                  annualincome: _annualincome,
+                  setupownhomestead: _setupownhomestead,
+                  nomaleearner: _nomaleearner,
+                  setupfamilyhead: _setupfamilyhead,
                   nofemaleearner: _nofemaleearner,
                   relationwithhead: _relationwithhead,
                   landdesc: _landdesc,
@@ -600,8 +621,9 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                           height: 30,
                                                           width: 96,
                                                           child: ElevatedButton(
-                                                            style: ElevatedButton
-                                                                .styleFrom(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
                                                               primary:
                                                                   Colors.white,
                                                               shape:
@@ -684,7 +706,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                           color: Colors.grey,
                                           width: 0.5,
                                         ),
-                                        borderRadius: BorderRadius.circular(5.0),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
                                       ),
                                       child: img
                                           ? Image.memory(
@@ -692,7 +715,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                               fit: BoxFit.cover,
                                             )
                                           : Center(
-                                              child: Icon(Icons.person_2_outlined,
+                                              child: Icon(
+                                                  Icons.person_2_outlined,
                                                   size: 58),
                                             ),
                                     )
@@ -729,7 +753,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 40.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 40.0),
                                       child: Text(
                                         "Member’s Image",
                                         style: TextStyle(
@@ -797,7 +822,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                   child: Column(
                                                     children: [
                                                       Padding(
-                                                        padding: EdgeInsets.only(
+                                                        padding:
+                                                            EdgeInsets.only(
                                                           top: 20,
                                                           left: 10,
                                                           right: 10,
@@ -816,9 +842,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                               width: 96,
                                                               child:
                                                                   ElevatedButton(
-                                                                style:
-                                                                    ElevatedButton
-                                                                        .styleFrom(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
                                                                   primary: Colors
                                                                       .white,
                                                                   shape:
@@ -827,9 +852,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                         color: Colors
                                                                             .blue),
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5.0),
+                                                                        BorderRadius.circular(
+                                                                            5.0),
                                                                   ),
                                                                 ),
                                                                 onPressed:
@@ -838,7 +862,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                   "Select",
                                                                   style:
                                                                       TextStyle(
-                                                                    fontSize: 14,
+                                                                    fontSize:
+                                                                        14,
                                                                   ),
                                                                 ),
                                                               ),
@@ -951,7 +976,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 40.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 40.0),
                                       child: Text(
                                         "Member’s Image",
                                         style: TextStyle(
@@ -1019,7 +1045,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                   child: Column(
                                                     children: [
                                                       Padding(
-                                                        padding: EdgeInsets.only(
+                                                        padding:
+                                                            EdgeInsets.only(
                                                           top: 20,
                                                           left: 10,
                                                           right: 10,
@@ -1038,9 +1065,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                               width: 96,
                                                               child:
                                                                   ElevatedButton(
-                                                                style:
-                                                                    ElevatedButton
-                                                                        .styleFrom(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
                                                                   primary: Colors
                                                                       .white,
                                                                   shape:
@@ -1049,9 +1075,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                         color: Colors
                                                                             .blue),
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5.0),
+                                                                        BorderRadius.circular(
+                                                                            5.0),
                                                                   ),
                                                                 ),
                                                                 onPressed:
@@ -1060,7 +1085,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                   "Select",
                                                                   style:
                                                                       TextStyle(
-                                                                    fontSize: 14,
+                                                                    fontSize:
+                                                                        14,
                                                                   ),
                                                                 ),
                                                               ),

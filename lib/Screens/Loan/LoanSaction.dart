@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor_family.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
 import 'package:prottashasomit/Screens/Loan/widgets/LoanSamitteSelection.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
@@ -43,17 +43,26 @@ class _LoanSanctionState extends State<LoanSanction> {
   var _selectedinstalment;
   var _selectedloanperiod;
   DateTime selectedDate = DateTime.now();
-  var selectedgrantor1;
-  var selectedgrantor2;
-  var congrname = TextEditingController();
-  var congrfname = TextEditingController();
-  var congrrelation = TextEditingController();
-  var congrmobile = TextEditingController();
   var coninstallmentno = TextEditingController();
   var conremarks = TextEditingController();
   var coninstallmentamount = TextEditingController();
   var consanctionlimit = TextEditingController();
   var conservicecharge = TextEditingController();
+  var congrfname = TextEditingController();
+  var congrffname = TextEditingController();
+  var congrfrelation = TextEditingController();
+  var congrfmobile = TextEditingController();
+  var congrfocupasion = TextEditingController();
+  var congrsname = TextEditingController();
+  var congrsfname = TextEditingController();
+  var congrsrelation = TextEditingController();
+  var congrsmobile = TextEditingController();
+  var congrsocupasion = TextEditingController();
+  var congrpname = TextEditingController();
+  var congrpfname = TextEditingController();
+  var congrprelation = TextEditingController();
+  var congrpmobile = TextEditingController();
+  var congrpocupasion = TextEditingController();
   double serviceamount = 0;
   @override
   void initState() {
@@ -72,7 +81,8 @@ class _LoanSanctionState extends State<LoanSanction> {
             id: element.id,
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
-            active: element["Active"],closed: element["Closed"],
+            active: element["Active"],
+            closed: element["Closed"],
             formation: element["Formation Date"].toDate(),
             phone: element["Phone"],
             branch: element["Branch"],
@@ -85,43 +95,47 @@ class _LoanSanctionState extends State<LoanSanction> {
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
-        if(element["Status"]){
-        allmemberss.add(Memberss(
-            somiteename: element["Somitee Name"],
-            somiteeid: element["Somitee ID"],
-            membertype: element["Member Type"],
-            occupation: element["Occupation"],
-            firstname: element["First Name"],
-            lastname: element["Last Name"],
-            fathername: element["Father Name"],
-            mothername: element["Mother Name"],
-            gender: element["Gender"],
-            religion: element["Religion"],
-            nationalid: element["National ID"],loanpendingamount: element["Loan Pending Amount"],owndepositamount: element["Own deposit Amount"],
-            birthregi: element["Birth Registration"],
-            annualincome: element["Annual Income"],sts: element["Status"],
-            age: element["Age"],
-            nodepenndent: element["No of Dependent"],
-            education: element["Education"],
-            maritalstatus: element["Marital Status"],
-            mobilenotype: element["Mobile No Type"],
-            mobilenno: element["Mobile No"],
-            presentadd: element["Present Address"],
-            parmaadd: element["Parmanent Address"],
-            livingperiod: element["Living Period"],
-            nomaleearner: element["No Female Earner"],
-            nofemaleearner: element["No Male Earner"],
-            id: element.id,
-            headfamily: element["Head Family"],
-            ownhomestead: element["Own HomeStead"],
-            relationwithhead: element["Relation With Head"],
-            landdesc: element["Land Desc"],
-            housedesc: element["House Desc"],
-            remarks: element["Remarks"],
-            imageurl: element["ImageURL"],
-            img: element["Image"],
-            birthdate: element["Date Of Birth"].toDate(),
-            sl: 0));}
+        if (element["Status"]) {
+          allmemberss.add(Memberss(
+              somiteename: element["Somitee Name"],
+              somiteeid: element["Somitee ID"],
+              membertype: element["Member Type"],
+              occupation: element["Occupation"],
+              firstname: element["First Name"],
+              lastname: element["Last Name"],
+              fathername: element["Father Name"],
+              mothername: element["Mother Name"],
+              gender: element["Gender"],
+              religion: element["Religion"],
+              nationalid: element["National ID"],
+              loanpendingamount: element["Loan Pending Amount"],
+              owndepositamount: element["Own deposit Amount"],
+              birthregi: element["Birth Registration"],
+              annualincome: element["Annual Income"],
+              sts: element["Status"],
+              age: element["Age"],
+              nodepenndent: element["No of Dependent"],
+              education: element["Education"],
+              maritalstatus: element["Marital Status"],
+              mobilenotype: element["Mobile No Type"],
+              mobilenno: element["Mobile No"],
+              presentadd: element["Present Address"],
+              parmaadd: element["Parmanent Address"],
+              livingperiod: element["Living Period"],
+              nomaleearner: element["No Female Earner"],
+              nofemaleearner: element["No Male Earner"],
+              id: element.id,
+              headfamily: element["Head Family"],
+              ownhomestead: element["Own HomeStead"],
+              relationwithhead: element["Relation With Head"],
+              landdesc: element["Land Desc"],
+              housedesc: element["House Desc"],
+              remarks: element["Remarks"],
+              imageurl: element["ImageURL"],
+              img: element["Image"],
+              birthdate: element["Date Of Birth"].toDate(),
+              sl: 0));
+        }
       }
     });
   }
@@ -132,8 +146,7 @@ class _LoanSanctionState extends State<LoanSanction> {
       selectedsomiti = ss;
       selectedsomiti = ss;
       selectedmemberss = ss;
-      selectedgrantor1 = ss;
-      selectedgrantor2 = ss;selectedloanpurpose = ss;
+      selectedloanpurpose = ss;
       _selectedinstalment = ss;
       _selectedloanperiod = ss;
       consanctionlimit.text = "";
@@ -142,10 +155,21 @@ class _LoanSanctionState extends State<LoanSanction> {
       coninstallmentamount.text = "";
       serviceamount = 0;
       conremarks.text = "";
-      congrname.text = "";
       congrfname.text = "";
-      congrrelation.text = "";
-      congrmobile.text = "";
+      congrffname.text = "";
+      congrfrelation.text = "";
+      congrfmobile.text = "";
+      congrfocupasion.text = "";
+      congrsname.text = "";
+      congrsfname.text = "";
+      congrsrelation.text = "";
+      congrsmobile.text = "";
+      congrsocupasion.text = "";
+      congrpname.text = "";
+      congrpfname.text = "";
+      congrprelation.text = "";
+      congrpmobile.text = "";
+      congrpocupasion.text = "";
     });
   }
 
@@ -158,8 +182,22 @@ class _LoanSanctionState extends State<LoanSanction> {
     String sanctionloanrequestid = getRandomString(8);
     if (selectedsomiti == null ||
         selectedmemberss == null ||
-        selectedgrantor1 == null ||selectedloanpurpose == null||
-        selectedgrantor2 == null ||
+        selectedloanpurpose == null ||
+        congrfname.text == "" ||
+        congrffname.text == "" ||
+        congrfrelation.text == "" ||
+        congrfmobile.text == "" ||
+        congrfocupasion.text == "" ||
+        congrsname.text == "" ||
+        congrsfname.text == "" ||
+        congrsrelation.text == "" ||
+        congrsmobile.text == "" ||
+        congrsocupasion.text == "" ||
+        congrpname.text == "" ||
+        congrpfname.text == "" ||
+        congrprelation.text == "" ||
+        congrpmobile.text == "" ||
+        congrpocupasion.text == "" ||
         consanctionlimit.text.isEmpty ||
         _selectedinstalment == null) {
       Get.snackbar(
@@ -175,7 +213,7 @@ class _LoanSanctionState extends State<LoanSanction> {
           ],
           borderRadius: 0);
     } else {
-     FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection('LoanSanction')
           .doc(sanctionloanrequestid)
           .set({
@@ -188,25 +226,30 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Sanction Limit": double.parse(consanctionlimit.text),
         "Installment Frequency": _selectedinstalment,
         "Sanction Date": selectedDate,
-       "Loan Purpose":selectedloanpurpose,
+        "Loan Purpose": selectedloanpurpose,
         "Loan Period": _selectedloanperiod,
         "Service Charge": double.parse(conservicecharge.text),
         "Installment No": double.parse(coninstallmentno.text),
-        "Installment Amount":  double.parse(coninstallmentamount.text),
+        "Installment Amount": double.parse(coninstallmentamount.text),
         "Remarks": conremarks.text,
         "Service Amount": serviceamount,
-        'Grantor 1 Name':
-            selectedgrantor1.firstname + " " + selectedgrantor1.lastname,
-        'Grantor 1 ID': selectedgrantor1.id,
-        'Grantor 2 Name':
-            selectedgrantor2.firstname + " " + selectedgrantor2.lastname,
-        'Grantor 2 ID': selectedgrantor2.id,
-        "Grantor F Name": congrname.text,
         "Status": "Requested",
-        'ID':sanctionloanrequestid,
-        "Grantor F FatherName": congrfname.text,
-        "Grantor F Relation": congrrelation.text,
-        "Grantor F Mobile": congrmobile.text,
+        'ID': sanctionloanrequestid,
+        "Grantor F Name": congrfname.text,
+        "Grantor F FatherName": congrffname.text,
+        "Grantor F Relation": congrfrelation.text,
+        "Grantor F Mobile": congrfmobile.text,
+        "Grantor F Occupation": congrfocupasion.text,
+        "Grantor S Name": congrsname.text,
+        "Grantor S FatherName": congrsfname.text,
+        "Grantor S Relation": congrsrelation.text,
+        "Grantor S Mobile": congrsmobile.text,
+        "Grantor S Occupation": congrsocupasion.text,
+        "Grantor P Name": congrpname.text,
+        "Grantor P FatherName": congrpfname.text,
+        "Grantor P Relation": congrprelation.text,
+        "Grantor P Mobile": congrpmobile.text,
+        "Grantor P Occupation": congrpocupasion.text,
       }).then((value) async {
         Get.offNamed(loanrequestlistPageRoute);
         Get.snackbar("Loan Sanction Added Successfully.",
@@ -255,17 +298,6 @@ class _LoanSanctionState extends State<LoanSanction> {
       });
     }
 
-    void _setupgrantor1(int ins) {
-      setState(() {
-        selectedgrantor1 = allmemberss[ins];
-      });
-    }
-
-    void _setupgrantor2(int ins) {
-      setState(() {
-        selectedgrantor2 = allmemberss[ins];
-      });
-    }
     void _setuploanpurpose(int ins) {
       setState(() {
         selectedloanpurpose = LoanPurposeList[ins];
@@ -283,11 +315,9 @@ class _LoanSanctionState extends State<LoanSanction> {
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),
-
             SizedBox(
               height: 50,
             ),
-
             LoanSamitteSelection(
                 ssomitee: ssomitee,
                 setupsomiti: _setupsomiti,
@@ -295,9 +325,11 @@ class _LoanSanctionState extends State<LoanSanction> {
                 consanctionlimit: consanctionlimit,
                 coninstallmentamount: coninstallmentamount,
                 coninstallmentno: coninstallmentno,
-                selectedsomiteeid: selectedsomiti,setuploanpurpose: _setuploanpurpose,
+                selectedsomiteeid: selectedsomiti,
+                setuploanpurpose: _setuploanpurpose,
                 serviceamount: serviceamount,
-                conservicecharge: conservicecharge,selectedloanpurpose: selectedloanpurpose,
+                conservicecharge: conservicecharge,
+                selectedloanpurpose: selectedloanpurpose,
                 setupinstallment: _setupinstallment,
                 setuplloanperiod: _setuplloanperiod,
                 selectedDate: selectedDate,
@@ -313,30 +345,36 @@ class _LoanSanctionState extends State<LoanSanction> {
                 onclear: _onclear,
                 memberss: memberss,
                 selectedsomitee: sselectedsomiti),
-
             SizedBox(
               height: 50,
             ),
-
-            // Loan Guarantor information
             LoanGuarantor(
-                allmemberss: allmemberss,
-                setupgrantor1: _setupgrantor1,
-                setupgrantor2: _setupgrantor2,
-                selectedgrantor1: selectedgrantor1,
-                selectedgrantor2: selectedgrantor2),
-
+                sss: "Social",
+                congrname: congrsname,
+                congrfname: congrsfname,
+                congrmobile: congrsmobile,
+                congropcupasion: congrsocupasion,
+                congrrelation: congrsrelation),
             SizedBox(
               height: 50,
             ),
-            // LoanGuarantorFamily(),
-
-            LoanGuarantor_family(
-                congrname: congrname,
-                congrfname: congrfname,
-                congrmobile: congrmobile,
-                congrrelation: congrrelation),
-
+            LoanGuarantor(
+                sss: "Family",
+                congrname: congrfname,
+                congrfname: congrffname,
+                congrmobile: congrfmobile,
+                congropcupasion: congrfocupasion,
+                congrrelation: congrfrelation),
+            SizedBox(
+              height: 50,
+            ),
+            LoanGuarantor(
+                sss: "Bussiness",
+                congrname: congrpname,
+                congrfname: congrpfname,
+                congrmobile: congrpmobile,
+                congropcupasion: congrpocupasion,
+                congrrelation: congrprelation),
             SizedBox(
               height: 50,
             ),

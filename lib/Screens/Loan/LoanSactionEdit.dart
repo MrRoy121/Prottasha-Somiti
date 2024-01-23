@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor_family.dart';
+import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
 import 'package:prottashasomit/Screens/Loan/widgets/LoanSamitteSelectionUpdate.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
@@ -385,24 +385,17 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               height: 50,
             ),
 
-            // Loan Guarantor information
-            LoanGuarantor(
-                allmemberss: allmemberss,
-                setupgrantor1: _setupgrantor1,
-                setupgrantor2: _setupgrantor2,
-                selectedgrantor1: selectedgrantor1,
-                selectedgrantor2: selectedgrantor2),
 
             SizedBox(
               height: 50,
             ),
             // LoanGuarantorFamily(),
-
-            LoanGuarantor_family(
-                congrname: congrname,
-                congrfname: congrfname,
-                congrmobile: congrmobile,
-                congrrelation: congrrelation),
+            //
+            // LoanGuarantor_family(
+            //     congrname: congrname,
+            //     congrfname: congrfname,
+            //     congrmobile: congrmobile,
+            //     congrrelation: congrrelation),
 
             SizedBox(
               height: 50,

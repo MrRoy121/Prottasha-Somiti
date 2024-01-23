@@ -1,36 +1,26 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Constants/Constants.dart';
-import '../../../Model/member.dart';
 
 
 class LoanGuarantor extends StatefulWidget {
 
+  var  congrname;
+  var  congrfname;
+  var  congrrelation;
+  var  congrmobile;
+  var  congropcupasion;
 
-  List<Memberss> allmemberss = [];
-  var selectedgrantor1;
-  var selectedgrantor2;
-
-  void Function(int) setupgrantor1;
-  void Function(int) setupgrantor2;
+  String sss;
   LoanGuarantor(
-      {required this.selectedgrantor1,
-        required this.selectedgrantor2,
-        required this.setupgrantor1,
-        required this.setupgrantor2,
-        required this.allmemberss,
-  });
+      {required this.sss,required this.congrname,required this.congrfname,required this.congropcupasion,required this.congrmobile,required this.congrrelation});
   @override
   State<LoanGuarantor> createState() => _LoanGuarantorState();
 }
 
 class _LoanGuarantorState extends State<LoanGuarantor> {
-  
-
   @override
   Widget build(BuildContext context) {
-
     var ScreenWidth =MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
@@ -54,10 +44,10 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
       tablet = false;
     }
 
-
     return desktop? Container(
-      width: 1400,
-      height: 230,
+      // width: 1400,
+      // //height: 350,
+      // height: 350,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -74,258 +64,217 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
 
       child: Column(
         children: [
+
           Container(
             width: 1400,
-            height: 40,
-            color: navbarColor,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            height: 350,
+            // color: Colors.white,
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    "Loan Guarantor Information",
-                    style: TextStyle(
-                      color: AppColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                Container(
+                  width: 1400,
+                  height: 40,
+                  color: navbarColor,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40.0),
+                        child: Text(
+                          "Loan Guarantor (${widget.sss})",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+
+
+                    ],
                   ),
                 ),
 
-              ],
-            ),
-          ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 150),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Guarantor Name :",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 50, left: 150),
-            child: Row(
-              children: [
-                Column(
-                  children: [
 
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Guarantor',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+                              SizedBox(width: 65,),
+
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrname,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+
 
                             ],
                           ),
-                        ),
-
-                        SizedBox(width: 60,),
 
 
-                        Container(
-                            width: 300,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<Memberss>(
-                              filterFn: (Memberss item, String query) {
-                                return item.filterFn(query);
-                              },
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context,
-                                    Memberss item, bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item.firstname +
-                                          " " +
-                                          item.lastname +
-                                          " - " +
-                                          item.id,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            children: [
+                              Text(
+                                "Relation with Beneficiary :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
+                              ),
+
+                              SizedBox(width: 15,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrrelation,
                                   decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownDecoratorProps:
-                              const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                ),
-                              ),
-                              dropdownBuilder: (context, item) {
-                                if (item == null) {
-                                  return const Text(
-                                    "Enter Member Name/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
-                                  );
-                                }
-                              },
-                              onChanged: (newValue) {
-                                  widget.setupgrantor1(widget.allmemberss.indexOf(newValue!));
-                              },
-                              items:widget.allmemberss ,
-                              selectedItem: widget.selectedgrantor1,
-                            )),
 
-
-                      ],
-                    ),
-
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  width: 150,
-                ),
-
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Guarantor',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
 
                             ],
                           ),
-                        ),
 
-                        SizedBox(width: 80,),
+                          SizedBox(
+                            height: 40,
+                          ),
 
-
-                        Container(
-                            width: 300,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<Memberss>(
-                              filterFn: (Memberss item, String query) {
-                                return item.filterFn(query);
-                              },
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context,
-                                    Memberss item, bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item.firstname +
-                                          " " +
-                                          item.lastname +
-                                          " - " +
-                                          item.id,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
+                          Row(
+                            children: [
+                              Text(
+                                "Ocupasion",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
+                              ),
+
+                              SizedBox(width: 115,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congropcupasion,
                                   decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownDecoratorProps:
-                              const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
+
+
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        width: 150,
+                      ),
+
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Father Name :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+
+                              SizedBox(width: 80,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrfname,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownBuilder: (context, item) {
-                                if (item == null) {
-                                  return const Text(
-                                    "Enter Member Name/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
-                                  );
-                                }
-                              },
-
-                              onChanged: (newValue) {
-                                widget.setupgrantor2(widget.allmemberss.indexOf(newValue!));
-                              },
-                              items: widget.allmemberss,
-                              selectedItem: widget.selectedgrantor2,
-                            )),
 
 
-                      ],
-                    ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            children: [
+                              const Text(
+                                "Guarantor Mobile No :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 30,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrmobile,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
 
 
-                  ],
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     )
     : tablet? Container(
-      width: 1400,
-      height: 330,
+      // width: 1400,
+      // //height: 350,
+      // height: 350,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -342,258 +291,217 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
 
       child: Column(
         children: [
+
           Container(
             width: 1400,
-            height: 40,
-            color: navbarColor,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            height: 600,
+            // color: Colors.white,
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    "Loan Guarantor Information",
-                    style: TextStyle(
-                      color: AppColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                Container(
+                  width: 1400,
+                  height: 40,
+                  color: navbarColor,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40.0),
+                        child: Text(
+                          "Loan Guarantor (${widget.sss})",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+
+
+                    ],
                   ),
                 ),
 
-              ],
-            ),
-          ),
+                Padding(
+                  padding: EdgeInsets.only(top: 50, left: ScreenWidth/10.24),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Guarantor Name :",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
 
-          Padding(
-            padding: EdgeInsets.only(top: 50, left: ScreenWidth/10.74),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Guarantor',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
+
+                              SizedBox(width: 65,),
+
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrname,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+
 
                             ],
                           ),
-                        ),
-
-                        SizedBox(width: 60,),
 
 
+                          SizedBox(
+                            height: 40,
+                          ),
 
-                        Container(
-                            width: 300,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<Memberss>(
-                              filterFn: (Memberss item, String query) {
-                                return item.filterFn(query);
-                              },
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context,
-                                    Memberss item, bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item.firstname +
-                                          " " +
-                                          item.lastname +
-                                          " - " +
-                                          item.id,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
+                          Row(
+                            children: [
+                              Text(
+                                "Relation with Beneficiary :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
+                              ),
+
+                              SizedBox(width: 15,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrrelation,
                                   decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownDecoratorProps:
-                              const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                ),
-                              ),
-                              dropdownBuilder: (context, item) {
-                                if (item == null) {
-                                  return const Text(
-                                    "Enter Member Name/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
-                                  );
-                                }
-                              },
-                              onChanged: (newValue) {
-                                widget.setupgrantor1(widget.allmemberss.indexOf(newValue!));
-                              },
-                              items: widget.allmemberss,
-                              selectedItem: widget.selectedgrantor1,
-                            )),
 
-
-                      ],
-                    ),
-
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
-                ),
-
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Guarantor',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
 
                             ],
                           ),
-                        ),
 
-                        SizedBox(width: 60,),
+                          SizedBox(
+                            height: 40,
+                          ),
 
-
-                        Container(
-                            width: 300,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<Memberss>(
-                              filterFn: (Memberss item, String query) {
-                                return item.filterFn(query);
-                              },
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context,
-                                    Memberss item, bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item.firstname +
-                                          " " +
-                                          item.lastname +
-                                          " - " +
-                                          item.id,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
+                          Row(
+                            children: [
+                              Text(
+                                "Ocupasion",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
+                              ),
+
+                              SizedBox(width:105,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congropcupasion,
                                   decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownDecoratorProps:
-                              const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
+
+
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 50,
+                      ),
+
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Father Name :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+
+                              SizedBox(width: 80,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrfname,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownBuilder: (context, item) {
-                                if (item == null) {
-                                  return const Text(
-                                    "Enter Member Name/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
-                                  );
-                                }
-                              },
-
-                              onChanged: (newValue) {
-                                widget.setupgrantor2(widget.allmemberss.indexOf(newValue!));
-                              },
-                              items: widget.allmemberss,
-                              selectedItem: widget.selectedgrantor2,
-                            )),
 
 
-                      ],
-                    ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            children: [
+                              Text(
+                                "Guarantor Mobile No :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 30,),
+
+                              SizedBox(
+                                width: 300,
+                                child: TextField(controller: widget.congrmobile,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
 
 
-                  ],
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     )
     : Container(
-      width: 1400,
-      height: 330,
+      // width: 1400,
+      // //height: 350,
+      // height: 350,
       // color: Colors.white,
 
       decoration: BoxDecoration(
@@ -610,251 +518,209 @@ class _LoanGuarantorState extends State<LoanGuarantor> {
 
       child: Column(
         children: [
+
           Container(
             width: 1400,
-            height: 30,
-            color: navbarColor,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            height: 600,
+            // color: Colors.white,
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    "Loan Guarantor Information",
-                    style: TextStyle(
-                      color: AppColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                    ),
+                Container(
+                  width: 1400,
+                  height: 30,
+                  color: navbarColor,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40.0),
+                        child: Text(
+                          "Loan Guarantor (${widget.sss})",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+
+
+                    ],
                   ),
                 ),
 
-              ],
-            ),
-          ),
+                Padding(
+                  padding: EdgeInsets.only(top: 50, left: ScreenWidth/10.24),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Guarantor Name :",
+                                style: TextStyle(
+                                  fontSize: 8,
+                                  color: Colors.black,
+                                ),
+                              ),
 
-          Padding(
-            padding: EdgeInsets.only(top: 50, left: ScreenWidth/10.74),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Guarantor',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
+
+                              SizedBox(width: 55,),
+
+
+                              SizedBox(
+                                width: 200,
+                                child: TextField(controller: widget.congrname,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+
 
                             ],
                           ),
-                        ),
-
-                        SizedBox(width: 50,),
 
 
-                        Container(
-                            width: 200,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<Memberss>(
-                              filterFn: (Memberss item, String query) {
-                                return item.filterFn(query);
-                              },
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context,
-                                    Memberss item, bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item.firstname +
-                                          " " +
-                                          item.lastname +
-                                          " - " +
-                                          item.id,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            children: [
+                              Text(
+                                "Relation with Beneficiary :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8,
                                 ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
+                              ),
+
+                              SizedBox(width: 25,),
+
+                              SizedBox(
+                                width: 200,
+                                child: TextField(controller: widget.congrrelation,
                                   decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownDecoratorProps:
-                              const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                ),
-                              ),
-                              dropdownBuilder: (context, item) {
-                                if (item == null) {
-                                  return const Text(
-                                    "Enter Member Name/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
-                                  );
-                                }
-                              },
-                              onChanged: (newValue) {
-                                widget.setupgrantor1(widget.allmemberss.indexOf(newValue!));
-                              },
-                              items: widget.allmemberss,
-                              selectedItem: widget.selectedgrantor1,
-                            )),
 
-
-                      ],
-                    ),
-
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
-                ),
-
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Select Guarantor',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
 
                             ],
                           ),
-                        ),
+                          SizedBox(
+                            height: 40,
+                          ),
 
-                        SizedBox(width: 50,),
-
-
-                        Container(
-                            width: 200,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: AppColor_greyBorder,
-                              border: Border.all(color: AppColor_Black),
-                            ),
-                            child: DropdownSearch<Memberss>(
-                              filterFn: (Memberss item, String query) {
-                                return item.filterFn(query);
-                              },
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                itemBuilder: (BuildContext context,
-                                    Memberss item, bool isSelected) {
-                                  return Container(
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      item.firstname +
-                                          " " +
-                                          item.lastname +
-                                          " - " +
-                                          item.id,
-                                    ),
-                                  );
-                                },
-                                fit: FlexFit.loose,
-                                showSelectedItems: false,
-                                menuProps: const MenuProps(
-                                  backgroundColor: Colors.white,
-                                  elevation: 100,
+                          Row(
+                            children: [
+                              Text(
+                                "Ocupasion",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
-                                searchFieldProps: const TextFieldProps(
-                                  style: TextStyle(fontSize: 12),
+                              ),
+
+                              SizedBox(width: 15,),
+
+                              SizedBox(
+                                width: 200,
+                                child: TextField(controller: widget.congropcupasion,
                                   decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: "Search...",
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownDecoratorProps:
-                              const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent),
+
+
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 50,
+                      ),
+
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Father Name :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8,
+                                ),
+                              ),
+
+                              SizedBox(width: 70,),
+
+                              SizedBox(
+                                width: 200,
+                                child: TextField(controller: widget.congrfname,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                              dropdownBuilder: (context, item) {
-                                if (item == null) {
-                                  return const Text(
-                                    "Enter Member Name/Code",
-                                  );
-                                } else {
-                                  return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
-                                  );
-                                }
-                              },
-
-                              onChanged: (newValue) {
-                                widget.setupgrantor2(widget.allmemberss.indexOf(newValue!));
-                              },
-                              items: widget.allmemberss,
-                              selectedItem: widget.selectedgrantor2,
-                            )),
 
 
-                      ],
-                    ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            children: [
+                              Text(
+                                "Guarantor Mobile No :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8,
+                                ),
+                              ),
+                              SizedBox(width: 40,),
+
+                              SizedBox(
+                                width: 200,
+                                child: TextField(controller: widget.congrmobile,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
 
 
-                  ],
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );
