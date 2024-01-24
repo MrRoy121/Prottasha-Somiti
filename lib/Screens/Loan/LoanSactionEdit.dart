@@ -237,10 +237,6 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
           .toList();
       selectedmemberss =
           memberss.firstWhere((member) => member.id == cst.memberid);
-      selectedgrantor1 =
-          allmemberss.firstWhere((member) => member.id == cst.grantor1id);
-      selectedgrantor2 =
-          allmemberss.firstWhere((member) => member.id == cst.grantor2id);
       selectedloanpurpose = cst.loanpurpose;
       _selectedinstalment = cst.installmentfrequency;
       _selectedloanperiod = cst.loanperiod;
@@ -324,16 +320,23 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         installmentamount: arguments['LoanSanction']["Installment Amount"],
         remarks: arguments['LoanSanction']["Remarks"],
         serviceamount: arguments['LoanSanction']["Service Amount"],
-        grantor1name: arguments['LoanSanction']['Grantor 1 Name'],
-        grantor1id: arguments['LoanSanction']['Grantor 1 ID'],
-        grantor2name: arguments['LoanSanction']['Grantor 2 Name'],
-        grantor2id: arguments['LoanSanction']['Grantor 2 ID'],
         grantorfname: arguments['LoanSanction']["Grantor F Name"],
+        grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
+        grantorfrelation: arguments['LoanSanction'][ "Grantor F Relation"],
+        grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
+        grantorfocupasion: arguments['LoanSanction'][ "Grantor F Occupation"],
+        grantorsname: arguments['LoanSanction']["Grantor S Name"],
+        grantorsfname: arguments['LoanSanction']["Grantor S FatherName"],
+        grantorsrelation: arguments['LoanSanction']["Grantor S Relation"],
+        grantorsmobile: arguments['LoanSanction']["Grantor S Mobile"],
+        grantorsocupasion: arguments['LoanSanction']["Grantor S Occupation"],
+        grantorpname: arguments['LoanSanction']["Grantor P Name"],
+        grantorpfname: arguments['LoanSanction']["Grantor P FatherName"],
+        grantorprelation: arguments['LoanSanction']["Grantor P Relation"],
+        grantorpmobile: arguments['LoanSanction']["Grantor P Mobile"],
+        grantorpocupasion: arguments['LoanSanction']["Grantor P Occupation"],
         status: arguments['LoanSanction']["Status"],
         id: arguments['LoanSanction']['ID'],
-        grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
-        grantorfrelation: arguments['LoanSanction']["Grantor F Relation"],
-        grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
         sl: arguments['LoanSanction']['sl']);
     cst = mst;
     return Scaffold(

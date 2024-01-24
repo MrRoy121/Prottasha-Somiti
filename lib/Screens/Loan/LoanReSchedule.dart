@@ -7,7 +7,6 @@ import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
 import '../../../../Widget/NavbarScreen.dart';
 
-
 class LoanReSchedule extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
@@ -19,11 +18,8 @@ class LoanReSchedule extends StatefulWidget {
 }
 
 class _LoanReScheduleState extends State<LoanReSchedule> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -31,14 +27,19 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
 
             SizedBox(
               height: 50,
             ),
 
             // Loan Disbursement Details
-            LoanDetailsWidget(title: 'Reverse Repayment',),
+            LoanDetailsWidget(
+              title: 'Reverse Repayment',
+            ),
 
             SizedBox(
               height: 20,
@@ -54,15 +55,12 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
             // Loan information
             ReScheduleLoanInfo(),
 
-
             SizedBox(
               height: 50,
             ),
-
           ],
         ),
       ),
-
     );
   }
 }

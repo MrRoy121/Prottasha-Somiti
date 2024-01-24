@@ -59,16 +59,23 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         installmentamount: arguments['LoanSanction']["Installment Amount"],
         remarks: arguments['LoanSanction']["Remarks"],
         serviceamount: arguments['LoanSanction']["Service Amount"],
-        grantor1name: arguments['LoanSanction']['Grantor 1 Name'],
-        grantor1id: arguments['LoanSanction']['Grantor 1 ID'],
-        grantor2name: arguments['LoanSanction']['Grantor 2 Name'],
-        grantor2id: arguments['LoanSanction']['Grantor 2 ID'],
         grantorfname: arguments['LoanSanction']["Grantor F Name"],
+        grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
+        grantorfrelation: arguments['LoanSanction'][ "Grantor F Relation"],
+        grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
+        grantorfocupasion: arguments['LoanSanction'][ "Grantor F Occupation"],
+        grantorsname: arguments['LoanSanction']["Grantor S Name"],
+        grantorsfname: arguments['LoanSanction']["Grantor S FatherName"],
+        grantorsrelation: arguments['LoanSanction']["Grantor S Relation"],
+        grantorsmobile: arguments['LoanSanction']["Grantor S Mobile"],
+        grantorsocupasion: arguments['LoanSanction']["Grantor S Occupation"],
+        grantorpname: arguments['LoanSanction']["Grantor P Name"],
+        grantorpfname: arguments['LoanSanction']["Grantor P FatherName"],
+        grantorprelation: arguments['LoanSanction']["Grantor P Relation"],
+        grantorpmobile: arguments['LoanSanction']["Grantor P Mobile"],
+        grantorpocupasion: arguments['LoanSanction']["Grantor P Occupation"],
         status: arguments['LoanSanction']["Status"],
         id: arguments['LoanSanction']['ID'],
-        grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
-        grantorfrelation: arguments['LoanSanction']["Grantor F Relation"],
-        grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
         sl: arguments['LoanSanction']['sl']);
     _addinit(mst);
 
@@ -129,17 +136,19 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                         InkWell(
                           onTap: () {
                             Get.back();
-                            Get.toNamed(sanctionloaneditPageRoute,arguments: {
-                              'LoanSanction': lst.toJson(),
-                            },);
+                            Get.toNamed(
+                              sanctionloaneditPageRoute,
+                              arguments: {
+                                'LoanSanction': lst.toJson(),
+                              },
+                            );
                           },
                           child: Container(
                             height: 40,
                             width: 90,
                             color: AppColor_yellow,
                             child: const Padding(
-                              padding:
-                              EdgeInsets.only(top: 3.0, left: 15),
+                              padding: EdgeInsets.only(top: 3.0, left: 15),
                               child: Row(
                                 children: [
                                   Icon(
@@ -172,7 +181,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               "Status": "Approved",
                             }).then((value) async {
                               Get.offNamed(sanctionloanapprovelistPageRoute);
-                              Get.snackbar("Loan Sanction Approved Successfully.",
+                              Get.snackbar(
+                                  "Loan Sanction Approved Successfully.",
                                   "Redirecting to Loan Sanction List Page.",
                                   snackPosition: SnackPosition.BOTTOM,
                                   colorText: Colors.white,
@@ -181,10 +191,13 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                   duration: const Duration(milliseconds: 2000),
                                   boxShadows: [
                                     const BoxShadow(
-                                        color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                                        color: Colors.grey,
+                                        offset: Offset(-100, 0),
+                                        blurRadius: 20),
                                   ],
                                   borderRadius: 0);
-                            }).catchError((error) => print("Failed to add user: $error"));
+                            }).catchError((error) =>
+                                    print("Failed to add user: $error"));
                           },
                           child: Container(
                             height: 40,
@@ -213,7 +226,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               "Status": "Rejected",
                             }).then((value) async {
                               Get.offNamed(sanctionloanapprovelistPageRoute);
-                              Get.snackbar("Loan Sanction Rejected Successfully.",
+                              Get.snackbar(
+                                  "Loan Sanction Rejected Successfully.",
                                   "Redirecting to Loan Sanction List Page.",
                                   snackPosition: SnackPosition.BOTTOM,
                                   colorText: Colors.white,
@@ -222,18 +236,20 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                   duration: const Duration(milliseconds: 2000),
                                   boxShadows: [
                                     const BoxShadow(
-                                        color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                                        color: Colors.grey,
+                                        offset: Offset(-100, 0),
+                                        blurRadius: 20),
                                   ],
                                   borderRadius: 0);
-                            }).catchError((error) => print("Failed to add user: $error"));
+                            }).catchError((error) =>
+                                    print("Failed to add user: $error"));
                           },
                           child: Container(
                             height: 40,
                             width: 90,
                             color: Colors.red,
                             child: const Padding(
-                              padding:
-                                  EdgeInsets.only(top: 3.0, left: 15),
+                              padding: EdgeInsets.only(top: 3.0, left: 15),
                               child: Row(
                                 children: [
                                   Icon(
@@ -665,7 +681,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                       border: Border.all(
                                           width: 1, color: Colors.black)),
                                   child: Text(
-                                    selectloan ? lst.grantor1name : '',
+                                    selectloan ? lst.grantorfname : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -784,11 +800,9 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 ),
                               ],
                             ),
-
                             SizedBox(
-                              height:25,
+                              height: 25,
                             ),
-
                           ],
                         ),
                         SizedBox(
@@ -1036,7 +1050,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                       border: Border.all(
                                           width: 1, color: Colors.black)),
                                   child: Text(
-                                    selectloan ? lst.grantor2name : '',
+                                    selectloan ? lst.grantorpname : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
