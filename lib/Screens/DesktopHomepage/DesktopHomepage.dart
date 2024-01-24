@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/Notice_widget.dart';
+import 'package:get/get.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Constants/responsive.dart';
 import '../../../Widget/Appbar.dart';
+import '../../route.dart';
 
 class DesktopHomePage extends StatefulWidget {
   Appbool navbool;
@@ -203,44 +205,48 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(90.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  margin: EdgeInsets.only(
-                                      top: ScreenWidth / 51.2,
-                                      left: ScreenWidth / 76.8),
-                                  height: ScreenWidth / 12.8,
-                                  width: ScreenWidth / 3.072,
-                                  // color: Colors.white,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: ScreenWidth / 25.6,
-                                      ),
-                                      Image.asset('assets/management.png',
-                                          width: ScreenWidth / 19.2,
-                                          height: ScreenWidth / 19.2),
-                                      SizedBox(
-                                        width: ScreenWidth / 25.6,
-                                      ),
-                                      Text(
-                                        "Microfinance Management",
-                                        style: TextStyle(
-                                            fontSize: ScreenWidth / 96,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor_greyText),
-                                      ),
-                                    ],
+                                InkWell( onTap: (){
+                                  Get.toNamed(dashboardPageRoute);
+                                },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(90.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        top: ScreenWidth / 51.2,
+                                        left: ScreenWidth / 76.8),
+                                    height: ScreenWidth / 12.8,
+                                    width: ScreenWidth / 3.072,
+                                    // color: Colors.white,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: ScreenWidth / 25.6,
+                                        ),
+                                        Image.asset('assets/management.png',
+                                            width: ScreenWidth / 19.2,
+                                            height: ScreenWidth / 19.2),
+                                        SizedBox(
+                                          width: ScreenWidth / 25.6,
+                                        ),
+                                        Text(
+                                          "Microfinance Management",
+                                          style: TextStyle(
+                                              fontSize: ScreenWidth / 96,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor_greyText),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Container(

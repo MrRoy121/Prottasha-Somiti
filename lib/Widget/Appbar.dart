@@ -72,7 +72,6 @@ class _NavbarState extends State<Appbar> {
                                 widget.navbool.makeallfalse();
                                 widget.navbool.dashboard = true;
                               });
-                              Get.toNamed(dashboardPageRoute);
                             },
                             child: AppbarItem(
                                 flag: widget.navbool.dashboard,
@@ -270,7 +269,6 @@ class _NavbarState extends State<Appbar> {
                                           widget.navbool.makeallfalse();
                                           widget.navbool.dashboard = true;
                                         });
-                                        Get.toNamed(dashboardPageRoute);
                                       },
                                       child: Container(
                                           padding: EdgeInsets.only(

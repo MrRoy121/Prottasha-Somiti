@@ -45,12 +45,21 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
   var _selectedinstalment;
   var _selectedloanperiod;
   DateTime selectedDate = DateTime.now();
-  var selectedgrantor1;
-  var selectedgrantor2;
-  var congrname = TextEditingController();
   var congrfname = TextEditingController();
-  var congrrelation = TextEditingController();
-  var congrmobile = TextEditingController();
+  var congrffname = TextEditingController();
+  var congrfrelation = TextEditingController();
+  var congrfmobile = TextEditingController();
+  var congrfoccupasion = TextEditingController();
+  var congrsname = TextEditingController();
+  var congrsfname = TextEditingController();
+  var congrsrelation = TextEditingController();
+  var congrsmobile = TextEditingController();
+  var congrsoccupasion = TextEditingController();
+  var congrpname = TextEditingController();
+  var congrpfname = TextEditingController();
+  var congrprelation = TextEditingController();
+  var congrpmobile = TextEditingController();
+  var congrpoccupasion = TextEditingController();
   var coninstallmentno = TextEditingController();
   var conremarks = TextEditingController();
   var coninstallmentamount = TextEditingController();
@@ -140,8 +149,6 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       sselectedsomiti = ss;
       selectedsomiti = ss;
       selectedmemberss = ss;
-      selectedgrantor1 = ss;
-      selectedgrantor2 = ss;
       selectedloanpurpose = ss;
       _selectedinstalment = ss;
       _selectedloanperiod = ss;
@@ -151,19 +158,42 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       coninstallmentamount.text = "";
       serviceamount = 0;
       conremarks.text = "";
-      congrname.text = "";
-      congrfname.text = "";
-      congrrelation.text = "";
-      congrmobile.text = "";
+      congrffname.text = "";
+      congrfrelation.text = "";
+      congrfmobile.text = "";
+      congrfoccupasion.text = "";
+      congrsname.text = "";
+      congrsfname.text = "";
+      congrsrelation.text = "";
+      congrsmobile.text = "";
+      congrsoccupasion.text = "";
+      congrpname.text = "";
+      congrpfname.text = "";
+      congrprelation.text = "";
+      congrpmobile.text = "";
+      congrpoccupasion.text = "";
     });
   }
 
   void _save(LoanSanction cst) async {
     if (selectedsomiti == null ||
         selectedmemberss == null ||
-        selectedgrantor1 == null ||
         selectedloanpurpose == null ||
-        selectedgrantor2 == null ||
+        congrfname.text == "" ||
+        congrffname.text == "" ||
+        congrfrelation.text == "" ||
+        congrfmobile.text == "" ||
+        congrfoccupasion.text == "" ||
+        congrsname.text == "" ||
+        congrsfname.text == "" ||
+        congrsrelation.text == "" ||
+        congrsmobile.text == "" ||
+        congrsoccupasion.text == "" ||
+        congrpname.text == "" ||
+        congrpfname.text == "" ||
+        congrprelation.text == "" ||
+        congrpmobile.text == "" ||
+        congrpoccupasion.text == "" ||
         consanctionlimit.text.isEmpty ||
         _selectedinstalment == null) {
       Get.snackbar(
@@ -196,18 +226,23 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         "Installment Amount": double.parse(coninstallmentamount.text),
         "Remarks": conremarks.text,
         "Service Amount": serviceamount,
-        'Grantor 1 Name':
-            selectedgrantor1.firstname + " " + selectedgrantor1.lastname,
-        'Grantor 1 ID': selectedgrantor1.id,
-        'Grantor 2 Name':
-            selectedgrantor2.firstname + " " + selectedgrantor2.lastname,
-        'Grantor 2 ID': selectedgrantor2.id,
-        "Grantor F Name": congrname.text,
+        "Grantor F Name": congrfname.text,
+        "Grantor F FatherName": congrffname.text,
+        "Grantor F Relation": congrfrelation.text,
+        "Grantor F Mobile": congrfmobile.text,
+        "Grantor F Occupation": congrfoccupasion.text,
+        "Grantor S Name": congrsname.text,
+        "Grantor S FatherName": congrsfname.text,
+        "Grantor S Relation": congrsrelation.text,
+        "Grantor S Mobile": congrsmobile.text,
+        "Grantor S Occupation": congrsoccupasion.text,
+        "Grantor P Name": congrpname.text,
+        "Grantor P FatherName": congrpfname.text,
+        "Grantor P Relation": congrprelation.text,
+        "Grantor P Mobile": congrpmobile.text,
+        "Grantor P Occupation": congrpoccupasion.text,
         "Status": "Requested",
         'ID': cst.id,
-        "Grantor F FatherName": congrfname.text,
-        "Grantor F Relation": congrrelation.text,
-        "Grantor F Mobile": congrmobile.text,
       }).then((value) async {
         Get.offNamed(loanrequestlistPageRoute);
         Get.snackbar("Loan Sanction Added Successfully.",
@@ -246,10 +281,21 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       coninstallmentamount.text = cst.installmentamount.toString();
       serviceamount = cst.serviceamount;
       conremarks.text = cst.remarks;
-      congrname.text = cst.grantorfname;
-      congrfname.text = cst.grantorffname;
-      congrrelation.text = cst.grantorfrelation;
-      congrmobile.text = cst.grantorfmobile;
+      congrfname.text = cst.grantorfname;
+      congrffname.text = cst.grantorffname;
+      congrfrelation.text = cst.grantorfrelation;
+      congrfmobile.text = cst.grantorfmobile;
+      congrsname.text = cst.grantorsname;
+      congrsfname.text = cst.grantorsfname;
+      congrsrelation.text = cst.grantorsrelation;
+      congrsmobile.text = cst.grantorsmobile;
+      congrpname.text = cst.grantorpname;
+      congrpfname.text = cst.grantorpfname;
+      congrprelation.text = cst.grantorprelation;
+      congrpmobile.text = cst.grantorpmobile;
+      congrpoccupasion.text = cst.grantorpocupasion;
+      congrsoccupasion.text = cst.grantorsocupasion;
+      congrfoccupasion.text = cst.grantorfocupasion;
     });
   }
 
@@ -283,18 +329,6 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       });
     }
 
-    void _setupgrantor1(int ins) {
-      setState(() {
-        selectedgrantor1 = allmemberss[ins];
-      });
-    }
-
-    void _setupgrantor2(int ins) {
-      setState(() {
-        selectedgrantor2 = allmemberss[ins];
-      });
-    }
-
     void _setuploanpurpose(int ins) {
       setState(() {
         selectedloanpurpose = LoanPurposeList[ins];
@@ -322,9 +356,9 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         serviceamount: arguments['LoanSanction']["Service Amount"],
         grantorfname: arguments['LoanSanction']["Grantor F Name"],
         grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
-        grantorfrelation: arguments['LoanSanction'][ "Grantor F Relation"],
+        grantorfrelation: arguments['LoanSanction']["Grantor F Relation"],
         grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
-        grantorfocupasion: arguments['LoanSanction'][ "Grantor F Occupation"],
+        grantorfocupasion: arguments['LoanSanction']["Grantor F Occupation"],
         grantorsname: arguments['LoanSanction']["Grantor S Name"],
         grantorsfname: arguments['LoanSanction']["Grantor S FatherName"],
         grantorsrelation: arguments['LoanSanction']["Grantor S Relation"],
@@ -388,18 +422,38 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               height: 50,
             ),
 
-
             SizedBox(
               height: 50,
             ),
             // LoanGuarantorFamily(),
-            //
-            // LoanGuarantor_family(
-            //     congrname: congrname,
-            //     congrfname: congrfname,
-            //     congrmobile: congrmobile,
-            //     congrrelation: congrrelation),
 
+            LoanGuarantor(
+                sss: "Social",
+                congrname: congrsname,
+                congrfname: congrsfname,
+                congrmobile: congrsmobile,
+                congropcupasion: congrsoccupasion,
+                congrrelation: congrsrelation),
+            SizedBox(
+              height: 50,
+            ),
+            LoanGuarantor(
+                sss: "Family",
+                congrname: congrfname,
+                congrfname: congrffname,
+                congrmobile: congrfmobile,
+                congropcupasion: congrfoccupasion,
+                congrrelation: congrfrelation),
+            SizedBox(
+              height: 50,
+            ),
+            LoanGuarantor(
+                sss: "Bussiness",
+                congrname: congrpname,
+                congrfname: congrpfname,
+                congrmobile: congrpmobile,
+                congropcupasion: congrpoccupasion,
+                congrrelation: congrprelation),
             SizedBox(
               height: 50,
             ),
