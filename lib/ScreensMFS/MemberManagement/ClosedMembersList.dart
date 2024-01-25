@@ -97,7 +97,6 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-
             Container(
               margin: EdgeInsets.only(top: 100, left: 50),
               child: Container(
@@ -142,7 +141,8 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                       padding: const EdgeInsets.all(10),
                       child: FutureBuilder(
                         builder: (ctx, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
                             if (snapshot.hasError) {
                               return const Center(
                                 child: Text("No Member Data Available.."),
@@ -330,18 +330,20 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                                 onTap: () {
                                                   FirebaseFirestore.instance
                                                       .collection('Member')
-                                                      .doc(
-                                                          snapshot.data[index].id)
-                                                      .update({'Status': false});
+                                                      .doc(snapshot
+                                                          .data[index].id)
+                                                      .update(
+                                                          {'Status': false});
                                                   FirebaseFirestore.instance
                                                       .collection('Somitee')
-                                                      .doc(snapshot
-                                                          .data[index].somiteeid)
+                                                      .doc(snapshot.data[index]
+                                                          .somiteeid)
                                                       .get()
                                                       .then((value) {
                                                     FirebaseFirestore.instance
                                                         .collection('Somitee')
-                                                        .doc(snapshot.data[index]
+                                                        .doc(snapshot
+                                                            .data[index]
                                                             .somiteeid)
                                                         .update({
                                                       'Closed':
@@ -351,8 +353,8 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                                   FirebaseFirestore.instance
                                                       .collection(
                                                           'ClosedMemberRequest')
-                                                      .doc(
-                                                          snapshot.data[index].id)
+                                                      .doc(snapshot
+                                                          .data[index].id)
                                                       .delete();
                                                   Get.snackbar(
                                                       "Member Closed Successfully.",
@@ -376,12 +378,13 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                                   setState(() {});
                                                 },
                                                 child: Container(
-                                                    padding: EdgeInsets.all(4.0),
+                                                    padding:
+                                                        EdgeInsets.all(4.0),
                                                     decoration: BoxDecoration(
                                                         color: AppColor_Blue,
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                100)),
+                                                            BorderRadius
+                                                                .circular(100)),
                                                     child: const Icon(
                                                       Icons.check,
                                                       size: 16,
@@ -395,18 +398,19 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                                                   FirebaseFirestore.instance
                                                       .collection(
                                                           'ClosedMemberRequest')
-                                                      .doc(
-                                                          snapshot.data[index].id)
+                                                      .doc(snapshot
+                                                          .data[index].id)
                                                       .delete();
                                                   setState(() {});
                                                 },
                                                 child: Container(
-                                                    padding: EdgeInsets.all(4.0),
+                                                    padding:
+                                                        EdgeInsets.all(4.0),
                                                     decoration: BoxDecoration(
                                                         color: AppColor_Blue,
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                100)),
+                                                            BorderRadius
+                                                                .circular(100)),
                                                     child: const Icon(
                                                       Icons.close,
                                                       size: 16,
@@ -434,7 +438,6 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                 ),
               ),
             ),
-            
             NavbarScreen(
               appbool: widget.appbool,
               navbool: widget.navbool,

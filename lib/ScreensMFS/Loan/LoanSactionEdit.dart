@@ -378,84 +378,91 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+            Container(
+              margin: const EdgeInsets.only(top: 100),
+              child: Column(
+                children: [
+
+                  SizedBox(
+                    height: 50,
+                  ),
+
+                  LoanSamitteSelectionUpdate(
+                      ssomitee: ssomitee,
+                      setupsomiti: _setupsomiti,
+                      mst: mst,
+                      conremarks: conremarks,
+                      consanctionlimit: consanctionlimit,
+                      coninstallmentamount: coninstallmentamount,
+                      coninstallmentno: coninstallmentno,
+                      selectedsomiteeid: selectedsomiti,
+                      setuploanpurpose: _setuploanpurpose,
+                      serviceamount: serviceamount,
+                      conservicecharge: conservicecharge,
+                      selectedloanpurpose: selectedloanpurpose,
+                      setupinstallment: _setupinstallment,
+                      setuplloanperiod: _setuplloanperiod,
+                      selectedDate: selectedDate,
+                      allmemberss: allmemberss,
+                      selectedinstalment: _selectedinstalment,
+                      setupmemberss: _setupmemberss,
+                      selectedloanperiod: _selectedloanperiod,
+                      onsubmit: _save,
+                      memberssselected: memberselection,
+                      selectedmemberssid: sselectedmemberss,
+                      somitee: somitee,
+                      selectedmemberss: selectedmemberss,
+                      onclear: _onclear,
+                      memberss: memberss,
+                      selectedsomitee: sselectedsomiti),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+                  // LoanGuarantorFamily(),
+
+                  LoanGuarantor(
+                      sss: "Social",
+                      congrname: congrsname,
+                      congrfname: congrsfname,
+                      congrmobile: congrsmobile,
+                      congropcupasion: congrsoccupasion,
+                      congrrelation: congrsrelation),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  LoanGuarantor(
+                      sss: "Family",
+                      congrname: congrfname,
+                      congrfname: congrffname,
+                      congrmobile: congrfmobile,
+                      congropcupasion: congrfoccupasion,
+                      congrrelation: congrfrelation),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  LoanGuarantor(
+                      sss: "Bussiness",
+                      congrname: congrpname,
+                      congrfname: congrpfname,
+                      congrmobile: congrpmobile,
+                      congropcupasion: congrpoccupasion,
+                      congrrelation: congrprelation),
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),
             NavbarScreen(
               appbool: widget.appbool,
               navbool: widget.navbool,
-            ),
-
-            SizedBox(
-              height: 50,
-            ),
-
-            LoanSamitteSelectionUpdate(
-                ssomitee: ssomitee,
-                setupsomiti: _setupsomiti,
-                mst: mst,
-                conremarks: conremarks,
-                consanctionlimit: consanctionlimit,
-                coninstallmentamount: coninstallmentamount,
-                coninstallmentno: coninstallmentno,
-                selectedsomiteeid: selectedsomiti,
-                setuploanpurpose: _setuploanpurpose,
-                serviceamount: serviceamount,
-                conservicecharge: conservicecharge,
-                selectedloanpurpose: selectedloanpurpose,
-                setupinstallment: _setupinstallment,
-                setuplloanperiod: _setuplloanperiod,
-                selectedDate: selectedDate,
-                allmemberss: allmemberss,
-                selectedinstalment: _selectedinstalment,
-                setupmemberss: _setupmemberss,
-                selectedloanperiod: _selectedloanperiod,
-                onsubmit: _save,
-                memberssselected: memberselection,
-                selectedmemberssid: sselectedmemberss,
-                somitee: somitee,
-                selectedmemberss: selectedmemberss,
-                onclear: _onclear,
-                memberss: memberss,
-                selectedsomitee: sselectedsomiti),
-
-            SizedBox(
-              height: 50,
-            ),
-
-            SizedBox(
-              height: 50,
-            ),
-            // LoanGuarantorFamily(),
-
-            LoanGuarantor(
-                sss: "Social",
-                congrname: congrsname,
-                congrfname: congrsfname,
-                congrmobile: congrsmobile,
-                congropcupasion: congrsoccupasion,
-                congrrelation: congrsrelation),
-            SizedBox(
-              height: 50,
-            ),
-            LoanGuarantor(
-                sss: "Family",
-                congrname: congrfname,
-                congrfname: congrffname,
-                congrmobile: congrfmobile,
-                congropcupasion: congrfoccupasion,
-                congrrelation: congrfrelation),
-            SizedBox(
-              height: 50,
-            ),
-            LoanGuarantor(
-                sss: "Bussiness",
-                congrname: congrpname,
-                congrfname: congrpfname,
-                congrmobile: congrpmobile,
-                congropcupasion: congrpoccupasion,
-                congrrelation: congrprelation),
-            SizedBox(
-              height: 50,
             ),
           ],
         ),

@@ -57,12 +57,11 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
               installmentamount: json["Installment Amount"],
               remarks: json["Remarks"],
               serviceamount: json["Service Amount"],
-
               grantorfname: json["Grantor F Name"],
               grantorffname: json["Grantor F FatherName"],
-              grantorfrelation: json[ "Grantor F Relation"],
+              grantorfrelation: json["Grantor F Relation"],
               grantorfmobile: json["Grantor F Mobile"],
-              grantorfocupasion: json[ "Grantor F Occupation"],
+              grantorfocupasion: json["Grantor F Occupation"],
               grantorsname: json["Grantor S Name"],
               grantorsfname: json["Grantor S FatherName"],
               grantorsrelation: json["Grantor S Relation"],
@@ -129,74 +128,75 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Column(
+                children: [
+                  LoanDetailsWidget(
+                    title: 'Loan Disbursement Details',
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  // Loan information
+                  LoanInformation(
+                      sanction: sanction,
+                      bsanction: bsanction,
+                      selectedsanction: selectedsanction,
+                      selectedsanctionid: selectedsanctionid,
+                      setupsanction: _setupsanction,
+                      ssanction: ssanction),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  // Loan Other imformation
+                  LoanOtherInfo(
+                      bsanction: bsanction, selectedsanction: selectedsanction),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  // Link A/c Information
+                  Padding(
+                    padding: EdgeInsets.only(left: ScreenWidth / 21.94),
+                    child: desktop
+                        ? Row(
+                            children: [
+                              LinkACinfo(),
+                              Spacer(),
+                              ImageMember(imgurl: imgurl),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              LinkACinfo(),
+
+                              // Spacer(),
+                              SizedBox(
+                                height: 50,
+                              ),
+
+                              ImageMember(imgurl: imgurl),
+                            ],
+                          ),
+                  ),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),
             NavbarScreen(
               appbool: widget.appbool,
               navbool: widget.navbool,
-            ),
-
-            SizedBox(
-              height: 50,
-            ),
-
-            // Loan Disbursement Details
-            LoanDetailsWidget(
-              title: 'Loan Disbursement Details',
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            // Loan information
-            LoanInformation(
-                sanction: sanction,
-                bsanction: bsanction,
-                selectedsanction: selectedsanction,
-                selectedsanctionid: selectedsanctionid,
-                setupsanction: _setupsanction,
-                ssanction: ssanction),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            // Loan Other imformation
-            LoanOtherInfo(
-                bsanction: bsanction, selectedsanction: selectedsanction),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            // Link A/c Information
-            Padding(
-              padding: EdgeInsets.only(left: ScreenWidth / 21.94),
-              child: desktop
-                  ? Row(
-                      children: [
-                        LinkACinfo(),
-                        Spacer(),
-                        ImageMember(imgurl: imgurl),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        LinkACinfo(),
-
-                        // Spacer(),
-                        SizedBox(
-                          height: 50,
-                        ),
-
-                        ImageMember(imgurl: imgurl),
-                      ],
-                    ),
-            ),
-
-            SizedBox(
-              height: 50,
             ),
           ],
         ),

@@ -10,7 +10,6 @@ import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/TransactionWidget/Image.dart';
 import '../../../../Widget/TransactionWidget/LinkACinfo.dart';
 
-
 class RepaymentRequest extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
@@ -22,58 +21,62 @@ class RepaymentRequest extends StatefulWidget {
 }
 
 class _RepaymentRequestState extends State<RepaymentRequest> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 50,
+                  ),
 
-            SizedBox(
-              height: 50,
+                  // Loan Disbursement Details
+                  LoanDetailsWidget(
+                    title: 'Loan Disbursement Details',
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  // Loan repayment
+                  LoanRepaymentWidget(),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  // Loan imformation
+                  RepaymentLoanINfo(),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  // Last Repayment Information
+                  LastRepaymentInfo(),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
             ),
-
-            // Loan Disbursement Details
-            LoanDetailsWidget(title: 'Loan Disbursement Details',),
-
-            SizedBox(
-              height: 20,
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
             ),
-
-            // Loan repayment
-            LoanRepaymentWidget(),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            // Loan imformation
-            RepaymentLoanINfo(),
-
-
-            SizedBox(
-              height: 30,
-            ),
-
-
-            // Last Repayment Information
-            LastRepaymentInfo(),
-
-            SizedBox(
-              height: 50,
-            ),
-
           ],
         ),
       ),
-
     );
   }
 }

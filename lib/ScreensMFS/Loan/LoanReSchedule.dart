@@ -25,39 +25,43 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Column(
+                children: [
+                  // Loan Disbursement Details
+                  LoanDetailsWidget(
+                    title: 'Reverse Repayment',
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  // Request Information
+                  RequestInfo(),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  // Loan information
+                  ReScheduleLoanInfo(),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),
+
             NavbarScreen(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),
 
-            SizedBox(
-              height: 50,
-            ),
-
-            // Loan Disbursement Details
-            LoanDetailsWidget(
-              title: 'Reverse Repayment',
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            // Request Information
-            RequestInfo(),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            // Loan information
-            ReScheduleLoanInfo(),
-
-            SizedBox(
-              height: 50,
-            ),
           ],
         ),
       ),

@@ -7,7 +7,6 @@ import 'package:prottashasomit/Widget/NavBool.dart';
 import 'package:prottashasomit/Widget/SamiteeSelection.dart';
 import '../../../../Widget/NavbarScreen.dart';
 
-
 class ReverseRepayment extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
@@ -19,50 +18,51 @@ class ReverseRepayment extends StatefulWidget {
 }
 
 class _ReverseRepaymentState extends State<ReverseRepayment> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Column(
+                children: [
+                  // Loan Disbursement Details
+                  LoanDetailsWidget(
+                    title: 'Reverse Repayment',
+                  ),
 
-            SizedBox(
-              height: 50,
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  // Samitee Selection
+                  // SamiteeSelection(submit: false, selectmember: false, clear: false, close: false, active: true,onsubmit: (){},),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  // Ledger Trasaction Selection
+                  LedgerTrasactionSelection(),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
             ),
-
-            // Loan Disbursement Details
-            LoanDetailsWidget(title: 'Reverse Repayment',),
-
-            SizedBox(
-              height: 20,
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
             ),
-
-            // Samitee Selection
-           // SamiteeSelection(submit: false, selectmember: false, clear: false, close: false, active: true,onsubmit: (){},),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            // Ledger Trasaction Selection
-            LedgerTrasactionSelection(),
-
-
-            SizedBox(
-              height: 50,
-            ),
-
           ],
         ),
       ),
-
     );
   }
 }

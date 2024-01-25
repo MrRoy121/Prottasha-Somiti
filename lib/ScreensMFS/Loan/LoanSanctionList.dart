@@ -84,19 +84,12 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreen(
-              appbool: widget.appbool,
-              navbool: widget.navbool,
-            ),
-            SizedBox(
-              height: 50,
-            ),
             Container(
               width: 1400,
               // color: Colors.white,
-
+              margin: EdgeInsets.only(top: 100),
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -383,8 +376,9 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 30,
+            NavbarScreen(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
             ),
           ],
         ),
