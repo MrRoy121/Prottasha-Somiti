@@ -2,11 +2,11 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Constants/values.dart';
 import '../../../Model/member.dart';
+import '../../../Model/scheme.dart';
 import '../../../Model/somitee.dart';
 
 class LoanSamitteSelection extends StatefulWidget {
@@ -17,6 +17,8 @@ class LoanSamitteSelection extends StatefulWidget {
   var consanctionlimit;
   var conservicecharge;
   var selectedloanpurpose;
+  var selectedloantype;
+  var selectedscheme;
   double serviceamount;
   var selectedinstalment;
   var selectedloanperiod;
@@ -34,12 +36,17 @@ class LoanSamitteSelection extends StatefulWidget {
   void Function(int) setuploanpurpose;
   void Function(int) setupinstallment;
   void Function(int) setuplloanperiod;
+  void Function(int) setuplloantype;
+  void Function(int) setuplloanscheme;
   LoanSamitteSelection(
       {required this.onclear,
       required this.setupsomiti,
       required this.coninstallmentno,
       required this.setuploanpurpose,
+      required this.setuplloantype,
       required this.setupinstallment,
+      required this.setuplloanscheme,
+      required this.selectedscheme,
       required this.selectedloanpurpose,
       required this.setuplloanperiod,
       required this.selectedDate,
@@ -47,6 +54,7 @@ class LoanSamitteSelection extends StatefulWidget {
       required this.coninstallmentamount,
       required this.setupmemberss,
       required this.selectedloanperiod,
+      required this.selectedloantype,
       required this.conservicecharge,
       required this.serviceamount,
       required this.consanctionlimit,
@@ -792,7 +800,140 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 180,
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "Loan Category",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 55,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: DropdownButtonFormField<String>(
+                                  isDense: true,
+                                  decoration: const InputDecoration(
+                                    fillColor: AppColor_greyBorder,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide: BorderSide(
+                                          color: AppColor_greyBorder),
+                                    ),
+                                    hintText: "Select",
+                                    hintStyle: TextStyle(
+                                      color: AppColor_greyText,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 0),
+                                  value: widget.selectedloantype,
+                                  onChanged: (newValue) {
+                                    widget.setuplloantype(
+                                        LoanType.indexOf(newValue!));
+                                  },
+                                  items: LoanType.map((item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(item),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "Select Scheme",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 55,
+                              ),
+                              Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: AppColor_greyBorder,
+                                    border: Border.all(color: AppColor_Black),
+                                  ),
+                                  child: DropdownSearch<Scheme>(
+                                    filterFn: (Scheme item, String query) {
+                                      return item.filterFn(query);
+                                    },
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      itemBuilder: (BuildContext context,
+                                          Scheme item, bool isSelected) {
+                                        return Container(
+                                          padding: EdgeInsets.all(15),
+                                          child: Text(
+                                            item.name,
+                                          ),
+                                        );
+                                      },
+                                      fit: FlexFit.loose,
+                                      showSelectedItems: false,
+                                      menuProps: const MenuProps(
+                                        backgroundColor: Colors.white,
+                                        elevation: 100,
+                                      ),
+                                      searchFieldProps: const TextFieldProps(
+                                        style: TextStyle(fontSize: 12),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: "Search...",
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownBuilder: (context, item) {
+                                      if (item == null) {
+                                        return const Text(
+                                          "Enter Member Name/Code",
+                                        );
+                                      } else {
+                                        return Text(
+                                          item.name,
+                                        );
+                                      }
+                                    },
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.setuplloanscheme(
+                                            LoanSchemes.indexOf(newValue!));
+                                      });
+                                    },
+                                    items: LoanSchemes,
+                                    selectedItem: widget.selectedscheme,
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 70,
                           ),
                           Row(
                             children: [

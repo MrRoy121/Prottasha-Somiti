@@ -42,6 +42,8 @@ class _LoanSanctionState extends State<LoanSanction> {
   var sselectedmemberss;
   var _selectedinstalment;
   var _selectedloanperiod;
+  var _selectedscheme;
+  var _selectedloantype;
   DateTime selectedDate = DateTime.now();
   var coninstallmentno = TextEditingController();
   var conremarks = TextEditingController();
@@ -149,6 +151,8 @@ class _LoanSanctionState extends State<LoanSanction> {
       selectedloanpurpose = ss;
       _selectedinstalment = ss;
       _selectedloanperiod = ss;
+      _selectedscheme = ss;
+      _selectedloantype = ss;
       consanctionlimit.text = "";
       conservicecharge.text = "";
       coninstallmentno.text = "";
@@ -292,9 +296,21 @@ class _LoanSanctionState extends State<LoanSanction> {
       });
     }
 
+    void _setuploanscheme(int ins) {
+      setState(() {
+        _selectedscheme = LoanSchemes[ins];
+      });
+    }
+
     void _setuplloanperiod(int ins) {
       setState(() {
         _selectedloanperiod = LoanPeriodList[ins];
+      });
+    }
+
+    void _setuplloantype(int ins) {
+      setState(() {
+        _selectedloantype = LoanType[ins];
       });
     }
 
@@ -321,11 +337,15 @@ class _LoanSanctionState extends State<LoanSanction> {
                       conremarks: conremarks,
                       consanctionlimit: consanctionlimit,
                       coninstallmentamount: coninstallmentamount,
+                      selectedscheme: _selectedscheme,
+                      setuplloanscheme: _setuploanscheme,
                       coninstallmentno: coninstallmentno,
                       selectedsomiteeid: selectedsomiti,
                       setuploanpurpose: _setuploanpurpose,
                       serviceamount: serviceamount,
+                      setuplloantype: _setuplloantype,
                       conservicecharge: conservicecharge,
+                      selectedloantype: _selectedloantype,
                       selectedloanpurpose: selectedloanpurpose,
                       setupinstallment: _setupinstallment,
                       setuplloanperiod: _setuplloanperiod,
@@ -342,7 +362,7 @@ class _LoanSanctionState extends State<LoanSanction> {
                       onclear: _onclear,
                       memberss: memberss,
                       selectedsomitee: sselectedsomiti),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   LoanGuarantor(
@@ -352,7 +372,7 @@ class _LoanSanctionState extends State<LoanSanction> {
                       congrmobile: congrsmobile,
                       congropcupasion: congrsocupasion,
                       congrrelation: congrsrelation),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   LoanGuarantor(

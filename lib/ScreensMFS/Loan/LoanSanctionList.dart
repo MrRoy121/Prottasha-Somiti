@@ -89,7 +89,7 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
             Container(
               width: 1400,
               // color: Colors.white,
-              margin: EdgeInsets.only(top: 100),
+              margin: EdgeInsets.only(top: 100, left: 50),
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [

@@ -36,10 +36,6 @@ class _ReverseRepaymentState extends State<ReverseRepayment> {
                     title: 'Reverse Repayment',
                   ),
 
-                  SizedBox(
-                    height: 20,
-                  ),
-
                   // Samitee Selection
                   // SamiteeSelection(submit: false, selectmember: false, clear: false, close: false, active: true,onsubmit: (){},),
 
