@@ -37,42 +37,43 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
-         if(json["Status"]=="Requested"){
-           somitee.add(LoanSanction(
-               somiteename: json['Somitee Name'],
-               somiteeid: json['Somitee ID'],
-               membername: json['Member Name'],
-               memberid: json['Member ID'],loanpurpose: json["Loan Purpose"],
-               memberphone: json['Member Phone'],
-               sanctionlimit: json["Sanction Limit"],
-               installmentfrequency: json["Installment Frequency"],
-               sanctiondate: json["Sanction Date"].toDate(),
-               loanperiod: json["Loan Period"],
-               servicecharge: json["Service Charge"],
-               installmentno: json["Installment No"],
-               installmentamount: json["Installment Amount"],
-               remarks: json["Remarks"],
-               serviceamount: json["Service Amount"],
-               grantorfname: json["Grantor F Name"],
-               grantorffname: json["Grantor F FatherName"],
-               grantorfrelation: json[ "Grantor F Relation"],
-               grantorfmobile: json["Grantor F Mobile"],
-               grantorfocupasion: json[ "Grantor F Occupation"],
-               grantorsname: json["Grantor S Name"],
-               grantorsfname: json["Grantor S FatherName"],
-               grantorsrelation: json["Grantor S Relation"],
-               grantorsmobile: json["Grantor S Mobile"],
-               grantorsocupasion: json["Grantor S Occupation"],
-               grantorpname: json["Grantor P Name"],
-               grantorpfname: json["Grantor P FatherName"],
-               grantorprelation: json["Grantor P Relation"],
-               grantorpmobile: json["Grantor P Mobile"],
-               grantorpocupasion: json["Grantor P Occupation"],
-               status: json["Status"],
-               id: json['ID'],
-               sl: s));
-           s++;
-         }
+          if (json["Status"] == "Requested") {
+            somitee.add(LoanSanction(
+                somiteename: json['Somitee Name'],
+                somiteeid: json['Somitee ID'],
+                membername: json['Member Name'],
+                memberid: json['Member ID'],
+                loanpurpose: json["Loan Purpose"],
+                memberphone: json['Member Phone'],
+                sanctionlimit: json["Sanction Limit"],
+                installmentfrequency: json["Installment Frequency"],
+                sanctiondate: json["Sanction Date"].toDate(),
+                loanperiod: json["Loan Period"],
+                servicecharge: json["Service Charge"],
+                installmentno: json["Installment No"],
+                installmentamount: json["Installment Amount"],
+                remarks: json["Remarks"],
+                serviceamount: json["Service Amount"],
+                grantorfname: json["Grantor F Name"],
+                grantorffname: json["Grantor F FatherName"],
+                grantorfrelation: json["Grantor F Relation"],
+                grantorfmobile: json["Grantor F Mobile"],
+                grantorfocupasion: json["Grantor F Occupation"],
+                grantorsname: json["Grantor S Name"],
+                grantorsfname: json["Grantor S FatherName"],
+                grantorsrelation: json["Grantor S Relation"],
+                grantorsmobile: json["Grantor S Mobile"],
+                grantorsocupasion: json["Grantor S Occupation"],
+                grantorpname: json["Grantor P Name"],
+                grantorpfname: json["Grantor P FatherName"],
+                grantorprelation: json["Grantor P Relation"],
+                grantorpmobile: json["Grantor P Mobile"],
+                grantorpocupasion: json["Grantor P Occupation"],
+                status: json["Status"],
+                id: json['ID'],
+                sl: s));
+            s++;
+          }
         }
       });
       return somitee;
@@ -228,7 +229,6 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                       ),
                                     ),
                                   ),
-
                                   DataColumn(
                                     label: Text(
                                       'Status',
@@ -239,7 +239,6 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                       ),
                                     ),
                                   ),
-
                                   DataColumn(
                                     label: Text('ACTION',
                                         style: TextStyle(
@@ -258,14 +257,16 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                             fontSize: 12,
                                           ))),
                                       DataCell(
-                                        Text( snapshot.data[index].id,
+                                        Text(snapshot.data[index].id,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
                                       ),
                                       DataCell(
-                                        Text( snapshot.data[index].somiteename+
-                                        " " +snapshot.data[index].somiteeid,
+                                        Text(
+                                            snapshot.data[index].somiteename +
+                                                " " +
+                                                snapshot.data[index].somiteeid,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
@@ -276,11 +277,11 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(Text(
-                                          snapshot.data[index].membername,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ))),
+                                      DataCell(
+                                          Text(snapshot.data[index].membername,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ))),
                                       DataCell(
                                         Text(snapshot.data[index].memberphone,
                                             style: TextStyle(
@@ -288,12 +289,13 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                             )),
                                       ),
                                       DataCell(
-                                        Text(snapshot.data[index].sanctionlimit.toString(),
+                                        Text(
+                                            snapshot.data[index].sanctionlimit
+                                                .toString(),
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
                                       ),
-
                                       DataCell(
                                         Center(
                                           child: Text(
@@ -306,54 +308,64 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                               )),
                                         ),
                                       ),
-
                                       DataCell(
                                         Text(snapshot.data[index].status,
                                             style: const TextStyle(
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(
-                                        Row(children: [InkWell(
-                                          onTap: () {LoanSanction sss = snapshot.data[index];
-                                          Get.toNamed(sanctionloanapprovePageRoute,arguments: {
-                                            'LoanSanction': sss.toJson(),
-                                          },);
-                                          },
-                                          child: Container(
-                                              padding: EdgeInsets.all(4.0),
-                                              decoration: BoxDecoration(
-                                                  color: AppColor_Blue,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      100)),
-                                              child: const Icon(
-                                                Icons.remove_red_eye_outlined,
-                                                size: 16,
-                                                color: AppColor_White,
-                                              )),
-                                        ),InkWell(
-                                          onTap: () {
-                                            LoanSanction sss = snapshot.data[index];
-                                            Get.toNamed(sanctionloaneditPageRoute,arguments: {
-                                              'LoanSanction': sss.toJson(),
-                                            },);
-
-                                          },
-                                          child: Container(
-                                              padding: EdgeInsets.all(4.0),
-                                              decoration: BoxDecoration(
-                                                  color: AppColor_Blue,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      100)),
-                                              child: const Icon(
-                                                Icons.edit_outlined,
-                                                size: 16,
-                                                color: AppColor_White,
-                                              )),
-                                        ),],)
-                                      ),
+                                      DataCell(Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              LoanSanction sss =
+                                                  snapshot.data[index];
+                                              Get.toNamed(
+                                                sanctionloanapprovePageRoute,
+                                                arguments: {
+                                                  'LoanSanction': sss.toJson(),
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                                padding: EdgeInsets.all(4.0),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor_Blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: const Icon(
+                                                  Icons.remove_red_eye_outlined,
+                                                  size: 16,
+                                                  color: AppColor_White,
+                                                )),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              LoanSanction sss =
+                                                  snapshot.data[index];
+                                              Get.toNamed(
+                                                sanctionloaneditPageRoute,
+                                                arguments: {
+                                                  'LoanSanction': sss.toJson(),
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                                padding: EdgeInsets.all(4.0),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor_Blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: const Icon(
+                                                  Icons.edit_outlined,
+                                                  size: 16,
+                                                  color: AppColor_White,
+                                                )),
+                                          ),
+                                        ],
+                                      )),
                                     ],
                                   );
                                 }),

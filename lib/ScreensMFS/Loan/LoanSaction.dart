@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanGuarantor.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanSamitteSelectionUpdate.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanGuarantor.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanGuarantor.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanSamitteSelection.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
@@ -18,24 +18,22 @@ import '../../../../Widget/NavbarScreen.dart';
 import '../../../../Widget/SamiteeSelection.dart';
 import '../../../../Widget/TransactionWidget/MemberDeposit.dart';
 import '../../../../route.dart';
-import '../../../Model/LoanSanction.dart';
 
-class LoanSanctionEdit extends StatefulWidget {
+class LoanSanction extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanSanctionEdit({required this.appbool, required this.navbool});
+  LoanSanction({required this.appbool, required this.navbool});
 
   @override
-  State<LoanSanctionEdit> createState() => _LoanSanctionEditState();
+  State<LoanSanction> createState() => _LoanSanctionState();
 }
 
-class _LoanSanctionEditState extends State<LoanSanctionEdit> {
+class _LoanSanctionState extends State<LoanSanction> {
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
   List<Memberss> allmemberss = [];
   List<Memberss> memberss = [];
-  late LoanSanction cst;
   bool memberselection = false;
   var selectedsomiti;
   var selectedloanpurpose;
@@ -45,26 +43,26 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
   var _selectedinstalment;
   var _selectedloanperiod;
   DateTime selectedDate = DateTime.now();
-  var congrfname = TextEditingController();
-  var congrffname = TextEditingController();
-  var congrfrelation = TextEditingController();
-  var congrfmobile = TextEditingController();
-  var congrfoccupasion = TextEditingController();
-  var congrsname = TextEditingController();
-  var congrsfname = TextEditingController();
-  var congrsrelation = TextEditingController();
-  var congrsmobile = TextEditingController();
-  var congrsoccupasion = TextEditingController();
-  var congrpname = TextEditingController();
-  var congrpfname = TextEditingController();
-  var congrprelation = TextEditingController();
-  var congrpmobile = TextEditingController();
-  var congrpoccupasion = TextEditingController();
   var coninstallmentno = TextEditingController();
   var conremarks = TextEditingController();
   var coninstallmentamount = TextEditingController();
   var consanctionlimit = TextEditingController();
   var conservicecharge = TextEditingController();
+  var congrfname = TextEditingController();
+  var congrffname = TextEditingController();
+  var congrfrelation = TextEditingController();
+  var congrfmobile = TextEditingController();
+  var congrfocupasion = TextEditingController();
+  var congrsname = TextEditingController();
+  var congrsfname = TextEditingController();
+  var congrsrelation = TextEditingController();
+  var congrsmobile = TextEditingController();
+  var congrsocupasion = TextEditingController();
+  var congrpname = TextEditingController();
+  var congrpfname = TextEditingController();
+  var congrprelation = TextEditingController();
+  var congrpmobile = TextEditingController();
+  var congrpocupasion = TextEditingController();
   double serviceamount = 0;
   @override
   void initState() {
@@ -81,10 +79,10 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         somitee.add(Somitee(
             address: element["Address"],
             id: element.id,
-            closed: element["Closed"],
             lastupdated: element["Last Edited"].toDate(),
             name: element["Name"],
             active: element["Active"],
+            closed: element["Closed"],
             formation: element["Formation Date"].toDate(),
             phone: element["Phone"],
             branch: element["Branch"],
@@ -106,15 +104,15 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               firstname: element["First Name"],
               lastname: element["Last Name"],
               fathername: element["Father Name"],
-              sts: element["Status"],
               mothername: element["Mother Name"],
-              loanpendingamount: element["Loan Pending Amount"],
-              owndepositamount: element["Own deposit Amount"],
               gender: element["Gender"],
               religion: element["Religion"],
               nationalid: element["National ID"],
+              loanpendingamount: element["Loan Pending Amount"],
+              owndepositamount: element["Own deposit Amount"],
               birthregi: element["Birth Registration"],
               annualincome: element["Annual Income"],
+              sts: element["Status"],
               age: element["Age"],
               nodepenndent: element["No of Dependent"],
               education: element["Education"],
@@ -139,14 +137,13 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               sl: 0));
         }
       }
-      _addinit();
     });
   }
 
   void _onclear() {
     setState(() {
       var ss;
-      sselectedsomiti = ss;
+      selectedsomiti = ss;
       selectedsomiti = ss;
       selectedmemberss = ss;
       selectedloanpurpose = ss;
@@ -158,24 +155,31 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       coninstallmentamount.text = "";
       serviceamount = 0;
       conremarks.text = "";
+      congrfname.text = "";
       congrffname.text = "";
       congrfrelation.text = "";
       congrfmobile.text = "";
-      congrfoccupasion.text = "";
+      congrfocupasion.text = "";
       congrsname.text = "";
       congrsfname.text = "";
       congrsrelation.text = "";
       congrsmobile.text = "";
-      congrsoccupasion.text = "";
+      congrsocupasion.text = "";
       congrpname.text = "";
       congrpfname.text = "";
       congrprelation.text = "";
       congrpmobile.text = "";
-      congrpoccupasion.text = "";
+      congrpocupasion.text = "";
     });
   }
 
-  void _save(LoanSanction cst) async {
+  void _save() async {
+    const _chars = '1234567890';
+    Random _rnd = Random();
+    String getRandomString(int length) =>
+        String.fromCharCodes(Iterable.generate(
+            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+    String sanctionloanrequestid = getRandomString(8);
     if (selectedsomiti == null ||
         selectedmemberss == null ||
         selectedloanpurpose == null ||
@@ -183,17 +187,17 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         congrffname.text == "" ||
         congrfrelation.text == "" ||
         congrfmobile.text == "" ||
-        congrfoccupasion.text == "" ||
+        congrfocupasion.text == "" ||
         congrsname.text == "" ||
         congrsfname.text == "" ||
         congrsrelation.text == "" ||
         congrsmobile.text == "" ||
-        congrsoccupasion.text == "" ||
+        congrsocupasion.text == "" ||
         congrpname.text == "" ||
         congrpfname.text == "" ||
         congrprelation.text == "" ||
         congrpmobile.text == "" ||
-        congrpoccupasion.text == "" ||
+        congrpocupasion.text == "" ||
         consanctionlimit.text.isEmpty ||
         _selectedinstalment == null) {
       Get.snackbar(
@@ -209,7 +213,10 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance.collection('LoanSanction').doc(cst.id).update({
+      FirebaseFirestore.instance
+          .collection('LoanSanction')
+          .doc(sanctionloanrequestid)
+          .set({
         'Somitee Name': selectedsomiti.name,
         'Somitee ID': selectedsomiti.id,
         'Member Name':
@@ -226,23 +233,23 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         "Installment Amount": double.parse(coninstallmentamount.text),
         "Remarks": conremarks.text,
         "Service Amount": serviceamount,
+        "Status": "Requested",
+        'ID': sanctionloanrequestid,
         "Grantor F Name": congrfname.text,
         "Grantor F FatherName": congrffname.text,
         "Grantor F Relation": congrfrelation.text,
         "Grantor F Mobile": congrfmobile.text,
-        "Grantor F Occupation": congrfoccupasion.text,
+        "Grantor F Occupation": congrfocupasion.text,
         "Grantor S Name": congrsname.text,
         "Grantor S FatherName": congrsfname.text,
         "Grantor S Relation": congrsrelation.text,
         "Grantor S Mobile": congrsmobile.text,
-        "Grantor S Occupation": congrsoccupasion.text,
+        "Grantor S Occupation": congrsocupasion.text,
         "Grantor P Name": congrpname.text,
         "Grantor P FatherName": congrpfname.text,
         "Grantor P Relation": congrprelation.text,
         "Grantor P Mobile": congrpmobile.text,
-        "Grantor P Occupation": congrpoccupasion.text,
-        "Status": "Requested",
-        'ID': cst.id,
+        "Grantor P Occupation": congrpocupasion.text,
       }).then((value) async {
         Get.offNamed(loanrequestlistPageRoute);
         Get.snackbar("Loan Sanction Added Successfully.",
@@ -259,44 +266,6 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
             borderRadius: 0);
       }).catchError((error) => print("Failed to add user: $error"));
     }
-  }
-
-  void _addinit() {
-    setState(() {
-      print(cst.toJson());
-      selectedsomiti = somitee[ssomitee.indexOf(cst.somiteename)];
-      sselectedsomiti = cst.somiteename;
-      memberselection = true;
-      memberss = allmemberss
-          .where((member) => member.somiteeid == selectedsomiti.id)
-          .toList();
-      selectedmemberss =
-          memberss.firstWhere((member) => member.id == cst.memberid);
-      selectedloanpurpose = cst.loanpurpose;
-      _selectedinstalment = cst.installmentfrequency;
-      _selectedloanperiod = cst.loanperiod;
-      consanctionlimit.text = cst.sanctionlimit.toString();
-      conservicecharge.text = cst.servicecharge.toString();
-      coninstallmentno.text = cst.installmentno.toString();
-      coninstallmentamount.text = cst.installmentamount.toString();
-      serviceamount = cst.serviceamount;
-      conremarks.text = cst.remarks;
-      congrfname.text = cst.grantorfname;
-      congrffname.text = cst.grantorffname;
-      congrfrelation.text = cst.grantorfrelation;
-      congrfmobile.text = cst.grantorfmobile;
-      congrsname.text = cst.grantorsname;
-      congrsfname.text = cst.grantorsfname;
-      congrsrelation.text = cst.grantorsrelation;
-      congrsmobile.text = cst.grantorsmobile;
-      congrpname.text = cst.grantorpname;
-      congrpfname.text = cst.grantorpfname;
-      congrprelation.text = cst.grantorprelation;
-      congrpmobile.text = cst.grantorpmobile;
-      congrpoccupasion.text = cst.grantorpocupasion;
-      congrsoccupasion.text = cst.grantorsocupasion;
-      congrfoccupasion.text = cst.grantorfocupasion;
-    });
   }
 
   @override
@@ -335,44 +304,6 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       });
     }
 
-    var arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    LoanSanction mst = LoanSanction(
-        somiteename: arguments['LoanSanction']["Somitee Name"],
-        somiteeid: arguments['LoanSanction']["Somitee ID"],
-        loanpurpose: arguments['LoanSanction']['Loan Purpose'],
-        membername: arguments['LoanSanction']['Member Name'],
-        memberid: arguments['LoanSanction']['Member ID'],
-        memberphone: arguments['LoanSanction']['Member Phone'],
-        sanctionlimit: arguments['LoanSanction']["Sanction Limit"],
-        installmentfrequency: arguments['LoanSanction']
-            ["Installment Frequency"],
-        sanctiondate: arguments['LoanSanction']["Sanction Date"],
-        loanperiod: arguments['LoanSanction']["Loan Period"],
-        servicecharge: arguments['LoanSanction']["Service Charge"],
-        installmentno: arguments['LoanSanction']["Installment No"],
-        installmentamount: arguments['LoanSanction']["Installment Amount"],
-        remarks: arguments['LoanSanction']["Remarks"],
-        serviceamount: arguments['LoanSanction']["Service Amount"],
-        grantorfname: arguments['LoanSanction']["Grantor F Name"],
-        grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
-        grantorfrelation: arguments['LoanSanction']["Grantor F Relation"],
-        grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
-        grantorfocupasion: arguments['LoanSanction']["Grantor F Occupation"],
-        grantorsname: arguments['LoanSanction']["Grantor S Name"],
-        grantorsfname: arguments['LoanSanction']["Grantor S FatherName"],
-        grantorsrelation: arguments['LoanSanction']["Grantor S Relation"],
-        grantorsmobile: arguments['LoanSanction']["Grantor S Mobile"],
-        grantorsocupasion: arguments['LoanSanction']["Grantor S Occupation"],
-        grantorpname: arguments['LoanSanction']["Grantor P Name"],
-        grantorpfname: arguments['LoanSanction']["Grantor P FatherName"],
-        grantorprelation: arguments['LoanSanction']["Grantor P Relation"],
-        grantorpmobile: arguments['LoanSanction']["Grantor P Mobile"],
-        grantorpocupasion: arguments['LoanSanction']["Grantor P Occupation"],
-        status: arguments['LoanSanction']["Status"],
-        id: arguments['LoanSanction']['ID'],
-        sl: arguments['LoanSanction']['sl']);
-    cst = mst;
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -384,15 +315,12 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),
-
             SizedBox(
               height: 50,
             ),
-
-            LoanSamitteSelectionUpdate(
+            LoanSamitteSelection(
                 ssomitee: ssomitee,
                 setupsomiti: _setupsomiti,
-                mst: mst,
                 conremarks: conremarks,
                 consanctionlimit: consanctionlimit,
                 coninstallmentamount: coninstallmentamount,
@@ -417,22 +345,15 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
                 onclear: _onclear,
                 memberss: memberss,
                 selectedsomitee: sselectedsomiti),
-
             SizedBox(
               height: 50,
             ),
-
-            SizedBox(
-              height: 50,
-            ),
-            // LoanGuarantorFamily(),
-
             LoanGuarantor(
                 sss: "Social",
                 congrname: congrsname,
                 congrfname: congrsfname,
                 congrmobile: congrsmobile,
-                congropcupasion: congrsoccupasion,
+                congropcupasion: congrsocupasion,
                 congrrelation: congrsrelation),
             SizedBox(
               height: 50,
@@ -442,7 +363,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
                 congrname: congrfname,
                 congrfname: congrffname,
                 congrmobile: congrfmobile,
-                congropcupasion: congrfoccupasion,
+                congropcupasion: congrfocupasion,
                 congrrelation: congrfrelation),
             SizedBox(
               height: 50,
@@ -452,7 +373,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
                 congrname: congrpname,
                 congrfname: congrpfname,
                 congrmobile: congrpmobile,
-                congropcupasion: congrpoccupasion,
+                congropcupasion: congrpocupasion,
                 congrrelation: congrprelation),
             SizedBox(
               height: 50,

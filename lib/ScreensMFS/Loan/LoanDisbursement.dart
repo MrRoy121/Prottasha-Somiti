@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanDetailsWidget.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanInformation.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanOtherInfo.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanInformation.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanOtherInfo.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';

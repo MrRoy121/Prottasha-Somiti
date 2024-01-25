@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -632,7 +631,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                             Row(
                               children: [
                                 Text(
-                                  "Loan Guarantor Information",
+                                  "Loan Guarantor (Social) Information",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -651,7 +650,99 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               children: [
                                 RichText(
                                   text: TextSpan(
-                                    text: 'Guarantor 1',
+                                    text: 'Guarantor Name',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorsname : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Relation With Beneficiary',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorsrelation : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Occupasion',
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 14),
                                     children: <TextSpan>[
@@ -681,7 +772,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                       border: Border.all(
                                           width: 1, color: Colors.black)),
                                   child: Text(
-                                    selectloan ? lst.grantorfname : '',
+                                    selectloan ? lst.grantorsocupasion : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -692,8 +783,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                             ),
                             SizedBox(
                               height: 25,
-                            ),
-                            Row(
+                            ),Row(
                               children: [
                                 Text(
                                   "Loan Guarantor (Family) Information",
@@ -791,7 +881,208 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                       border: Border.all(
                                           width: 1, color: Colors.black)),
                                   child: Text(
-                                    selectloan ? lst.grantorfname : '',
+                                    selectloan ? lst.grantorfrelation : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Occupasion',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 95,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorfocupasion : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),Row(
+                              children: [
+                                Text(
+                                  "Loan Guarantor (Business) Information",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 390,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Guarantor Name',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorpname : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Relation With Beneficiary',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorprelation : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Occupasion',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 95,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorpocupasion : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -809,6 +1100,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                           width: 150,
                         ),
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
                               children: [
@@ -854,7 +1146,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               ],
                             ),
                             SizedBox(
-                              height: 180,
+                              height: 110,
                             ),
                             Row(
                               children: [
@@ -1003,7 +1295,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               ],
                             ),
                             SizedBox(
-                              height: 25,
+                              height: 105,
                             ),
                             Text(
                               " ",
@@ -1020,7 +1312,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               children: [
                                 RichText(
                                   text: TextSpan(
-                                    text: 'Guarantor 2',
+                                    text: 'Guarantor Father Name',
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 14),
                                     children: <TextSpan>[
@@ -1039,7 +1331,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 50,
+                                  width: 15,
                                 ),
                                 Container(
                                   width: 300,
@@ -1050,7 +1342,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                       border: Border.all(
                                           width: 1, color: Colors.black)),
                                   child: Text(
-                                    selectloan ? lst.grantorpname : '',
+                                    selectloan ? lst.grantorsfname : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -1060,7 +1352,53 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               ],
                             ),
                             SizedBox(
-                              height: 25,
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Guarantor Mobile Number',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorsmobile : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 105,
                             ),
                             Text(
                               " ",
@@ -1142,6 +1480,64 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                   ),
                                 ),
                                 SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorfmobile : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 105,
+                            ),
+                            Text(
+                              " ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Guarantor Father Name',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
                                   width: 15,
                                 ),
                                 Container(
@@ -1153,7 +1549,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                       border: Border.all(
                                           width: 1, color: Colors.black)),
                                   child: Text(
-                                    selectloan ? lst.grantorffname : '',
+                                    selectloan ? lst.grantorpfname : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -1161,6 +1557,56 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                   ),
                                 ),
                               ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Guarantor Mobile Number',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.grantorpmobile : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 55,
                             ),
                           ],
                         ),

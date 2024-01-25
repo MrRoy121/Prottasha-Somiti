@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LastRepaymentInfo.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanDetailsWidget.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/LoanRepaymentWidget.dart';
-import 'package:prottashasomit/Screens/Loan/widgets/RepaymentLoanInfo.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LastRepaymentInfo.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanRepaymentWidget.dart';
+import 'package:prottashasomit/ScreensMFS/Loan/widgets/RepaymentLoanInfo.dart';
 import 'package:prottashasomit/Widget/Appbar.dart';
 import 'package:prottashasomit/Widget/Appbool.dart';
 import 'package:prottashasomit/Widget/NavBool.dart';
