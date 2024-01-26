@@ -299,6 +299,10 @@ class _LoanSanctionState extends State<LoanSanction> {
     void _setuploanscheme(int ins) {
       setState(() {
         _selectedscheme = LoanSchemes[ins];
+        _selectedinstalment = InstallmentFrequencyList[0];
+        coninstallmentamount.text =  _selectedscheme.installmentno.toString();
+        conservicecharge.text = (double.parse(consanctionlimit.text.toString()) * ((_selectedscheme.servicecharge)/100)).toString();
+        serviceamount = double.parse(conservicecharge.text) + double.parse(coninstallmentamount.text);
       });
     }
 
@@ -311,7 +315,7 @@ class _LoanSanctionState extends State<LoanSanction> {
     void _setuplloantype(int ins) {
       setState(() {
         _selectedloantype = LoanType[ins];
-      });
+          });
     }
 
     void _setuploanpurpose(int ins) {

@@ -432,53 +432,53 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Loan Period :",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 260,
-                              ),
-                              SizedBox(
-                                width: 150,
-                                child: DropdownButtonFormField<String>(
-                                  isDense: true,
-                                  decoration: const InputDecoration(
-                                    fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Select",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 0),
-                                  value: widget.selectedloanperiod,
-                                  onChanged: (newValue) {
-                                    widget.setuplloanperiod(
-                                        LoanPeriodList.indexOf(newValue!));
-                                  },
-                                  items: LoanPeriodList.map((item) {
-                                    return DropdownMenuItem(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       "Loan Period :",
+                          //       style: TextStyle(
+                          //         color: Colors.black,
+                          //         fontSize: 14,
+                          //       ),
+                          //     ),
+                          //     SizedBox(
+                          //       width: 260,
+                          //     ),
+                          //     SizedBox(
+                          //       width: 150,
+                          //       child: DropdownButtonFormField<String>(
+                          //         isDense: true,
+                          //         decoration: const InputDecoration(
+                          //           fillColor: AppColor_greyBorder,
+                          //           border: OutlineInputBorder(
+                          //             borderRadius: BorderRadius.zero,
+                          //             borderSide: BorderSide(
+                          //                 color: AppColor_greyBorder),
+                          //           ),
+                          //           hintText: "Select",
+                          //           hintStyle: TextStyle(
+                          //             color: AppColor_greyText,
+                          //           ),
+                          //         ),
+                          //         padding: EdgeInsets.symmetric(vertical: 0),
+                          //         value: widget.selectedloanperiod,
+                          //         onChanged: (newValue) {
+                          //           widget.setuplloanperiod(
+                          //               LoanPeriodList.indexOf(newValue!));
+                          //         },
+                          //         items: LoanPeriodList.map((item) {
+                          //           return DropdownMenuItem(
+                          //             value: item,
+                          //             child: Text(item),
+                          //           );
+                          //         }).toList(),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -933,7 +933,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                             ],
                           ),
                           SizedBox(
-                            height: 70,
+                            height: 10,
                           ),
                           Row(
                             children: [
