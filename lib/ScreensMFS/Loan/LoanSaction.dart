@@ -300,9 +300,24 @@ class _LoanSanctionState extends State<LoanSanction> {
       setState(() {
         _selectedscheme = LoanSchemes[ins];
         _selectedinstalment = InstallmentFrequencyList[0];
-        coninstallmentamount.text =  _selectedscheme.installmentno.toString();
-        conservicecharge.text = (double.parse(consanctionlimit.text.toString()) * ((_selectedscheme.servicecharge)/100)).toString();
-        serviceamount = double.parse(conservicecharge.text) + double.parse(coninstallmentamount.text);
+        coninstallmentno.text = _selectedscheme.installmentno.toString();
+        coninstallmentamount.text =
+            _selectedscheme.installmentamount.toString();
+        conservicecharge.text = _selectedscheme.servicecharge.toString();
+        serviceamount = double.parse(conservicecharge.text) +
+            double.parse(coninstallmentamount.text);
+      });
+    }
+
+    void _resetloanscheme() {
+      var vs;
+      setState(() {
+        _selectedscheme = vs;
+        _selectedinstalment = vs;
+        coninstallmentno.text = '';
+        coninstallmentamount.text = '';
+        conservicecharge.text = '';
+        serviceamount = 0;
       });
     }
 
@@ -315,7 +330,7 @@ class _LoanSanctionState extends State<LoanSanction> {
     void _setuplloantype(int ins) {
       setState(() {
         _selectedloantype = LoanType[ins];
-          });
+      });
     }
 
     void _setuploanpurpose(int ins) {
@@ -332,7 +347,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         child: Stack(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 100),
+              margin: const EdgeInsets.only(top: 100,left: 50),
               child: Column(
                 children: [
                   LoanSamitteSelection(
@@ -354,6 +369,7 @@ class _LoanSanctionState extends State<LoanSanction> {
                       setupinstallment: _setupinstallment,
                       setuplloanperiod: _setuplloanperiod,
                       selectedDate: selectedDate,
+                      resetloanscheme: _resetloanscheme,
                       allmemberss: allmemberss,
                       selectedinstalment: _selectedinstalment,
                       setupmemberss: _setupmemberss,

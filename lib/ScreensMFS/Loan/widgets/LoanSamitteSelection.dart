@@ -29,7 +29,7 @@ class LoanSamitteSelection extends StatefulWidget {
   var selectedmemberssid;
   DateTime selectedDate;
   void Function() onsubmit;
-  void Function() onclear;
+  void Function() onclear;void Function() resetloanscheme;
   void Function(int) setupsomiti;
   bool memberssselected;
   void Function(int) setupmemberss;
@@ -38,12 +38,14 @@ class LoanSamitteSelection extends StatefulWidget {
   void Function(int) setuplloanperiod;
   void Function(int) setuplloantype;
   void Function(int) setuplloanscheme;
+
   LoanSamitteSelection(
       {required this.onclear,
       required this.setupsomiti,
       required this.coninstallmentno,
       required this.setuploanpurpose,
       required this.setuplloantype,
+        required this.resetloanscheme,
       required this.setupinstallment,
       required this.setuplloanscheme,
       required this.selectedscheme,
@@ -76,7 +78,7 @@ class LoanSamitteSelection extends StatefulWidget {
 
 class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
   bool somiteeselected = false;
-
+  bool schemeselection = false;
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -377,7 +379,15 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     FilteringTextInputFormatter.allow(
                                         RegExp(r'[0-9]')),
                                     FilteringTextInputFormatter.digitsOnly
-                                  ],
+                                  ],onChanged: (val) {
+                                  setState(() {
+                                    if (val.length == 0) {
+                                      schemeselection = false;
+                                    } else {
+                                      schemeselection = true;
+                                    }widget.resetloanscheme();
+                                  });
+                                },
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
@@ -872,6 +882,7 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     filterFn: (Scheme item, String query) {
                                       return item.filterFn(query);
                                     },
+                                    enabled: schemeselection,
                                     popupProps: PopupProps.menu(
                                       showSearchBox: true,
                                       itemBuilder: (BuildContext context,
@@ -1421,6 +1432,16 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                             RegExp(r'[0-9]')),
                                         FilteringTextInputFormatter.digitsOnly
                                       ],
+                                      onChanged: (val) {
+                                        setState(() {
+                                          print(val);
+                                          if (val.length == 0) {
+                                            schemeselection = false;
+                                          } else {
+                                            schemeselection = true;
+                                          }
+                                        });
+                                      },
                                       decoration: InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.zero,
