@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../Widget/NavBool.dart';
+import '../Widget/NavBool.dart';
+
 
 class SpecialConsideration extends StatefulWidget {
   Navbool navbool;

@@ -42,9 +42,9 @@ import 'ScreensMFS/Samitee Management/SamiteeManagement.dart';
 import 'ScreensMFS/Special Consideration/SpecialConsideration.dart';
 import 'ScreensMFS/Transaction/Transaction.dart';
 import 'ScreensMFS/DesktopHomepage/DesktopHomepage.dart';
+import 'ScreensMFS/Widget/Appbool.dart';
+import 'ScreensMFS/Widget/NavBool.dart';
 import 'ScreensMFS/authentication/authentication.dart';
-import 'Widget/Appbool.dart';
-import 'Widget/NavBool.dart';
 import 'Constants/responsive.dart';
 import 'helpers/auth_service.dart';
 

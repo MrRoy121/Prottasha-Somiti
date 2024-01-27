@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Widget/Appbar.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
-import '../../../Widget/NavbarScreen.dart';
+
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/NavBool.dart';
+import '../Widget/NavbarScreen.dart';
 
 class DesktopDashBoard extends StatefulWidget {
   Navbool navbool;

@@ -2,20 +2,17 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:prottashasomit/Widget/Appbar.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
-import 'package:prottashasomit/Widget/NoDataFound.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/LoanSanction.dart';
 import '../../../../Model/member.dart';
 import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
-import '../../../../Widget/NavbarScreen.dart';
-import '../../../../Widget/SamiteeSelection.dart';
-import '../../../../Widget/TransactionWidget/MemberDeposit.dart';
 import '../../../../route.dart';
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/NavBool.dart';
+import '../Widget/NavbarScreen.dart';
 
 class LoanSanctionApprove extends StatefulWidget {
   Navbool navbool;

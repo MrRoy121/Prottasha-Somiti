@@ -5,20 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanGuarantor.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanGuarantor.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanSamitteSelectionUpdate.dart';
-import 'package:prottashasomit/Widget/Appbar.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
-import 'package:prottashasomit/Widget/NoDataFound.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/member.dart';
 import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
-import '../../../../Widget/NavbarScreen.dart';
-import '../../../../Widget/SamiteeSelection.dart';
-import '../../../../Widget/TransactionWidget/MemberDeposit.dart';
 import '../../../../route.dart';
 import '../../../Model/LoanSanction.dart';
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/NavBool.dart';
+import '../Widget/NavbarScreen.dart';
 
 class LoanSanctionEdit extends StatefulWidget {
   Navbool navbool;

@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:prottashasomit/Widget/Appbar.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
-import 'package:prottashasomit/Widget/NoDataFound.dart';
-import '../../../../Constants/Constants.dart';
-import '../../../../Widget/MemberRequestOfClosing.dart';
-import '../../../../Widget/NavbarScreen.dart';
-import '../../../../Widget/SamiteeSelection.dart';
 import '../../../Model/member.dart';
 import '../../../Model/somitee.dart';
 import '../../../route.dart';
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/MemberRequestOfClosing.dart';
+import '../Widget/NavBool.dart';
+import '../Widget/NavbarScreen.dart';
+import '../Widget/SamiteeSelection.dart';
 
 class CloseMember extends StatefulWidget {
   Navbool navbool;

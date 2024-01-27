@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/Notice_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Constants/responsive.dart';
-import '../../../Widget/Appbar.dart';
 import '../../route.dart';
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/Notice_widget.dart';
 
 class DesktopHomePage extends StatefulWidget {
   Appbool navbool;

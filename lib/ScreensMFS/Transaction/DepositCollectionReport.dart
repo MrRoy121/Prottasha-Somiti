@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Widget/Appbar.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
-import 'package:prottashasomit/Widget/NoDataFound.dart';
-import '../../../../Constants/Constants.dart';
-import '../../../../Widget/NavbarScreen.dart';
-import '../../../../Widget/SamiteeSelection.dart';
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/NavBool.dart';
+import '../Widget/NavbarScreen.dart';
+import '../Widget/NoDataFound.dart';
 
 
 class DepositCollectionReport extends StatefulWidget {

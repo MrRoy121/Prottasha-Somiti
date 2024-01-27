@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/ReScheduleLoanInfo.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/RequestInfo.dart';
-import 'package:prottashasomit/Widget/Appbar.dart';
-import 'package:prottashasomit/Widget/Appbool.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
-import '../../../../Widget/NavbarScreen.dart';
+import '../Widget/Appbar.dart';
+import '../Widget/Appbool.dart';
+import '../Widget/NavBool.dart';
+import '../Widget/NavbarScreen.dart';
 
 class LoanReSchedule extends StatefulWidget {
   Navbool navbool;

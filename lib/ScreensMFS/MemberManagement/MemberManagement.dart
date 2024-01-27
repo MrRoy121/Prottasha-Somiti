@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prottashasomit/Widget/NavBool.dart';
+
+import '../Widget/NavBool.dart';
 
 class MemberManagement extends StatefulWidget {
   Navbool navbool;

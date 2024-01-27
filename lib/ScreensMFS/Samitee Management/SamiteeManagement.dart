@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../Widget/NavBool.dart';
+import '../Widget/NavBool.dart';
+
 
 class SamiteeManagement extends StatefulWidget {
   Navbool navbool;
