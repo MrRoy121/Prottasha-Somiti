@@ -9,6 +9,7 @@ import '../../../../Model/member.dart';
 import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
+import '../../Model/scheme.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -76,6 +77,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         sl: arguments['LoanSanction']['sl']);
     _addinit(mst);
 
+    Scheme scheme = LoanSchemes.firstWhere((element) => element.name==mst.scheme);
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -86,7 +88,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
             Container(
               width: 1400,
               // color: Colors.white,
-              margin: EdgeInsets.only(top: 100),
+              margin: EdgeInsets.only(top: 100, left: 50),
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -410,6 +412,41 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                           width: 1, color: Colors.black)),
                                   child: Text(
                                     selectloan ? lst.memberphone : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Duration :",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 135,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan
+                                        ? scheme.duration.toString()
+                                        : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -1060,6 +1097,9 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              height: 10,
+                            ),
                             Row(
                               children: [
                                 RichText(
@@ -1104,7 +1144,99 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                               ],
                             ),
                             SizedBox(
-                              height: 110,
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Loan Category",
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.category : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Loan Scheme",
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: ' *',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 14)),
+                                      TextSpan(
+                                          text: ' :',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 7, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      border: Border.all(
+                                          width: 1, color: Colors.black)),
+                                  child: Text(
+                                    selectloan ? lst.scheme : '',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             Row(
                               children: [

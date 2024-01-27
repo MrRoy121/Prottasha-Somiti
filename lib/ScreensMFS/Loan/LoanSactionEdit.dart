@@ -38,6 +38,8 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
   var selectedloanpurpose;
   var sselectedsomiti;
   var selectedmemberss;
+  var _selectedscheme;
+  var _selectedloantype;
   var sselectedmemberss;
   var _selectedinstalment;
   var _selectedloanperiod;
@@ -55,6 +57,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
   var congrpname = TextEditingController();
   var congrpfname = TextEditingController();
   var congrprelation = TextEditingController();
+  var conduratioon = TextEditingController();
   var congrpmobile = TextEditingController();
   var congrpoccupasion = TextEditingController();
   var coninstallmentno = TextEditingController();
@@ -149,6 +152,9 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       selectedloanpurpose = ss;
       _selectedinstalment = ss;
       _selectedloanperiod = ss;
+      _selectedscheme = ss;
+      _selectedloantype = ss;
+      conduratioon.text = '';
       consanctionlimit.text = "";
       conservicecharge.text = "";
       coninstallmentno.text = "";
@@ -176,9 +182,11 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
     if (selectedsomiti == null ||
         selectedmemberss == null ||
         selectedloanpurpose == null ||
+        _selectedscheme == null ||
         congrfname.text == "" ||
         congrffname.text == "" ||
         congrfrelation.text == "" ||
+        _selectedloantype == null ||
         congrfmobile.text == "" ||
         congrfoccupasion.text == "" ||
         congrsname.text == "" ||
@@ -217,6 +225,8 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         "Installment Frequency": _selectedinstalment,
         "Sanction Date": selectedDate,
         "Loan Purpose": selectedloanpurpose,
+        "Loan Scheme": _selectedscheme.name,
+        'Loan Category': _selectedloantype,
         "Loan Period": _selectedloanperiod,
         "Service Charge": double.parse(conservicecharge.text),
         "Installment No": double.parse(coninstallmentno.text),
@@ -278,6 +288,11 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       serviceamount = cst.serviceamount;
       conremarks.text = cst.remarks;
       congrfname.text = cst.grantorfname;
+
+      _selectedscheme =
+          LoanSchemes.firstWhere((element) => element.name == cst.scheme);
+      conduratioon.text = _selectedscheme.duration.toString();
+      _selectedloantype = cst.category;
       congrffname.text = cst.grantorffname;
       congrfrelation.text = cst.grantorfrelation;
       congrfmobile.text = cst.grantorfmobile;
@@ -319,15 +334,42 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
       });
     }
 
-    void _setuplloanperiod(int ins) {
+    void _resetloanscheme() {
+      var vs;
       setState(() {
-        _selectedloanperiod = LoanPeriodList[ins];
+        _selectedscheme = vs;
+        _selectedinstalment = vs;
+        conduratioon.text = '';
+        coninstallmentno.text = '';
+        coninstallmentamount.text = '';
+        conservicecharge.text = '';
+        serviceamount = 0;
+      });
+    }
+
+    void _setuploanscheme(int ins) {
+      setState(() {
+        _selectedscheme = LoanSchemes[ins];
+        _selectedinstalment = InstallmentFrequencyList[0];
+        coninstallmentno.text = _selectedscheme.installmentno.toString();
+        conduratioon.text = _selectedscheme.duration.toString();
+        coninstallmentamount.text =
+            _selectedscheme.installmentamount.toString();
+        conservicecharge.text = _selectedscheme.servicecharge.toString();
+        serviceamount = double.parse(conservicecharge.text) +
+            double.parse(coninstallmentamount.text);
       });
     }
 
     void _setuploanpurpose(int ins) {
       setState(() {
         selectedloanpurpose = LoanPurposeList[ins];
+      });
+    }
+
+    void _setuplloantype(int ins) {
+      setState(() {
+        _selectedloantype = LoanType[ins];
       });
     }
 
@@ -378,10 +420,9 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         child: Stack(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 100),
+              margin: const EdgeInsets.only(top: 100,left: 50),
               child: Column(
                 children: [
-
                   SizedBox(
                     height: 50,
                   ),
@@ -391,21 +432,25 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
                       setupsomiti: _setupsomiti,
                       mst: mst,
                       conremarks: conremarks,
+                      selectedloantype: _selectedloantype,
                       consanctionlimit: consanctionlimit,
                       coninstallmentamount: coninstallmentamount,
+                      conduratioon: conduratioon,
                       coninstallmentno: coninstallmentno,
+                      setuplloantype: _setuplloantype,
                       selectedsomiteeid: selectedsomiti,
+                      selectedscheme: _selectedscheme,
                       setuploanpurpose: _setuploanpurpose,
+                      setuplloanscheme: _setuploanscheme,
                       serviceamount: serviceamount,
+                      resetloanscheme: _resetloanscheme,
                       conservicecharge: conservicecharge,
                       selectedloanpurpose: selectedloanpurpose,
                       setupinstallment: _setupinstallment,
-                      setuplloanperiod: _setuplloanperiod,
                       selectedDate: selectedDate,
                       allmemberss: allmemberss,
                       selectedinstalment: _selectedinstalment,
                       setupmemberss: _setupmemberss,
-                      selectedloanperiod: _selectedloanperiod,
                       onsubmit: _save,
                       memberssselected: memberselection,
                       selectedmemberssid: sselectedmemberss,
