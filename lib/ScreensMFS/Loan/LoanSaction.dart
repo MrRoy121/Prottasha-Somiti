@@ -38,7 +38,6 @@ class _LoanSanctionState extends State<LoanSanction> {
   var selectedmemberss;
   var sselectedmemberss;
   var _selectedinstalment;
-  var _selectedloanperiod;
   var _selectedscheme;
   var _selectedloantype;
   DateTime selectedDate = DateTime.now();
@@ -62,6 +61,7 @@ class _LoanSanctionState extends State<LoanSanction> {
   var congrprelation = TextEditingController();
   var congrpmobile = TextEditingController();
   var congrpocupasion = TextEditingController();
+  var conduratioon = TextEditingController();
   double serviceamount = 0;
   @override
   void initState() {
@@ -147,13 +147,13 @@ class _LoanSanctionState extends State<LoanSanction> {
       selectedmemberss = ss;
       selectedloanpurpose = ss;
       _selectedinstalment = ss;
-      _selectedloanperiod = ss;
       _selectedscheme = ss;
       _selectedloantype = ss;
       consanctionlimit.text = "";
       conservicecharge.text = "";
       coninstallmentno.text = "";
       coninstallmentamount.text = "";
+      conduratioon.text = '';
       serviceamount = 0;
       conremarks.text = "";
       congrfname.text = "";
@@ -184,11 +184,13 @@ class _LoanSanctionState extends State<LoanSanction> {
     if (selectedsomiti == null ||
         selectedmemberss == null ||
         selectedloanpurpose == null ||
+        _selectedscheme == null ||
         congrfname.text == "" ||
         congrffname.text == "" ||
         congrfrelation.text == "" ||
         congrfmobile.text == "" ||
         congrfocupasion.text == "" ||
+        _selectedloantype == null ||
         congrsname.text == "" ||
         congrsfname.text == "" ||
         congrsrelation.text == "" ||
@@ -228,7 +230,8 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Installment Frequency": _selectedinstalment,
         "Sanction Date": selectedDate,
         "Loan Purpose": selectedloanpurpose,
-        "Loan Period": _selectedloanperiod,
+        "Loan Scheme": _selectedscheme.name,
+        'Loan Category':_selectedloantype,
         "Service Charge": double.parse(conservicecharge.text),
         "Installment No": double.parse(coninstallmentno.text),
         "Installment Amount": double.parse(coninstallmentamount.text),
@@ -298,6 +301,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         _selectedscheme = LoanSchemes[ins];
         _selectedinstalment = InstallmentFrequencyList[0];
         coninstallmentno.text = _selectedscheme.installmentno.toString();
+        conduratioon.text = _selectedscheme.duration.toString();
         coninstallmentamount.text =
             _selectedscheme.installmentamount.toString();
         conservicecharge.text = _selectedscheme.servicecharge.toString();
@@ -311,16 +315,11 @@ class _LoanSanctionState extends State<LoanSanction> {
       setState(() {
         _selectedscheme = vs;
         _selectedinstalment = vs;
+        conduratioon.text = '';
         coninstallmentno.text = '';
         coninstallmentamount.text = '';
         conservicecharge.text = '';
         serviceamount = 0;
-      });
-    }
-
-    void _setuplloanperiod(int ins) {
-      setState(() {
-        _selectedloanperiod = LoanPeriodList[ins];
       });
     }
 
@@ -344,7 +343,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         child: Stack(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 100,left: 50),
+              margin: const EdgeInsets.only(top: 100, left: 50),
               child: Column(
                 children: [
                   LoanSamitteSelection(
@@ -357,20 +356,18 @@ class _LoanSanctionState extends State<LoanSanction> {
                       setuplloanscheme: _setuploanscheme,
                       coninstallmentno: coninstallmentno,
                       selectedsomiteeid: selectedsomiti,
-                      setuploanpurpose: _setuploanpurpose,
+                      setuploanpurpose: _setuploanpurpose,conduratioon: conduratioon,
                       serviceamount: serviceamount,
                       setuplloantype: _setuplloantype,
                       conservicecharge: conservicecharge,
                       selectedloantype: _selectedloantype,
                       selectedloanpurpose: selectedloanpurpose,
                       setupinstallment: _setupinstallment,
-                      setuplloanperiod: _setuplloanperiod,
                       selectedDate: selectedDate,
                       resetloanscheme: _resetloanscheme,
                       allmemberss: allmemberss,
                       selectedinstalment: _selectedinstalment,
                       setupmemberss: _setupmemberss,
-                      selectedloanperiod: _selectedloanperiod,
                       onsubmit: _save,
                       memberssselected: memberselection,
                       selectedmemberssid: sselectedmemberss,

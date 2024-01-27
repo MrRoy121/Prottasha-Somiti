@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanInformation.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanOtherInfo.dart';
-import '../../../Model/LoanSanction.dart';
+import '../../../Model/loanSanction.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -22,7 +22,7 @@ class LoanDisbursement extends StatefulWidget {
 }
 
 class _LoanDisbursementState extends State<LoanDisbursement> {
-  List<LoanSanction> sanction = [];
+  List<loanSanction> sanction = [];
   List<String> ssanction = [];
   bool bsanction = false;
   String imgurl = '';
@@ -41,17 +41,18 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
         .then((querySnapshot) {
       for (var json in querySnapshot.docs) {
         if (json["Status"] == "Approved") {
-          sanction.add(LoanSanction(
+          sanction.add(loanSanction(
               somiteename: json['Somitee Name'],
               somiteeid: json['Somitee ID'],
               membername: json['Member Name'],
               memberid: json['Member ID'],
               loanpurpose: json["Loan Purpose"],
               memberphone: json['Member Phone'],
+              scheme: json["Loan Scheme"],
+              category: json['Loan Category'],
               sanctionlimit: json["Sanction Limit"],
               installmentfrequency: json["Installment Frequency"],
               sanctiondate: json["Sanction Date"].toDate(),
-              loanperiod: json["Loan Period"],
               servicecharge: json["Service Charge"],
               installmentno: json["Installment No"],
               installmentamount: json["Installment Amount"],

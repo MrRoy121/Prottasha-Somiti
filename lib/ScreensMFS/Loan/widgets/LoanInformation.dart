@@ -2,10 +2,10 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Constants/Constants.dart';
-import '../../../Model/LoanSanction.dart';
+import '../../../Model/loanSanction.dart';
 
 class LoanInformation extends StatefulWidget {
-  List<LoanSanction> sanction;
+  List<loanSanction> sanction;
   List<String> ssanction;
   void Function(int) setupsanction;
   var selectedsanction;
@@ -131,15 +131,15 @@ class _LoanInformationState extends State<LoanInformation> {
                                     color: AppColor_greyBorder,
                                     border: Border.all(color: AppColor_Black),
                                   ),
-                                  child: DropdownSearch<LoanSanction>(
+                                  child: DropdownSearch<loanSanction>(
                                     filterFn:
-                                        (LoanSanction item, String query) {
+                                        (loanSanction item, String query) {
                                       return item.filterFn(query);
                                     },
                                     popupProps: PopupProps.menu(
                                       showSearchBox: true,
                                       itemBuilder: (BuildContext context,
-                                          LoanSanction item, bool isSelected) {
+                                          loanSanction item, bool isSelected) {
                                         return Container(
                                           padding: EdgeInsets.all(15),
                                           child: Text(

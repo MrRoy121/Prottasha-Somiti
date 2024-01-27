@@ -21,8 +21,7 @@ class LoanSamitteSelection extends StatefulWidget {
   var selectedscheme;
   double serviceamount;
   var selectedinstalment;
-  var selectedloanperiod;
-  var coninstallmentno, conremarks, coninstallmentamount;
+  var coninstallmentno, conremarks, coninstallmentamount,conduratioon;
   List<Memberss> memberss = [];
   List<Memberss> allmemberss = [];
   var selectedmemberss;
@@ -35,7 +34,6 @@ class LoanSamitteSelection extends StatefulWidget {
   void Function(int) setupmemberss;
   void Function(int) setuploanpurpose;
   void Function(int) setupinstallment;
-  void Function(int) setuplloanperiod;
   void Function(int) setuplloantype;
   void Function(int) setuplloanscheme;
 
@@ -44,18 +42,17 @@ class LoanSamitteSelection extends StatefulWidget {
       required this.setupsomiti,
       required this.coninstallmentno,
       required this.setuploanpurpose,
+        required this.conduratioon,
       required this.setuplloantype,
         required this.resetloanscheme,
       required this.setupinstallment,
       required this.setuplloanscheme,
       required this.selectedscheme,
       required this.selectedloanpurpose,
-      required this.setuplloanperiod,
       required this.selectedDate,
       required this.conremarks,
       required this.coninstallmentamount,
       required this.setupmemberss,
-      required this.selectedloanperiod,
       required this.selectedloantype,
       required this.conservicecharge,
       required this.serviceamount,
@@ -489,6 +486,50 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                           //     ),
                           //   ],
                           // ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Duration :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 130,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: TextFormField(
+                                  controller: widget.conduratioon,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Installment No",
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -1502,50 +1543,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                               Row(
                                 children: [
                                   Text(
-                                    "Loan Period :",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 250,
-                                  ),
-                                  SizedBox(
-                                    width: 150,
-                                    child: DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Select",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                        ),
-                                      ),
-                                      value: widget.selectedloanperiod,
-                                      onChanged: (newValue) {
-                                        widget.setuplloanperiod(
-                                            LoanPeriodList.indexOf(newValue!));
-                                      },
-                                      items: LoanPeriodList.map((item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
                                     "Service Charge :",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -2229,50 +2226,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                         color: Colors.black,
                                         fontSize: 14,
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Loan Period :",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 110,
-                                  ),
-                                  SizedBox(
-                                    width: 150,
-                                    child: DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Select",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                        ),
-                                      ),
-                                      value: widget.selectedloanperiod,
-                                      onChanged: (newValue) {
-                                        widget.setuplloanperiod(
-                                            LoanPeriodList.indexOf(newValue!));
-                                      },
-                                      items: LoanPeriodList.map((item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        );
-                                      }).toList(),
                                     ),
                                   ),
                                 ],

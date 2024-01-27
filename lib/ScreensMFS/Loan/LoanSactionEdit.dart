@@ -11,7 +11,7 @@ import '../../../../Model/member.dart';
 import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
-import '../../../Model/LoanSanction.dart';
+import '../../../Model/loanSanction.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -32,7 +32,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
   List<String> ssomitee = [];
   List<Memberss> allmemberss = [];
   List<Memberss> memberss = [];
-  late LoanSanction cst;
+  late loanSanction cst;
   bool memberselection = false;
   var selectedsomiti;
   var selectedloanpurpose;
@@ -172,7 +172,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
     });
   }
 
-  void _save(LoanSanction cst) async {
+  void _save(loanSanction cst) async {
     if (selectedsomiti == null ||
         selectedmemberss == null ||
         selectedloanpurpose == null ||
@@ -271,7 +271,6 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
           memberss.firstWhere((member) => member.id == cst.memberid);
       selectedloanpurpose = cst.loanpurpose;
       _selectedinstalment = cst.installmentfrequency;
-      _selectedloanperiod = cst.loanperiod;
       consanctionlimit.text = cst.sanctionlimit.toString();
       conservicecharge.text = cst.servicecharge.toString();
       coninstallmentno.text = cst.installmentno.toString();
@@ -334,7 +333,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
 
     var arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    LoanSanction mst = LoanSanction(
+    loanSanction mst = loanSanction(
         somiteename: arguments['LoanSanction']["Somitee Name"],
         somiteeid: arguments['LoanSanction']["Somitee ID"],
         loanpurpose: arguments['LoanSanction']['Loan Purpose'],
@@ -345,7 +344,8 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         installmentfrequency: arguments['LoanSanction']
             ["Installment Frequency"],
         sanctiondate: arguments['LoanSanction']["Sanction Date"],
-        loanperiod: arguments['LoanSanction']["Loan Period"],
+        scheme: arguments['LoanSanction']["Loan Scheme"],
+        category: arguments['LoanSanction']['Loan Category'],
         servicecharge: arguments['LoanSanction']["Service Charge"],
         installmentno: arguments['LoanSanction']["Installment No"],
         installmentamount: arguments['LoanSanction']["Installment Amount"],

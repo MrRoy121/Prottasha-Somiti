@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../../Constants/Constants.dart';
-import '../../../../Model/LoanSanction.dart';
+import '../../../../Model/loanSanction.dart';
 import '../../../../Model/member.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
@@ -28,8 +28,8 @@ class ApproveLoanSanctionReject extends StatefulWidget {
 class _ApproveLoanSanctionRejectState extends State<ApproveLoanSanctionReject> {
   @override
   Widget build(BuildContext context) {
-    Future<List<LoanSanction>> getCust() async {
-      List<LoanSanction> somitee = [];
+    Future<List<loanSanction>> getCust() async {
+      List<loanSanction> somitee = [];
       int s = 1;
       await FirebaseFirestore.instance
           .collection('LoanSanction')
@@ -37,7 +37,7 @@ class _ApproveLoanSanctionRejectState extends State<ApproveLoanSanctionReject> {
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
           if (json["Status"] != "Requested") {
-            somitee.add(LoanSanction(
+            somitee.add(loanSanction(
                 somiteename: json['Somitee Name'],
                 somiteeid: json['Somitee ID'],
                 membername: json['Member Name'],
@@ -47,7 +47,8 @@ class _ApproveLoanSanctionRejectState extends State<ApproveLoanSanctionReject> {
                 sanctionlimit: json["Sanction Limit"],
                 installmentfrequency: json["Installment Frequency"],
                 sanctiondate: json["Sanction Date"].toDate(),
-                loanperiod: json["Loan Period"],
+                scheme: json["Loan Scheme"],
+                category: json['Loan Category'],
                 servicecharge: json["Service Charge"],
                 installmentno: json["Installment No"],
                 installmentamount: json["Installment Amount"],

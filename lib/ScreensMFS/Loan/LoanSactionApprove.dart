@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
-import '../../../../Model/LoanSanction.dart';
+import '../../../../Model/loanSanction.dart';
 import '../../../../Model/member.dart';
 import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
@@ -25,10 +25,10 @@ class LoanSanctionApprove extends StatefulWidget {
 }
 
 class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
-  late LoanSanction lst;
+  late loanSanction lst;
   bool selectloan = false;
 
-  void _addinit(LoanSanction cst) {
+  void _addinit(loanSanction cst) {
     selectloan = true;
     lst = cst;
     setState(() {});
@@ -38,10 +38,12 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
   Widget build(BuildContext context) {
     var arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    LoanSanction mst = LoanSanction(
+    loanSanction mst = loanSanction(
         somiteename: arguments['LoanSanction']["Somitee Name"],
         somiteeid: arguments['LoanSanction']["Somitee ID"],
         loanpurpose: arguments['LoanSanction']['Loan Purpose'],
+        scheme: arguments['LoanSanction']["Loan Scheme"],
+        category: arguments['LoanSanction']['Loan Category'],
         membername: arguments['LoanSanction']['Member Name'],
         memberid: arguments['LoanSanction']['Member ID'],
         memberphone: arguments['LoanSanction']['Member Phone'],
@@ -49,7 +51,6 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         installmentfrequency: arguments['LoanSanction']
             ["Installment Frequency"],
         sanctiondate: arguments['LoanSanction']["Sanction Date"],
-        loanperiod: arguments['LoanSanction']["Loan Period"],
         servicecharge: arguments['LoanSanction']["Service Charge"],
         installmentno: arguments['LoanSanction']["Installment No"],
         installmentamount: arguments['LoanSanction']["Installment Amount"],
@@ -409,39 +410,6 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                           width: 1, color: Colors.black)),
                                   child: Text(
                                     selectloan ? lst.memberphone : '',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Loan Period :",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 110,
-                                ),
-                                Container(
-                                  width: 300,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 7, vertical: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      border: Border.all(
-                                          width: 1, color: Colors.black)),
-                                  child: Text(
-                                    selectloan ? lst.loanperiod : '',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,

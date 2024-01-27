@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:prottashasomit/Model/LoanSanction.dart';
+import 'package:prottashasomit/Model/loanSanction.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Constants/values.dart';
@@ -15,7 +15,7 @@ class LoanSamitteSelectionUpdate extends StatefulWidget {
   List<String> ssomitee;
   var selectedsomitee;
   var consanctionlimit;
-  LoanSanction mst;
+  loanSanction mst;
   var selectedsomiteeid;
   var conservicecharge;
   var selectedloanpurpose;
@@ -28,7 +28,7 @@ class LoanSamitteSelectionUpdate extends StatefulWidget {
   var selectedmemberss;
   var selectedmemberssid;
   DateTime selectedDate;
-  void Function(LoanSanction) onsubmit;
+  void Function(loanSanction) onsubmit;
   void Function() onclear;
   void Function(int) setupsomiti;
   bool memberssselected;
