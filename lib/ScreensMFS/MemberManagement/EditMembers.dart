@@ -10,8 +10,8 @@ import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/SamiteeSelection.dart';
 
 class EditMembers extends StatefulWidget {
@@ -450,7 +450,7 @@ class _EditMembersState extends State<EditMembers> {
                 ],
               ),
             ),
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

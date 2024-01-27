@@ -4,8 +4,8 @@ import 'package:prottashasomit/ScreensMFS/Loan/widgets/ReScheduleLoanInfo.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/RequestInfo.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 
 class LoanReSchedule extends StatefulWidget {
   Navbool navbool;
@@ -57,7 +57,7 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
               ),
             ),
 
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

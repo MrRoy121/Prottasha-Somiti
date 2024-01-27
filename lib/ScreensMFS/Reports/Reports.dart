@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Widget/NavBool.dart';
+import '../Widget/NavBoolMFS.dart';
 
 class Reports extends StatefulWidget {
   Navbool navbool;

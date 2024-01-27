@@ -6,8 +6,8 @@ import 'package:prottashasomit/ScreensMFS/Loan/widgets/RepaymentLoanInfo.dart';
 
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 
 class RepaymentRequest extends StatefulWidget {
   Navbool navbool;
@@ -69,7 +69,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                 ],
               ),
             ),
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

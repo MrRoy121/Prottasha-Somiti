@@ -10,8 +10,8 @@ import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 
 class ClosedMembersList extends StatefulWidget {
   Navbool navbool;
@@ -436,7 +436,7 @@ class _ClosedMembersListState extends State<ClosedMembersList> {
                 ),
               ),
             ),
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

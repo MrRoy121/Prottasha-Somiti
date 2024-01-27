@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/ReportsWidgets/GLSummary.dart';
 
 import '../Widget/ReportsWidgets/TransactionList.dart';
@@ -32,7 +32,7 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
+            NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
 
             SizedBox(
               height: 50,

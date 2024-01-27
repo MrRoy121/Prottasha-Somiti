@@ -17,8 +17,8 @@ import '../../../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/ContactForm.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/OtherInfo.dart';
 import '../Widget/PersonalInfoForm.dart';
 import '../Widget/SamiteeSelection.dart';
@@ -1176,7 +1176,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                         ),
             ),
 
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

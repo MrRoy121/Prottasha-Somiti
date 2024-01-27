@@ -6,8 +6,8 @@ import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanOtherInfo.dart';
 import '../../../Model/LoanSanction.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/TransactionWidget/Image.dart';
 import '../Widget/TransactionWidget/LinkACinfo.dart';
 
@@ -194,7 +194,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                 ],
               ),
             ),
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

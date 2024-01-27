@@ -3,16 +3,13 @@ import 'package:get/get.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Constants/responsive.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
+import '../../ScreensMFS/Widget/Notice_widget.dart';
 import '../../route.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/Notice_widget.dart';
 
 class DesktopHomePage extends StatefulWidget {
   Appbool navbool;
-  // Responsivess rs;
-  // DesktopHomePage({required this.navbool, required this.rs});
-
   DesktopHomePage({
     required this.navbool,
   });
@@ -165,48 +162,52 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                           SingleChildScrollView(
                             child: Column(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(90.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  margin: EdgeInsets.only(
-                                      top: ScreenWidth / 17.66,
-                                      left: ScreenWidth / 76.8),
-                                  height: ScreenWidth / 12.8,
-                                  width: ScreenWidth / 3.072,
-                                  // color: Colors.white,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: ScreenWidth / 25.6,
-                                      ),
-                                      Image.asset('assets/money.png',
-                                          width: ScreenWidth / 19.2,
-                                          height: ScreenWidth / 19.2),
-                                      SizedBox(
-                                        width: ScreenWidth / 25.6,
-                                      ),
-                                      Text(
-                                        "Core Banking System",
-                                        style: TextStyle(
-                                            fontSize: ScreenWidth / 96,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor_greyText),
-                                      ),
-                                    ],
+                                InkWell(onTap: (){
+                                  Get.toNamed(dashboardPageRoute,arguments: {'CBS': true},);
+                                },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(90.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        top: ScreenWidth / 17.66,
+                                        left: ScreenWidth / 76.8),
+                                    height: ScreenWidth / 12.8,
+                                    width: ScreenWidth / 3.072,
+                                    // color: Colors.white,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: ScreenWidth / 25.6,
+                                        ),
+                                        Image.asset('assets/money.png',
+                                            width: ScreenWidth / 19.2,
+                                            height: ScreenWidth / 19.2),
+                                        SizedBox(
+                                          width: ScreenWidth / 25.6,
+                                        ),
+                                        Text(
+                                          "Core Banking System",
+                                          style: TextStyle(
+                                              fontSize: ScreenWidth / 96,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor_greyText),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 InkWell( onTap: (){
-                                  Get.toNamed(dashboardPageRoute);
+                                  Get.toNamed(dashboardPageRoute,arguments: {'CBS': false},);
                                 },
                                   child: Container(
                                     decoration: BoxDecoration(

@@ -5,8 +5,8 @@ import '../../../../Constants/Constants.dart';
 import '../../../../Model/somitee.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 
 class ShamiteeList extends StatefulWidget {
   Navbool navbool;
@@ -299,7 +299,7 @@ class _ShamiteeListState extends State<ShamiteeList> {
                   ],
                 ),
               ),
-              NavbarScreen(
+              NavbarScreenMFS(
                 appbool: widget.appbool,
                 navbool: widget.navbool,
               ),

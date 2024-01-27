@@ -17,10 +17,10 @@ import 'package:prottashasomit/ScreensMFS/Reports/SlipReprint.dart';
 import 'package:prottashasomit/route.dart';
 import 'Constants/responsive.dart';
 import 'Model/auth_middleware.dart';
-import 'ScreensMFS/Accounts/Accounts.dart';
-import 'ScreensMFS/Calculators/Calculators.dart';
-import 'ScreensMFS/DesktopDashBoard/DashBoard.dart';
-import 'ScreensMFS/Employee/Employee.dart';
+import 'Screens/DashBoard/DashBoard.dart';
+import 'Screens/Homepage/Homepage.dart';
+import 'Screens/authentication/authentication.dart';
+import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
 import 'ScreensMFS/Loan/LoanSaction.dart';
@@ -41,10 +41,8 @@ import 'ScreensMFS/Reports/Reports.dart';
 import 'ScreensMFS/Samitee Management/SamiteeManagement.dart';
 import 'ScreensMFS/Special Consideration/SpecialConsideration.dart';
 import 'ScreensMFS/Transaction/Transaction.dart';
-import 'ScreensMFS/DesktopHomepage/DesktopHomepage.dart';
 import 'ScreensMFS/Widget/Appbool.dart';
-import 'ScreensMFS/Widget/NavBool.dart';
-import 'ScreensMFS/authentication/authentication.dart';
+import 'ScreensMFS/Widget/NavBoolMFS.dart';
 import 'Constants/responsive.dart';
 import 'helpers/auth_service.dart';
 
@@ -69,10 +67,13 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
   Navbool navbool =
-  Navbool(true, false, false, false, false, false, false, false, false);
+      Navbool(true, false, false, false, false, false, false, false, false);
 
+  NavboolCBS navboolcbs =
+  NavboolCBS(true, false, false, false, false);
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
       // return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -91,187 +92,183 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: homePageRoute,
             page: () => DesktopHomePage(
-              navbool: appbool,
-            ),
+                  navbool: appbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: authenticationPageRoute,
-            page: () => AuthenticationPage(
-            ),
+            page: () => AuthenticationPage(),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dashboardPageRoute,
-            page: () => DesktopDashBoard(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+            page: () => DashBoard(
+                  appbool: appbool,
+                  navbool: navbool,navboolcbs: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloaneditPageRoute,
             page: () => LoanSanctionEdit(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: somiteeregistrationPageRoute,
             page: () => SamiteeRegistration(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberegistrationPageRoute,
             page: () => MemberRegistration(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberclosingPageRoute,
             page: () => CloseMember(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: closingmemberrequestPageRoute,
             page: () => ClosedMembersList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: somiteelistPageRoute,
             page: () => ShamiteeList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberlistPageRoute,
             page: () => EditMembers(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberEditPageRoute,
             page: () => MemberUpdate(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloanrequestPageRoute,
             page: () => LoanSanction(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloanapprovePageRoute,
             page: () => LoanSanctionApprove(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloanapprovelistPageRoute,
             page: () => ApproveLoanSanctionReject(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: loandisbursementPageRoute,
             page: () => LoanDisbursement(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: loanrequestlistPageRoute,
             page: () => LoanSanctionList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: repaymentrequestPageRoute,
             page: () => RepaymentRequest(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
-
-
 
         // Report's section
         GetPage(
             name: memberledgerPageRoute,
             page: () => MemberLedger(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dailytransactionPageRoute,
             page: () => DailyTransactionList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dailyglsummaryPageRoute,
             page: () => DailyGLSummary(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: samiteewisememberdepositPageRoute,
             page: () => SamiteeWiseMemberDepositeLoan(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctiondetailsinformationPageRoute,
             page: () => SanctionDetailInformation(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: glstatementPageRoute,
             page: () => GenerallLedgerStatement(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: samiteewisedisbursePageRoute,
             page: () => SamiteeWiseDisburse(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberwishdisbursePageRoute,
             page: () => MemberWiseDisburse(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: slipreprintPageRoute,
             page: () => SlipReprint(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
-
       ],
       // onGenerateRoute: (settings) {
       //   switch (settings.name) {

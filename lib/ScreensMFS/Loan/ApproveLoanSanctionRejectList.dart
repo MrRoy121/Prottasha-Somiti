@@ -11,8 +11,8 @@ import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 
 class ApproveLoanSanctionReject extends StatefulWidget {
   Navbool navbool;
@@ -341,7 +341,7 @@ class _ApproveLoanSanctionRejectState extends State<ApproveLoanSanctionReject> {
                 ],
               ),
             ),
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

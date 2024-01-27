@@ -9,8 +9,8 @@ import '../../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/MemberRequestOfClosing.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/SamiteeSelection.dart';
 
 class CloseMember extends StatefulWidget {
@@ -231,7 +231,7 @@ class _CloseMemberState extends State<CloseMember> {
               ),
             ),
 
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

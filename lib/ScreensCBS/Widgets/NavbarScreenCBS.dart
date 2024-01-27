@@ -2,32 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../Constants/Constants.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import '../../route.dart';
-import '../Loan/LoanReSchedule.dart';
-import '../Loan/ReverseRepayment.dart';
-import '../MemberManagement/DeadMemberInfo.dart';
-import '../Transaction/DepositCollectionReport.dart';
-import '../Transaction/DepositCollectionReportScreen2.dart';
-import '../Transaction/DepositWithDwarClosed.dart';
-import '../Transaction/DepositWithDwarNormal.dart';
-import '../Transaction/SamiteeTransaction.dart';
-import 'Appbool.dart';
-import 'NavBool.dart';
-import 'Navbar.dart';
+import 'NavBoolCBS.dart';
+import 'NavbarCBS.dart';
 
 
-class NavbarScreen extends StatefulWidget {
-  Navbool navbool;
+class NavbarScreenCBS extends StatefulWidget {
+  NavboolCBS navbool;
   Appbool appbool;
 
-  NavbarScreen({required this.appbool, required this.navbool});
+  NavbarScreenCBS({required this.appbool, required this.navbool});
 
   @override
-  State<NavbarScreen> createState() => _NavbarScreenState();
+  State<NavbarScreenCBS> createState() => _NavbarScreenCBSState();
 }
 
-class _NavbarScreenState extends State<NavbarScreen> {
-  var arr = [false, false, false, false, false, false, false, false, false];
+class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
+  var arr = [false, false, false, false, false];
   var withdrawArr = [false, false];
   var trasctionArr = [false, false];
   var closedArr = [false, false];
@@ -177,7 +169,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Navbar(
+          NavbarCBS(
             navbool: widget.navbool,
             toglechnage: _toglechnage,
           ),
@@ -334,10 +326,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.to(DeadMemberInfo(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
@@ -548,10 +537,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                 });
                               },
                               onTap: () {
-                                Get.to(SamiteeTransaction(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
@@ -577,165 +563,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                       )
                                     ],
                                   )),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SizedBox(),
-                arr[2]
-                    ? Container(
-                        margin: EdgeInsets.only(left: 340),
-                        color: AppColor_Blue,
-                        // height: 800,
-                        width: 200,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor1 = AppColor_hover1;
-                                    textColor1 = Colors.white;
-                                  } else {
-                                    itemColor1 = AppColor_Blue;
-                                    textColor1 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                _loanTogle_saction(0);
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 200,
-                                color: itemColor1,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Loan Saction",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: textColor1,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 75,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 12,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor2 = AppColor_hover1;
-                                    textColor2 = Colors.white;
-                                  } else {
-                                    itemColor2 = AppColor_Blue;
-                                    textColor2 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.toNamed(loandisbursementPageRoute);
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 200,
-                                  color: itemColor2,
-                                  child: Text(
-                                    "Loan Disbursement",
-                                    style: TextStyle(
-                                      color: textColor2,
-                                      fontSize: 12,
-                                    ),
-                                  )),
-                            ),
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor3 = AppColor_hover1;
-                                    textColor3 = Colors.white;
-                                  } else {
-                                    itemColor3 = AppColor_Blue;
-                                    textColor3 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                _loanTogle_Repay(0);
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, bottom: 10),
-                                  height: 40,
-                                  width: 200,
-                                  color: itemColor3,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Loan Repayment",
-                                        style: TextStyle(
-                                          color: textColor3,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 55,
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 12,
-                                      )
-                                    ],
-                                  )),
-                            ),
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor4 = AppColor_hover1;
-                                    textColor4 = Colors.white;
-                                  } else {
-                                    itemColor4 = AppColor_Blue;
-                                    textColor4 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.to(LoanReSchedule(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 200,
-                                color: itemColor4,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Reschedule",
-                                      style: TextStyle(
-                                        color: textColor4,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ),
                           ],
                         ),
@@ -1404,168 +1231,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                         ),
                       )
                     : SizedBox(),
-                trasctionArr[0]
-                    ? Container(
-                        margin: EdgeInsets.only(left: 0),
-                        color: AppColor_Blue,
-                        // height: 800,
-                        width: 200,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor6 = AppColor_hover2;
-                                    textColor6 = Colors.white;
-                                  } else {
-                                    itemColor6 = AppColor_Blue;
-                                    textColor6 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.to(DepositCollectionReport(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 200,
-                                color: itemColor6,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Deposit Collection Request",
-                                      style: TextStyle(
-                                        color: textColor6,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor5 = AppColor_hover2;
-                                    textColor5 = Colors.white;
-                                  } else {
-                                    itemColor5 = AppColor_Blue;
-                                    textColor5 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.to(DepositCollectionReportScreen2(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 200,
-                                  color: itemColor5,
-                                  child: Text(
-                                    "Deposit Collection Request",
-                                    style: TextStyle(
-                                      color: textColor5,
-                                      fontSize: 12,
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SizedBox(),
-                withdrawArr[0]
-                    ? Container(
-                        margin: EdgeInsets.only(left: 0),
-                        color: AppColor_Blue,
-                        // height: 800,
-                        width: 250,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor6 = AppColor_hover2;
-                                    textColor6 = Colors.white;
-                                  } else {
-                                    itemColor6 = AppColor_Blue;
-                                    textColor6 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.to(DepositWithDwarNormal(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 250,
-                                color: itemColor6,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Deposit Withdwar Request (normal)",
-                                      style: TextStyle(
-                                        color: textColor6,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor5 = AppColor_hover2;
-                                    textColor5 = Colors.white;
-                                  } else {
-                                    itemColor5 = AppColor_Blue;
-                                    textColor5 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.to(DepositWithDwarClosed(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 250,
-                                  color: itemColor5,
-                                  child: Text(
-                                    "Deposit Withdwar Request (closed)",
-                                    style: TextStyle(
-                                      color: textColor5,
-                                      fontSize: 12,
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SizedBox(),
                 loanSectionArr[0]
                     ? Container(
                         margin: EdgeInsets.only(left: 0),
@@ -1665,84 +1330,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
                                   color: itemColor5,
                                   child: Text(
                                     "Approved Sanction Reject",
-                                    style: TextStyle(
-                                      color: textColor5,
-                                      fontSize: 12,
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SizedBox(),
-                loanRePayArr[0]
-                    ? Container(
-                        margin: EdgeInsets.only(left: 0),
-                        color: AppColor_Blue,
-                        // height: 800,
-                        width: 250,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed(repaymentrequestPageRoute);
-                              },
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor6 = AppColor_hover2;
-                                    textColor6 = Colors.white;
-                                  } else {
-                                    itemColor6 = AppColor_Blue;
-                                    textColor6 = Colors.black;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 20, right: 20, bottom: 10),
-                                height: 40,
-                                width: 250,
-                                color: itemColor6,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Loan Repayment Request",
-                                      style: TextStyle(
-                                        color: textColor6,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onHover: (val) {
-                                setState(() {
-                                  if (val) {
-                                    itemColor5 = AppColor_hover2;
-                                    textColor5 = Colors.white;
-                                  } else {
-                                    itemColor5 = AppColor_Blue;
-                                    textColor5 = Colors.black;
-                                  }
-                                });
-                              },
-                              onTap: () {
-                                Get.to(ReverseRepayment(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 250,
-                                  color: itemColor5,
-                                  child: Text(
-                                    "Reverse Repayment Request",
                                     style: TextStyle(
                                       color: textColor5,
                                       fontSize: 12,

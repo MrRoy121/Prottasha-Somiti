@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import '../../../Constants/Constants.dart';
-import 'NavBool.dart';
-import 'NavItem.dart';
+import 'NavBoolMFS.dart';
+import '../../Screens/Widgets/NavItem.dart';
 
 class Navbar extends AppBar {
   Navbool navbool;
@@ -34,7 +34,7 @@ class _NavbarState extends State<Navbar> {
                 });
               },
               child: NavbarItem(
-                flag: widget.navbool.transaction,
+                flag: widget.navbool.memberManagement,
                 text: 'Member Management',
                 icon: Icons.arrow_drop_down
               ),

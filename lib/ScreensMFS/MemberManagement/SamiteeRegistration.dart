@@ -8,8 +8,8 @@ import '../../../../Constants/Constants.dart';
 import '../../../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 
 class SamiteeRegistration extends StatefulWidget {
   Navbool navbool;
@@ -410,7 +410,7 @@ class _SamiteeRegistrationState extends State<SamiteeRegistration> {
                 ],
               ),
             ),
-            NavbarScreen(
+            NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

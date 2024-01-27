@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
-import '../Widget/NavBool.dart';
-import '../Widget/NavbarScreen.dart';
+import '../Widget/NavBoolMFS.dart';
+import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/TransactionWidget/MemberDeposit.dart';
 
 
@@ -29,7 +29,7 @@ class _DepositCollectionReportScreen2State extends State<DepositCollectionReport
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NavbarScreen(appbool: widget.appbool, navbool: widget.navbool,),
+            NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
 
             SizedBox(
               height: 50,
