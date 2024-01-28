@@ -44,6 +44,7 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                 scheme: json["Loan Scheme"],
                 category: json['Loan Category'],
                 loanpurpose: json["Loan Purpose"],
+                approvedate: json["Approve Date"].toDate(),
                 memberphone: json['Member Phone'],
                 sanctionlimit: json["Sanction Limit"],
                 installmentfrequency: json["Installment Frequency"],

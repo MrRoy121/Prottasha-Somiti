@@ -175,6 +175,11 @@ class _LoanSanctionState extends State<LoanSanction> {
   }
 
   void _save() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('LoanSanction')
+        .get();
+
+    int numberOfItems = querySnapshot.size;
     const _chars = '1234567890';
     Random _rnd = Random();
     String getRandomString(int length) =>
@@ -240,6 +245,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Status": "Requested",
         'ID': sanctionloanrequestid,
         "Grantor F Name": congrfname.text,
+        'SL':numberOfItems+1,
         "Grantor F FatherName": congrffname.text,
         "Grantor F Relation": congrfrelation.text,
         "Grantor F Mobile": congrfmobile.text,

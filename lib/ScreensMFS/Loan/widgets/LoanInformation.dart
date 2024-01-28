@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Model/loanSanction.dart';
@@ -8,15 +9,23 @@ class LoanInformation extends StatefulWidget {
   List<loanSanction> sanction;
   List<String> ssanction;
   void Function(int) setupsanction;
+  var scheme;
   var selectedsanction;
   var selectedsanctionid;
+  var conpincode;
+  var condisbursed;
+  var connarration;
+  double deathriskamount;
   bool bsanction;
 
   LoanInformation(
       {required this.sanction,
       required this.bsanction,
-      required this.ssanction,
-      required this.setupsanction,
+        required this.conpincode,
+        required this.condisbursed,
+        required this.deathriskamount,
+      required this.ssanction,required this.connarration,
+      required this.setupsanction,required this.scheme,
       required this.selectedsanction,
       required this.selectedsanctionid});
 
@@ -218,7 +227,7 @@ class _LoanInformationState extends State<LoanInformation> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  widget.bsanction ? "${widget.selectedsanction.id}${widget.selectedsanction.memberid}" : "",
+                                  widget.bsanction ? "${widget.selectedsanction.somiteeid}${widget.selectedsanction.memberid}${widget.scheme.sl}${widget.selectedsanction.sl}": "",
                                 ),
                               ),
                             ],
@@ -235,16 +244,33 @@ class _LoanInformationState extends State<LoanInformation> {
                                 ),
                               ),
                               SizedBox(
-                                width: 25,
+                                width: 10,
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
+
+                                child: TextFormField(
+                                  controller: widget.condisbursed,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Disbursed Value",
+                                    fillColor: Colors.grey.shade200,
+                                    filled: true,
                                   ),
                                 ),
                               ),
@@ -267,18 +293,29 @@ class _LoanInformationState extends State<LoanInformation> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+
+                                child: TextFormField(
+                                  controller: widget.conpincode,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Pin Code",
+                                    fillColor: Colors.grey.shade200,
                                     filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Enter PIN Code",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
                                   ),
                                 ),
                               ),
@@ -307,7 +344,7 @@ class _LoanInformationState extends State<LoanInformation> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 120,
+                                  width: 40,
                                 ),
                                 SizedBox(
                                   width: 300,
@@ -330,16 +367,21 @@ class _LoanInformationState extends State<LoanInformation> {
                                 ),
                               ),
                               SizedBox(
-                                width: 40,
+                                width: 20,
                               ),
-                              SizedBox(
+                              Container(
                                 width: 300,
-                                child: TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 7, vertical: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    border: Border.all(
+                                        width: 1, color: Colors.black)),
+                                child: Text(
+                                  widget.deathriskamount.toString(),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ),
@@ -370,22 +412,26 @@ class _LoanInformationState extends State<LoanInformation> {
                                 ),
                               ),
                               SizedBox(
-                                width: 40,
+                                width: 70,
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
+                                child: TextFormField(
+                                  controller: widget.connarration,
                                   decoration: InputDecoration(
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      borderSide:
+                                      BorderSide(color: Colors.black),
+                                    ),
+                                    hintText: "Narration",
+                                    fillColor: Colors.grey.shade200,
                                     filled: true,
-                                    fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Enter Somitee/ Code",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
                                   ),
                                 ),
                               ),

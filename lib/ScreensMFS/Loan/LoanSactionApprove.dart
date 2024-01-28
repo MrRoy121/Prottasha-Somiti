@@ -45,6 +45,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         loanpurpose: arguments['LoanSanction']['Loan Purpose'],
         scheme: arguments['LoanSanction']["Loan Scheme"],
         category: arguments['LoanSanction']['Loan Category'],
+        approvedate: arguments['LoanSanction']["Approve Date"].toDate(),
         membername: arguments['LoanSanction']['Member Name'],
         memberid: arguments['LoanSanction']['Member ID'],
         memberphone: arguments['LoanSanction']['Member Phone'],
@@ -59,9 +60,9 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         serviceamount: arguments['LoanSanction']["Service Amount"],
         grantorfname: arguments['LoanSanction']["Grantor F Name"],
         grantorffname: arguments['LoanSanction']["Grantor F FatherName"],
-        grantorfrelation: arguments['LoanSanction'][ "Grantor F Relation"],
+        grantorfrelation: arguments['LoanSanction']["Grantor F Relation"],
         grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
-        grantorfocupasion: arguments['LoanSanction'][ "Grantor F Occupation"],
+        grantorfocupasion: arguments['LoanSanction']["Grantor F Occupation"],
         grantorsname: arguments['LoanSanction']["Grantor S Name"],
         grantorsfname: arguments['LoanSanction']["Grantor S FatherName"],
         grantorsrelation: arguments['LoanSanction']["Grantor S Relation"],
@@ -77,7 +78,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         sl: arguments['LoanSanction']['sl']);
     _addinit(mst);
 
-    Scheme scheme = LoanSchemes.firstWhere((element) => element.name==mst.scheme);
+    Scheme scheme =
+        LoanSchemes.firstWhere((element) => element.name == mst.scheme);
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -778,7 +780,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                             ),
                             SizedBox(
                               height: 25,
-                            ),Row(
+                            ),
+                            Row(
                               children: [
                                 Text(
                                   "Loan Guarantor (Family) Information",
@@ -933,7 +936,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                             ),
                             SizedBox(
                               height: 25,
-                            ),Row(
+                            ),
+                            Row(
                               children: [
                                 Text(
                                   "Loan Guarantor (Business) Information",
@@ -1590,7 +1594,6 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 ),
                               ],
                             ),
-
                             SizedBox(
                               height: 105,
                             ),
@@ -1694,7 +1697,6 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 ),
                               ],
                             ),
-
                             SizedBox(
                               height: 55,
                             ),

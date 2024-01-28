@@ -398,6 +398,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         grantorfrelation: arguments['LoanSanction']["Grantor F Relation"],
         grantorfmobile: arguments['LoanSanction']["Grantor F Mobile"],
         grantorfocupasion: arguments['LoanSanction']["Grantor F Occupation"],
+        approvedate: arguments['LoanSanction']["Approve Date"].toDate(),
         grantorsname: arguments['LoanSanction']["Grantor S Name"],
         grantorsfname: arguments['LoanSanction']["Grantor S FatherName"],
         grantorsrelation: arguments['LoanSanction']["Grantor S Relation"],
@@ -412,6 +413,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         id: arguments['LoanSanction']['ID'],
         sl: arguments['LoanSanction']['sl']);
     cst = mst;
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -420,7 +422,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         child: Stack(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 100,left: 50),
+              margin: const EdgeInsets.only(top: 100, left: 50),
               child: Column(
                 children: [
                   SizedBox(

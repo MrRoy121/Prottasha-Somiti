@@ -4,6 +4,8 @@ import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanInformation.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanOtherInfo.dart';
 import '../../../Model/loanSanction.dart';
+import '../../Constants/values.dart';
+import '../../Model/scheme.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -26,8 +28,15 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
   List<String> ssanction = [];
   bool bsanction = false;
   String imgurl = '';
+  var ssscheme;
   var selectedsanction;
   var selectedsanctionid;
+  var condisbursed = TextEditingController();
+  var conpincode = TextEditingController();
+  var conmanagername = TextEditingController();
+  var connarration = TextEditingController(text: "Loan Disbursement");
+  String deathrisk = '';
+  double deathriskamount = 0;
   @override
   void initState() {
     super.initState();
@@ -47,6 +56,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
               membername: json['Member Name'],
               memberid: json['Member ID'],
               loanpurpose: json["Loan Purpose"],
+              approvedate: json["Approve Date"].toDate(),
               memberphone: json['Member Phone'],
               scheme: json["Loan Scheme"],
               category: json['Loan Category'],
@@ -75,7 +85,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
               grantorpocupasion: json["Grantor P Occupation"],
               status: json["Status"],
               id: json['ID'],
-              sl: 0));
+              sl: json['SL']));
           ssanction.add(json['ID']);
         }
       }
@@ -84,6 +94,39 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
 
   @override
   Widget build(BuildContext context) {
+    void updatedeath() {
+      if (double.parse(condisbursed.text.toString()) >= 10000 &&
+          double.parse(condisbursed.text.toString()) <= 500000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.060;
+        deathrisk = "0.60%";
+      } else if (double.parse(condisbursed.text.toString()) >= 500001 &&
+          double.parse(condisbursed.text.toString()) <= 1000000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.065;
+        deathrisk = "0.65%";
+      } else if (double.parse(condisbursed.text.toString()) >= 1000001 &&
+          double.parse(condisbursed.text.toString()) <= 2000000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.070;
+        deathrisk = "0.70%";
+      } else if (double.parse(condisbursed.text.toString()) >= 2000001 &&
+          double.parse(condisbursed.text.toString()) <= 3000000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.075;
+        deathrisk = "0.75%";
+      } else if (double.parse(condisbursed.text.toString()) >= 3000001 &&
+          double.parse(condisbursed.text.toString()) <= 5000000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.080;
+        deathrisk = "0.80%";
+      } else if (double.parse(condisbursed.text.toString()) >= 5000001 &&
+          double.parse(condisbursed.text.toString()) <= 10000000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.090;
+        deathrisk = "0.90%";
+      } else if (double.parse(condisbursed.text.toString()) >= 10000001 &&
+          double.parse(condisbursed.text.toString()) <= 30000000) {
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.10;
+        deathrisk = "1.00%";
+      }
+      setState(() {});
+    }
+
     var ScreenWidth = MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
@@ -110,7 +153,9 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
     void _setupsanction(int ins) {
       selectedsanction = sanction[ins];
       bsanction = true;
-
+      condisbursed.text = selectedsanction.sanctionlimit.toString();
+      ssscheme = LoanSchemes.firstWhere(
+          (element) => element.name == selectedsanction.scheme);
       FirebaseFirestore.instance
           .collection('Member')
           .doc(selectedsanction.memberid)
@@ -121,7 +166,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           setState(() {});
         }
       });
-      setState(() {});
+      updatedeath();
     }
 
     return Scaffold(
@@ -146,9 +191,14 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                   // Loan information
                   LoanInformation(
                       sanction: sanction,
+                      scheme: ssscheme,
                       bsanction: bsanction,
+                      deathriskamount: deathriskamount,
                       selectedsanction: selectedsanction,
+                      condisbursed: condisbursed,
+                      conpincode: conpincode,
                       selectedsanctionid: selectedsanctionid,
+                      connarration: connarration,
                       setupsanction: _setupsanction,
                       ssanction: ssanction),
 
@@ -158,7 +208,12 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
 
                   // Loan Other imformation
                   LoanOtherInfo(
-                      bsanction: bsanction, selectedsanction: selectedsanction),
+                      bsanction: bsanction,
+                      condisburse: condisbursed,
+                      conmanagername: conmanagername,
+                      scheme: ssscheme,
+                      deathrisk: deathrisk,
+                      selectedsanction: selectedsanction),
 
                   SizedBox(
                     height: 30,
