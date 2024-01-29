@@ -23,6 +23,7 @@ import 'Screens/authentication/authentication.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
+import 'ScreensMFS/Loan/LoanDisbursementList.dart';
 import 'ScreensMFS/Loan/LoanSaction.dart';
 import 'ScreensMFS/Loan/LoanSactionApprove.dart';
 import 'ScreensMFS/Loan/LoanSactionEdit.dart';
@@ -189,6 +190,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navbool,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: loandisbursementlistPageRoute,
+            page: () => LoanDisbursementList(
+              appbool: appbool,
+              navbool: navbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: loanrequestlistPageRoute,

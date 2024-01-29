@@ -15,28 +15,42 @@ import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
 
-class loanDisbursementList extends StatefulWidget {
+class LoanDisbursementList extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  loanDisbursementList({required this.appbool, required this.navbool});
+  LoanDisbursementList({required this.appbool, required this.navbool});
 
   @override
-  State<loanDisbursementList> createState() => _loanDisbursementListState();
+  State<LoanDisbursementList> createState() => _loanDisbursementListState();
 }
 
-class _loanDisbursementListState extends State<loanDisbursementList> {
+class _loanDisbursementListState extends State<LoanDisbursementList> {
   @override
   Widget build(BuildContext context) {
     Future<List<loanDisbursement>> getCust() async {
       List<loanDisbursement> somitee = [];
-      int s = 1;
       await FirebaseFirestore.instance
-          .collection('loanDisbursement')
+          .collection('LoanDisbursed')
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
-            somitee.add(loanDisbursement.fromJson(json.data()));
+          somitee.add(loanDisbursement(
+            somiteename: json['Somitee Name'],
+            somiteeid: json['Somitee ID'],
+            lst: loanSanction.fromJson(json['Sanction']),
+            membername: json['Member Name'],
+            disbursedate: json["Disbursed Date"].toDate(),
+            memberid: json['Member ID'],
+            disburseamount: json["Disbursed Amount"],
+            narration: json["Narration"],
+            approvedate: json["Approve Date"].toDate(),
+            manegername: json["Manager Name"],
+            pincode: json["Pin Code"],
+            status: json["Status"],
+            id: json.id,
+            sl: json['SL'],
+          ));
         }
       });
       return somitee;
@@ -187,21 +201,13 @@ class _loanDisbursementListState extends State<loanDisbursementList> {
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      'Status',
+                                      'Narration',
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),
-                                  ),
-                                  DataColumn(
-                                    label: Text('ACTION',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
                                   ),
                                 ],
                                 rows: List.generate(snapshot.data.length,
@@ -270,58 +276,6 @@ class _loanDisbursementListState extends State<loanDisbursementList> {
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              loanSanction sss =
-                                                  snapshot.data[index];
-                                              Get.toNamed(
-                                                sanctionloanapprovePageRoute,
-                                                arguments: {
-                                                  'LoanSanction': sss.toJson(),
-                                                },
-                                              );
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
-                                                child: const Icon(
-                                                  Icons.remove_red_eye_outlined,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              // loanSanction sss =
-                                              //     snapshot.data[index];
-                                              // Get.toNamed(
-                                              //   sanctionloaneditPageRoute,
-                                              //   arguments: {
-                                              //     'LoanSanction': sss.toJson(),
-                                              //   },
-                                              // );
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
-                                                child: const Icon(
-                                                  Icons.edit_outlined,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
-                                          ),
-                                        ],
-                                      )),
                                     ],
                                   );
                                 }),

@@ -32,6 +32,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
   var trasctionArr = [false, false];
   var closedArr = [false, false];
   var loanSectionArr = [false, false];
+  var loandisburseArr = [false, false];
   var loanRePayArr = [false, false];
 
   Color itemColor1 = AppColor_Blue;
@@ -117,6 +118,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
       loanSectionArr[index] = false;
       loanRePayArr[index] = false;
       closedArr[index] = false;
+      loandisburseArr[index] =false;
     });
   }
 
@@ -130,6 +132,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
       loanSectionArr[index] = false;
       loanRePayArr[index] = false;
       closedArr[index] = false;
+      loandisburseArr[index] =false;
     });
   }
 
@@ -142,6 +145,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
       loanSectionArr[index] = false;
       withdrawArr[index] = false;
       trasctionArr[index] = false;
+      loandisburseArr[index] =false;
       loanRePayArr[index] = false;
     });
   }
@@ -156,8 +160,23 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
       trasctionArr[index] = false;
       loanRePayArr[index] = false;
       closedArr[index] = false;
+      loandisburseArr[index] =false;
     });
   }
+  _loanTogle_disbursement(int index) {
+    setState(() {
+      for (int i = 0; i < loandisburseArr.length; i++) {
+        loandisburseArr[i] = false;
+      }
+      loanSectionArr[index] = false;
+      withdrawArr[index] = false;
+      trasctionArr[index] = false;
+      loanRePayArr[index] = false;
+      closedArr[index] = false;
+      loandisburseArr[index] =true;
+    });
+  }
+
 
   _loanTogle_Repay(int index) {
     setState(() {
@@ -169,6 +188,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
       trasctionArr[index] = false;
       loanSectionArr[index] = false;
       closedArr[index] = false;
+      loandisburseArr[index] =false;
     });
   }
 
@@ -635,30 +655,42 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                               onHover: (val) {
                                 setState(() {
                                   if (val) {
-                                    itemColor2 = AppColor_hover1;
-                                    textColor2 = Colors.white;
+                                    itemColor18 = AppColor_hover1;
+                                    textColor18 = Colors.white;
                                   } else {
-                                    itemColor2 = AppColor_Blue;
-                                    textColor2 = Colors.black;
+                                    itemColor18 = AppColor_Blue;
+                                    textColor18 = Colors.black;
                                   }
                                 });
                               },
                               onTap: () {
-                                Get.toNamed(loandisbursementPageRoute);
+                                _loanTogle_disbursement(0);
                               },
                               child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 200,
-                                  color: itemColor2,
-                                  child: Text(
-                                    "Loan Disbursement",
-                                    style: TextStyle(
-                                      color: textColor2,
-                                      fontSize: 12,
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 200,
+                                color: itemColor18,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Loan Disbursement",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: textColor18,
+                                      ),
                                     ),
-                                  )),
+                                    SizedBox(
+                                      width: 35,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             InkWell(
                               onHover: (val) {
@@ -1674,6 +1706,87 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                           ],
                         ),
                       )
+                    : SizedBox(),
+
+                loandisburseArr[0]
+                    ? Container(
+                  margin: EdgeInsets.only(left: 0),
+                  color: AppColor_Blue,
+                  // height: 800,
+                  width: 250,
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(loandisbursementPageRoute);
+                        },
+                        onHover: (val) {
+                          setState(() {
+                            if (val) {
+                              itemColor6 = AppColor_hover2;
+                              textColor6 = Colors.white;
+                            } else {
+                              itemColor6 = AppColor_Blue;
+                              textColor6 = Colors.black;
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 250,
+                          color: itemColor6,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Add Disbursement",
+                                style: TextStyle(
+                                  color: textColor6,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(loandisbursementlistPageRoute);
+                        },
+                        onHover: (val) {
+                          setState(() {
+                            if (val) {
+                              itemColor7 = AppColor_hover2;
+                              textColor7 = Colors.white;
+                            } else {
+                              itemColor7 = AppColor_Blue;
+                              textColor7 = Colors.black;
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          height: 40,
+                          width: 250,
+                          color: itemColor7,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Disbursement List",
+                                style: TextStyle(
+                                  color: textColor7,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
                     : SizedBox(),
                 loanRePayArr[0]
                     ? Container(

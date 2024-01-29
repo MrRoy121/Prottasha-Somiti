@@ -55,10 +55,10 @@ class loanDisbursement {
     return loanDisbursement(
         somiteename: json['Somitee Name'],
         somiteeid: json['Somitee ID'],
-        lst: loanSanction.fromJson(json['Sanction']),
-        membername: json['Member Name'],disbursedate: json["Disbursed Date"],
+        lst: loanSanction.fromJson(Map<String, dynamic>.from(json['Sanction'])),
+        membername: json['Member Name'],disbursedate: json["Disbursed Date"].toDate(),
         memberid: json['Member ID'],disburseamount: json["Disbursed Amount"],narration: json["Narration"],
-        approvedate: json["Approve Date"],manegername: json["Manager Name"],pincode: json["Pin Code"],
+        approvedate: json["Approve Date"].toDate(), manegername: json["Manager Name"],pincode: json["Pin Code"],
         status: json["Status"],
         id: json['ID'],
         sl: json['sl']);
