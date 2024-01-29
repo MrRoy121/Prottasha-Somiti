@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../Constants/Constants.dart';
 
 class LinkACinfo extends StatefulWidget {
 
 
+  var scheme;
+  var selectedsanction;
+  bool bsanction;
+  var memberss;
+  LinkACinfo({required this.memberss,required this.scheme,
+    required this.bsanction,required this.selectedsanction,});
   @override
   State<LinkACinfo> createState() => _LinkACinfoState();
 }
@@ -107,25 +114,27 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(width: 10,),
 
-
-                        SizedBox(
+                        Container(
                           width: 250,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 7, vertical: 15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              border: Border.all(
+                                  width: 1, color: Colors.black)),
+                          child: Text(
+                            widget.bsanction ? "${widget.selectedsanction.somiteeid}${widget.selectedsanction.memberid}": "",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
                             ),
                           ),
-
                         ),
 
                       ],
                     ),
 
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
 
 
 
@@ -143,14 +152,8 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(
                           width: 250,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
+                          child: Text(widget.bsanction?
+                          widget.memberss.firstname +' '+ widget.memberss.lastname:"",
                           ),
 
                         ),
@@ -177,13 +180,8 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(
                           width: 250,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(widget.bsanction?
+                            widget.memberss.fathername:"",
                           ),
                         ),
 
@@ -208,16 +206,8 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(
                           width: 250,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
+                          child: Text(widget.bsanction?
+                            widget.memberss.gender:'',
                           ),
 
                         ),
@@ -254,18 +244,22 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                           SizedBox(width: 80,),
 
-                          SizedBox(
+
+                          Container(
                             width: 250,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColor_greyBorder,
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColor_greyBorder),
-                                ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 7, vertical: 15),
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                border: Border.all(
+                                    width: 1, color: Colors.black)),
+                            child: Text(
+                              widget.bsanction ? "${widget.memberss.nationalid}": "",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
                               ),
                             ),
-
                           ),
 
 
@@ -290,13 +284,8 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(
                           width: 250,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(widget.bsanction?DateFormat.yMMMMd().format(widget.memberss.birthdate)
+                            :'',
                           ),
                         ),
 
@@ -323,13 +312,8 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(
                           width: 250,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(widget.bsanction?widget.memberss.mothername:''
+                            ,
                           ),
                         ),
 
@@ -356,13 +340,8 @@ class _LinkACinfoState extends State<LinkACinfo> {
 
                         SizedBox(
                           width: 250,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(widget.bsanction?widget.memberss.mobilenno:''
+                            ,
                           ),
                         ),
 

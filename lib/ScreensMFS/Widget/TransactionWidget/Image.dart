@@ -63,7 +63,7 @@ class _ImageMemberState extends State<ImageMember> {
 
             child: Column(
               children: [
-                widget.imgurl == ""
+                widget.imgurl == ''
                     ? Center(
                         child: Icon(
                         Icons.person_2_outlined,

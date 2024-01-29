@@ -5,6 +5,7 @@ import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanInformation.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanOtherInfo.dart';
 import '../../../Model/loanSanction.dart';
 import '../../Constants/values.dart';
+import '../../Model/member.dart';
 import '../../Model/scheme.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
@@ -27,8 +28,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
   List<loanSanction> sanction = [];
   List<String> ssanction = [];
   bool bsanction = false;
-  String imgurl = '';
   var ssscheme;
+  var memberss;
   var selectedsanction;
   var selectedsanctionid;
   var condisbursed = TextEditingController();
@@ -150,21 +151,56 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
       desktop = false;
       tablet = false;
     }
-    void _setupsanction(int ins) {
+    Future<void> _setupsanction(int ins) async {
       selectedsanction = sanction[ins];
       bsanction = true;
       condisbursed.text = selectedsanction.sanctionlimit.toString();
       ssscheme = LoanSchemes.firstWhere(
           (element) => element.name == selectedsanction.scheme);
-      FirebaseFirestore.instance
+     await FirebaseFirestore.instance
           .collection('Member')
           .doc(selectedsanction.memberid)
           .get()
           .then((element) {
-        if (element["Image"]) {
-          imgurl = element["ImageURL"];
-          setState(() {});
-        }
+        memberss =Memberss(
+            somiteename: element["Somitee Name"],
+            somiteeid: element["Somitee ID"],
+            membertype: element["Member Type"],
+            occupation: element["Occupation"],
+            firstname: element["First Name"],
+            lastname: element["Last Name"],
+            fathername: element["Father Name"],
+            mothername: element["Mother Name"],
+            loanpendingamount: element["Loan Pending Amount"],
+            owndepositamount: element["Own deposit Amount"],
+            gender: element["Gender"],
+            religion: element["Religion"],
+            sts: element["Status"],
+            nationalid: element["National ID"],
+            birthregi: element["Birth Registration"],
+            annualincome: element["Annual Income"],
+            age: element["Age"],
+            nodepenndent: element["No of Dependent"],
+            education: element["Education"],
+            maritalstatus: element["Marital Status"],
+            mobilenotype: element["Mobile No Type"],
+            mobilenno: element["Mobile No"],
+            presentadd: element["Present Address"],
+            parmaadd: element["Parmanent Address"],
+            livingperiod: element["Living Period"],
+            nomaleearner: element["No Female Earner"],
+            nofemaleearner: element["No Male Earner"],
+            id: element.id,
+            headfamily: element["Head Family"],
+            ownhomestead: element["Own HomeStead"],
+            relationwithhead: element["Relation With Head"],
+            landdesc: element["Land Desc"],
+            housedesc: element["House Desc"],
+            remarks: element["Remarks"],
+            imageurl: element["ImageURL"],
+            img: element["Image"],
+            birthdate: element["Date Of Birth"].toDate(),
+            sl: 0);
       });
       updatedeath();
     }
@@ -225,21 +261,23 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                     child: desktop
                         ? Row(
                             children: [
-                              LinkACinfo(),
+                              LinkACinfo(memberss: memberss,selectedsanction: selectedsanction,bsanction: bsanction,scheme: ssscheme),
                               Spacer(),
-                              ImageMember(imgurl: imgurl),
+                              memberss == null?ImageMember(imgurl: ''):
+                              ImageMember(imgurl: memberss.imageurl),
                             ],
                           )
                         : Column(
                             children: [
-                              LinkACinfo(),
+                              LinkACinfo(memberss: memberss,selectedsanction: selectedsanction,bsanction: bsanction,scheme: ssscheme),
 
                               // Spacer(),
                               SizedBox(
                                 height: 50,
                               ),
 
-                              ImageMember(imgurl: imgurl),
+                              memberss == null?ImageMember(imgurl: ''):
+                              ImageMember(imgurl: memberss.imageurl),
                             ],
                           ),
                   ),
