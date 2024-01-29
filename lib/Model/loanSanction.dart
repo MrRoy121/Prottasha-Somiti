@@ -31,7 +31,7 @@ class loanSanction {
       servicecharge,
       installmentamount,
       serviceamount;
-  DateTime sanctiondate,approvedate;
+  DateTime sanctiondate, approvedate;
   int sl;
 
   loanSanction(
@@ -40,7 +40,7 @@ class loanSanction {
       required this.loanpurpose,
       required this.membername,
       required this.memberid,
-        required this.approvedate,
+      required this.approvedate,
       required this.memberphone,
       required this.installmentfrequency,
       required this.scheme,
@@ -81,7 +81,7 @@ class loanSanction {
         "Installment Frequency": installmentfrequency,
         "Sanction Date": sanctiondate,
         "Loan Scheme": scheme,
-    "Approve Date": approvedate,
+        "Approve Date": approvedate,
         'Loan Category': category,
         "Service Charge": servicecharge,
         "Installment No": installmentno,
@@ -123,7 +123,8 @@ class loanSanction {
         sanctionlimit: json["Sanction Limit"],
         installmentfrequency: json["Installment Frequency"],
         sanctiondate: json["Sanction Date"].toDate(),
-        scheme: json["Loan Scheme"],approvedate: json["Approve Date"].toDate(),
+        scheme: json["Loan Scheme"],
+        approvedate: json["Approve Date"].toDate(),
         category: json['Loan Category'],
         servicecharge: json["Service Charge"],
         installmentno: json["Installment No"],

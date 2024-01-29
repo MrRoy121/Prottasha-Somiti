@@ -1,15 +1,42 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Constants/Constants.dart';
+import '../../../Model/member.dart';
+import '../../../Model/somitee.dart';
 
 class LoanRepaymentWidget extends StatefulWidget {
+  List<Somitee> somitee;
+  List<String> ssomitee;
+  var selectedsomitee;
+  var selectedsomiteeid;
+  List<Memberss> memberss = [];
+  List<Memberss> allmemberss = [];
+  var selectedmemberss;
+  var selectedmemberssid;
+  void Function(int) setupsomiti;
+  bool memberssselected;
+  void Function(int) setupmemberss;
 
-
+  LoanRepaymentWidget(
+      {
+        required this.setupsomiti,
+        required this.setupmemberss,
+        required this.memberssselected,
+        required this.allmemberss,
+        required this.somitee,
+        required this.memberss,
+        required this.ssomitee,
+        required this.selectedmemberss,
+        required this.selectedmemberssid,
+        required this.selectedsomitee,
+        required this.selectedsomiteeid,});
   @override
   State<LoanRepaymentWidget> createState() => _LoanRepaymentWidgetState();
 }
 
 class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
+  bool somiteeselected = false;
   @override
   Widget build(BuildContext context) {
     var ScreenWidth =MediaQuery.of(context).size.width;
@@ -105,24 +132,80 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Samitee Name/Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-
-                        ),
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.name + " - " + item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Somitee/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.name + " - " + item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedsomitee = newValue;
+                                  widget.selectedsomiteeid =
+                                  widget.somitee[widget.ssomitee
+                                      .indexOf(newValue!.name)];
+                                  widget.setupsomiti(widget.ssomitee
+                                      .indexOf(newValue.name));
+                                  somiteeselected = true;
+                                });
+                              },
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
+                            )),
 
                       ],
                     ),
@@ -241,24 +324,89 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Member Name/Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              enabled: widget.memberssselected,
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedmemberss = newValue;
+                                  widget.selectedmemberssid = widget
+                                      .somitee[
+                                  widget.memberss.indexOf(newValue!)];
+                                  widget.setupmemberss(
+                                      widget.memberss.indexOf(newValue));
+                                  widget.memberssselected = true;
+                                });
+                              },
+                              items: widget.memberss,
+                              selectedItem: widget.selectedmemberss,
+                            )),
 
                       ],
                     ),
@@ -380,24 +528,80 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Samitee Name/Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-
-                        ),
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.name + " - " + item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Somitee/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.name + " - " + item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedsomitee = newValue;
+                                  widget.selectedsomiteeid =
+                                  widget.somitee[widget.ssomitee
+                                      .indexOf(newValue!.name)];
+                                  widget.setupsomiti(widget.ssomitee
+                                      .indexOf(newValue.name));
+                                  somiteeselected = true;
+                                });
+                              },
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
+                            )),
 
                       ],
                     ),
@@ -513,24 +717,89 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Member Name/Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              enabled: widget.memberssselected,
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedmemberss = newValue;
+                                  widget.selectedmemberssid = widget
+                                      .somitee[
+                                  widget.memberss.indexOf(newValue!)];
+                                  widget.setupmemberss(
+                                      widget.memberss.indexOf(newValue));
+                                  widget.memberssselected = true;
+                                });
+                              },
+                              items: widget.memberss,
+                              selectedItem: widget.selectedmemberss,
+                            )),
 
                       ],
                     ),
@@ -652,25 +921,80 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Samitee Name/Code",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                        Container(
+                            width: 200,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-
-                        ),
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.name + " - " + item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Somitee/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.name + " - " + item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedsomitee = newValue;
+                                  widget.selectedsomiteeid =
+                                  widget.somitee[widget.ssomitee
+                                      .indexOf(newValue!.name)];
+                                  widget.setupsomiti(widget.ssomitee
+                                      .indexOf(newValue.name));
+                                  somiteeselected = true;
+                                });
+                              },
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
+                            )),
 
                       ],
                     ),
@@ -787,25 +1111,89 @@ class _LoanRepaymentWidgetState extends State<LoanRepaymentWidget> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Member Name/Code",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search, color: AppColor_greyText),
+                        Container(
+                            width: 200,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              enabled: widget.memberssselected,
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedmemberss = newValue;
+                                  widget.selectedmemberssid = widget
+                                      .somitee[
+                                  widget.memberss.indexOf(newValue!)];
+                                  widget.setupmemberss(
+                                      widget.memberss.indexOf(newValue));
+                                  widget.memberssselected = true;
+                                });
+                              },
+                              items: widget.memberss,
+                              selectedItem: widget.selectedmemberss,
+                            )),
 
                       ],
                     ),

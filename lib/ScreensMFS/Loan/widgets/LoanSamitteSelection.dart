@@ -21,14 +21,15 @@ class LoanSamitteSelection extends StatefulWidget {
   var selectedscheme;
   double serviceamount;
   var selectedinstalment;
-  var coninstallmentno, conremarks, coninstallmentamount,conduratioon;
+  var coninstallmentno, conremarks, coninstallmentamount, conduratioon;
   List<Memberss> memberss = [];
   List<Memberss> allmemberss = [];
   var selectedmemberss;
   var selectedmemberssid;
   DateTime selectedDate;
   void Function() onsubmit;
-  void Function() onclear;void Function() resetloanscheme;
+  void Function() onclear;
+  void Function() resetloanscheme;
   void Function(int) setupsomiti;
   bool memberssselected;
   void Function(int) setupmemberss;
@@ -42,9 +43,9 @@ class LoanSamitteSelection extends StatefulWidget {
       required this.setupsomiti,
       required this.coninstallmentno,
       required this.setuploanpurpose,
-        required this.conduratioon,
+      required this.conduratioon,
       required this.setuplloantype,
-        required this.resetloanscheme,
+      required this.resetloanscheme,
       required this.setupinstallment,
       required this.setuplloanscheme,
       required this.selectedscheme,
@@ -93,7 +94,6 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
 
   @override
   Widget build(BuildContext context) {
-
     var ScreenWidth = MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
@@ -377,15 +377,17 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     FilteringTextInputFormatter.allow(
                                         RegExp(r'[0-9]')),
                                     FilteringTextInputFormatter.digitsOnly
-                                  ],onChanged: (val) {
-                                  setState(() {
-                                    if (val.length == 0) {
-                                      schemeselection = false;
-                                    } else {
-                                      schemeselection = true;
-                                    }widget.resetloanscheme();
-                                  });
-                                },
+                                  ],
+                                  onChanged: (val) {
+                                    setState(() {
+                                      if (val.length == 0) {
+                                        schemeselection = false;
+                                      } else {
+                                        schemeselection = true;
+                                      }
+                                      widget.resetloanscheme();
+                                    });
+                                  },
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
@@ -469,12 +471,12 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Installment No",
                                     fillColor: Colors.white,

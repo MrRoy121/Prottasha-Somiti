@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../Constants/Constants.dart';
+import '../../../Constants/values.dart';
+import '../../../Model/scheme.dart';
 
 class RepaymentLoanINfo extends StatefulWidget {
-
+  var sscheme;
+  var disbursed;
+  bool memberselection;
+  RepaymentLoanINfo({required this.disbursed, required this.sscheme, required this.memberselection});
 
   @override
   State<RepaymentLoanINfo> createState() => _RepaymentLoanINfoState();
@@ -35,7 +41,6 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
       desktop = false;
       tablet = false;
     }
-
 
     return desktop? Container(
       width: 1400,
@@ -103,17 +108,9 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.membername:'',
                           ),
-
                         ),
 
                       ],
@@ -137,14 +134,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.lst.servicecharge.toString():'',
                           ),
 
                         ),
@@ -171,13 +162,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.lst.id:'',
                           ),
                         ),
 
@@ -202,13 +188,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.lst.installmentamount.toString():'',
                           ),
                         ),
 
@@ -233,16 +214,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
+                          child: Text(
+                            widget.memberselection?DateFormat.yMMMMd().format(widget.disbursed.disbursedate):'',
                           ),
 
                         ),
@@ -273,13 +246,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.disburseamount.toString():'',
                           ),
                         ),
 
@@ -294,7 +262,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                     Row(
                       children: [
                         Text(
-                          "Loan Period :",
+                          "Loan Duration :",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -304,13 +272,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.sscheme.duration.toString():'',
                           ),
                         ),
 
@@ -334,16 +297,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.lst.installmentno.toString():'',
                           ),
 
                         ),
@@ -368,13 +323,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.status:'',
                           ),
                         ),
 
@@ -399,13 +349,8 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
 
                         SizedBox(
                           width: 300,
-                          child: TextField(
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                          child: Text(
+                            widget.memberselection?widget.disbursed.manegername:'',
                           ),
                         ),
 
