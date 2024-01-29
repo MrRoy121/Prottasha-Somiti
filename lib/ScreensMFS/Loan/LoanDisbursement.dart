@@ -136,9 +136,6 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance
-          .collection('LoanSanction')
-          .doc(selectedsanction.id).delete().then((value){
         FirebaseFirestore.instance
             .collection('LoanDisbursed')
             .doc(selectedsanction.id)
@@ -157,21 +154,25 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           'Status':'Disbursed',
           'Narration': connarration.text,
         }).then((value) async {
-          Get.offNamed(loandisbursementlistPageRoute);
-          Get.snackbar("Loan Sanction Added Successfully.",
-              "Redirecting to Loan Sanction List Page.",
-              snackPosition: SnackPosition.BOTTOM,
-              colorText: Colors.white,
-              backgroundColor: Colors.green,
-              margin: EdgeInsets.zero,
-              duration: const Duration(milliseconds: 2000),
-              boxShadows: [
-                const BoxShadow(
-                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-              ],
-              borderRadius: 0);
-        }).catchError((error) => print("Failed to add user: $error"));
-      });
+          FirebaseFirestore.instance
+              .collection('LoanSanction')
+              .doc(selectedsanction.id).delete().then((value) {
+            Get.offNamed(loandisbursementlistPageRoute);
+            Get.snackbar("Loan Sanction Added Successfully.",
+                "Redirecting to Loan Sanction List Page.",
+                snackPosition: SnackPosition.BOTTOM,
+                colorText: Colors.white,
+                backgroundColor: Colors.green,
+                margin: EdgeInsets.zero,
+                duration: const Duration(milliseconds: 2000),
+                boxShadows: [
+                  const BoxShadow(
+                      color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                ],
+                borderRadius: 0);
+          });
+        });
+
     }
   }
 

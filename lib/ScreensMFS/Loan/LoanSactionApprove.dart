@@ -45,7 +45,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         loanpurpose: arguments['LoanSanction']['Loan Purpose'],
         scheme: arguments['LoanSanction']["Loan Scheme"],
         category: arguments['LoanSanction']['Loan Category'],
-        approvedate: arguments['LoanSanction']["Approve Date"].toDate(),
+        approvedate: arguments['LoanSanction']["Approve Date"],
         membername: arguments['LoanSanction']['Member Name'],
         memberid: arguments['LoanSanction']['Member ID'],
         memberphone: arguments['LoanSanction']['Member Phone'],
