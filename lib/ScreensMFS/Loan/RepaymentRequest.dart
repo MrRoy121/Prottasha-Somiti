@@ -40,6 +40,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Loan Disbursement Details',
+                    onsubmit: (){},
+                    onclear: (){},
                   ),
 
                   SizedBox(

@@ -33,6 +33,8 @@ class _ReverseRepaymentState extends State<ReverseRepayment> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Reverse Repayment',
+                    onsubmit: (){},
+                    onclear: (){},
                   ),
 
                   // Samitee Selection

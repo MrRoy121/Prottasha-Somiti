@@ -15,6 +15,7 @@ const sanctionloanapprovelistPageRoute = "/sanctionloanapprovelistPageRoute";
 const sanctionloaneditPageRoute = "/sanctionloaneditlistPageRoute";
 const loanrequestlistPageRoute = "/loanrequestlistPageRoute";
 const loandisbursementPageRoute = "/loandisbursementPageRoute";
+const loandisbursementlistPageRoute = "/loandisbursementlistPageRoute";
 const repaymentrequestPageRoute = "/repaymentrequestPageRoute";
 
 

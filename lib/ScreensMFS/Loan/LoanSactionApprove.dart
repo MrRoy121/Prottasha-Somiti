@@ -173,6 +173,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 .doc(lst.id)
                                 .update({
                               "Status": "Approved",
+                              "Approve Date": DateTime.now(),
                             }).then((value) async {
                               Get.offNamed(sanctionloanapprovelistPageRoute);
                               Get.snackbar(
@@ -218,6 +219,7 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 .doc(lst.id)
                                 .update({
                               "Status": "Rejected",
+                              "Approve Date": DateTime.now(),
                             }).then((value) async {
                               Get.offNamed(sanctionloanapprovelistPageRoute);
                               Get.snackbar(

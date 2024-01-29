@@ -34,6 +34,8 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Reverse Repayment',
+                    onsubmit: (){},
+                    onclear: (){},
                   ),
 
                   SizedBox(

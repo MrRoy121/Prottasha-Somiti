@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../../Constants/Constants.dart';
 
 class LoanDetailsWidget extends StatefulWidget {
   String title;
+  void Function() onsubmit;
+  void Function() onclear;
 
-  LoanDetailsWidget({required this.title});
+  LoanDetailsWidget({required this.title,required this.onclear,required this.onsubmit,});
 
   @override
   State<LoanDetailsWidget> createState() => _LoanDetailsWidgetState();
@@ -64,44 +66,54 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
 
               Spacer(),
 
-              Container(
-                height: 40,
-                width: 90,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 15),
-                  child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 14),),
-                ),
-                color: Colors.green,
-              ),
-
-              SizedBox(width: 10,),
-
-              Container(
-                height: 40,
-                width: 90,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, left: 15),
-                  child: Row(
-                    children: [
-                      Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                      SizedBox(width: 5,),
-                      Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                    ],
+              InkWell(onTap: (){
+                widget.onsubmit();},
+                child: Container(
+                  height: 40,
+                  width: 90,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 15),
+                    child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 14),),
                   ),
+                  color: Colors.green,
                 ),
-                color: AppColor_yellow,
               ),
 
               SizedBox(width: 10,),
 
-              Container(
-                height: 40,
-                width: 50,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 20),
-                  child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+              InkWell(onTap: (){
+                widget.onclear();},
+                child: Container(
+                  height: 40,
+                  width: 90,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                    child: Row(
+                      children: [
+                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
+                        SizedBox(width: 5,),
+                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
+                      ],
+                    ),
+                  ),
+                  color: AppColor_yellow,
                 ),
-                color: Colors.red,
+              ),
+
+              SizedBox(width: 10,),
+
+
+              InkWell(onTap: (){
+                Get.back();},
+                child: Container(
+                  height: 40,
+                  width: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 20),
+                    child: Text("X", style: TextStyle(color: Colors.white, fontSize: 14),),
+                  ),
+                  color: Colors.red,
+                ),
               ),
 
               SizedBox(width: 10,),
@@ -134,44 +146,53 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
 
               Spacer(),
 
-              Container(
-                height: 40,
-                width: 90,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15.0, left: 15),
-                  child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 8),),
-                ),
-                color: Colors.green,
-              ),
-
-              SizedBox(width: 10,),
-
-              Container(
-                height: 40,
-                width: 90,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, left: 15),
-                  child: Row(
-                    children: [
-                      Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
-                      SizedBox(width: 5,),
-                      Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
-                    ],
+              InkWell(onTap: (){
+                widget.onsubmit();},
+                child: Container(
+                  height: 40,
+                  width: 90,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15.0, left: 15),
+                    child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 8),),
                   ),
+                  color: Colors.green,
                 ),
-                color: AppColor_yellow,
               ),
 
               SizedBox(width: 10,),
 
-              Container(
-                height: 40,
-                width: 50,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15.0, left: 20),
-                  child: Text("X", style: TextStyle(color: Colors.white, fontSize: 8),),
+              InkWell(onTap: (){
+                widget.onclear();},
+                child: Container(
+                  height: 40,
+                  width: 90,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                    child: Row(
+                      children: [
+                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
+                        SizedBox(width: 5,),
+                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
+                      ],
+                    ),
+                  ),
+                  color: AppColor_yellow,
                 ),
-                color: Colors.red,
+              ),
+
+              SizedBox(width: 10,),
+
+              InkWell(onTap: (){
+                Get.back();},
+                child: Container(
+                  height: 40,
+                  width: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15.0, left: 20),
+                    child: Text("X", style: TextStyle(color: Colors.white, fontSize: 8),),
+                  ),
+                  color: Colors.red,
+                ),
               ),
 
               SizedBox(width: 10,),
@@ -204,44 +225,53 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
 
               Spacer(),
 
-              Container(
-                height: 30,
-                width: 70,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 15),
-                  child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 8),),
-                ),
-                color: Colors.green,
-              ),
-
-              SizedBox(width: 10,),
-
-              Container(
-                height: 30,
-                width: 70,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3.0, left: 15),
-                  child: Row(
-                    children: [
-                      Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
-                      SizedBox(width: 5,),
-                      Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
-                    ],
+              InkWell(onTap: (){
+                widget.onsubmit();},
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 15),
+                    child: Text("✓ Submit", style: TextStyle(color: Colors.white, fontSize: 8),),
                   ),
+                  color: Colors.green,
                 ),
-                color: AppColor_yellow,
               ),
 
               SizedBox(width: 10,),
 
-              Container(
-                height: 30,
-                width: 30,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 10),
-                  child: Text("X", style: TextStyle(color: Colors.white, fontSize: 8),),
+              InkWell(onTap: (){
+                widget.onclear();},
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                    child: Row(
+                      children: [
+                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
+                        SizedBox(width: 5,),
+                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
+                      ],
+                    ),
+                  ),
+                  color: AppColor_yellow,
                 ),
-                color: Colors.red,
+              ),
+
+              SizedBox(width: 10,),
+
+              InkWell(onTap: (){
+                Get.back();},
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 10),
+                    child: Text("X", style: TextStyle(color: Colors.white, fontSize: 8),),
+                  ),
+                  color: Colors.red,
+                ),
               ),
 
               SizedBox(width: 10,),

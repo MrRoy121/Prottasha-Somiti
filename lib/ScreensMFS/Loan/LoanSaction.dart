@@ -234,6 +234,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Sanction Limit": double.parse(consanctionlimit.text),
         "Installment Frequency": _selectedinstalment,
         "Sanction Date": selectedDate,
+        'Approve Date': DateTime.now(),
         "Loan Purpose": selectedloanpurpose,
         "Loan Scheme": _selectedscheme.name,
         'Loan Category':_selectedloantype,

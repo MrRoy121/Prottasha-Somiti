@@ -7,11 +7,13 @@ import '../../../Model/loanSanction.dart';
 import '../../Constants/values.dart';
 import '../../Model/member.dart';
 import '../../Model/scheme.dart';
+import '../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/TransactionWidget/Image.dart';
+import 'package:get/get.dart';
 import '../Widget/TransactionWidget/LinkACinfo.dart';
 
 class LoanDisbursement extends StatefulWidget {
@@ -92,6 +94,87 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
       }
     });
   }
+
+  void _onclear() {
+    setState(() {
+      var ss;
+      deathriskamount = 0;
+      deathrisk = "";
+      selectedsanction = ss;
+      bsanction = false;
+      ssscheme = ss;
+      memberss = ss;
+      condisbursed.text = "";
+      conmanagername.text = "";
+      connarration.text = "Loan Disbursement";
+      conpincode.text = "";
+    });
+  }
+
+
+  void _save() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('LoanDisbursed')
+        .get();
+
+    int numberOfItems = querySnapshot.size;
+    if (selectedsanction == null ||
+        condisbursed.text == "" ||
+        conmanagername.text == "" ||
+        connarration.text == "" ||
+        conpincode.text == "") {
+      Get.snackbar(
+          "Load Disbursement Request Failed.", "Some Required Fields are Empty",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      FirebaseFirestore.instance
+          .collection('LoanSanction')
+          .doc(selectedsanction.id).delete().then((value){
+        FirebaseFirestore.instance
+            .collection('LoanDisbursed')
+            .doc(selectedsanction.id)
+            .set({
+          'Sanction' :selectedsanction.toJson(),
+          'Somitee Name': selectedsanction.somiteename,
+          'Somitee ID': selectedsanction.somiteeid,
+          'Member Name':selectedsanction.membername,
+          'Member ID': selectedsanction.memberid,
+          'SL':numberOfItems+1,
+          'Disbursed Amount': double.parse(condisbursed.text),
+          'Pin Code' : conpincode.text,
+          'Disbursed Date': DateTime.now(),
+          'Approve Date':selectedsanction.approvedate,
+          'Manager Name':conmanagername.text,
+          'Status':'Disbursed',
+          'Narration': connarration.text,
+        }).then((value) async {
+          Get.offNamed(loandisbursementlistPageRoute);
+          Get.snackbar("Loan Sanction Added Successfully.",
+              "Redirecting to Loan Sanction List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+              ],
+              borderRadius: 0);
+        }).catchError((error) => print("Failed to add user: $error"));
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +301,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                 children: [
                   LoanDetailsWidget(
                     title: 'Loan Disbursement Details',
+                    onsubmit: _save,
+                    onclear: _onclear,
                   ),
 
                   SizedBox(
