@@ -26,20 +26,24 @@ class RepaymentRequest extends StatefulWidget {
 }
 
 class _RepaymentRequestState extends State<RepaymentRequest> {
-
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
   List<Memberss> allmemberss = [];
   List<Memberss> memberss = [];
   bool memberselection = false;
   bool memberupdated = false;
+  bool available = false;
+  var connarrarion = TextEditingController(text: "Loan Repayment");
+  var conpayamount = TextEditingController();
   var selectedsomiti;
   var sselectedsomiti;
   var selectedmemberss;
   var sselectedmemberss;
   var disbursed;
   var ssscheme;
-
+  String amountclosestring = '';
+  double totalpaidamount = 0, lastpaidamount = 0, amount = 0;
+  DateTime lastrepaymentdate = DateTime.now();
 
   @override
   void initState() {
@@ -117,11 +121,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-
     void _setupsomiti(int ins) {
       setState(() {
         selectedsomiti = somitee[ins];
@@ -133,39 +134,43 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
     }
 
     Future<void> _setupmemberss(int ins) async {
-
       selectedmemberss = memberss[ins];
       await FirebaseFirestore.instance
           .collection('LoanDisbursed')
           .get()
           .then((querySnapshot) {
-            for(var json in querySnapshot.docs){
-              if(json['Member ID']==selectedmemberss.id){
-                disbursed = loanDisbursement(
-                  somiteename: json['Somitee Name'],
-                  somiteeid: json['Somitee ID'],
-                  lst: loanSanction.fromJson(json['Sanction']),
-                  membername: json['Member Name'],
-                  disbursedate: json["Disbursed Date"].toDate(),
-                  memberid: json['Member ID'],
-                  disburseamount: json["Disbursed Amount"],
-                  narration: json["Narration"],
-                  approvedate: json["Approve Date"].toDate(),
-                  manegername: json["Manager Name"],
-                  pincode: json["Pin Code"],
-                  status: json["Status"],
-                  id: json.id,
-                  sl: json['SL'],
-                );
-                memberupdated = true;
-                ssscheme = LoanSchemes.firstWhere(
-                        (element) => element.name == disbursed.lst.scheme);
-                setState(() {});
-              }
-            }
+        for (var json in querySnapshot.docs) {
+          if (json['Member ID'] == selectedmemberss.id) {
+            disbursed = loanDisbursement(
+              somiteename: json['Somitee Name'],
+              somiteeid: json['Somitee ID'],
+              lst: loanSanction.fromJson(json['Sanction']),
+              membername: json['Member Name'],
+              disbursedate: json["Disbursed Date"].toDate(),
+              memberid: json['Member ID'],
+              disburseamount: json["Disbursed Amount"],
+              narration: json["Narration"],
+              approvedate: json["Approve Date"].toDate(),
+              manegername: json["Manager Name"],
+              pincode: json["Pin Code"],
+              status: json["Status"],
+              id: json.id,
+              sl: json['SL'],
+            );
+            available = true;
+            memberupdated = true;
+            ssscheme = LoanSchemes.firstWhere(
+                (element) => element.name == disbursed.lst.scheme);
+            conpayamount.text = ssscheme.installmentamount.toString();
+            setState(() {});
+          }
+        }
       });
     }
 
+    void _onsubmit() {}
+
+    void _onclear() {}
 
     return Scaffold(
       appBar: Appbar(
@@ -185,8 +190,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Loan Repayment Details',
-                    onsubmit: () {},
-                    onclear: () {},
+                    onsubmit: _onsubmit,
+                    onclear: _onclear,
                   ),
 
                   SizedBox(
@@ -196,6 +201,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   // Loan repayment
                   LoanRepaymentWidget(
                       ssomitee: ssomitee,
+                      connarrarion: connarrarion,
+                      conpayamount: conpayamount,
                       setupsomiti: _setupsomiti,
                       selectedsomiteeid: selectedsomiti,
                       allmemberss: allmemberss,
@@ -212,14 +219,22 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   ),
 
                   // Loan imformation
-                  RepaymentLoanINfo(disbursed: disbursed,memberselection:memberupdated,sscheme: ssscheme),
+                  RepaymentLoanINfo(
+                      disbursed: disbursed,
+                      memberselection: memberupdated,
+                      sscheme: ssscheme),
 
                   SizedBox(
                     height: 30,
                   ),
 
                   // Last Repayment Information
-                  LastRepaymentInfo(),
+                  LastRepaymentInfo(
+                      totalpaidamount: totalpaidamount,
+                      amount: amount,available: available,
+                      amountclosestring: amountclosestring,
+                      lastpaidamount: lastpaidamount,
+                      lastrepaymentdate: lastrepaymentdate),
 
                   SizedBox(
                     height: 50,
