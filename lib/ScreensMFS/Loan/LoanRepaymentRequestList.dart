@@ -28,14 +28,17 @@ class LoanRepaymentRequestList extends StatefulWidget {
 class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
   @override
   Widget build(BuildContext context) {
+    List<String> ids = [];
     Future<List<loanRepayment>> getCust() async {
       List<loanRepayment> somitee = [];
       int s = 1;
+      ids = [];
       await FirebaseFirestore.instance
           .collection('LoanRepayment')
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
+          ids.add(json.id);
           somitee.add(loanRepayment(
               somiteename: json['Somitee Name'],
               somiteeid: json['Somitee ID'],
@@ -279,10 +282,12 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {},
+                                      DataCell(
+                                          snapshot.data[index].status
+                                              ?InkWell(
+                                            onTap: () {
+
+                                            },
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
@@ -291,20 +296,63 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                                     BorderRadius.circular(
                                                         100)),
                                                 child: const Icon(
+                                                  Icons.edit,
+                                                  size: 16,
+                                                  color: AppColor_White,
+                                                )),
+                                          ):
+                                          Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              FirebaseFirestore.instance
+                                                  .collection('LoanRepayment')
+                                                  .doc(ids[index])
+                                                  .update({
+                                                "Status": true,
+                                                "Approve": true,
+                                                'Approve Date': DateTime.now(),
+                                              }).then((value) {
+                                                setState(() {
+
+                                                });
+                                              });
+                                            },
+                                            child: Container(
+                                                padding: EdgeInsets.all(4.0),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor_Blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: const Icon(
                                                   Icons.check,
                                                   size: 16,
                                                   color: AppColor_White,
                                                 )),
                                           ),
                                           InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              FirebaseFirestore.instance
+                                                  .collection('LoanRepayment')
+                                                  .doc(ids[index])
+                                                  .update({
+                                                "Status": true,
+                                                "Approve": false,
+                                                'Approve Date': DateTime.now(),
+                                              }).then((value) {
+                                                setState(() {
+
+                                                });
+                                              });
+                                            },
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
                                                     color: AppColor_Blue,
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        100)),
+                                                        BorderRadius.circular(
+                                                            100)),
                                                 child: const Icon(
                                                   Icons.close,
                                                   size: 16,
