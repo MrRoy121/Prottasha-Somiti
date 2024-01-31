@@ -167,9 +167,10 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             await FirebaseFirestore.instance
                 .collection('LoanRepayment')
                 .where("Status", isEqualTo: true)
+                .orderBy('Approve Date', descending: true)
                 .get()
                 .then((value) {
-              int i = 0;
+              int i = 1;
               if (value.docs.isNotEmpty) {
                 for (var jsn in value.docs) {
                   available = true;
@@ -182,12 +183,14 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                     z = jsn['Pay Amount'] - z;
                     interest = interest + y;
                     principle = principle + z;
+                    totalpaidamount = jsn['Pay Amount'] + totalpaidamount;
                   }
                   if (value.size == i) {
-                    lastrepaymentdate = jsn['Approve Date'];
-                    principle = jsn['Pay Amount'] - principle;
+                    lastrepaymentdate = jsn['Approve Date'].toDate();
+                    lastpaidamount = jsn['Pay Amount'];
+                    principle = jsn['Disbursed Amount'] - principle;
                     amountclosestring =
-                        "Principle : ${principle}/-,\nService Charge : ${interest}/-\nExpire Interest : 0/-";
+                        "Principle : $principle/-,\nService Charge : $interest/-\nExpire Interest : 0/-";
                     amount = principle + x + expireinterest;
                     setState(() {});
                   }

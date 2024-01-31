@@ -313,9 +313,7 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                                 "Approve": true,
                                                 'Approve Date': DateTime.now(),
                                               }).then((value) {
-                                                setState(() {
-
-                                                });
+                                                setState(() {});
                                               });
                                             },
                                             child: Container(
@@ -341,9 +339,7 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                                 "Approve": false,
                                                 'Approve Date': DateTime.now(),
                                               }).then((value) {
-                                                setState(() {
-
-                                                });
+                                                setState(() {});
                                               });
                                             },
                                             child: Container(
