@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LastRepaymentInfo.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
@@ -10,6 +11,7 @@ import '../../Model/loanDisbursement.dart';
 import '../../Model/loanSanction.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
+import '../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -41,6 +43,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
   var sselectedmemberss;
   var disbursed;
   var ssscheme;
+  int sl = 0;
   String amountclosestring = '';
   double totalpaidamount = 0, lastpaidamount = 0, amount = 0;
   DateTime lastrepaymentdate = DateTime.now();
@@ -172,6 +175,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   available = true;
                   if (jsn['Member ID'] == selectedmemberss.id &&
                       jsn['Sanction ID'] == disbursed.lst.id) {
+                    sl = sl +1;
                     x = double.parse(jsn['Pay Amount'].toString()) *
                         (double.parse(jsn['Service Charge'].toString()) / 100);
                     y = x / double.parse(jsn['No Of Installment'].toString());
@@ -180,7 +184,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                     principle = principle + z;
                   }
                   if (value.size == i) {
-                    lastrepaymentdate = jsn['Repayment Date'];
+                    lastrepaymentdate = jsn['Approve Date'];
                     principle = jsn['Pay Amount'] - principle;
                     amountclosestring =
                         "Principle : ${principle}/-,\nService Charge : ${interest}/-\nExpire Interest : 0/-";
@@ -209,9 +213,77 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
       });
     }
 
-    void _onsubmit() {}
+    void _onsubmit() {
+      if (selectedsomiti == null ||
+          selectedmemberss == null ||
+          conpayamount.text == "" ||
+          disbursed == null ) {
+        Get.snackbar(
+            "Load Sanction Request Failed.", "Some Required Fields are Empty",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        FirebaseFirestore.instance
+            .collection('LoanRepayment')
+        .add({
+          'Somitee Name': selectedsomiti.name,
+          'Somitee ID': selectedsomiti.id,
+          "Status": false,
+          'Member Name':
+          selectedmemberss.firstname + " " + selectedmemberss.lastname,
+          'Member ID': selectedmemberss.id,
+          "Disbursed Amount": disbursed.disburseamount,
+          'Approve Date': DateTime.now(),
+          'Request Date': DateTime.now(),
+          'Pay Amount': double.parse(conpayamount.text),
+          'Sanction Id':disbursed.lst.id,
+          'Narration': connarrarion.text,
+          'Amount Close': amountclosestring,
+          'Amount':amount,
+          'SL':sl+1,
+        }).then((value) async {
+          Get.offNamed(repaymentrequestlistPageRoute);
+          Get.snackbar("Loan Repayment Request Added Successfully.",
+              "Redirecting to Loan Repayment Request List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+              ],
+              borderRadius: 0);
+        }).catchError((error) => print("Failed to add user: $error"));
 
-    void _onclear() {}
+      }
+    }
+
+    void _onclear() {
+      var vs;
+      selectedsomiti = vs;
+      memberselection = false;
+      memberss = [];
+      selectedmemberss = vs;
+      disbursed = vs;
+      amountclosestring = "";
+      amount = 0;
+      memberupdated = false;
+      available = false;
+      ssscheme = vs;
+      conpayamount.text = '';
+      connarrarion.text =  "Loan Repayment";
+      setState(() {});
+    }
 
     return Scaffold(
       appBar: Appbar(

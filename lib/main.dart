@@ -24,6 +24,7 @@ import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
 import 'ScreensMFS/Loan/LoanDisbursementList.dart';
+import 'ScreensMFS/Loan/LoanRepaymentRequestList.dart';
 import 'ScreensMFS/Loan/LoanSaction.dart';
 import 'ScreensMFS/Loan/LoanSactionApprove.dart';
 import 'ScreensMFS/Loan/LoanSactionEdit.dart';
@@ -213,6 +214,13 @@ class MyApp extends StatelessWidget {
                 ),
             middlewares: [AuthMiddleware()]),
 
+        GetPage(
+            name: repaymentrequestlistPageRoute,
+            page: () => LoanRepaymentRequestList(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
         // Report's section
         GetPage(
             name: memberledgerPageRoute,
