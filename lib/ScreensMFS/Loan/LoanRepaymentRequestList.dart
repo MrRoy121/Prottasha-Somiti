@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../../Constants/Constants.dart';
-import '../../../../Model/loanSanction.dart';
 import '../../../../Model/member.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
+import '../../Model/loanRepayment.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -21,58 +21,39 @@ class LoanRepaymentRequestList extends StatefulWidget {
   LoanRepaymentRequestList({required this.appbool, required this.navbool});
 
   @override
-  State<LoanRepaymentRequestList> createState() => _LoanRepaymentRequestListState();
+  State<LoanRepaymentRequestList> createState() =>
+      _LoanRepaymentRequestListState();
 }
 
 class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
   @override
   Widget build(BuildContext context) {
-    Future<List<loanSanction>> getCust() async {
-      List<loanSanction> somitee = [];
+    Future<List<loanRepayment>> getCust() async {
+      List<loanRepayment> somitee = [];
       int s = 1;
       await FirebaseFirestore.instance
           .collection('LoanRepayment')
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
-            somitee.add(loanSanction(
-                somiteename: json['Somitee Name'],
-                somiteeid: json['Somitee ID'],
-                membername: json['Member Name'],
-                memberid: json['Member ID'],
-                scheme: json["Loan Scheme"],
-                category: json['Loan Category'],
-                loanpurpose: json["Loan Purpose"],
-                approvedate: json["Approve Date"].toDate(),
-                memberphone: json['Member Phone'],
-                sanctionlimit: json["Sanction Limit"],
-                installmentfrequency: json["Installment Frequency"],
-                sanctiondate: json["Sanction Date"].toDate(),
-                servicecharge: json["Service Charge"],
-                installmentno: json["Installment No"],
-                installmentamount: json["Installment Amount"],
-                remarks: json["Remarks"],
-                serviceamount: json["Service Amount"],
-                grantorfname: json["Grantor F Name"],
-                grantorffname: json["Grantor F FatherName"],
-                grantorfrelation: json["Grantor F Relation"],
-                grantorfmobile: json["Grantor F Mobile"],
-                grantorfocupasion: json["Grantor F Occupation"],
-                grantorsname: json["Grantor S Name"],
-                grantorsfname: json["Grantor S FatherName"],
-                grantorsrelation: json["Grantor S Relation"],
-                grantorsmobile: json["Grantor S Mobile"],
-                grantorsocupasion: json["Grantor S Occupation"],
-                grantorpname: json["Grantor P Name"],
-                grantorpfname: json["Grantor P FatherName"],
-                grantorprelation: json["Grantor P Relation"],
-                grantorpmobile: json["Grantor P Mobile"],
-                grantorpocupasion: json["Grantor P Occupation"],
-                status: json["Status"],
-                id: json['ID'],
-                sl: s));
-            s++;
-          }
+          somitee.add(loanRepayment(
+              somiteename: json['Somitee Name'],
+              somiteeid: json['Somitee ID'],
+              membername: json['Member Name'],
+              approve: json['Approve'],
+              memberid: json['Member ID'],
+              disbursedamount: json["Disbursed Amount"],
+              requestdate: json['Request Date'].toDate(),
+              payamount: json['Pay Amount'],
+              sanctionid: json['Sanction Id'],
+              narration: json['Narration'],
+              amountclose: json['Amount Close'],
+              amount: json['Amount'],
+              sl: json['SL'],
+              status: json["Status"],
+              approvedate: json["Approve Date"].toDate()));
+          s++;
+        }
       });
       return somitee;
     }
@@ -112,7 +93,7 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                         Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                            "All Requested Sanction List",
+                            "All Requested Repayment List",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -185,24 +166,8 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text('Member Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Mobile No',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
                                     label: Text(
-                                      'Sanction Limit',
+                                      'Transaction Date',
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -211,14 +176,20 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text(
-                                      'Sanction Date',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    label: Text('Disbursed Amount',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Pay Amount',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
                                   ),
                                   DataColumn(
                                     label: Text(
@@ -248,7 +219,7 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                             fontSize: 12,
                                           ))),
                                       DataCell(
-                                        Text(snapshot.data[index].id,
+                                        Text(snapshot.data[index].sanctionid,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
@@ -263,26 +234,10 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                             )),
                                       ),
                                       DataCell(
-                                        Text(snapshot.data[index].memberid,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                          Text(snapshot.data[index].membername,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                              ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].memberphone,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
                                         Text(
-                                            snapshot.data[index].sanctionlimit
-                                                .toString(),
+                                            snapshot.data[index].memberid +
+                                                " " +
+                                                snapshot.data[index].membername,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
@@ -292,15 +247,34 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                           child: Text(
                                               DateFormat.yMMMd()
                                                   .format(snapshot
-                                                      .data[index].sanctiondate)
+                                                      .data[index].requestdate)
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 12,
                                               )),
                                         ),
                                       ),
+                                      DataCell(Text(
+                                          snapshot.data[index].disbursedamount
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ))),
                                       DataCell(
-                                        Text(snapshot.data[index].status,
+                                        Text(
+                                            snapshot.data[index].payamount
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                            snapshot.data[index].status
+                                                ? snapshot.data[index].approve
+                                                    ? "Approved"
+                                                    : "Rejected"
+                                                : "Requested",
                                             style: const TextStyle(
                                               fontSize: 12,
                                             )),
@@ -308,49 +282,31 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                       DataCell(Row(
                                         children: [
                                           InkWell(
-                                            onTap: () {
-                                              loanSanction sss =
-                                                  snapshot.data[index];
-                                              Get.toNamed(
-                                                sanctionloanapprovePageRoute,
-                                                arguments: {
-                                                  'LoanSanction': sss.toJson(),
-                                                },
-                                              );
-                                            },
+                                            onTap: () {},
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
                                                     color: AppColor_Blue,
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
+                                                    BorderRadius.circular(
+                                                        100)),
                                                 child: const Icon(
-                                                  Icons.remove_red_eye_outlined,
+                                                  Icons.check,
                                                   size: 16,
                                                   color: AppColor_White,
                                                 )),
                                           ),
                                           InkWell(
-                                            onTap: () {
-                                              loanSanction sss =
-                                                  snapshot.data[index];
-                                              Get.toNamed(
-                                                sanctionloaneditPageRoute,
-                                                arguments: {
-                                                  'LoanSanction': sss.toJson(),
-                                                },
-                                              );
-                                            },
+                                            onTap: () {},
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
                                                     color: AppColor_Blue,
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
+                                                    BorderRadius.circular(
+                                                        100)),
                                                 child: const Icon(
-                                                  Icons.edit_outlined,
+                                                  Icons.close,
                                                   size: 16,
                                                   color: AppColor_White,
                                                 )),

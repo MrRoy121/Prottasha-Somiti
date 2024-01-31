@@ -33,7 +33,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
   var closedArr = [false, false];
   var loanSectionArr = [false, false];
   var loandisburseArr = [false, false];
-  var loanRePayArr = [false, false];
+  var loanRePayArr = [false, false, false, false, false];
 
   Color itemColor1 = AppColor_Blue;
   Color textColor1 = Colors.black;
@@ -1823,6 +1823,40 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                       "Loan Repayment Request",
                                       style: TextStyle(
                                         color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(repaymentrequestlistPageRoute);
+                              },
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor14 = AppColor_hover2;
+                                    textColor14 = Colors.white;
+                                  } else {
+                                    itemColor14 = AppColor_Blue;
+                                    textColor14 = Colors.black;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor14,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Loan Repayment Request List",
+                                      style: TextStyle(
+                                        color: textColor14,
                                         fontSize: 12,
                                       ),
                                     ),

@@ -174,8 +174,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                 for (var jsn in value.docs) {
                   available = true;
                   if (jsn['Member ID'] == selectedmemberss.id &&
-                      jsn['Sanction ID'] == disbursed.lst.id) {
-                    sl = sl +1;
+                      jsn['Sanction Id'] == disbursed.lst.id) {
+                    sl = sl + 1;
                     x = double.parse(jsn['Pay Amount'].toString()) *
                         (double.parse(jsn['Service Charge'].toString()) / 100);
                     y = x / double.parse(jsn['No Of Installment'].toString());
@@ -217,7 +217,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
       if (selectedsomiti == null ||
           selectedmemberss == null ||
           conpayamount.text == "" ||
-          disbursed == null ) {
+          disbursed == null) {
         Get.snackbar(
             "Load Sanction Request Failed.", "Some Required Fields are Empty",
             snackPosition: SnackPosition.BOTTOM,
@@ -231,24 +231,25 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             ],
             borderRadius: 0);
       } else {
-        FirebaseFirestore.instance
-            .collection('LoanRepayment')
-        .add({
+        FirebaseFirestore.instance.collection('LoanRepayment').add({
           'Somitee Name': selectedsomiti.name,
           'Somitee ID': selectedsomiti.id,
           "Status": false,
+          "Approve": false,
           'Member Name':
-          selectedmemberss.firstname + " " + selectedmemberss.lastname,
+              selectedmemberss.firstname + " " + selectedmemberss.lastname,
           'Member ID': selectedmemberss.id,
           "Disbursed Amount": disbursed.disburseamount,
           'Approve Date': DateTime.now(),
           'Request Date': DateTime.now(),
           'Pay Amount': double.parse(conpayamount.text),
-          'Sanction Id':disbursed.lst.id,
+          'Sanction Id': disbursed.lst.id,
+          'Service Charge': disbursed.lst.servicecharge,
+          'No Of Installment': disbursed.lst.installmentno,
           'Narration': connarrarion.text,
           'Amount Close': amountclosestring,
-          'Amount':amount,
-          'SL':sl+1,
+          'Amount': amount,
+          'SL': sl + 1,
         }).then((value) async {
           Get.offNamed(repaymentrequestlistPageRoute);
           Get.snackbar("Loan Repayment Request Added Successfully.",
@@ -260,11 +261,12 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
               duration: const Duration(milliseconds: 2000),
               boxShadows: [
                 const BoxShadow(
-                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                    color: Colors.grey,
+                    offset: Offset(-100, 0),
+                    blurRadius: 20),
               ],
               borderRadius: 0);
         }).catchError((error) => print("Failed to add user: $error"));
-
       }
     }
 
@@ -281,7 +283,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
       available = false;
       ssscheme = vs;
       conpayamount.text = '';
-      connarrarion.text =  "Loan Repayment";
+      connarrarion.text = "Loan Repayment";
       setState(() {});
     }
 

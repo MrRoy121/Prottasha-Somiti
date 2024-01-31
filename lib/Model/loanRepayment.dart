@@ -6,7 +6,7 @@ class loanRepayment {
       sanctionid,
       narration,
       amountclose;
-  bool status;
+  bool status, approve;
   double amount, payamount, disbursedamount;
   DateTime requestdate, approvedate;
   int sl;
@@ -17,6 +17,7 @@ class loanRepayment {
       required this.requestdate,
       required this.membername,
       required this.memberid,
+      required this.approve,
       required this.approvedate,
       required this.amount,
       required this.amountclose,
@@ -37,6 +38,7 @@ class loanRepayment {
         'Request Date': requestdate,
         'Pay Amount': payamount,
         'Sanction Id': sanctionid,
+        'Approve': approve,
         'Narration': narration,
         'Amount Close': amountclose,
         'Amount': amount,
@@ -49,6 +51,7 @@ class loanRepayment {
         somiteename: json['Somitee Name'],
         somiteeid: json['Somitee ID'],
         membername: json['Member Name'],
+        approve: json['Approve'],
         memberid: json['Member ID'],
         disbursedamount: json["Disbursed Amount"],
         requestdate: json['Request Date'].toDate(),
