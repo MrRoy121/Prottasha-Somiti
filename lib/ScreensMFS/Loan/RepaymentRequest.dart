@@ -135,10 +135,11 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
 
     Future<void> _setupmemberss(int ins) async {
       selectedmemberss = memberss[ins];
+
       await FirebaseFirestore.instance
           .collection('LoanDisbursed')
           .get()
-          .then((querySnapshot) {
+          .then((querySnapshot) async {
         for (var json in querySnapshot.docs) {
           if (json['Member ID'] == selectedmemberss.id) {
             disbursed = loanDisbursement(
@@ -157,7 +158,47 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
               id: json.id,
               sl: json['SL'],
             );
-            available = true;
+
+            double principle = 0, interest = 0, expireinterest = 0;
+            double x = 0, y = 0, z = 0;
+            await FirebaseFirestore.instance
+                .collection('LoanRepayment')
+                .where("Status", isEqualTo: true)
+                .get()
+                .then((value) {
+              int i = 0;
+              if (value.docs.isNotEmpty) {
+                for (var jsn in value.docs) {
+                  available = true;
+                  if (jsn['Member ID'] == selectedmemberss.id &&
+                      jsn['Sanction ID'] == disbursed.lst.id) {
+                    x = double.parse(jsn['Pay Amount'].toString()) *
+                        (double.parse(jsn['Service Charge'].toString()) / 100);
+                    y = x / double.parse(jsn['No Of Installment'].toString());
+                    z = jsn['Pay Amount'] - z;
+                    interest = interest + y;
+                    principle = principle + z;
+                  }
+                  if (value.size == i) {
+                    lastrepaymentdate = jsn['Repayment Date'];
+                    principle = jsn['Pay Amount'] - principle;
+                    amountclosestring =
+                        "Principle : ${principle}/-,\nService Charge : ${interest}/-\nExpire Interest : 0/-";
+                    amount = principle + x + expireinterest;
+                    setState(() {});
+                  }
+                  i++;
+                }
+              } else {
+                x = double.parse(disbursed.disburseamount.toString()) *
+                    (double.parse(disbursed.lst.servicecharge.toString()) /
+                        100);
+                amountclosestring =
+                    "Principle : ${json['Disbursed Amount']}/-\nService Charge : ${x}/-\nExpire Interest : 0/-";
+                amount = json['Disbursed Amount'] + x;
+                setState(() {});
+              }
+            });
             memberupdated = true;
             ssscheme = LoanSchemes.firstWhere(
                 (element) => element.name == disbursed.lst.scheme);
@@ -231,7 +272,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   // Last Repayment Information
                   LastRepaymentInfo(
                       totalpaidamount: totalpaidamount,
-                      amount: amount,available: available,
+                      amount: amount,
+                      available: available,
                       amountclosestring: amountclosestring,
                       lastpaidamount: lastpaidamount,
                       lastrepaymentdate: lastrepaymentdate),

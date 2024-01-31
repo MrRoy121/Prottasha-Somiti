@@ -153,7 +153,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  widget.amountclosestring,
+                                  widget.amountclosestring,style: TextStyle(fontWeight: FontWeight.bold, color: AppColor),
                                 ),
                               ),
                             ],
