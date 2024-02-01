@@ -138,6 +138,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
 
     Future<void> _setupmemberss(int ins) async {
       selectedmemberss = memberss[ins];
+      double principle = 0, interest = 0, expireinterest = 0;
+      double x = 0, y = 0, z = 0;
 
       await FirebaseFirestore.instance
           .collection('LoanDisbursed')
@@ -162,12 +164,10 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
               sl: json['SL'],
             );
 
-            double principle = 0, interest = 0, expireinterest = 0;
-            double x = 0, y = 0, z = 0;
             await FirebaseFirestore.instance
                 .collection('LoanRepayment')
                 .where("Status", isEqualTo: true)
-                .orderBy('Approve Date', descending: true)
+                .orderBy('Approve Date', descending: false)
                 .get()
                 .then((value) {
               int i = 1;
@@ -177,20 +177,26 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   if (jsn['Member ID'] == selectedmemberss.id &&
                       jsn['Sanction Id'] == disbursed.lst.id) {
                     sl = sl + 1;
-                    x = double.parse(jsn['Pay Amount'].toString()) *
+                    print(jsn['Pay Amount']);
+                    print(jsn['Service Charge']);
+                    x = double.parse(jsn['Disbursed Amount'].toString()) *
                         (double.parse(jsn['Service Charge'].toString()) / 100);
+                    print(x);
                     y = x / double.parse(jsn['No Of Installment'].toString());
-                    z = jsn['Pay Amount'] - z;
+                    print(y);
+                    z = jsn['Pay Amount'] - y;
+                    print(z);
                     interest = interest + y;
                     principle = principle + z;
                     totalpaidamount = jsn['Pay Amount'] + totalpaidamount;
+                    print('finish');
                   }
                   if (value.size == i) {
                     lastrepaymentdate = jsn['Approve Date'].toDate();
                     lastpaidamount = jsn['Pay Amount'];
                     principle = jsn['Disbursed Amount'] - principle;
                     amountclosestring =
-                        "Principle : $principle/-,\nService Charge : $interest/-\nExpire Interest : 0/-";
+                        "Principle : ${principle.toStringAsFixed(2)}/-,\nService Charge : ${(x-interest).toStringAsFixed(2)}/-\nExpire Interest : 0/-";
                     amount = principle + x + expireinterest;
                     setState(() {});
                   }

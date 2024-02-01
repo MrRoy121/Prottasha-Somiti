@@ -205,7 +205,7 @@ class _LastRepaymentInfoState extends State<LastRepaymentInfo> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  widget.amount.toString(),
+                                  widget.amount.toStringAsFixed(2).toString(),
                                 ),
                               ),
                             ],

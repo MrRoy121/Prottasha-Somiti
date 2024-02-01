@@ -35,6 +35,7 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
       ids = [];
       await FirebaseFirestore.instance
           .collection('LoanRepayment')
+          .orderBy('Approve Date', descending: true)
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
