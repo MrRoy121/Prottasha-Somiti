@@ -295,6 +295,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
       connarrarion.text = "Loan Repayment";
       setState(() {});
     }
+    void _onfine() {
+    }
 
     return Scaffold(
       appBar: Appbar(
@@ -314,8 +316,9 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Loan Repayment Details',
-                    onsubmit: _onsubmit,
+                    onsubmit: _onsubmit,showfine: true,
                     onclear: _onclear,
+                    onfine: _onfine,
                   ),
 
                   SizedBox(

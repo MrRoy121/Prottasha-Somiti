@@ -302,7 +302,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                 children: [
                   LoanDetailsWidget(
                     title: 'Loan Disbursement Details',
-                    onsubmit: _save,
+                    onsubmit: _save,onfine: (){},showfine: false,
                     onclear: _onclear,
                   ),
 

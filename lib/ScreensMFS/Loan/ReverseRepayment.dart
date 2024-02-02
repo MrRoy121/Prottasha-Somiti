@@ -34,7 +34,7 @@ class _ReverseRepaymentState extends State<ReverseRepayment> {
                   LoanDetailsWidget(
                     title: 'Reverse Repayment',
                     onsubmit: (){},
-                    onclear: (){},
+                    onclear: (){},onfine: (){},showfine: false,
                   ),
 
                   // Samitee Selection

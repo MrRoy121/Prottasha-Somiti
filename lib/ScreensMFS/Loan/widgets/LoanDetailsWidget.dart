@@ -5,9 +5,10 @@ import '../../../Constants/Constants.dart';
 class LoanDetailsWidget extends StatefulWidget {
   String title;
   void Function() onsubmit;
-  void Function() onclear;
+  void Function() onclear;bool showfine;
+  void Function() onfine;
 
-  LoanDetailsWidget({required this.title,required this.onclear,required this.onsubmit,});
+  LoanDetailsWidget({required this.title,required this.onclear,required this.showfine,required this.onfine,required this.onsubmit,});
 
   @override
   State<LoanDetailsWidget> createState() => _LoanDetailsWidgetState();
@@ -64,7 +65,30 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
                 ),
               ),
 
+
               Spacer(),
+
+
+              widget.showfine?InkWell(
+                onTap: (){
+                widget.onfine();},
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  color: Colors.redAccent,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                    child: Row(
+                      children: [
+                        Icon(Icons.access_alarm_outlined, color: Colors.white, size: 18,),
+                        SizedBox(width: 5,),
+                        Text("Penulty", style: TextStyle(color: Colors.white, fontSize: 14),),
+                      ],
+                    ),
+                  ),
+                ),
+              ):SizedBox(),
+              widget.showfine?SizedBox(width: 10,):SizedBox(),
 
               InkWell(onTap: (){
                 widget.onsubmit();},
@@ -146,6 +170,27 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
 
               Spacer(),
 
+
+              widget.showfine?InkWell(
+                onTap: (){
+                  widget.onfine();},
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  color: Colors.redAccent,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                    child: Row(
+                      children: [
+                        Icon(Icons.access_alarm_outlined, color: Colors.white, size: 18,),
+                        SizedBox(width: 5,),
+                        Text("Penulty", style: TextStyle(color: Colors.white, fontSize: 14),),
+                      ],
+                    ),
+                  ),
+                ),
+              ):SizedBox(),
+              widget.showfine?SizedBox(width: 10,):SizedBox(),
               InkWell(onTap: (){
                 widget.onsubmit();},
                 child: Container(
@@ -225,6 +270,27 @@ class _LoanDetailsWidgetState extends State<LoanDetailsWidget> {
 
               Spacer(),
 
+
+              widget.showfine?InkWell(
+                onTap: (){
+                  widget.onfine();},
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  color: Colors.redAccent,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                    child: Row(
+                      children: [
+                        Icon(Icons.access_alarm_outlined, color: Colors.white, size: 18,),
+                        SizedBox(width: 5,),
+                        Text("Penulty", style: TextStyle(color: Colors.white, fontSize: 14),),
+                      ],
+                    ),
+                  ),
+                ),
+              ):SizedBox(),
+              widget.showfine?SizedBox(width: 10,):SizedBox(),
               InkWell(onTap: (){
                 widget.onsubmit();},
                 child: Container(
