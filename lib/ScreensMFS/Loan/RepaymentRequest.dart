@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LastRepaymentInfo.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanRepaymentWidget.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/RepaymentLoanInfo.dart';
 
+import '../../Constants/Constants.dart';
 import '../../Constants/values.dart';
 import '../../Model/loanDisbursement.dart';
 import '../../Model/loanSanction.dart';
@@ -37,6 +41,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
   bool available = false;
   var connarrarion = TextEditingController(text: "Loan Repayment");
   var conpayamount = TextEditingController();
+  var conpayfineamount = TextEditingController();
+  DateTime selectedfineDate = DateTime.now();
   var selectedsomiti;
   var sselectedsomiti;
   var selectedmemberss;
@@ -196,7 +202,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                     lastpaidamount = jsn['Pay Amount'];
                     principle = jsn['Disbursed Amount'] - principle;
                     amountclosestring =
-                        "Principle : ${principle.toStringAsFixed(2)}/-,\nService Charge : ${(x-interest).toStringAsFixed(2)}/-\nExpire Interest : 0/-";
+                        "Principle : ${principle.toStringAsFixed(2)}/-,\nService Charge : ${(x - interest).toStringAsFixed(2)}/-\nExpire Interest : 0/-";
                     amount = principle + x + expireinterest;
                     setState(() {});
                   }
@@ -216,6 +222,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             ssscheme = LoanSchemes.firstWhere(
                 (element) => element.name == disbursed.lst.scheme);
             conpayamount.text = ssscheme.installmentamount.toString();
+            conpayfineamount.text = ssscheme.installmentamount.toString();
             setState(() {});
           }
         }
@@ -228,7 +235,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
           conpayamount.text == "" ||
           disbursed == null) {
         Get.snackbar(
-            "Load Sanction Request Failed.", "Some Required Fields are Empty",
+            "Load Repayment Request Failed.", "Some Required Fields are Empty",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
             backgroundColor: Colors.red,
@@ -295,7 +302,219 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
       connarrarion.text = "Loan Repayment";
       setState(() {});
     }
+
     void _onfine() {
+      if (selectedsomiti == null || selectedmemberss == null) {
+        Get.snackbar("Load Repayment Penulty Failed.",
+            "Some Somitee and Member has to be selected.",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        Get.dialog(
+            barrierColor: Colors.transparent,
+            barrierDismissible: false,
+            Dialog(
+              backgroundColor: Colors.white,
+              elevation: 20,
+              alignment: Alignment.center,
+              child: Container(
+                width: 500,
+                height: 400,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Add Penulty To",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      selectedmemberss.firstname +
+                          " " +
+                          selectedmemberss.lastname +
+                          " -" +
+                          selectedmemberss.id,
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Transaction Date :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        SizedBox(
+                          width: 300,
+                          height: 120,
+                          child: DefaultTextStyle.merge(
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                            child: CupertinoDatePicker(
+                              initialDateTime: selectedfineDate,
+                              onDateTimeChanged: (DateTime newDate) {
+                                setState(() {
+                                  selectedfineDate = newDate;
+                                });
+                              },
+                              maximumDate: DateTime.now(),
+                              mode: CupertinoDatePickerMode.date,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Fine Amount :",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 70,
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            controller: conpayfineamount,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: AppColor_greyBorder),
+                              ),
+                              hintText: "Enter Amount",
+                              hintStyle: TextStyle(
+                                color: AppColor_greyText,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Expanded(
+                        child: SizedBox(
+                      height: 0,
+                    )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 100,
+                            color: Colors.redAccent,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              "Cancel",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if(conpayfineamount.text == ''){
+                              Get.snackbar("Load Repayment Penulty Failed.",
+                                  "Fine Amount Cannot be empty.",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.red,
+                                  margin: EdgeInsets.zero,
+                                  duration: const Duration(milliseconds: 2000),
+                                  boxShadows: [
+                                    const BoxShadow(
+                                        color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                                  ],
+                                  borderRadius: 0);
+                            }else{
+                              FirebaseFirestore.instance.collection('LoanRepaymentFine').add({
+                                'Member ID': selectedmemberss.id,
+                                'Fine Date': DateTime.now(),
+                                'Fine Amount': double.parse(conpayfineamount.text),
+                                'Sanction Id': disbursed.lst.id,
+                              }).then((value) async {
+                                Get.offNamed(repaymentrequestlistPageRoute);
+                                Get.snackbar("Loan Repayment Fine Added Successfully.",
+                                    "Redirecting to Loan Repayment Request List Page.",
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.green,
+                                    margin: EdgeInsets.zero,
+                                    duration: const Duration(milliseconds: 2000),
+                                    boxShadows: [
+                                      const BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(-100, 0),
+                                          blurRadius: 20),
+                                    ],
+                                    borderRadius: 0);
+                              });
+                            }
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 40,
+                            width: 100,
+                            color: Colors.green,
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              "Save",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ));
+      }
     }
 
     return Scaffold(
@@ -316,7 +535,8 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Loan Repayment Details',
-                    onsubmit: _onsubmit,showfine: true,
+                    onsubmit: _onsubmit,
+                    showfine: true,
                     onclear: _onclear,
                     onfine: _onfine,
                   ),
