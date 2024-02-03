@@ -108,6 +108,7 @@ class MyApp extends StatelessWidget {
                   navbool: navbool,navboolcbs: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
+
         GetPage(
             name: sanctionloaneditPageRoute,
             page: () => LoanSanctionEdit(

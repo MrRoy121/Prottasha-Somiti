@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ScreensCBS/Widgets/NavBoolCBS.dart';
 import '../../ScreensCBS/Widgets/NavbarScreenCBS.dart';
@@ -19,11 +20,21 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
+  bool sss = false;
+  _getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sss = prefs.getBool('CBS') ?? false;setState(() {
+
+    });
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    bool sss = arguments['CBS'];
 
     return Scaffold(
       appBar: Appbar(

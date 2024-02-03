@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Constants/responsive.dart';
@@ -162,8 +163,10 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                           SingleChildScrollView(
                             child: Column(
                               children: [
-                                InkWell(onTap: (){
+                                InkWell(onTap: () async {
                                   Get.toNamed(dashboardPageRoute,arguments: {'CBS': true},);
+                                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  prefs.setBool('CBS', true);
                                 },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -206,8 +209,10 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     ),
                                   ),
                                 ),
-                                InkWell( onTap: (){
+                                InkWell( onTap: () async {
                                   Get.toNamed(dashboardPageRoute,arguments: {'CBS': false},);
+                                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  prefs.setBool('CBS', false);
                                 },
                                   child: Container(
                                     decoration: BoxDecoration(

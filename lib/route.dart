@@ -29,3 +29,6 @@ const glstatementPageRoute = "/glstatement";
 const samiteewisedisbursePageRoute = "/samiteewisedisburse";
 const memberwishdisbursePageRoute = "/memberwishdisburse";
 const slipreprintPageRoute = "/slipreprint";
+
+
+const individualmemberregistrationPageRoute = "/individualmemberregistration";
