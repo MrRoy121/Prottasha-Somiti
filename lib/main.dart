@@ -20,6 +20,7 @@ import 'Model/auth_middleware.dart';
 import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
+import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
@@ -108,7 +109,13 @@ class MyApp extends StatelessWidget {
                   navbool: navbool,navboolcbs: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
-
+        GetPage(
+            name: individualmemberregistrationPageRoute,
+            page: () => IndividualCustomerRegistration(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloaneditPageRoute,
             page: () => LoanSanctionEdit(
