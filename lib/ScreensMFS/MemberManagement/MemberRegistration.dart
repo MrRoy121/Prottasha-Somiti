@@ -229,6 +229,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'No Male Earner': _nomaleearner.text,
           'ID': memberid,
           'Status': true,
+          'Dead': false,
           'Head Family': selectedfamilyhead,
           'Own HomeStead': selectedownhomestead,
           'Relation With Head': _relationwithhead.text,

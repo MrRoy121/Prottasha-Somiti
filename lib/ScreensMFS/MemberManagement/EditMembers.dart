@@ -213,8 +213,8 @@ class _EditMembersState extends State<EditMembers> {
                                         ConnectionState.done) {
                                       if (snapshot.hasError) {
                                         return const Center(
-                                          child:
-                                              Text("No Member Data Available.."),
+                                          child: Text(
+                                              "No Member Data Available.."),
                                         );
                                       } else if (snapshot.hasData) {
                                         return MediaQuery.removePadding(
@@ -223,10 +223,11 @@ class _EditMembersState extends State<EditMembers> {
                                           child: DataTable(
                                             showCheckboxColumn: false,
                                             border: TableBorder.all(
-                                                color: Colors.black26, width: 1),
+                                                color: Colors.black26,
+                                                width: 1),
                                             headingRowColor:
-                                                MaterialStateProperty.all<Color>(
-                                                    AppColor_Blue),
+                                                MaterialStateProperty.all<
+                                                    Color>(AppColor_Blue),
                                             columns: const [
                                               DataColumn(
                                                 label: Text(
@@ -252,7 +253,8 @@ class _EditMembersState extends State<EditMembers> {
                                                 label: Text('Member Name',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.white,
                                                     )),
                                               ),
@@ -260,7 +262,8 @@ class _EditMembersState extends State<EditMembers> {
                                                 label: Text('Mobile No',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.white,
                                                     )),
                                               ),
@@ -287,7 +290,8 @@ class _EditMembersState extends State<EditMembers> {
                                                 label: Text('Father Name',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.white,
                                                     )),
                                               ),
@@ -295,7 +299,8 @@ class _EditMembersState extends State<EditMembers> {
                                                 label: Text('Date Of Birth',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.white,
                                                     )),
                                               ),
@@ -303,7 +308,8 @@ class _EditMembersState extends State<EditMembers> {
                                                 label: Text('Present Address',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.white,
                                                     )),
                                               ),
@@ -311,7 +317,8 @@ class _EditMembersState extends State<EditMembers> {
                                                 label: Text('ACTION',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.white,
                                                     )),
                                               ),
@@ -320,13 +327,14 @@ class _EditMembersState extends State<EditMembers> {
                                                 snapshot.data.length, (index) {
                                               return DataRow(
                                                 cells: [
+                                                  DataCell(Text(
+                                                      (index + 1).toString(),
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                      ))),
                                                   DataCell(
-                                                      Text((index + 1).toString(),
-                                                          style: const TextStyle(
-                                                            fontSize: 12,
-                                                          ))),
-                                                  DataCell(
-                                                    Text(snapshot.data[index].id,
+                                                    Text(
+                                                        snapshot.data[index].id,
                                                         style: TextStyle(
                                                           fontSize: 12,
                                                         )),
@@ -393,40 +401,149 @@ class _EditMembersState extends State<EditMembers> {
                                                           fontSize: 12,
                                                         )),
                                                   ),
-                                                  DataCell(
-                                                    Center(
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          Memberss sss = snapshot
-                                                              .data[index];
-                                                          Get.toNamed(
-                                                            memberEditPageRoute,
-                                                            arguments: {
-                                                              'Members':
-                                                                  sss.toJson(),
-                                                            },
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    4.0),
-                                                            decoration: BoxDecoration(
+                                                  DataCell(Row(
+                                                    children: [
+                                                      Center(
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            Memberss sss =
+                                                                snapshot.data[
+                                                                    index];
+                                                            Get.toNamed(
+                                                              memberEditPageRoute,
+                                                              arguments: {
+                                                                'Members': sss
+                                                                    .toJson(),
+                                                              },
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(4.0),
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      AppColor_Blue,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              100)),
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .edit_outlined,
+                                                                size: 16,
                                                                 color:
-                                                                    AppColor_Blue,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            100)),
-                                                            child: const Icon(
-                                                              Icons.edit_outlined,
-                                                              size: 16,
-                                                              color:
-                                                                  AppColor_White,
-                                                            )),
+                                                                    AppColor_White,
+                                                              )),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
+                                                      Center(
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            Memberss sss =
+                                                                snapshot.data[
+                                                                    index];
+                                                            Get.dialog(
+                                                                barrierDismissible:
+                                                                    false,
+                                                                Dialog(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  child:
+                                                                        Container(width: 350,
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              30),
+                                                                      decoration: BoxDecoration(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(20)),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Center(
+                                                                            child:
+                                                                                Text("Confirm ${sss.firstname + " " + sss.lastname}\n as Dead Member ",textAlign: TextAlign.center,
+                                                                          style: TextStyle(color: Colors.black, fontSize: 18),),
+                                                                          ),
+                                                                          SizedBox(height: 20,),
+                                                                          Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                            children: [
+                                                                              InkWell(
+                                                                                onTap: () {
+                                                                                  Get.back();
+                                                                                },
+                                                                                child: Center(
+                                                                                  child: Container(
+                                                                                    height: 40,
+                                                                                    width: 80,
+                                                                                    alignment: Alignment.center,
+                                                                                    decoration: const BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                                    child: const Text(
+                                                                                      "No",
+                                                                                      style: TextStyle(color: Colors.white),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+
+                                                                              InkWell(
+                                                                                onTap: () async {
+                                                                                 await FirebaseFirestore.instance
+                                                                                     .collection('Member').doc(sss.id).update({'Dead':true}).then((value) {
+
+                                                                                 });
+
+                                                                                },
+                                                                                child: Center(
+                                                                                  child: Container(
+                                                                                    height: 40,
+                                                                                    width:80,
+                                                                                    alignment: Alignment.center,
+                                                                                    decoration: const BoxDecoration(color: Colors.red, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                                    child: Text(
+                                                                                      "Yes",
+                                                                                      style: TextStyle(color: Colors.white),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                ));
+                                                          },
+                                                          child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(4.0),
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      AppColor_Blue,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              100)),
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .warning_amber_outlined,
+                                                                size: 16,
+                                                                color:
+                                                                    AppColor_White,
+                                                              )),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )),
                                                 ],
                                               );
                                             }),

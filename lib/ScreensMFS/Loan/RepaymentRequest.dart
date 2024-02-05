@@ -171,6 +171,19 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             );
 
             await FirebaseFirestore.instance
+                .collection('LoanRepaymentFine')
+                .get()
+                .then((querySnapshot) {
+              for (var json in querySnapshot.docs) {
+                if(json['Member ID'] == selectedmemberss.id &&
+                    json['Sanction Id'] == disbursed.lst.id){
+                  expireinterest = expireinterest + json['Fine Amount'];
+                  print(expireinterest);
+                }
+              }
+            });
+
+            await FirebaseFirestore.instance
                 .collection('LoanRepayment')
                 .where("Status", isEqualTo: true)
                 .orderBy('Approve Date', descending: false)
@@ -183,26 +196,20 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                   if (jsn['Member ID'] == selectedmemberss.id &&
                       jsn['Sanction Id'] == disbursed.lst.id) {
                     sl = sl + 1;
-                    print(jsn['Pay Amount']);
-                    print(jsn['Service Charge']);
                     x = double.parse(jsn['Disbursed Amount'].toString()) *
                         (double.parse(jsn['Service Charge'].toString()) / 100);
-                    print(x);
                     y = x / double.parse(jsn['No Of Installment'].toString());
-                    print(y);
                     z = jsn['Pay Amount'] - y;
-                    print(z);
                     interest = interest + y;
                     principle = principle + z;
                     totalpaidamount = jsn['Pay Amount'] + totalpaidamount;
-                    print('finish');
                   }
                   if (value.size == i) {
                     lastrepaymentdate = jsn['Approve Date'].toDate();
                     lastpaidamount = jsn['Pay Amount'];
                     principle = jsn['Disbursed Amount'] - principle;
                     amountclosestring =
-                        "Principle : ${principle.toStringAsFixed(2)}/-,\nService Charge : ${(x - interest).toStringAsFixed(2)}/-\nExpire Interest : 0/-";
+                        "Principle : ${principle.toStringAsFixed(2)}/-,\nService Charge : ${(x - interest).toStringAsFixed(2)}/-\nExpire Interest : ${(expireinterest).toStringAsFixed(2)}/-";
                     amount = principle + x + expireinterest;
                     setState(() {});
                   }
@@ -222,7 +229,6 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             ssscheme = LoanSchemes.firstWhere(
                 (element) => element.name == disbursed.lst.scheme);
             conpayamount.text = ssscheme.installmentamount.toString();
-            conpayfineamount.text = ssscheme.installmentamount.toString();
             setState(() {});
           }
         }
@@ -304,6 +310,20 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
     }
 
     void _onfine() {
+      double fine = 0;
+      Duration difference = DateTime.now().difference(disbursed.disbursedate);
+      int differenceInDays = difference.inDays;
+      print(differenceInDays);
+      print(ssscheme.duration);
+      if (differenceInDays < ssscheme.duration) {
+        fine = amount*0.01;
+      } else {
+        fine = amount*0.02;
+      }
+      setState(() {
+        conpayfineamount.text = fine.toString();
+      });
+
       if (selectedsomiti == null || selectedmemberss == null) {
         Get.snackbar("Load Repayment Penulty Failed.",
             "Some Somitee and Member has to be selected.",

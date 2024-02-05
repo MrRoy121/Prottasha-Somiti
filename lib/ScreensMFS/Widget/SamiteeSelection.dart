@@ -523,7 +523,7 @@ class _SamiteeSelectionState extends State<SamiteeSelection> {
                                   .toString()
                                   : "",
                               style: TextStyle(
-                                fontSize: 109.71,
+                                fontSize: ScreenWidth/109.71,
                               ),
                             ),
                           ),

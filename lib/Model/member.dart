@@ -31,7 +31,7 @@ class Memberss {
       housedesc,
       remarks,
       imageurl;
-  bool img, sts;
+  bool img, sts, dead;
   DateTime birthdate;
   double loanpendingamount, owndepositamount;
   int sl;
@@ -71,7 +71,7 @@ class Memberss {
       required this.landdesc,
       required this.housedesc,
       required this.remarks,
-      required this.imageurl,
+      required this.imageurl,required this.dead,
       required this.img,
       required this.birthdate,
       required this.sl});
@@ -90,7 +90,7 @@ class Memberss {
         'National ID': nationalid,
         'Birth Registration': birthregi,
         'Age': age,
-        'Date Of Birth': birthdate,
+        'Date Of Birth': birthdate,'Dead':dead,
         'No of Dependent': nodepenndent,
         'Education': education,
         'Marital Status': maritalstatus,
@@ -125,7 +125,7 @@ class Memberss {
         sts: json['Status'],
         occupation: json['Occupation'].toString(),
         firstname: json['First Name'].toString(),
-        lastname: json['Last Name'].toString(),
+        lastname: json['Last Name'].toString(),dead: json['Dead'],
         fathername: json['Father Name'].toString(),
         mothername: json['Mother Name'].toString(),
         gender: json['Gender'].toString(),
