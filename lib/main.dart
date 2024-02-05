@@ -73,11 +73,9 @@ class MyApp extends StatelessWidget {
   Navbool navbool =
       Navbool(true, false, false, false, false, false, false, false, false);
 
-  NavboolCBS navboolcbs =
-  NavboolCBS(true, false, false, false, false);
+  NavboolCBS navboolcbs = NavboolCBS(true, false, false, false, false);
   @override
   Widget build(BuildContext context) {
-
     return GetMaterialApp(
       // return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -107,21 +105,23 @@ class MyApp extends StatelessWidget {
             name: dashboardPageRoute,
             page: () => DashBoard(
                   appbool: appbool,
-                  navbool: navbool,navboolcbs: navboolcbs,
+                  navbool: navbool,
+                  navboolcbs: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: deadmemberPageRoute,
             page: () => DeadMemberInfo(
-              appbool: appbool,
-              navbool: navbool,
-            ),
-            middlewares: [AuthMiddleware()]),        GetPage(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
             name: individualmemberregistrationPageRoute,
             page: () => IndividualCustomerRegistration(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloaneditPageRoute,
@@ -210,9 +210,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: loandisbursementlistPageRoute,
             page: () => LoanDisbursementList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: loanrequestlistPageRoute,
@@ -232,9 +232,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: repaymentrequestlistPageRoute,
             page: () => LoanRepaymentRequestList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         // Report's section
         GetPage(
