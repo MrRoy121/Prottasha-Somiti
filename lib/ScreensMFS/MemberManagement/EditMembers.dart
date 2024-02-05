@@ -498,9 +498,10 @@ class _EditMembersState extends State<EditMembers> {
                                                                                 onTap: () async {
                                                                                  await FirebaseFirestore.instance
                                                                                      .collection('Member').doc(sss.id).update({'Dead':true}).then((value) {
-
+                                                                                   Get.toNamed(
+                                                                                     deadmemberPageRoute,
+                                                                                   );
                                                                                  });
-
                                                                                 },
                                                                                 child: Center(
                                                                                   child: Container(

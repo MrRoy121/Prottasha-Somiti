@@ -6,6 +6,7 @@ const somiteelistPageRoute = "/somiteelist";
 const memberegistrationPageRoute = "/memberregistration";
 const memberlistPageRoute = "/memberlist";
 const memberclosingPageRoute = "/memberclosing";
+const deadmemberPageRoute = "/deadmemberlist";
 const closingmemberrequestPageRoute = "/closingmemberrequest";
 const memberEditPageRoute = "/memberedit";
 

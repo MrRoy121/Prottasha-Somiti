@@ -33,6 +33,7 @@ import 'ScreensMFS/Loan/LoanSanctionList.dart';
 import 'ScreensMFS/Loan/RepaymentRequest.dart';
 import 'ScreensMFS/MemberManagement/CloseMember.dart';
 import 'ScreensMFS/MemberManagement/ClosedMembersList.dart';
+import 'ScreensMFS/MemberManagement/DeadMemberInfo.dart';
 import 'ScreensMFS/MemberManagement/EditMembers.dart';
 import 'ScreensMFS/MemberManagement/MemberManagement.dart';
 import 'ScreensMFS/MemberManagement/MemberRegistration.dart';
@@ -110,6 +111,12 @@ class MyApp extends StatelessWidget {
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
+            name: deadmemberPageRoute,
+            page: () => DeadMemberInfo(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),        GetPage(
             name: individualmemberregistrationPageRoute,
             page: () => IndividualCustomerRegistration(
               appbool: appbool,
