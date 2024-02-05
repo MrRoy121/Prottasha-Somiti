@@ -89,7 +89,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
           allmemberss.add(Memberss(
               somiteename: element["Somitee Name"],
               somiteeid: element["Somitee ID"],
-              membertype: element["Member Type"],
+              membertype: element["Member Type"],dead: element['Dead'],
               occupation: element["Occupation"],
               firstname: element["First Name"],
               lastname: element["Last Name"],

@@ -71,7 +71,7 @@ class _CloseMemberState extends State<CloseMember> {
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],
               occupation: element["Occupation"],
-              firstname: element["First Name"],
+              firstname: element["First Name"],dead: element['Dead'],
               lastname: element["Last Name"],
               sts: element["Status"],
               fathername: element["Father Name"],

@@ -102,7 +102,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               somiteename: element["Somitee Name"],
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],
-              occupation: element["Occupation"],
+              occupation: element["Occupation"],dead: element['Dead'],
               firstname: element["First Name"],
               lastname: element["Last Name"],
               fathername: element["Father Name"],
