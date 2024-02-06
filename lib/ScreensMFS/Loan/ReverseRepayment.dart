@@ -100,6 +100,8 @@ class _ReverseRepaymentState extends State<ReverseRepayment> {
         'Somitee Name': selectedsomiti.name,
         'Somitee ID': selectedsomiti.id,
         "Approve": false,
+        'Status': false,
+      'Narration':conremarks.text,
         'ID': selectedloanrepay.id,
         'Member Name': selectedloanrepay.membername,
         'Member ID': selectedloanrepay.memberid,

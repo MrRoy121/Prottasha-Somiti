@@ -52,7 +52,7 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
               amountclose: json['Amount Close'],
               amount: json['Amount'],
               sl: s,
-              status: true,
+              status: json['Status'],
               approvedate: json["Approve Date"].toDate()));
           s++;
         }
@@ -95,7 +95,7 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
                         Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                            "All Requested Repayment List",
+                            "All Reversed Requested Repayment List",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -283,35 +283,22 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
                                       ),
                                       DataCell(
                                           snapshot.data[index].status
-                                              ?InkWell(
-                                            onTap: () {
-
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        100)),
-                                                child: const Icon(
-                                                  Icons.edit,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
-                                          ):
+                                              ?SizedBox():
                                           Row(
                                         children: [
                                           InkWell(
                                             onTap: () {
                                               FirebaseFirestore.instance
-                                                  .collection('LoanRepayment')
+                                                  .collection('LoanRepaymentReverse')
                                                   .doc(snapshot.data[index].id)
                                                   .update({
                                                 "Status": true,
                                                 "Approve": true,
                                                 'Approve Date': DateTime.now(),
                                               }).then((value) {
+                                                FirebaseFirestore.instance
+                                                    .collection('LoanRepayment')
+                                                    .doc(snapshot.data[index].id).delete();
                                                 setState(() {});
                                               });
                                             },
@@ -331,7 +318,7 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
                                           InkWell(
                                             onTap: () {
                                               FirebaseFirestore.instance
-                                                  .collection('LoanRepayment')
+                                                  .collection('LoanRepaymentReverse')
                                                   .doc(snapshot.data[index].id)
                                                   .update({
                                                 "Status": true,

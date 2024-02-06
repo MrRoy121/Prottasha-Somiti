@@ -1876,6 +1876,35 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                     ),
                                   )),
                             ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor7 = AppColor_hover2;
+                                    textColor7 = Colors.white;
+                                  } else {
+                                    itemColor7 = AppColor_Blue;
+                                    textColor7 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(repaymentreverseListPageRoute);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 250,
+                                  color: itemColor7,
+                                  child: Text(
+                                    "Reverse Repayment Request List",
+                                    style: TextStyle(
+                                      color: textColor7,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
                           ],
                         ),
                       )
