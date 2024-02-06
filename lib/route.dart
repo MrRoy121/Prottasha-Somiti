@@ -34,4 +34,11 @@ const memberwishdisbursePageRoute = "/memberwishdisburse";
 const slipreprintPageRoute = "/slipreprint";
 
 
+
+const depositcollectionrequestPageRoute = "/depositcollectionrequestPageRoute";
+const depositcorrectionrequestPageRoute = "/depositcorrectionrequestPageRoute";
+
+
+
+
 const individualmemberregistrationPageRoute = "/individualmemberregistration";

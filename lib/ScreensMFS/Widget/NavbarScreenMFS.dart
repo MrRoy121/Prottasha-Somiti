@@ -5,8 +5,8 @@ import '../../../Constants/Constants.dart';
 import '../../route.dart';
 import '../Loan/LoanReSchedule.dart';
 import '../Loan/ReverseRepayment.dart';
-import '../Transaction/DepositCollectionReport.dart';
-import '../Transaction/DepositCollectionReportScreen2.dart';
+import '../Transaction/DepositCollectionRequest.dart';
+import '../Transaction/DepositCorrectionRequest.dart';
 import '../Transaction/DepositWithDwarClosed.dart';
 import '../Transaction/DepositWithDwarNormal.dart';
 import '../Transaction/SamiteeTransaction.dart';
@@ -199,6 +199,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
           SizedBox(
             width: double.infinity,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 arr[0]
                     ? Container(
@@ -372,7 +373,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                     : SizedBox(),
                 closedArr[0]
                     ? Container(
-                        margin: EdgeInsets.only(left: 0),
+                        margin: EdgeInsets.only(left: 0, top: 120),
                         color: AppColor_Blue,
                         // height: 800,
                         width: 250,
@@ -1425,6 +1426,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                         margin: EdgeInsets.only(left: 0),
                         color: AppColor_Blue,
                         // height: 800,
+                  alignment: Alignment.topCenter,
                         width: 200,
                         child: Column(
                           children: [
@@ -1441,10 +1443,8 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 });
                               },
                               onTap: () {
-                                Get.to(DepositCollectionReport(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+
+                                Get.toNamed(depositcollectionrequestPageRoute);
                               },
                               child: Container(
                                 padding: EdgeInsets.only(
@@ -1478,10 +1478,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 });
                               },
                               onTap: () {
-                                Get.to(DepositCollectionReportScreen2(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(depositcorrectionrequestPageRoute);
                               },
                               child: Container(
                                   padding: EdgeInsets.only(
@@ -1490,7 +1487,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   width: 200,
                                   color: itemColor5,
                                   child: Text(
-                                    "Deposit Collection Request",
+                                    "Deposit Correction Request",
                                     style: TextStyle(
                                       color: textColor5,
                                       fontSize: 12,
@@ -1503,7 +1500,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                     : SizedBox(),
                 withdrawArr[0]
                     ? Container(
-                        margin: EdgeInsets.only(left: 0),
+                        margin: EdgeInsets.only(left: 0, top: 40),
                         color: AppColor_Blue,
                         // height: 800,
                         width: 250,
@@ -1693,7 +1690,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                     : SizedBox(),
                 loandisburseArr[0]
                     ? Container(
-                        margin: EdgeInsets.only(left: 0),
+                        margin: EdgeInsets.only(left: 0, top : 40),
                         color: AppColor_Blue,
                         // height: 800,
                         width: 250,
@@ -1773,7 +1770,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                     : SizedBox(),
                 loanRePayArr[0]
                     ? Container(
-                        margin: EdgeInsets.only(left: 0),
+                        margin: EdgeInsets.only(left: 0, top:80),
                         color: AppColor_Blue,
                         // height: 800,
                         width: 250,

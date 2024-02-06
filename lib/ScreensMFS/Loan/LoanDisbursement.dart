@@ -8,13 +8,13 @@ import '../../Constants/values.dart';
 import '../../Model/member.dart';
 import '../../Model/scheme.dart';
 import '../../route.dart';
+import '../Transaction/widget/Image.dart';
+import '../Transaction/widget/LinkACinfo.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/TransactionWidget/Image.dart';
 import 'package:get/get.dart';
-import '../Widget/TransactionWidget/LinkACinfo.dart';
 
 class LoanDisbursement extends StatefulWidget {
   Navbool navbool;

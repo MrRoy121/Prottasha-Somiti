@@ -1,12 +1,12 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:prottashasomit/ScreensMFS/Transaction/widget/DepositWithDwar.dart';
+import 'package:prottashasomit/ScreensMFS/Transaction/widget/MemberDepositWithdearRequest.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/TransactionWidget/DepositWithDwar.dart';
-import '../Widget/TransactionWidget/MemberDepositWithdearRequest.dart';
 
 
 class DepositWithDwarClosed extends StatefulWidget {
@@ -30,39 +30,46 @@ class _DepositWithDwarClosedState extends State<DepositWithDwarClosed> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Column(
+                children: [
+
+                  SizedBox(
+                    height: 50,
+                  ),
+
+
+                  // Member Deposit Withdraw Request
+                  MemberDepositWithdwar(submit: true, selectmember: false,),
+
+
+                  SizedBox(
+                    height: 50,
+                  ),
+
+                  // Somitee Selection
+                //  SamiteeSelection(submit: false, selectmember: false, clear: false, close: false,active: true,onsubmit: (){}),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+
+                  // Deposit Withdraw
+                  DepositWithDwar(),
+
+
+                  SizedBox(
+                    height: 50,
+                  ),
+
+
+                ],
+              ),
+            ),
             NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
-
-            SizedBox(
-              height: 50,
-            ),
-
-
-            // Member Deposit Withdraw Request
-            MemberDepositWithdwar(submit: true, selectmember: false,),
-
-
-            SizedBox(
-              height: 50,
-            ),
-
-            // Somitee Selection
-          //  SamiteeSelection(submit: false, selectmember: false, clear: false, close: false,active: true,onsubmit: (){}),
-
-            SizedBox(
-              height: 50,
-            ),
-
-            // Deposit Withdraw
-            DepositWithDwar(),
-
-
-            SizedBox(
-              height: 50,
-            ),
-
-
           ],
         ),
       ),

@@ -43,10 +43,8 @@ import 'ScreensMFS/MemberManagement/MemberUpdate.dart';
 import 'ScreensMFS/MemberManagement/SamiteeList.dart';
 import 'ScreensMFS/MemberManagement/SamiteeRegistration.dart';
 import 'ScreensMFS/Reports/GeneralLedgerStatement.dart';
-import 'ScreensMFS/Reports/Reports.dart';
-import 'ScreensMFS/Samitee Management/SamiteeManagement.dart';
-import 'ScreensMFS/Special Consideration/SpecialConsideration.dart';
-import 'ScreensMFS/Transaction/Transaction.dart';
+import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
+import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
 import 'ScreensMFS/Widget/Appbool.dart';
 import 'ScreensMFS/Widget/NavBoolMFS.dart';
 import 'Constants/responsive.dart';
@@ -131,6 +129,20 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navbool,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: depositcollectionrequestPageRoute,
+            page: () => DepositCollectionRequest(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: depositcorrectionrequestPageRoute,
+            page: () => DepositCorrectionRequest(
+              appbool: appbool,
+              navbool: navbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: individualmemberregistrationPageRoute,
