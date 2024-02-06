@@ -26,11 +26,13 @@ import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
 import 'ScreensMFS/Loan/LoanDisbursementList.dart';
 import 'ScreensMFS/Loan/LoanRepaymentRequestList.dart';
+import 'ScreensMFS/Loan/LoanRepaymentReverseRequestList.dart';
 import 'ScreensMFS/Loan/LoanSaction.dart';
 import 'ScreensMFS/Loan/LoanSactionApprove.dart';
 import 'ScreensMFS/Loan/LoanSactionEdit.dart';
 import 'ScreensMFS/Loan/LoanSanctionList.dart';
 import 'ScreensMFS/Loan/RepaymentRequest.dart';
+import 'ScreensMFS/Loan/ReverseRepayment.dart';
 import 'ScreensMFS/MemberManagement/CloseMember.dart';
 import 'ScreensMFS/MemberManagement/ClosedMembersList.dart';
 import 'ScreensMFS/MemberManagement/DeadMemberInfo.dart';
@@ -112,6 +114,20 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: deadmemberPageRoute,
             page: () => DeadMemberInfo(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: repaymentreversePageRoute,
+            page: () => ReverseRepayment(
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: repaymentreverseListPageRoute,
+            page: () => LoanRepaymentReverseRequestList(
                   appbool: appbool,
                   navbool: navbool,
                 ),

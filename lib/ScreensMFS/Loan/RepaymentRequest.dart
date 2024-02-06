@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -178,7 +180,6 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
                 if(json['Member ID'] == selectedmemberss.id &&
                     json['Sanction Id'] == disbursed.lst.id){
                   expireinterest = expireinterest + json['Fine Amount'];
-                  print(expireinterest);
                 }
               }
             });
@@ -253,11 +254,17 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
             ],
             borderRadius: 0);
       } else {
-        FirebaseFirestore.instance.collection('LoanRepayment').add({
+        const _chars = '1234567890';
+        Random _rnd = Random();
+        String getRandomString(int length) =>
+            String.fromCharCodes(Iterable.generate(
+                length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+        String id = getRandomString(8);
+        FirebaseFirestore.instance.collection('LoanRepayment').doc(id).set({
           'Somitee Name': selectedsomiti.name,
           'Somitee ID': selectedsomiti.id,
           "Status": false,
-          "Approve": false,
+          "Approve": false,'ID':id,
           'Member Name':
               selectedmemberss.firstname + " " + selectedmemberss.lastname,
           'Member ID': selectedmemberss.id,

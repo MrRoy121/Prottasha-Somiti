@@ -18,6 +18,8 @@ const loanrequestlistPageRoute = "/loanrequestlistPageRoute";
 const loandisbursementPageRoute = "/loandisbursementPageRoute";
 const loandisbursementlistPageRoute = "/loandisbursementlistPageRoute";
 const repaymentrequestPageRoute = "/repaymentrequestPageRoute";
+const repaymentreversePageRoute = "/repaymentreversePageRoute";
+const repaymentreverseListPageRoute = "/repaymentreverselistPageRoute";
 const repaymentrequestlistPageRoute = "/repaymentrequestlistPageRoute";
 
 

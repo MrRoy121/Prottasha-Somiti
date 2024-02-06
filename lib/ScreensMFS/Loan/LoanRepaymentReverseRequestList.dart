@@ -14,18 +14,18 @@ import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
 
-class LoanRepaymentRequestList extends StatefulWidget {
+class LoanRepaymentReverseRequestList extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanRepaymentRequestList({required this.appbool, required this.navbool});
+  LoanRepaymentReverseRequestList({required this.appbool, required this.navbool});
 
   @override
-  State<LoanRepaymentRequestList> createState() =>
-      _LoanRepaymentRequestListState();
+  State<LoanRepaymentReverseRequestList> createState() =>
+      _LoanRepaymentReverseRequestListState();
 }
 
-class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
+class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRequestList> {
   @override
   Widget build(BuildContext context) {
     Future<List<loanRepayment>> getCust() async {

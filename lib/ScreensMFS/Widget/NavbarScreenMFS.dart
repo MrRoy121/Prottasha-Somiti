@@ -1860,10 +1860,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 });
                               },
                               onTap: () {
-                                Get.to(ReverseRepayment(
-                                  appbool: widget.appbool,
-                                  navbool: widget.navbool,
-                                ));
+                                Get.toNamed(repaymentreversePageRoute);
                               },
                               child: Container(
                                   padding: EdgeInsets.only(

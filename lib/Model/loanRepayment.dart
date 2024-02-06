@@ -4,6 +4,7 @@ class loanRepayment {
       membername,
       memberid,
       sanctionid,
+      id,
       narration,
       amountclose;
   bool status, approve;
@@ -16,6 +17,7 @@ class loanRepayment {
       required this.somiteeid,
       required this.requestdate,
       required this.membername,
+      required this.id,
       required this.memberid,
       required this.approve,
       required this.approvedate,
@@ -28,6 +30,10 @@ class loanRepayment {
       required this.sanctionid,
       required this.sl});
 
+  bool filterFn(String query) {
+    return id.toLowerCase().contains(query.toLowerCase());
+  }
+
   Map toJson() => {
         'Somitee Name': somiteename,
         'Somitee ID': somiteeid,
@@ -39,6 +45,7 @@ class loanRepayment {
         'Pay Amount': payamount,
         'Sanction Id': sanctionid,
         'Approve': approve,
+        'ID': id,
         'Narration': narration,
         'Amount Close': amountclose,
         'Amount': amount,
@@ -53,6 +60,7 @@ class loanRepayment {
         membername: json['Member Name'],
         approve: json['Approve'],
         memberid: json['Member ID'],
+        id: json['ID'],
         disbursedamount: json["Disbursed Amount"],
         requestdate: json['Request Date'].toDate(),
         payamount: json['Pay Amount'],
