@@ -105,7 +105,6 @@ class _ReverseRepaymentState extends State<ReverseRepayment> {
         'Member ID': selectedloanrepay.memberid,
         "Disbursed Amount": selectedloanrepay.disbursedamount,
         'Approve Date': DateTime.now(),
-        'Request Date': DateTime.now(),
         'Repayment Date': selectedloanrepay.approvedate,
         'Pay Amount': selectedloanrepay.payamount,
         'Sanction Id': selectedloanrepay.sanctionid,

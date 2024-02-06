@@ -32,7 +32,7 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
       List<loanRepayment> somitee = [];
       int s = 1;
       await FirebaseFirestore.instance
-          .collection('LoanRepayment')
+          .collection('LoanRepaymentReverse')
           .orderBy('Approve Date', descending: true)
           .get()
           .then((querySnapshot) {
@@ -45,14 +45,14 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
               approve: json['Approve'],
               memberid: json['Member ID'],
               disbursedamount: json["Disbursed Amount"],
-              requestdate: json['Request Date'].toDate(),
+              requestdate: json['Repayment Date'].toDate(),
               payamount: json['Pay Amount'],
               sanctionid: json['Sanction Id'],
-              narration: json['Narration'],
+              narration: '',
               amountclose: json['Amount Close'],
               amount: json['Amount'],
-              sl: json['SL'],
-              status: json["Status"],
+              sl: s,
+              status: true,
               approvedate: json["Approve Date"].toDate()));
           s++;
         }

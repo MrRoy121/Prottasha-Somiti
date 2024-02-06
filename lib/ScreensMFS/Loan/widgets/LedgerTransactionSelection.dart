@@ -148,7 +148,8 @@ class _LedgerTrasactionSelectionState extends State<LedgerTrasactionSelection> {
                                           padding: EdgeInsets.all(
                                               ScreenWidth / 102.4),
                                           child: Text(
-                                            item.id + " - " + item.membername,
+                                            item.id + " - " + item.membername + '-' +DateFormat.yMMMMd().format(
+                                                item.approvedate),
                                           ),
                                         );
                                       },
@@ -192,7 +193,8 @@ class _LedgerTrasactionSelectionState extends State<LedgerTrasactionSelection> {
                                         );
                                       } else {
                                         return Text(
-                                          item.id + " - " + item.membername,
+                                          item.id + " - " + item.membername + '-' +DateFormat.yMMMMd().format(
+                                              item.approvedate),
                                           style: TextStyle(
                                             fontSize: ScreenWidth / 109.71,
                                           ),
@@ -284,8 +286,6 @@ class _LedgerTrasactionSelectionState extends State<LedgerTrasactionSelection> {
                                     hintStyle: TextStyle(
                                       color: AppColor_greyText,
                                     ),
-                                    suffixIcon: Icon(Icons.search,
-                                        color: AppColor_greyText),
                                   ),
                                 ),
                               ),
@@ -294,7 +294,7 @@ class _LedgerTrasactionSelectionState extends State<LedgerTrasactionSelection> {
                           SizedBox(
                             height: 40,
                           ),
-                          Row(
+                          const Row(
                             children: [
                               Text(
                                 "Remarks :",
@@ -310,7 +310,7 @@ class _LedgerTrasactionSelectionState extends State<LedgerTrasactionSelection> {
                                 child: TextField(
                                   decoration: InputDecoration(
                                     contentPadding:
-                                        EdgeInsets.only(top: 20, bottom: 20),
+                                        EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
