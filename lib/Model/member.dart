@@ -31,7 +31,8 @@ class Memberss {
       housedesc,
       remarks,
       imageurl;
-  late List<dynamic> deposit, withdraw;
+  late List<dynamic> deposit;
+  late List<dynamic> withdraw;
   bool img, sts, dead;
   DateTime birthdate;
   double loanpendingamount, owndepositamount;

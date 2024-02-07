@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../../Constants/Constants.dart';
 import '../../Model/member.dart';
@@ -11,7 +12,6 @@ import '../Widget/NavbarScreenMFS.dart';
 import '../Widget/NoDataFound.dart';
 import '../Widget/SamiteeSelection.dart';
 
-
 class DepositCollectionRequest extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
@@ -19,13 +19,15 @@ class DepositCollectionRequest extends StatefulWidget {
   DepositCollectionRequest({required this.appbool, required this.navbool});
 
   @override
-  State<DepositCollectionRequest> createState() => _DepositCollectionRequestState();
+  State<DepositCollectionRequest> createState() =>
+      _DepositCollectionRequestState();
 }
 
 class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
-
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
+  List<TextEditingController> memberamount = [];
+  List<Memberss> somiteemembers = [];
   var selectedsomiti;
   var sselectedsomiti;
 
@@ -68,66 +70,96 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
 
   @override
   Widget build(BuildContext context) {
-    void _setupsomiti(int ins) {
-      setState(() {
-        selectedsomiti = somitee[ins];
-      });
-    }
-
-    Future<List<Memberss>> getCust() async {
-      List<Memberss> somitee = [];
+    Future<void> _getData() async {
       int s = 1;
-      await FirebaseFirestore.instance
-          .collection('Member')
-          .get()
-          .then((querySnapshot) {
+      try {
+        QuerySnapshot querySnapshot =
+            await FirebaseFirestore.instance.collection('Member').get();
+
         for (var element in querySnapshot.docs) {
           if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
-            somitee.add(Memberss(
-                somiteename: element["Somitee Name"],
-                somiteeid: element["Somitee ID"],
-                membertype: element["Member Type"],
-                occupation: element["Occupation"],
-                firstname: element["First Name"],
-                lastname: element["Last Name"],dead: element['Dead'],
-                fathername: element["Father Name"],
-                mothername: element["Mother Name"],
-                loanpendingamount: element["Loan Pending Amount"],
-                owndepositamount: element["Own deposit Amount"],
-                gender: element["Gender"],
-                religion: element["Religion"],
-                sts: element["Status"],
-                nationalid: element["National ID"],
-                birthregi: element["Birth Registration"],
-                annualincome: element["Annual Income"],
-                age: element["Age"],
-                nodepenndent: element["No of Dependent"],
-                education: element["Education"],
-                maritalstatus: element["Marital Status"],
-                mobilenotype: element["Mobile No Type"],
-                mobilenno: element["Mobile No"],
-                presentadd: element["Present Address"],
-                parmaadd: element["Parmanent Address"],
-                livingperiod: element["Living Period"],
-                nomaleearner: element["No Female Earner"],
-                nofemaleearner: element["No Male Earner"],
-                id: element.id,
-                headfamily: element["Head Family"],
-                ownhomestead: element["Own HomeStead"],
-                relationwithhead: element["Relation With Head"],
-                landdesc: element["Land Desc"],
-                housedesc: element["House Desc"],
-                remarks: element["Remarks"],
-                imageurl: element["ImageURL"],
-                img: element["Image"],
-                birthdate: element["Date Of Birth"].toDate(),
-                sl: s));
-            s++;
+            var deposits = element["Deposits"];
+            var withdraws = element["Withdraws"];
+            if (deposits is Map && withdraws is Map) {
+              var depositList = deposits.values.toList();
+              var withdrawList = withdraws.values.toList();
+              memberamount.add(TextEditingController(text: '0'));
+              somiteemembers.add(Memberss.withDepo(
+                  somiteename: element["Somitee Name"],
+                  somiteeid: element["Somitee ID"],
+                  membertype: element["Member Type"],
+                  deposit: depositList,
+                  withdraw: withdrawList,
+                  occupation: element["Occupation"],
+                  firstname: element["First Name"],
+                  lastname: element["Last Name"],
+                  dead: element['Dead'],
+                  fathername: element["Father Name"],
+                  mothername: element["Mother Name"],
+                  loanpendingamount: element["Loan Pending Amount"],
+                  owndepositamount: element["Own deposit Amount"],
+                  gender: element["Gender"],
+                  religion: element["Religion"],
+                  sts: element["Status"],
+                  nationalid: element["National ID"],
+                  birthregi: element["Birth Registration"],
+                  annualincome: element["Annual Income"],
+                  age: element["Age"],
+                  nodepenndent: element["No of Dependent"],
+                  education: element["Education"],
+                  maritalstatus: element["Marital Status"],
+                  mobilenotype: element["Mobile No Type"],
+                  mobilenno: element["Mobile No"],
+                  presentadd: element["Present Address"],
+                  parmaadd: element["Parmanent Address"],
+                  livingperiod: element["Living Period"],
+                  nomaleearner: element["No Female Earner"],
+                  nofemaleearner: element["No Male Earner"],
+                  id: element.id,
+                  headfamily: element["Head Family"],
+                  ownhomestead: element["Own HomeStead"],
+                  relationwithhead: element["Relation With Head"],
+                  landdesc: element["Land Desc"],
+                  housedesc: element["House Desc"],
+                  remarks: element["Remarks"],
+                  imageurl: element["ImageURL"],
+                  img: element["Image"],
+                  birthdate: element["Date Of Birth"].toDate(),
+                  sl: s));
+              s++;
+              setState(() {});
+            } else {
+              print("Deposits or Withdraws is not a Map");
+            }
           }
         }
-      });
-      return somitee;
+      } catch (e) {
+        print("Error fetching data from Firestore: $e");
+      }
     }
+
+    Future<void> _setupsomiti(int ins) async {
+      selectedsomiti = somitee[ins];
+      _getData();
+    }
+
+    void _save() async {
+
+      for(int i =0; i<somiteemembers.length; i++){
+        FirebaseFirestore.instance.collection('Member').doc(somiteemembers[i].id).update({
+          'Own deposit Amount': FieldValue.increment(double.parse(memberamount[i].text.toString())),
+          'Deposits': FieldValue.arrayUnion([
+            {
+              'date': DateTime.now().toLocal().toString(),
+              'value': double.parse(memberamount[i].text.toString()),
+            }
+          ]),
+        }).then((value) async {
+          _getData();
+        }).catchError((error) => print("Failed to add user: $error"));
+      }
+    }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -148,15 +180,13 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                       setupsomiti: _setupsomiti,
                       active: true,
                       selectedsomiteeid: selectedsomiti,
-                      onsubmit: () {},
+                      onsubmit: _save,
                       somitee: somitee,
                       onclear: _onclear,
                       selectedsomitee: sselectedsomiti),
-
                   SizedBox(
                     height: 50,
                   ),
-
                   Container(
                     width: 1400,
                     // color: Colors.white,
@@ -197,32 +227,21 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
-                          child: selectedsomiti == null
-                              ? Center(
-                            child: Text("No Somitee Is Selected.."),
-                          )
-                              : FutureBuilder(
-                            builder: (ctx, AsyncSnapshot snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                if (snapshot.hasError) {
-                                  return const Center(
-                                    child: Text(
-                                        "No Member Data Available.."),
-                                  );
-                                } else if (snapshot.hasData) {
-                                  return MediaQuery.removePadding(
+                            padding: const EdgeInsets.all(10),
+                            child: selectedsomiti == null
+                                ? Center(
+                                    child: Text("No Somitee Is Selected.."),
+                                  )
+                                : MediaQuery.removePadding(
                                     context: context,
                                     removeTop: true,
                                     child: DataTable(
                                       showCheckboxColumn: false,
                                       border: TableBorder.all(
-                                          color: Colors.black26,
-                                          width: 1),
+                                          color: Colors.black26, width: 1),
                                       headingRowColor:
-                                      MaterialStateProperty.all<
-                                          Color>(AppColor_Blue),
+                                          MaterialStateProperty.all<Color>(
+                                              AppColor_Blue),
                                       columns: const [
                                         DataColumn(
                                           label: Text(
@@ -248,8 +267,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                           label: Text('Ledger Name',
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                fontWeight:
-                                                FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                               )),
                                         ),
@@ -257,8 +275,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                           label: Text('Mobile No',
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                fontWeight:
-                                                FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                               )),
                                         ),
@@ -273,20 +290,21 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                           ),
                                         ),
                                         DataColumn(
-                                            label: Text(
-                                              'Amount',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              ),
-                                            )),
+                                            label: Center(
+                                          child: Text(
+                                            'Amount',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        )),
                                         DataColumn(
                                           label: Text('Remarks',
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                fontWeight:
-                                                FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                               )),
                                         ),
@@ -294,8 +312,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                           label: Text('Last Deposit Date',
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                fontWeight:
-                                                FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                               )),
                                         ),
@@ -303,40 +320,38 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                           label: Text('Last Deposit Amount',
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                fontWeight:
-                                                FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                               )),
                                         ),
                                       ],
-                                      rows: List.generate(
-                                          snapshot.data.length, (index) {
+                                      rows: List.generate(somiteemembers.length,
+                                          (index) {
                                         return DataRow(
                                           cells: [
-                                            DataCell(Text(
-                                                (index + 1).toString(),
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                ))),
                                             DataCell(
-                                              Text(
-                                                  snapshot.data[index].id,
+                                                Text((index + 1).toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                    ))),
+                                            DataCell(
+                                              Text(somiteemembers[index].id,
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
                                             ),
                                             DataCell(Text(
-                                                snapshot.data[index]
-                                                    .firstname +
+                                                somiteemembers[index]
+                                                        .firstname +
                                                     " " +
-                                                    snapshot.data[index]
+                                                    somiteemembers[index]
                                                         .lastname,
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                 ))),
                                             DataCell(
                                               Text(
-                                                  snapshot.data[index]
+                                                  somiteemembers[index]
                                                       .mobilenno,
                                                   style: TextStyle(
                                                     fontSize: 12,
@@ -344,24 +359,64 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                             ),
                                             DataCell(
                                               Text(
-                                                  snapshot.data[index]
-                                                      .membertype,
+                                                  somiteemembers[index]
+                                                      .owndepositamount
+                                                      .toString(),
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
                                             ),
                                             DataCell(
-                                              Text(
-                                                  snapshot.data[index]
-                                                      .nationalid,
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                  )),
+                                              Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 6, horizontal: 0),
+                                                width: 100,
+                                                child: TextField(
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        if (val.isEmpty) {
+                                                          memberamount[index]
+                                                              .text = '0';
+                                                        }
+                                                      });
+                                                    },
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    inputFormatters: <TextInputFormatter>[
+                                                      FilteringTextInputFormatter
+                                                          .allow(
+                                                              RegExp(r'[0-9]')),
+                                                      FilteringTextInputFormatter
+                                                          .digitsOnly
+                                                    ],
+                                                    controller:
+                                                        memberamount[index],
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      isDense: true,
+                                                      fillColor:
+                                                          AppColor.withOpacity(
+                                                              0.2),
+                                                      border:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                AppColor_greyBorder),
+                                                      ),
+                                                    ),
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                    )),
+                                              ),
                                             ),
                                             DataCell(
                                               Text(
-                                                  snapshot.data[index]
-                                                      .fathername,
+                                                  somiteemembers[index]
+                                                              .deposit
+                                                              .length ==
+                                                          0
+                                                      ? ""
+                                                      : "Deposit Collection",
                                                   style: const TextStyle(
                                                     fontSize: 12,
                                                   )),
@@ -369,20 +424,26 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                             DataCell(
                                               Center(
                                                 child: Text(
-                                                    DateFormat.yMMMd()
-                                                        .format(snapshot
-                                                        .data[index]
-                                                        .birthdate)
+                                                    somiteemembers[index]
+                                                        .deposit
+                                                        .length
                                                         .toString(),
-                                                    style: TextStyle(
+                                                    // DateFormat.yMMMd()
+                                                    //     .format(snapshot
+                                                    //     .data[index]
+                                                    //     .birthdate)
+                                                    //     .toString(),
+                                                    style: const TextStyle(
                                                       fontSize: 12,
                                                     )),
                                               ),
                                             ),
                                             DataCell(
                                               Text(
-                                                  snapshot.data[index]
-                                                      .presentadd,
+                                                  somiteemembers[index]
+                                                      .deposit
+                                                      .length
+                                                      .toString(),
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
@@ -391,32 +452,23 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                         );
                                       }),
                                     ),
-                                  );
-                                }
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                            future: getCust(),
-                          ),
-                        ),
+                                  )),
                       ],
                     ),
                   ),
-
                   SizedBox(
                     height: 50,
                   ),
-
                 ],
               ),
             ),
-            NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
+            NavbarScreenMFS(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
           ],
         ),
       ),
-
     );
   }
 }

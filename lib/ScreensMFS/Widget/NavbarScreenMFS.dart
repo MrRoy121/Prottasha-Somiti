@@ -1455,7 +1455,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Deposit Collection Request",
+                                      "Deposit Collection",
                                       style: TextStyle(
                                         color: textColor6,
                                         fontSize: 12,
