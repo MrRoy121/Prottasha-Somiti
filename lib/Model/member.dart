@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Memberss {
   String somiteename,
       somiteeid,
@@ -38,6 +40,27 @@ class Memberss {
   double loanpendingamount, owndepositamount;
   int sl;
 
+  dynamic getLastDepositInfo(bool returnDate) {
+    if (deposit.isNotEmpty) {
+      // Sort 'Deposits' by date in descending order
+      deposit.sort((a, b) {
+        var dateA = DateTime.parse(a['date']);
+        var dateB = DateTime.parse(b['date']);
+        return dateB.compareTo(dateA);
+      });
+
+      if (returnDate) {
+        return DateFormat.yMMMd().format(
+          DateTime.parse(deposit[0]['date']),
+        );
+      } else {
+        return deposit[0]['value'].toString();
+      }
+    } else {
+      // Return default values or handle accordingly
+      return returnDate ? '' : '0';
+    }
+  }
   Memberss(
       {required this.somiteename,
       required this.somiteeid,

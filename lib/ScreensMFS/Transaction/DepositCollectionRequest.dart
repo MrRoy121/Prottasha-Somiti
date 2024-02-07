@@ -71,25 +71,42 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
   @override
   Widget build(BuildContext context) {
     Future<void> _getData() async {
+      somiteemembers = [];
+      memberamount = [];
       int s = 1;
       try {
         QuerySnapshot querySnapshot =
             await FirebaseFirestore.instance.collection('Member').get();
-
         for (var element in querySnapshot.docs) {
           if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
-            var deposits = element["Deposits"];
-            var withdraws = element["Withdraws"];
-            if (deposits is Map && withdraws is Map) {
-              var depositList = deposits.values.toList();
-              var withdrawList = withdraws.values.toList();
-              memberamount.add(TextEditingController(text: '0'));
+            if (element["Deposits"].toString() != 'null') {
+              var deposits = element["Deposits"];
+              if (deposits.isNotEmpty) {
+                var today = DateTime.now().toLocal();
+                var todaysDeposit = deposits.firstWhere(
+                  (entry) {
+                    var entryDate = DateTime.parse(entry["date"]).toLocal();
+                    return entryDate.year == today.year &&
+                        entryDate.month == today.month &&
+                        entryDate.day == today.day;
+                  },
+                  orElse: () => null,
+                );
+                if (todaysDeposit != null) {
+                  memberamount.add(TextEditingController(
+                      text: todaysDeposit["value"].toString()));
+                } else {
+                  memberamount.add(TextEditingController(text: '0'));
+                }
+              } else {
+                memberamount.add(TextEditingController(text: '0'));
+              }
               somiteemembers.add(Memberss.withDepo(
                   somiteename: element["Somitee Name"],
                   somiteeid: element["Somitee ID"],
                   membertype: element["Member Type"],
-                  deposit: depositList,
-                  withdraw: withdrawList,
+                  deposit: deposits,
+                  withdraw: [],
                   occupation: element["Occupation"],
                   firstname: element["First Name"],
                   lastname: element["Last Name"],
@@ -129,8 +146,54 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
               s++;
               setState(() {});
             } else {
-              print("Deposits or Withdraws is not a Map");
+              memberamount.add(TextEditingController(text: '0'));
+              somiteemembers.add(Memberss.withDepo(
+                  somiteename: element["Somitee Name"],
+                  somiteeid: element["Somitee ID"],
+                  membertype: element["Member Type"],
+                  deposit: [],
+                  withdraw: [],
+                  occupation: element["Occupation"],
+                  firstname: element["First Name"],
+                  lastname: element["Last Name"],
+                  dead: element['Dead'],
+                  fathername: element["Father Name"],
+                  mothername: element["Mother Name"],
+                  loanpendingamount: element["Loan Pending Amount"],
+                  owndepositamount: element["Own deposit Amount"],
+                  gender: element["Gender"],
+                  religion: element["Religion"],
+                  sts: element["Status"],
+                  nationalid: element["National ID"],
+                  birthregi: element["Birth Registration"],
+                  annualincome: element["Annual Income"],
+                  age: element["Age"],
+                  nodepenndent: element["No of Dependent"],
+                  education: element["Education"],
+                  maritalstatus: element["Marital Status"],
+                  mobilenotype: element["Mobile No Type"],
+                  mobilenno: element["Mobile No"],
+                  presentadd: element["Present Address"],
+                  parmaadd: element["Parmanent Address"],
+                  livingperiod: element["Living Period"],
+                  nomaleearner: element["No Female Earner"],
+                  nofemaleearner: element["No Male Earner"],
+                  id: element.id,
+                  headfamily: element["Head Family"],
+                  ownhomestead: element["Own HomeStead"],
+                  relationwithhead: element["Relation With Head"],
+                  landdesc: element["Land Desc"],
+                  housedesc: element["House Desc"],
+                  remarks: element["Remarks"],
+                  imageurl: element["ImageURL"],
+                  img: element["Image"],
+                  birthdate: element["Date Of Birth"].toDate(),
+                  sl: s));
+              s++;
+              setState(() {});
             }
+          } else {
+            setState(() {});
           }
         }
       } catch (e) {
@@ -144,10 +207,13 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
     }
 
     void _save() async {
-
-      for(int i =0; i<somiteemembers.length; i++){
-        FirebaseFirestore.instance.collection('Member').doc(somiteemembers[i].id).update({
-          'Own deposit Amount': FieldValue.increment(double.parse(memberamount[i].text.toString())),
+      for (int i = 0; i < somiteemembers.length; i++) {
+        FirebaseFirestore.instance
+            .collection('Member')
+            .doc(somiteemembers[i].id)
+            .update({
+          'Own deposit Amount': FieldValue.increment(
+              double.parse(memberamount[i].text.toString())),
           'Deposits': FieldValue.arrayUnion([
             {
               'date': DateTime.now().toLocal().toString(),
@@ -424,15 +490,15 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                             DataCell(
                                               Center(
                                                 child: Text(
+                                                somiteemembers[index]
+                                                    .deposit
+                                                .length ==
+                                            0
+                                            ? "N\\A"
+                                                :
                                                     somiteemembers[index]
-                                                        .deposit
-                                                        .length
-                                                        .toString(),
-                                                    // DateFormat.yMMMd()
-                                                    //     .format(snapshot
-                                                    //     .data[index]
-                                                    //     .birthdate)
-                                                    //     .toString(),
+                                                        .getLastDepositInfo(
+                                                            true),
                                                     style: const TextStyle(
                                                       fontSize: 12,
                                                     )),
@@ -441,10 +507,9 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                             DataCell(
                                               Text(
                                                   somiteemembers[index]
-                                                      .deposit
-                                                      .length
-                                                      .toString(),
-                                                  style: TextStyle(
+                                                      .getLastDepositInfo(
+                                                          false),
+                                                  style: const TextStyle(
                                                     fontSize: 12,
                                                   )),
                                             ),
