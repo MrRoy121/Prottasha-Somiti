@@ -139,6 +139,16 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
                                   ),
                                   DataColumn(
                                     label: Text(
+                                      'Transaction ID',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
                                       'Sanction ID',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -220,6 +230,12 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
                                           style: const TextStyle(
                                             fontSize: 12,
                                           ))),
+                                      DataCell(
+                                        Text(snapshot.data[index].id,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
+                                      ),
                                       DataCell(
                                         Text(snapshot.data[index].sanctionid,
                                             style: TextStyle(

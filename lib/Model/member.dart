@@ -31,6 +31,7 @@ class Memberss {
       housedesc,
       remarks,
       imageurl;
+  late List<dynamic> deposit, withdraw;
   bool img, sts, dead;
   DateTime birthdate;
   double loanpendingamount, owndepositamount;
@@ -76,6 +77,50 @@ class Memberss {
       required this.birthdate,
       required this.sl});
 
+
+
+  Memberss.withDepo(
+      {required this.somiteename,
+        required this.somiteeid,
+        required this.membertype,
+        required this.occupation,
+        required this.loanpendingamount,
+        required this.owndepositamount,
+        required this.firstname,
+        required this.lastname,
+        required this.fathername,
+        required this.deposit,
+        required this.withdraw,
+        required this.annualincome,
+        required this.mothername,
+        required this.gender,
+        required this.religion,
+        required this.nationalid,
+        required this.sts,
+        required this.birthregi,
+        required this.age,
+        required this.nodepenndent,
+        required this.education,
+        required this.maritalstatus,
+        required this.mobilenotype,
+        required this.mobilenno,
+        required this.presentadd,
+        required this.parmaadd,
+        required this.livingperiod,
+        required this.nomaleearner,
+        required this.nofemaleearner,
+        required this.id,
+        required this.headfamily,
+        required this.ownhomestead,
+        required this.relationwithhead,
+        required this.landdesc,
+        required this.housedesc,
+        required this.remarks,
+        required this.imageurl,required this.dead,
+        required this.img,
+        required this.birthdate,
+        required this.sl});
+
   Map toJson() => {
         'Somitee Name': somiteename,
         'Somitee ID': somiteeid,
@@ -97,7 +142,7 @@ class Memberss {
         'Mobile No Type': mobilenotype,
         'Mobile No': mobilenno,
         'Present Address': presentadd,
-        'Parmanent Address': parmaadd,
+        'Permanent Address': parmaadd,
         'Living Period': livingperiod,
         'Annual Income': annualincome,
         'Loan Pending Amount': loanpendingamount,
@@ -141,7 +186,7 @@ class Memberss {
         loanpendingamount: json['Loan Pending Amount'],
         owndepositamount: json['Own deposit Amount'],
         presentadd: json['Present Address'].toString(),
-        parmaadd: json['Parmanent Address'].toString(),
+        parmaadd: json['Permanent Address'].toString(),
         livingperiod: json['Living Period'].toString(),
         nomaleearner: json['No Male Earner'].toString(),
         nofemaleearner: json['No Female Earner'].toString(),

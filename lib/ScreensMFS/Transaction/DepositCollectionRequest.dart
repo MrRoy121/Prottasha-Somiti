@@ -136,17 +136,11 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100),
+              margin: EdgeInsets.only(top: 100, left: 50),
               child: Column(
                 children: [
-
-                  SizedBox(
-                    height: 50,
-                  ),
-
-
                   SamiteeSelection(
-                      submit: false,
+                      submit: true,
                       selectmember: false,
                       clear: true,
                       ssomitee: ssomitee,
@@ -251,7 +245,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                           ),
                                         ),
                                         DataColumn(
-                                          label: Text('Member Name',
+                                          label: Text('Ledger Name',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight:
@@ -270,7 +264,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                         ),
                                         DataColumn(
                                           label: Text(
-                                            'Member Type',
+                                            'Current Balance',
                                             style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
@@ -280,7 +274,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                         ),
                                         DataColumn(
                                             label: Text(
-                                              'National ID',
+                                              'Amount',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
@@ -288,7 +282,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                               ),
                                             )),
                                         DataColumn(
-                                          label: Text('Father Name',
+                                          label: Text('Remarks',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight:
@@ -297,7 +291,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                               )),
                                         ),
                                         DataColumn(
-                                          label: Text('Date Of Birth',
+                                          label: Text('Last Deposit Date',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight:
@@ -306,7 +300,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                               )),
                                         ),
                                         DataColumn(
-                                          label: Text('Present Address',
+                                          label: Text('Last Deposit Amount',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight:
