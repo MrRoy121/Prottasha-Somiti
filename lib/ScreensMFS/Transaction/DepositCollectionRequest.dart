@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:intl/intl.dart';
 import '../../Constants/Constants.dart';
 import '../../Model/member.dart';
@@ -201,31 +204,76 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
       }
     }
 
-    Future<void> _setupsomiti(int ins) async {
-      selectedsomiti = somitee[ins];
-      _getData();
-    }
-
     void _save() async {
       for (int i = 0; i < somiteemembers.length; i++) {
+        String todayDate = DateTime.now().toLocal().toString();
+        DateTime todayDateTime = DateTime.now().toLocal();
+
+        var existingDeposit = somiteemembers[i].deposit.firstWhere(
+              (entry) {
+            DateTime entryDate = DateTime.parse(entry["date"]).toLocal();
+            return entryDate.year == todayDateTime.year &&
+                entryDate.month == todayDateTime.month &&
+                entryDate.day == todayDateTime.day;
+          },
+          orElse: () => null,
+        );
+
+        if (existingDeposit != null) {
+          FirebaseFirestore.instance
+              .collection('Member')
+              .doc(somiteemembers[i].id)
+              .update({
+            'Own deposit Amount': FieldValue.increment(
+              -existingDeposit["value"],
+            ),
+            'Deposits': FieldValue.arrayRemove([existingDeposit]),
+          });
+        }
+
         FirebaseFirestore.instance
             .collection('Member')
             .doc(somiteemembers[i].id)
             .update({
           'Own deposit Amount': FieldValue.increment(
-              double.parse(memberamount[i].text.toString())),
+            double.parse(memberamount[i].text.toString()),
+          ),
           'Deposits': FieldValue.arrayUnion([
             {
-              'date': DateTime.now().toLocal().toString(),
+              'date': todayDate,
               'value': double.parse(memberamount[i].text.toString()),
             }
           ]),
         }).then((value) async {
           _getData();
         }).catchError((error) => print("Failed to add user: $error"));
+
+        if (i == somiteemembers.length - 1) {
+          Get.snackbar(
+            "Members Deposits Added Successfully.",
+            "Page is updated.",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.green,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                color: Colors.grey,
+                offset: Offset(-100, 0),
+                blurRadius: 20,
+              ),
+            ],
+            borderRadius: 0,
+          );
+        }
       }
     }
 
+    Future<void> _setupsomiti(int ins) async {
+      selectedsomiti = somitee[ins];
+      _getData();
+    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,

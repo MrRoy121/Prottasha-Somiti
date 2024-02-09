@@ -42,6 +42,10 @@ const List<String> LoanType = [
   'Micro Credit',
   'Share Holder Loan'
 ];
+const List<String> ReverseTypeList = [
+  'Full Reverse',
+  'Partial Reverse',
+];
 List<Scheme> LoanSchemes = [
   Scheme(
       sl: 1,
