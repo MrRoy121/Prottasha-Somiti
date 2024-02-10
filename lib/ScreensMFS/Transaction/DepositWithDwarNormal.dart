@@ -272,6 +272,12 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
       _getData();
     }
 
+    void changetype(int val){
+      setState(() {
+        selectedtype = val;
+      });
+    }
+
     var ScreenWidth = MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
@@ -304,7 +310,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100),
+              margin: EdgeInsets.only(top: 100, left:  selectedtype==1?68:0),
               child: Column(
                 children: [
                   SizedBox(
@@ -313,7 +319,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
 
                   // Member Deposit Withdraw Request
                   MemberDepositWithdwar(
-                    submit: true,
+                    submit: true,changetype: changetype,
                     selectmember: false,selectedtype: selectedtype,
                   ),
 
@@ -355,7 +361,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                   ),
 
                   // Link A/c Information
-                  Padding(
+                  selectedtype==0?Padding(
                     padding: EdgeInsets.only(left: ScreenWidth / 21.94),
                     child: desktop
                         ? Row(
@@ -391,11 +397,11 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                                       imgurl: selectedmemberss.imageurl),
                             ],
                           ),
-                  ),
+                  ):SizedBox(),
 
-                  SizedBox(
+                  selectedtype==0?SizedBox(
                     height: 50,
-                  ),
+                  ):SizedBox(),
                 ],
               ),
             ),

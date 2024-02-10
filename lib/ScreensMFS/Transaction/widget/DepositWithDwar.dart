@@ -105,7 +105,7 @@ class _DepositWithDwarState extends State<DepositWithDwar> {
                           Row(
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   text: 'Select Member',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14),

@@ -5,10 +5,12 @@ import '../../../Constants/Constants.dart';
 class MemberDepositWithdwar extends StatefulWidget {
   var selectedtype;
   bool submit = true;
+  void Function(int) changetype;
   bool selectmember = false;
   MemberDepositWithdwar(
       {required this.submit,
       required this.selectedtype,
+      required this.changetype,
       required this.selectmember});
 
   @override
@@ -165,9 +167,7 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                             value: 0,
                             groupValue: widget.selectedtype,
                             onChanged: (value) {
-                              setState(() {
-                                widget.selectedtype = value;
-                              });
+                              widget.changetype(int.parse(value.toString()));
                             },
                           ),
                           Text('Normal Withdraw'),
@@ -176,9 +176,7 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                             value: 1,
                             groupValue: widget.selectedtype,
                             onChanged: (value) {
-                              setState(() {
-                                widget.selectedtype = value;
-                              });
+                              widget.changetype(int.parse(value.toString()));
                             },
                           ),
                           Text('Closed Withdraw'),
@@ -234,6 +232,7 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                               ? Container(
                                   height: 40,
                                   width: 90,
+                                  color: Colors.green,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 10.0, left: 15),
@@ -243,7 +242,6 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                                           color: Colors.white, fontSize: 14),
                                     ),
                                   ),
-                                  color: Colors.green,
                                 )
                               : Container(),
                           SizedBox(
@@ -252,9 +250,10 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           Container(
                             height: 40,
                             width: 90,
-                            child: Padding(
+                            color: AppColor_yellow,
+                            child: const Padding(
                               padding:
-                                  const EdgeInsets.only(top: 3.0, left: 15),
+                                  EdgeInsets.only(top: 3.0, left: 15),
                               child: Row(
                                 children: [
                                   Icon(
@@ -273,7 +272,6 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                                 ],
                               ),
                             ),
-                            color: AppColor_yellow,
                           ),
                           SizedBox(
                             width: 10,
