@@ -206,7 +206,6 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
 
     void _save() async {
       for (int i = 0; i < somiteemembers.length; i++) {
-        String todayDate = DateTime.now().toLocal().toString();
         DateTime todayDateTime = DateTime.now().toLocal();
 
         var existingDeposit = somiteemembers[i].deposit.firstWhere(
@@ -240,7 +239,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
           ),
           'Deposits': FieldValue.arrayUnion([
             {
-              'date': todayDate,
+              'date': todayDateTime.toString().split(' ')[0],
               'value': double.parse(memberamount[i].text.toString()),
             }
           ]),

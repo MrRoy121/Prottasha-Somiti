@@ -352,11 +352,7 @@ class _DepositCorrectionRequestListState
                                                           'Deposits': FieldValue
                                                               .arrayRemove([
                                                             {
-                                                              'date': snapshot
-                                                                  .data[index]
-                                                                  .date
-                                                                  .toLocal()
-                                                                  .toString(),
+                                                              'date': snapshot.data[index].date.toLocal().toString().split(' ')[0],
                                                               'value': snapshot
                                                                   .data[index]
                                                                   .mainamount,
@@ -376,9 +372,7 @@ class _DepositCorrectionRequestListState
 
                                                       List<Map<String, dynamic>> deposits = memberSnapshot['Deposits'];
                                                       int depositIndex = deposits.indexWhere(
-                                                            (entry) => entry['date'] == snapshot
-                                                                .data[index]
-                                                                .date.toLocal().toString(),
+                                                            (entry) => entry['date'] == snapshot.data[index].date.toLocal().toString().split(' ')[0],
                                                       );
 
                                                       if (depositIndex != -1) {
