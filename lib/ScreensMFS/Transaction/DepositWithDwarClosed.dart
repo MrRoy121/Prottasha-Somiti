@@ -43,7 +43,7 @@ class _DepositWithDwarClosedState extends State<DepositWithDwarClosed> {
 
 
                   // Member Deposit Withdraw Request
-                  MemberDepositWithdwar(submit: true, selectmember: false,),
+                 // MemberDepositWithdwar(submit: true, selectmember: false,),
 
 
                   SizedBox(
@@ -58,7 +58,7 @@ class _DepositWithDwarClosedState extends State<DepositWithDwarClosed> {
                   ),
 
                   // Deposit Withdraw
-                  DepositWithDwar(),
+                  //DepositWithDwar(),
 
 
                   SizedBox(

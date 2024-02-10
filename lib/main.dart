@@ -46,6 +46,7 @@ import 'ScreensMFS/Reports/GeneralLedgerStatement.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequestList.dart';
+import 'ScreensMFS/Transaction/DepositWithDwarNormal.dart';
 import 'ScreensMFS/Widget/Appbool.dart';
 import 'ScreensMFS/Widget/NavBoolMFS.dart';
 import 'Constants/responsive.dart';
@@ -158,6 +159,12 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navboolcbs,
                 ),
+            middlewares: [AuthMiddleware()]),    GetPage(
+            name: depositwithdrawPageRoute,
+            page: () => DepositWithDwarNormal(
+              appbool: appbool,
+              navbool: navbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloaneditPageRoute,
