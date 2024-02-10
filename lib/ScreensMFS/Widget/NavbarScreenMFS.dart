@@ -1465,6 +1465,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
+
                             InkWell(
                               onHover: (val) {
                                 setState(() {
@@ -1490,6 +1491,34 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                     "Deposit Correction Request",
                                     style: TextStyle(
                                       color: textColor5,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ), InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor15 = AppColor_hover2;
+                                    textColor15= Colors.white;
+                                  } else {
+                                    itemColor15 = AppColor_Blue;
+                                    textColor15 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(depositcorrectionrequestlistPageRoute);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  color: itemColor15,
+                                  child: Text(
+                                    "Deposit Correction List ",
+                                    style: TextStyle(
+                                      color: textColor15,
                                       fontSize: 12,
                                     ),
                                   )),

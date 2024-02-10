@@ -13,16 +13,19 @@ class MemberDeposit extends StatefulWidget {
   bool memberssselected;
   var conamount, conremarks;
   void Function(int) setupmemberss;
+  void Function(BuildContext) selectDate;
+  
   var selectreverce;
   var selectedDate;
-
+  double mainamount;
   MemberDeposit(
       {required this.setupmemberss,
       required this.allmemberss,
       required this.memberssselected,
+        required this.selectDate,
       required this.memberss,
       required this.conamount,
-      required this.conremarks,
+      required this.conremarks,required this.mainamount,
       required this.selectedDate,
       required this.selectreverce,
       required this.selectedmemberss,
@@ -34,52 +37,6 @@ class MemberDeposit extends StatefulWidget {
 
 class _MemberDepositState extends State<MemberDeposit> {
   bool amountenable = false;
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: widget.selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      selectableDayPredicate: (DateTime day) {
-        if (widget.memberssselected) {
-          return widget.selectedmemberss.deposit.any(
-                (entry) {
-              DateTime depositDate = DateTime.parse(entry["date"]).toLocal();
-              return day.year == depositDate.year &&
-                  day.month == depositDate.month &&
-                  day.day == depositDate.day;
-            },
-          );
-        } else {
-          return false;
-        }
-      },
-    );
-
-    if (picked != null && picked != widget.selectedDate) {
-      setState(() {
-        widget.selectedDate = picked;
-        var matchingDeposit = widget.selectedmemberss.deposit.firstWhere(
-              (entry) {
-            DateTime depositDate = DateTime.parse(entry["date"]).toLocal();
-            return picked.year == depositDate.year &&
-                picked.month == depositDate.month &&
-                picked.day == depositDate.day;
-          },
-          orElse: () => null,
-        );
-        if (matchingDeposit != null) {
-          print('s'+matchingDeposit["value"].toString());
-          print(matchingDeposit);
-          print(matchingDeposit);
-          widget.conamount.text = matchingDeposit['value'].toString();
-        } else {
-          widget.conamount.clear();
-        }
-      });
-
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +314,7 @@ class _MemberDepositState extends State<MemberDeposit> {
                               SizedBox(
                                 width: 300,
                                 child: InkWell(
-                                  onTap: () => _selectDate(context),
+                                  onTap: () => widget.selectDate(context),
                                   child: AbsorbPointer(
                                     child: TextField(
                                       decoration: InputDecoration(
@@ -559,7 +516,7 @@ class _MemberDepositState extends State<MemberDeposit> {
                                     child: InkWell(
                                       onTap: () {
                                         if(widget.memberssselected){
-                                          _selectDate(context);
+                                          widget.selectDate(context);
                                         }
                                       },
                                       child: AbsorbPointer(
@@ -688,7 +645,7 @@ class _MemberDepositState extends State<MemberDeposit> {
                                   SizedBox(
                                     width: 300,
                                     child: InkWell(
-                                      onTap: () => _selectDate(context),
+                                      onTap: () => widget.selectDate(context),
                                       child: AbsorbPointer(
                                         child: TextField(
                                           decoration: InputDecoration(
@@ -844,7 +801,7 @@ class _MemberDepositState extends State<MemberDeposit> {
                                   SizedBox(
                                     width: 200,
                                     child: InkWell(
-                                      onTap: () => _selectDate(context),
+                                      onTap: () => widget.selectDate(context),
                                       child: AbsorbPointer(
                                         child: TextField(
                                           decoration: InputDecoration(
@@ -964,7 +921,7 @@ class _MemberDepositState extends State<MemberDeposit> {
                                   SizedBox(
                                     width: 200,
                                     child: InkWell(
-                                      onTap: () => _selectDate(context),
+                                      onTap: () => widget.selectDate(context),
                                       child: AbsorbPointer(
                                         child: TextField(
                                           decoration: InputDecoration(
