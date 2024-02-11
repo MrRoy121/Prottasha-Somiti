@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
 import '../../Constants/values.dart';
+import '../../Model/Itemvaluess.dart';
 import '../../Model/member.dart';
+import '../../helpers/pdfs_helpers/pdf_memberledger.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -24,6 +26,8 @@ class _MemberLedgerState extends State<MemberLedger> {
   List<Memberss> memberss = [];
   var selectedledgertype;
   var selectedmemberss;
+  var balancelist = [];
+  double _totalamount = 0;
   var selectedStatus;
   var sselectedmemberss;
   DateTime selectedstartDate = DateTime.now();
@@ -96,8 +100,34 @@ class _MemberLedgerState extends State<MemberLedger> {
     });
   }
 
-  _save(){
+  Future<List<Itemvaluess>> getlist() async {
+    List<Itemvaluess> itemvaluess = [];
+    _totalamount = 0;
+    balancelist = [];
+    await FirebaseFirestore.instance
+        .collection('Member').doc(selectedmemberss.id)
+        .get()
+        .then((element) {
+        if (element["Status"]) {
+          print(element["Deposits"]);
+          for(int i = 0; i< element["Deposits"].length; i++){
+            itemvaluess.add(Itemvaluess(sl: i,date: element["Deposits"][i]['date'], value: element["Deposits"][i]['value'], remarks: element["Deposits"][i]['remarks']));
+            _totalamount = _totalamount + element["Deposits"][i]['value'];
+            if (balancelist.isEmpty) {
+              balancelist.add(element["Deposits"][i]['value']);
+            } else {
+              balancelist.add(
+                  element["Deposits"][i]['value'] + balancelist[balancelist.length - 1]);
+            }
+          }
+        }
+    });
 
+    return itemvaluess;
+  }
+
+  _save() async {
+    PdfMemberss.generate(await getlist(), _totalamount, balancelist);
   }
 
   @override

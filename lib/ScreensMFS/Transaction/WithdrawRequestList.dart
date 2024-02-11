@@ -22,12 +22,10 @@ class WidthdrawList extends StatefulWidget {
   WidthdrawList({required this.appbool, required this.navbool});
 
   @override
-  State<WidthdrawList> createState() =>
-      _WidthdrawListState();
+  State<WidthdrawList> createState() => _WidthdrawListState();
 }
 
-class _WidthdrawListState
-    extends State<WidthdrawList> {
+class _WidthdrawListState extends State<WidthdrawList> {
   @override
   Widget build(BuildContext context) {
     Future<List<depositWithdraw>> getCust() async {
@@ -287,9 +285,7 @@ class _WidthdrawListState
                                       ),
                                       DataCell(snapshot.data[index].status
                                           ? InkWell(
-                                              onTap: () {
-
-                                              },
+                                              onTap: () {},
                                               child: Container(
                                                   padding: EdgeInsets.all(4.0),
                                                   decoration: BoxDecoration(
@@ -308,22 +304,44 @@ class _WidthdrawListState
                                                 InkWell(
                                                   onTap: () {
                                                     FirebaseFirestore.instance
-                                                        .collection('DepositWithdraw')
-                                                        .doc(snapshot.data[index].id)
+                                                        .collection(
+                                                            'DepositWithdraw')
+                                                        .doc(snapshot
+                                                            .data[index].id)
                                                         .update({
                                                       "Status": true,
                                                       "Approve": true,
-                                                      'Approve Date': DateTime.now(),
+                                                      'Approve Date':
+                                                          DateTime.now(),
                                                     }).then((value) {
                                                       FirebaseFirestore.instance
                                                           .collection('Member')
-                                                          .doc(snapshot.data[index].memberid)
+                                                          .doc(snapshot
+                                                              .data[index]
+                                                              .memberid)
                                                           .update({
-                                                        "Own deposit Amount": FieldValue.increment(-snapshot.data[index].amount),
-                                                        'Withdraws': FieldValue.arrayUnion([
+                                                        "Own deposit Amount":
+                                                            FieldValue.increment(
+                                                                -snapshot
+                                                                    .data[index]
+                                                                    .amount),
+                                                        'Withdraws': FieldValue
+                                                            .arrayUnion([
                                                           {
-                                                            'date': DateTime.now().toLocal().toString().split(' ')[0],
-                                                            'value': double.parse(snapshot.data[index].amount.toString()),
+                                                            'date':
+                                                                DateTime.now()
+                                                                    .toLocal()
+                                                                    .toString()
+                                                                    .split(
+                                                                        ' ')[0],
+                                                            'remarks': snapshot
+                                                                .data[index]
+                                                                .remarks,
+                                                            'value': double
+                                                                .parse(snapshot
+                                                                    .data[index]
+                                                                    .amount
+                                                                    .toString()),
                                                           }
                                                         ]),
                                                       });
@@ -348,12 +366,15 @@ class _WidthdrawListState
                                                 InkWell(
                                                   onTap: () {
                                                     FirebaseFirestore.instance
-                                                        .collection('DepositWithdraw')
-                                                        .doc(snapshot.data[index].id)
+                                                        .collection(
+                                                            'DepositWithdraw')
+                                                        .doc(snapshot
+                                                            .data[index].id)
                                                         .update({
                                                       "Status": true,
                                                       "Approve": false,
-                                                      'Approve Date': DateTime.now(),
+                                                      'Approve Date':
+                                                          DateTime.now(),
                                                     }).then((value) {
                                                       setState(() {});
                                                     });

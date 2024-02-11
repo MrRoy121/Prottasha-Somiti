@@ -30,6 +30,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
   List<TextEditingController> memberamount = [];
+  List<TextEditingController> memberremarks = [];
   List<Memberss> somiteemembers = [];
   var selectedsomiti;
   var sselectedsomiti;
@@ -76,6 +77,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
     Future<void> _getData() async {
       somiteemembers = [];
       memberamount = [];
+      memberremarks = [];
       int s = 1;
       try {
         QuerySnapshot querySnapshot =
@@ -98,11 +100,17 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                 if (todaysDeposit != null) {
                   memberamount.add(TextEditingController(
                       text: todaysDeposit["value"].toString()));
+                  memberremarks.add(TextEditingController(
+                      text: todaysDeposit["remarks"].toString()));
                 } else {
                   memberamount.add(TextEditingController(text: '0'));
+                  memberremarks.add(TextEditingController(
+                      text: "Deposit Collection"));
                 }
               } else {
                 memberamount.add(TextEditingController(text: '0'));
+                memberremarks.add(TextEditingController(
+                    text: "Deposit Collection"));
               }
               somiteemembers.add(Memberss.withDepo(
                   somiteename: element["Somitee Name"],
@@ -150,6 +158,8 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
               setState(() {});
             } else {
               memberamount.add(TextEditingController(text: '0'));
+              memberremarks.add(TextEditingController(
+                  text: "Deposit Collection"));
               somiteemembers.add(Memberss.withDepo(
                   somiteename: element["Somitee Name"],
                   somiteeid: element["Somitee ID"],
@@ -240,6 +250,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
           'Deposits': FieldValue.arrayUnion([
             {
               'date': todayDateTime.toString().split(' ')[0],
+              'remarks': memberremarks[0].text.toString(),
               'value': double.parse(memberamount[i].text.toString()),
             }
           ]),
@@ -523,16 +534,30 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                               ),
                                             ),
                                             DataCell(
-                                              Text(
-                                                  somiteemembers[index]
-                                                              .deposit
-                                                              .length ==
-                                                          0
-                                                      ? ""
-                                                      : "Deposit Collection",
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                  )),
+                                              Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 6, horizontal: 0),
+                                                width: 120,
+                                                child: TextField(
+                                                    controller:
+                                                    memberremarks[index],
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      isDense: true,
+                                                      fillColor:
+                                                      AppColor.withOpacity(
+                                                          0.2),
+                                                      border:
+                                                      const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                            AppColor_greyBorder),
+                                                      ),
+                                                    ),
+                                                    style: const TextStyle(
+                                                      fontSize: 10,
+                                                    )),
+                                              ),
                                             ),
                                             DataCell(
                                               Center(

@@ -46,8 +46,8 @@ class _LedgerState extends State<Ledger> {
 
     var ScreenWidth =MediaQuery.of(context).size.width;
 
-    double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
-    double ResponsiveHeight = MediaQuery.of(context as BuildContext).size.height;
+    double ResponsiveWidth = MediaQuery.of(context).size.width;
+    double ResponsiveHeight = MediaQuery.of(context).size.height;
 
     bool desktop = false;
     bool tablet = false;
@@ -137,6 +137,7 @@ class _LedgerState extends State<Ledger> {
                   child: Container(
                     height: 40,
                     width: 90,
+                    color: AppColor_yellow,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 3.0, left: 15),
                       child: Row(
@@ -147,7 +148,6 @@ class _LedgerState extends State<Ledger> {
                         ],
                       ),
                     ),
-                    color: AppColor_yellow,
                   ),
                 ),
 
@@ -260,7 +260,7 @@ class _LedgerState extends State<Ledger> {
                     Row(
                       children: [
                         RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             text: 'From Date',
                             style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
@@ -302,20 +302,17 @@ class _LedgerState extends State<Ledger> {
                             ),
                           ),
                         ),
-
-
-
                       ],
                     ),
 
 
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
 
                     Row(
                       children: [
-                        Text(
+                        const Text(
                             "Active A/c Only:",
                           style: TextStyle(
                             fontSize: 14,
