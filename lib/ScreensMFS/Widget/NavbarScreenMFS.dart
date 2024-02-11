@@ -773,10 +773,6 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   });
                                 },
                                 onTap: () {
-                                  // Get.to(MemberLedger(
-                                  //   appbool: widget.appbool,
-                                  //   navbool: widget.navbool,
-                                  // ));
                                   Get.toNamed(memberledgerPageRoute);
                                 },
                                 child: Container(

@@ -3,7 +3,7 @@ import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/ReportsWidgets/SanctionDetail.dart';
+import 'Widgets/SanctionDetail.dart';
 
 
 class SanctionDetailInformation extends StatefulWidget {

@@ -3,7 +3,7 @@ import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/ReportsWidgets/SlipReprintWidget.dart';
+import 'Widgets/SlipReprintWidget.dart';
 
 
 class SlipReprint extends StatefulWidget {

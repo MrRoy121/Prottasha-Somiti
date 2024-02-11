@@ -3,7 +3,7 @@ import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/ReportsWidgets/SamiteeMemberDeposite.dart';
+import 'Widgets/SamiteeMemberDeposite.dart';
 
 class SamiteeWiseMemberDepositeLoan extends StatefulWidget {
   Navbool navbool;

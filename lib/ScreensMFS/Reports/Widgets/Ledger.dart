@@ -1,34 +1,44 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Constants/Constants.dart';
+import '../../../Constants/values.dart';
+import '../../../Model/member.dart';
 
 
 class Ledger extends StatefulWidget {
 
-
+  var selectedledgertype;
+  void Function(int) setupledgertype;
+  DateTime selectedendDate, selectedstartDate;
+  void Function() onsubmit;
+  void Function() onclear;
+  List<Memberss> memberss = [];
+  var selectedStatus;
+  var selectedmemberss;
+  void Function(int) setupmemberss;
+  var selectedmemberssid;
+  void Function(BuildContext) selectendDate;
+  void Function(BuildContext) selectstartDate;
+  
+  Ledger(
+      {required this.onclear,
+        required this.setupledgertype,
+        required this.selectendDate,required this.selectedStatus,
+        required this.setupmemberss,
+        required this.selectstartDate,
+        required this.selectedledgertype,
+        required this.selectedendDate,required this.selectedstartDate,
+        required this.memberss,
+        required this.selectedmemberss,
+        required this.selectedmemberssid,
+        required this.onsubmit});
+  
   @override
   State<Ledger> createState() => _LedgerState();
 }
 
 class _LedgerState extends State<Ledger> {
-
-  String? selectedGender;
-  DateTime? _selectedDate;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
 
 
   @override
@@ -58,7 +68,8 @@ class _LedgerState extends State<Ledger> {
     }
 
     String? selectLedger;
-    return desktop? Container(
+    if (desktop) {
+      return Container(
       width: 1400,
       height: 400,
       // color: Colors.white,
@@ -98,38 +109,46 @@ class _LedgerState extends State<Ledger> {
 
                 Spacer(),
 
-                Container(
-                  height: 40,
-                  width: 125,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 12),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
+                InkWell(onTap: (){
+                  widget.onsubmit();
+                },
+                  child: Container(
+                    height: 40,
+                    width: 125,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2.0, left: 12),
+                      child: Row(
+                        children: [
+                          Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
+                          SizedBox(width: 3,),
+                          Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        ],
+                      ),
                     ),
+                    color: Colors.green,
                   ),
-                  color: Colors.green,
                 ),
 
                 SizedBox(width: 10,),
 
-                Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 15),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
+                InkWell(onTap: (){
+                  widget.onclear();
+                },
+                  child: Container(
+                    height: 40,
+                    width: 90,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3.0, left: 15),
+                      child: Row(
+                        children: [
+                          Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
+                          SizedBox(width: 5,),
+                          Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        ],
+                      ),
                     ),
+                    color: AppColor_yellow,
                   ),
-                  color: AppColor_yellow,
                 ),
 
 
@@ -168,30 +187,66 @@ class _LedgerState extends State<Ledger> {
 
                         SizedBox(
                           width: 300,
-                          child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
+                          child:  DropdownSearch<String>(
+                            popupProps: PopupProps.menu(
+                              showSearchBox: true,
+                              itemBuilder: (BuildContext context,
+                                  String item, bool isSelected) {
+                                return Container(
+                                  padding: EdgeInsets.all(15),
+                                  child: Text(
+                                    item,
+                                  ),
+                                );
+                              },
+                              fit: FlexFit.loose,
+                              showSelectedItems: false,
+                              menuProps: const MenuProps(
+                                backgroundColor: Colors.white,
+                                elevation: 100,
                               ),
-                              hintText: "Select",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
+                              searchFieldProps: const TextFieldProps(
+                                style: TextStyle(fontSize: 12),
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: "Search...",
+                                ),
                               ),
                             ),
-                            value: selectLedger,
-                            onChanged: (newValue) {
-
+                            dropdownDecoratorProps:
+                            const DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent),
+                                ),
+                              ),
+                            ),
+                            dropdownBuilder: (context, item) {
+                              if (item == null) {
+                                return const Text(
+                                  "Select",
+                                );
+                              } else {
+                                return Text(
+                                  item,
+                                );
+                              }
                             },
-                            items: ['Item1', 'Item2', 'Item3',].map((item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                widget.selectedledgertype = newValue;
+                                widget.setupledgertype(
+                                    LedgerTypeList.indexOf(newValue!));
+                              });
+                            },
+                            items: LedgerTypeList,
+                            selectedItem: widget.selectedledgertype,
+                          )),
 
 
                       ],
@@ -225,7 +280,7 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(
                           width: 300,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectstartDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -234,8 +289,8 @@ class _LedgerState extends State<Ledger> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedstartDate != null
+                                      ? "${widget.selectedstartDate!.day}-${widget.selectedstartDate!.month}-${widget.selectedstartDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -271,10 +326,10 @@ class _LedgerState extends State<Ledger> {
                           children: [
                             Radio(
                               value: 'yes',
-                              groupValue: selectedGender,
+                              groupValue: widget.selectedStatus,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedGender = value.toString();
+                                  widget.selectedStatus = value.toString();
                                 });
                               },
                             ),
@@ -282,10 +337,10 @@ class _LedgerState extends State<Ledger> {
                             SizedBox(width: 10),
                             Radio(
                               value: 'no',
-                              groupValue: selectedGender,
+                              groupValue: widget.selectedStatus,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedGender = value.toString();
+                                  widget.selectedStatus = value.toString();
                                 });
                               },
                             ),
@@ -325,23 +380,84 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(width: 65,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Ledger Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.firstname +
+                                        " " +
+                                        item.lastname +
+                                        " - " +
+                                        item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedmemberss = newValue;
+                                  widget.setupmemberss(
+                                      widget.memberss.indexOf(newValue!));
+                                });
+                              },
+                              items: widget.memberss,
+                              selectedItem: widget.selectedmemberss,
+                            )),
 
 
                       ],
@@ -375,7 +491,7 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(
                           width: 300,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectendDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -384,8 +500,8 @@ class _LedgerState extends State<Ledger> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedendDate != null
+                                      ? "${widget.selectedendDate!.day}-${widget.selectedendDate!.month}-${widget.selectedendDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -415,8 +531,9 @@ class _LedgerState extends State<Ledger> {
           ),
         ],
       ),
-    )
-    : tablet? Container(
+    );
+    } else {
+      return tablet? Container(
       width: 1400,
       height: 600,
       // color: Colors.white,
@@ -583,7 +700,7 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(
                           width: 300,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectstartDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -592,8 +709,8 @@ class _LedgerState extends State<Ledger> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedstartDate != null
+                                      ? "${widget.selectedstartDate!.day}-${widget.selectedstartDate!.month}-${widget.selectedstartDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -629,10 +746,10 @@ class _LedgerState extends State<Ledger> {
                           children: [
                             Radio(
                               value: 'yes',
-                              groupValue: selectedGender,
+                              groupValue: widget.selectedStatus,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedGender = value.toString();
+                                  widget.selectedStatus = value.toString();
                                 });
                               },
                             ),
@@ -640,10 +757,10 @@ class _LedgerState extends State<Ledger> {
                             SizedBox(width: 10),
                             Radio(
                               value: 'no',
-                              groupValue: selectedGender,
+                              groupValue: widget.selectedStatus,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedGender = value.toString();
+                                  widget.selectedStatus = value.toString();
                                 });
                               },
                             ),
@@ -683,23 +800,81 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(width: 65,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Ledger Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
+
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.firstname +
+                                          " " +
+                                          item.lastname +
+                                          " - " +
+                                          item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    "${item.firstname} ${item.lastname} - ${item.id}",
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedmemberss = newValue;
+                                  widget.setupmemberss(
+                                      widget.memberss.indexOf(newValue!));
+                                });
+                              },
+                              items: widget.memberss,
+                              selectedItem: widget.selectedmemberss,
+                            )),
 
 
                       ],
@@ -733,7 +908,7 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(
                           width: 300,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectendDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -742,8 +917,8 @@ class _LedgerState extends State<Ledger> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedendDate != null
+                                      ? "${widget.selectedendDate!.day}-${widget.selectedendDate!.month}-${widget.selectedendDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -942,7 +1117,7 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(
                           width: 200,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectstartDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -951,8 +1126,8 @@ class _LedgerState extends State<Ledger> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedstartDate != null
+                                      ? "${widget.selectedstartDate!.day}-${widget.selectedstartDate!.month}-${widget.selectedstartDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -989,10 +1164,10 @@ class _LedgerState extends State<Ledger> {
                           children: [
                             Radio(
                               value: 'yes',
-                              groupValue: selectedGender,
+                              groupValue: widget.selectedStatus,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedGender = value.toString();
+                                  widget.selectedStatus = value.toString();
                                 });
                               },
                             ),
@@ -1002,10 +1177,10 @@ class _LedgerState extends State<Ledger> {
                             SizedBox(width: 10),
                             Radio(
                               value: 'no',
-                              groupValue: selectedGender,
+                              groupValue: widget.selectedStatus,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedGender = value.toString();
+                                  widget.selectedStatus = value.toString();
                                 });
                               },
                             ),
@@ -1047,25 +1222,85 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(width: 65,),
 
 
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Ledger Name/ Code",
-                              hintStyle: TextStyle(
-                                fontSize: 8,
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
+                        Container(
+                            width: 200,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-                        ),
+                            child: DropdownSearch<Memberss>(
+                              filterFn: (Memberss item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Memberss item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.id+
+                                          " - " +
+                                          item.firstname +
+                                          " " +
+                                          item.lastname,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Member Name/Code",
+                                  );
+                                } else {
+                                  return Text(
 
+                                    item.id+
+                                        " - " +
+                                        item.firstname +
+                                        " " +
+                                        item.lastname,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedmemberss = newValue;
+                                  widget.setupmemberss(
+                                      widget.memberss.indexOf(newValue!));
+                                });
+                              },
+                              items: widget.memberss,
+                              selectedItem: widget.selectedmemberss,
+                            )),
 
                       ],
                     ),
@@ -1098,7 +1333,7 @@ class _LedgerState extends State<Ledger> {
                         SizedBox(
                           width: 200,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectendDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -1107,8 +1342,8 @@ class _LedgerState extends State<Ledger> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedendDate != null
+                                      ? "${widget.selectedendDate!.day}-${widget.selectedendDate!.month}-${widget.selectedendDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     fontSize: 8,
@@ -1140,5 +1375,6 @@ class _LedgerState extends State<Ledger> {
         ],
       ),
     );
+    }
   }
 }

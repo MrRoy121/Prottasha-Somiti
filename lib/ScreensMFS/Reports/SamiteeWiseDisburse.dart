@@ -3,7 +3,7 @@ import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/ReportsWidgets/SamiteeWiseDisburseWidget.dart';
+import 'Widgets/SamiteeWiseDisburseWidget.dart';
 
 class SamiteeWiseDisburse extends StatefulWidget {
   Navbool navbool;

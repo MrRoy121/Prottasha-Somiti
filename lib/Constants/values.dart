@@ -46,6 +46,11 @@ const List<String> ReverseTypeList = [
   'Full Reverse',
   'Partial Reverse',
 ];
+
+const List<String> LedgerTypeList = [
+  'Member Deposit Ledger',
+  'Member Loan Ledger',
+];
 List<Scheme> LoanSchemes = [
   Scheme(
       sl: 1,

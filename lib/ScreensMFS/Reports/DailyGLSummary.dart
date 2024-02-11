@@ -4,7 +4,7 @@ import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
-import '../Widget/ReportsWidgets/GLSummary.dart';
+import 'Widgets/GLSummary.dart';
 
 
 class DailyGLSummary extends StatefulWidget {

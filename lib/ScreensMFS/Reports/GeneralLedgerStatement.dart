@@ -4,8 +4,8 @@ import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
+import 'Widgets/LedgerStatement.dart';
 
-import '../Widget/ReportsWidgets/LedgerStatement.dart';
 
 
 class GenerallLedgerStatement extends StatefulWidget {
