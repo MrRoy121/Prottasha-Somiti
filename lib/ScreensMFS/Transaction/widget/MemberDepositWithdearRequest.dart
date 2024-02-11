@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../../Constants/Constants.dart';
 
 class MemberDepositWithdwar extends StatefulWidget {
@@ -7,10 +7,12 @@ class MemberDepositWithdwar extends StatefulWidget {
   bool submit = true;
   void Function(int) changetype;
   bool selectmember = false;
+  void Function() onsubmit;
   MemberDepositWithdwar(
       {required this.submit,
       required this.selectedtype,
       required this.changetype,
+      required this.onsubmit,
       required this.selectmember});
 
   @override
@@ -85,63 +87,46 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                       ),
                       Spacer(),
                       widget.submit
-                          ? Container(
-                              height: 40,
-                              width: 90,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10.0, left: 15),
-                                child: Text(
-                                  "✓ Submit",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
+                          ? InkWell(
+                              onTap: () {
+                                widget.onsubmit();
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 90,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 15),
+                                  child: Text(
+                                    "✓ Submit",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
                                 ),
+                                color: Colors.green,
                               ),
-                              color: Colors.green,
                             )
                           : Container(),
                       SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height: 40,
-                        width: 90,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 3.0, left: 15),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.clear_all_sharp,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Clear",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                              ),
-                            ],
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 50,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 20),
+                            child: Text(
+                              "X",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
                           ),
+                          color: Colors.red,
                         ),
-                        color: AppColor_yellow,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        height: 40,
-                        width: 50,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20),
-                          child: Text(
-                            "X",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                        ),
-                        color: Colors.red,
                       ),
                       SizedBox(
                         width: 10,
@@ -229,17 +214,22 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           ),
                           Spacer(),
                           widget.submit
-                              ? Container(
-                                  height: 40,
-                                  width: 90,
-                                  color: Colors.green,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 15),
-                                    child: Text(
-                                      "✓ Submit",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 14),
+                              ? InkWell(
+                                  onTap: () {
+                                    widget.onsubmit();
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 90,
+                                    color: Colors.green,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10.0, left: 15),
+                                      child: Text(
+                                        "✓ Submit",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14),
+                                      ),
                                     ),
                                   ),
                                 )
@@ -247,48 +237,24 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            height: 40,
-                            width: 90,
-                            color: AppColor_yellow,
-                            child: const Padding(
-                              padding:
-                                  EdgeInsets.only(top: 3.0, left: 15),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.clear_all_sharp,
-                                    color: Colors.white,
-                                    size: 18,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Clear",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ],
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 50,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10.0, left: 20),
+                                child: Text(
+                                  "X",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
                               ),
+                              color: Colors.red,
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            height: 40,
-                            width: 50,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10.0, left: 20),
-                              child: Text(
-                                "X",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                              ),
-                            ),
-                            color: Colors.red,
                           ),
                           SizedBox(
                             width: 10,
@@ -312,36 +278,22 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           Row(
                             children: [
                               Radio(
-                                value: 'normalwindow',
+                                value: 0,
                                 groupValue: widget.selectedtype,
                                 onChanged: (value) {
-                                  setState(() {
-                                    widget.selectedtype = value.toString();
-                                  });
+                                  widget.changetype(int.parse(value.toString()));
                                 },
                               ),
-                              Text(
-                                'Normal Window',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                ),
-                              ),
+                              Text('Normal Withdraw'),
                               SizedBox(width: 10),
                               Radio(
-                                value: 'closewindow',
+                                value: 1,
                                 groupValue: widget.selectedtype,
                                 onChanged: (value) {
-                                  setState(() {
-                                    widget.selectedtype = value.toString();
-                                  });
+                                  widget.changetype(int.parse(value.toString()));
                                 },
                               ),
-                              Text(
-                                'Close Window',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                ),
-                              ),
+                              Text('Closed Withdraw'),
                             ],
                           ),
                         ],
@@ -390,66 +342,47 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           ),
                           Spacer(),
                           widget.submit
-                              ? Container(
-                                  height: 30,
-                                  width: 50,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10.0, left: ScreenWidth / 102.4),
-                                    child: Text(
-                                      "✓ Submit",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 8),
+                              ? InkWell(
+                                  onTap: () {
+                                    widget.onsubmit();
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 50,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 10.0, left: ScreenWidth / 102.4),
+                                      child: Text(
+                                        "✓ Submit",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 8),
+                                      ),
                                     ),
+                                    color: Colors.green,
                                   ),
-                                  color: Colors.green,
                                 )
                               : Container(),
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            height: 30,
-                            width: 60,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 3.0, left: ScreenWidth / 102.4),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.clear_all_sharp,
-                                    color: Colors.white,
-                                    size: 14,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Clear",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 8),
-                                  ),
-                                ],
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 20,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 10.0, left: ScreenWidth / 74.8),
+                                child: Text(
+                                  "X",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 8),
+                                ),
                               ),
+                              color: Colors.red,
                             ),
-                            color: AppColor_yellow,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            height: 30,
-                            width: 20,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 10.0, left: ScreenWidth / 74.8),
-                              child: Text(
-                                "X",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 8),
-                              ),
-                            ),
-                            color: Colors.red,
                           ),
                           SizedBox(
                             width: 10,
@@ -462,7 +395,7 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           EdgeInsets.only(top: 50, left: ScreenWidth / 10.24),
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             "Withdraw Type",
                             style: TextStyle(
                               fontSize: 8,
@@ -473,36 +406,22 @@ class _MemberDepositWithdwarState extends State<MemberDepositWithdwar> {
                           Row(
                             children: [
                               Radio(
-                                value: 'normalwindow',
+                                value: 0,
                                 groupValue: widget.selectedtype,
                                 onChanged: (value) {
-                                  setState(() {
-                                    widget.selectedtype = value.toString();
-                                  });
+                                  widget.changetype(int.parse(value.toString()));
                                 },
                               ),
-                              Text(
-                                'Normal Window',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                ),
-                              ),
+                              Text('Normal Withdraw'),
                               SizedBox(width: 10),
                               Radio(
-                                value: 'closewindow',
+                                value: 1,
                                 groupValue: widget.selectedtype,
                                 onChanged: (value) {
-                                  setState(() {
-                                    widget.selectedtype = value.toString();
-                                  });
+                                  widget.changetype(int.parse(value.toString()));
                                 },
                               ),
-                              Text(
-                                'Close Window',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                ),
-                              ),
+                              Text('Closed Withdraw'),
                             ],
                           ),
                         ],

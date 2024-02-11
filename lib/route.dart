@@ -39,6 +39,7 @@ const depositcollectionrequestPageRoute = "/depositcollectionrequestPageRoute";
 const depositcorrectionrequestPageRoute = "/depositcorrectionrequestPageRoute";
 const depositcorrectionrequestlistPageRoute = "/depositcorrectionrequestlistPageRoute";
 const depositwithdrawPageRoute = "/depositwithdrawPageRoute";
+const withdrawlistPageRoute = "/withdrawlistPageRoute";
 
 
 const individualmemberregistrationPageRoute = "/individualmemberregistration";

@@ -47,6 +47,7 @@ import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequestList.dart';
 import 'ScreensMFS/Transaction/DepositWithDwarNormal.dart';
+import 'ScreensMFS/Transaction/WithdrawRequestList.dart';
 import 'ScreensMFS/Widget/Appbool.dart';
 import 'ScreensMFS/Widget/NavBoolMFS.dart';
 import 'Constants/responsive.dart';
@@ -149,6 +150,13 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: depositcorrectionrequestlistPageRoute,
             page: () => DepositCorrectionRequestList(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: withdrawlistPageRoute,
+            page: () => WidthdrawList(
               appbool: appbool,
               navbool: navbool,
             ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +12,7 @@ import '../../Constants/values.dart';
 import '../../Model/loanSanction.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
+import '../../route.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -30,7 +33,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
   List<Somitee> somitee = [];
   List<String> ssomitee = [];
   List<Memberss> somiteemembers = [];
-  var selectedtype=0;
+  var selectedtype = 0;
   var selectedsomiti;
   var sselectedsomiti;
   bool memberselection = false;
@@ -70,13 +73,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
     });
   }
 
-  void _onclear() {
-    setState(() {
-      var ss;
-      selectedsomiti = ss;
-      sselectedsomiti = ss;
-    });
-  }
+  void _onclear() {}
 
   @override
   Widget build(BuildContext context) {
@@ -202,68 +199,65 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
     }
 
     void _save() async {
-      // for (int i = 0; i < somiteemembers.length; i++) {
-      //   DateTime todayDateTime = DateTime.now().toLocal();
-      //
-      //   var existingDeposit = somiteemembers[i].deposit.firstWhere(
-      //         (entry) {
-      //       DateTime entryDate = DateTime.parse(entry["date"]).toLocal();
-      //       return entryDate.year == todayDateTime.year &&
-      //           entryDate.month == todayDateTime.month &&
-      //           entryDate.day == todayDateTime.day;
-      //     },
-      //     orElse: () => null,
-      //   );
-      //
-      //   if (existingDeposit != null) {
-      //     FirebaseFirestore.instance
-      //         .collection('Member')
-      //         .doc(somiteemembers[i].id)
-      //         .update({
-      //       'Own deposit Amount': FieldValue.increment(
-      //         -existingDeposit["value"],
-      //       ),
-      //       'Deposits': FieldValue.arrayRemove([existingDeposit]),
-      //     });
-      //   }
-      //
-      //   FirebaseFirestore.instance
-      //       .collection('Member')
-      //       .doc(somiteemembers[i].id)
-      //       .update({
-      //     'Own deposit Amount': FieldValue.increment(
-      //       double.parse(memberamount[i].text.toString()),
-      //     ),
-      //     'Deposits': FieldValue.arrayUnion([
-      //       {
-      //         'date': todayDateTime.toString().split(' ')[0],
-      //         'value': double.parse(memberamount[i].text.toString()),
-      //       }
-      //     ]),
-      //   }).then((value) async {
-      //     _getData();
-      //   }).catchError((error) => print("Failed to add user: $error"));
-      //
-      //   if (i == somiteemembers.length - 1) {
-      //     Get.snackbar(
-      //       "Members Deposits Added Successfully.",
-      //       "Page is updated.",
-      //       snackPosition: SnackPosition.BOTTOM,
-      //       colorText: Colors.white,
-      //       backgroundColor: Colors.green,
-      //       margin: EdgeInsets.zero,
-      //       duration: const Duration(milliseconds: 2000),
-      //       boxShadows: [
-      //         const BoxShadow(
-      //           color: Colors.grey,
-      //           offset: Offset(-100, 0),
-      //           blurRadius: 20,
-      //         ),
-      //       ],
-      //       borderRadius: 0,
-      //     );
-      //   }
-      // }
+      const _chars = '1234567890';
+      Random _rnd = Random();
+      String getRandomString(int length) =>
+          String.fromCharCodes(Iterable.generate(
+              length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+      String widthdrawid = getRandomString(8);
+      if (selectedsomiti == null ||
+          selectedmemberss == null ||
+          conwithdrawamount.text == "") {
+        Get.snackbar(
+            "Withdraw Request Failed.", "Some Required Fields are Empty",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        FirebaseFirestore.instance
+            .collection('DepositWithdraw')
+            .doc(widthdrawid)
+            .set({
+          'Somitee Name': selectedsomiti.name,
+          'Somitee ID': selectedsomiti.id,
+          'Member Name':
+              selectedmemberss.firstname + " " + selectedmemberss.lastname,
+          'Member ID': selectedmemberss.id,
+          'Member Phone': selectedmemberss.mobilenno,
+          "Withdraw Amount": double.parse(conwithdrawamount.text),
+          "Withdraw Type":
+              selectedtype == 0 ? "Full Withdraw" : "Partial Withdraw",
+          "Remarks": conremarks.text,
+          'Approve Date': DateTime.now(),
+          'Request Date': DateTime.now(),
+          "Status": false,
+          'Approve': false,
+          'ID': widthdrawid,
+        }).then((value) async {
+          Get.offNamed(withdrawlistPageRoute);
+          Get.snackbar("Withdraw Request Added Successfully.",
+              "Redirecting to Withdraw List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(-100, 0),
+                    blurRadius: 20),
+              ],
+              borderRadius: 0);
+        }).catchError((error) => print("Failed to add user: $error"));
+      }
     }
 
     Future<void> _setupsomiti(int ins) async {
@@ -272,7 +266,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
       _getData();
     }
 
-    void changetype(int val){
+    void changetype(int val) {
       setState(() {
         selectedtype = val;
       });
@@ -310,7 +304,8 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100, left:  selectedtype==1?68:0),
+              margin:
+                  EdgeInsets.only(top: 100, left: selectedtype == 1 ? 68 : 0),
               child: Column(
                 children: [
                   SizedBox(
@@ -319,8 +314,11 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
 
                   // Member Deposit Withdraw Request
                   MemberDepositWithdwar(
-                    submit: true,changetype: changetype,
-                    selectmember: false,selectedtype: selectedtype,
+                    submit: true,
+                    changetype: changetype,
+                    onsubmit: _save,
+                    selectmember: false,
+                    selectedtype: selectedtype,
                   ),
 
                   SizedBox(
@@ -336,9 +334,9 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                       setupsomiti: _setupsomiti,
                       active: true,
                       selectedsomiteeid: selectedsomiti,
-                      onsubmit: _save,
+                      onsubmit: (){},
+                      onclear: (){},
                       somitee: somitee,
-                      onclear: _onclear,
                       selectedsomitee: sselectedsomiti),
 
                   SizedBox(
@@ -361,47 +359,51 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                   ),
 
                   // Link A/c Information
-                  selectedtype==0?Padding(
-                    padding: EdgeInsets.only(left: ScreenWidth / 21.94),
-                    child: desktop
-                        ? Row(
-                            children: [
-                              LinkACinfo(
-                                  memberss: selectedmemberss,
-                                  selectedsanction: selectedsanction,
-                                  bsanction: bsanction,
-                                  scheme: ssscheme),
-                              Spacer(),
-                              selectedmemberss == null
-                                  ? ImageMember(imgurl: '')
-                                  : ImageMember(
-                                      imgurl: selectedmemberss.imageurl),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              LinkACinfo(
-                                  memberss: selectedmemberss,
-                                  selectedsanction: selectedsanction,
-                                  bsanction: bsanction,
-                                  scheme: ssscheme),
+                  selectedtype == 0
+                      ? Padding(
+                          padding: EdgeInsets.only(left: ScreenWidth / 21.94),
+                          child: desktop
+                              ? Row(
+                                  children: [
+                                    LinkACinfo(
+                                        memberss: selectedmemberss,
+                                        selectedsanction: selectedsanction,
+                                        bsanction: bsanction,
+                                        scheme: ssscheme),
+                                    Spacer(),
+                                    selectedmemberss == null
+                                        ? ImageMember(imgurl: '')
+                                        : ImageMember(
+                                            imgurl: selectedmemberss.imageurl),
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    LinkACinfo(
+                                        memberss: selectedmemberss,
+                                        selectedsanction: selectedsanction,
+                                        bsanction: bsanction,
+                                        scheme: ssscheme),
 
-                              // Spacer(),
-                              SizedBox(
-                                height: 50,
-                              ),
+                                    // Spacer(),
+                                    SizedBox(
+                                      height: 50,
+                                    ),
 
-                              selectedmemberss == null
-                                  ? ImageMember(imgurl: '')
-                                  : ImageMember(
-                                      imgurl: selectedmemberss.imageurl),
-                            ],
-                          ),
-                  ):SizedBox(),
+                                    selectedmemberss == null
+                                        ? ImageMember(imgurl: '')
+                                        : ImageMember(
+                                            imgurl: selectedmemberss.imageurl),
+                                  ],
+                                ),
+                        )
+                      : SizedBox(),
 
-                  selectedtype==0?SizedBox(
-                    height: 50,
-                  ):SizedBox(),
+                  selectedtype == 0
+                      ? SizedBox(
+                          height: 50,
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

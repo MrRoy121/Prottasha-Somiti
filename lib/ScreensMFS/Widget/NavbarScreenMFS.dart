@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../../Constants/Constants.dart';
 import '../../route.dart';
 import '../Loan/LoanReSchedule.dart';
@@ -20,6 +21,7 @@ class NavbarScreenMFS extends StatefulWidget {
 
 class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
   var arr = [false, false, false, false, false, false, false, false, false];
+  var withdrawArr = [false, false];
   var trasctionArr = [false, false];
   var closedArr = [false, false];
   var loanSectionArr = [false, false];
@@ -73,6 +75,9 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
           arr[i] = false;
         }
         arr[index] = true;
+        for (int i = 0; i < withdrawArr.length; i++) {
+          withdrawArr[i] = false;
+        }
         for (int i = 0; i < trasctionArr.length; i++) {
           trasctionArr[i] = false;
         }
@@ -99,6 +104,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
         trasctionArr[i] = false;
       }
       trasctionArr[index] = true;
+      withdrawArr[index] = false;
       loanSectionArr[index] = false;
       loanRePayArr[index] = false;
       closedArr[index] = false;
@@ -106,6 +112,19 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
     });
   }
 
+  _transctionTogle_withdraw(int index) {
+    setState(() {
+      for (int i = 0; i < withdrawArr.length; i++) {
+        withdrawArr[i] = false;
+      }
+      withdrawArr[index] = true;
+      trasctionArr[index] = false;
+      loanSectionArr[index] = false;
+      loanRePayArr[index] = false;
+      closedArr[index] = false;
+      loandisburseArr[index] = false;
+    });
+  }
 
   _closeTogle_saction(int index) {
     setState(() {
@@ -114,6 +133,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
       }
       closedArr[index] = true;
       loanSectionArr[index] = false;
+      withdrawArr[index] = false;
       trasctionArr[index] = false;
       loandisburseArr[index] = false;
       loanRePayArr[index] = false;
@@ -126,6 +146,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
         loanSectionArr[i] = false;
       }
       loanSectionArr[index] = true;
+      withdrawArr[index] = false;
       trasctionArr[index] = false;
       loanRePayArr[index] = false;
       closedArr[index] = false;
@@ -139,6 +160,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
         loandisburseArr[i] = false;
       }
       loanSectionArr[index] = false;
+      withdrawArr[index] = false;
       trasctionArr[index] = false;
       loanRePayArr[index] = false;
       closedArr[index] = false;
@@ -152,6 +174,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
         loanRePayArr[i] = false;
       }
       loanRePayArr[index] = true;
+      withdrawArr[index] = false;
       trasctionArr[index] = false;
       loanSectionArr[index] = false;
       closedArr[index] = false;
@@ -482,7 +505,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 });
                               },
                               onTap: () {
-                                Get.toNamed(depositwithdrawPageRoute);
+                                _transctionTogle_withdraw(0);
                               },
                               child: Container(
                                 padding: EdgeInsets.only(
@@ -490,12 +513,23 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 height: 40,
                                 width: 200,
                                 color: itemColor2,
-                                child: Text(
-                                  "Withdraw",
-                                  style: TextStyle(
-                                    color: textColor2,
-                                    fontSize: 12,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Withdraw",
+                                      style: TextStyle(
+                                        color: textColor2,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 73,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
@@ -1480,6 +1514,81 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                     "Deposit Correction List ",
                                     style: TextStyle(
                                       color: textColor15,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(),
+                withdrawArr[0]
+                    ? Container(
+                        margin: EdgeInsets.only(left: 0, top: 40),
+                        color: AppColor_Blue,
+                        // height: 800,
+                        width: 250,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor6 = AppColor_hover2;
+                                    textColor6 = Colors.white;
+                                  } else {
+                                    itemColor6 = AppColor_Blue;
+                                    textColor6 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(depositwithdrawPageRoute);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 250,
+                                color: itemColor6,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Deposit Withdraw Request",
+                                      style: TextStyle(
+                                        color: textColor6,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor5 = AppColor_hover2;
+                                    textColor5 = Colors.white;
+                                  } else {
+                                    itemColor5 = AppColor_Blue;
+                                    textColor5 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(withdrawlistPageRoute);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 250,
+                                  color: itemColor5,
+                                  child: Text(
+                                    "Withdraw List",
+                                    style: TextStyle(
+                                      color: textColor5,
                                       fontSize: 12,
                                     ),
                                   )),
