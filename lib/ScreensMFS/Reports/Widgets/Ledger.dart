@@ -10,6 +10,7 @@ class Ledger extends StatefulWidget {
 
   var selectedledgertype;
   void Function(int) setupledgertype;
+  void Function(String) changestatus;
   DateTime selectedendDate, selectedstartDate;
   void Function() onsubmit;
   void Function() onclear;
@@ -28,6 +29,7 @@ class Ledger extends StatefulWidget {
         required this.setupmemberss,
         required this.selectstartDate,
         required this.selectedledgertype,
+        required this.changestatus,
         required this.selectedendDate,required this.selectedstartDate,
         required this.memberss,
         required this.selectedmemberss,
@@ -325,9 +327,8 @@ class _LedgerState extends State<Ledger> {
                               value: 'yes',
                               groupValue: widget.selectedStatus,
                               onChanged: (value) {
-                                setState(() {
-                                  widget.selectedStatus = value.toString();
-                                });
+                                
+                                widget.changestatus(value.toString());
                               },
                             ),
                             Text('Yes'),
@@ -336,9 +337,8 @@ class _LedgerState extends State<Ledger> {
                               value: 'no',
                               groupValue: widget.selectedStatus,
                               onChanged: (value) {
-                                setState(() {
-                                  widget.selectedStatus = value.toString();
-                                });
+                                
+                                widget.changestatus(value.toString());
                               },
                             ),
                             Text('No'),
@@ -437,11 +437,7 @@ class _LedgerState extends State<Ledger> {
                                   );
                                 } else {
                                   return Text(
-                                    item.firstname +
-                                        " " +
-                                        item.lastname +
-                                        " - " +
-                                        item.id,
+                                    "${item.firstname} ${item.lastname} - ${item.id}",
                                   );
                                 }
                               },
@@ -745,9 +741,8 @@ class _LedgerState extends State<Ledger> {
                               value: 'yes',
                               groupValue: widget.selectedStatus,
                               onChanged: (value) {
-                                setState(() {
-                                  widget.selectedStatus = value.toString();
-                                });
+                                
+                                widget.changestatus(value.toString());
                               },
                             ),
                             Text('Yes'),
@@ -756,9 +751,8 @@ class _LedgerState extends State<Ledger> {
                               value: 'no',
                               groupValue: widget.selectedStatus,
                               onChanged: (value) {
-                                setState(() {
-                                  widget.selectedStatus = value.toString();
-                                });
+                                
+                                widget.changestatus(value.toString());
                               },
                             ),
                             Text('No'),
@@ -1163,9 +1157,8 @@ class _LedgerState extends State<Ledger> {
                               value: 'yes',
                               groupValue: widget.selectedStatus,
                               onChanged: (value) {
-                                setState(() {
-                                  widget.selectedStatus = value.toString();
-                                });
+                                
+                                widget.changestatus(value.toString());
                               },
                             ),
                             Text('Yes', style: TextStyle(
@@ -1176,9 +1169,8 @@ class _LedgerState extends State<Ledger> {
                               value: 'no',
                               groupValue: widget.selectedStatus,
                               onChanged: (value) {
-                                setState(() {
-                                  widget.selectedStatus = value.toString();
-                                });
+                                
+                                widget.changestatus(value.toString());
                               },
                             ),
                             Text('No', style: TextStyle(

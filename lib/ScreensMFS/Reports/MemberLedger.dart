@@ -10,7 +10,7 @@ import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
 import 'Widgets/Ledger.dart';
-
+import 'package:get/get.dart';
 
 class MemberLedger extends StatefulWidget {
   Navbool navbool;
@@ -50,7 +50,8 @@ class _MemberLedgerState extends State<MemberLedger> {
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],
               occupation: element["Occupation"],
-              firstname: element["First Name"],dead: element['Dead'],
+              firstname: element["First Name"],
+              dead: element['Dead'],
               lastname: element["Last Name"],
               fathername: element["Father Name"],
               mothername: element["Mother Name"],
@@ -100,44 +101,83 @@ class _MemberLedgerState extends State<MemberLedger> {
     });
   }
 
-  Future<List<Itemvaluess>> getlist() async {
+  Future<List<Itemvaluess>> getdepositlist() async {
     List<Itemvaluess> itemvaluess = [];
     _totalamount = 0;
     balancelist = [];
     await FirebaseFirestore.instance
-        .collection('Member').doc(selectedmemberss.id)
+        .collection('Member')
+        .doc(selectedmemberss.id)
         .get()
         .then((element) {
-        if (element["Status"]) {
-          print(element["Deposits"]);
-          for(int i = 0; i< element["Deposits"].length; i++){
-            itemvaluess.add(Itemvaluess(sl: i,date: element["Deposits"][i]['date'], value: element["Deposits"][i]['value'], remarks: element["Deposits"][i]['remarks']));
-            _totalamount = _totalamount + element["Deposits"][i]['value'];
-            if (balancelist.isEmpty) {
-              balancelist.add(element["Deposits"][i]['value']);
-            } else {
-              balancelist.add(
-                  element["Deposits"][i]['value'] + balancelist[balancelist.length - 1]);
-            }
+      if (element["Status"]) {
+        for (int i = 0; i < element["Deposits"].length; i++) {
+          itemvaluess.add(Itemvaluess(
+              sl: i,
+              date: element["Deposits"][i]['date'],
+              value: element["Deposits"][i]['value'],
+              remarks: element["Deposits"][i]['remarks']));
+          _totalamount = _totalamount + element["Deposits"][i]['value'];
+          if (balancelist.isEmpty) {
+            balancelist.add(element["Deposits"][i]['value']);
+          } else {
+            balancelist.add(element["Deposits"][i]['value'] +
+                balancelist[balancelist.length - 1]);
           }
         }
+      }
     });
-
     return itemvaluess;
   }
 
   _save() async {
-    PdfMemberss.generate(await getlist(), _totalamount, balancelist);
+    if (selectedmemberss == null ||
+        selectedledgertype == null ||
+        selectedStatus == null) {
+
+
+      Get.snackbar("Member Ledger Report Generation Failed.",
+          "Some Required Fields are Empty",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      if (selectedledgertype == LedgerTypeList[0]) {
+        PdfMemberss.generate(
+            await getdepositlist(),
+            _totalamount,
+            balancelist,
+            selectedmemberss.id,
+            "${selectedmemberss.firstname} ${selectedmemberss.lastname}",
+            selectedledgertype,
+            selectedStatus == 'yes' ? "Active" : "Closed",
+            selectedstartDate,
+            selectedendDate);
+      } else {}
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-
     void _setupledgertype(int ins) {
       setState(() {
         selectedledgertype = LedgerTypeList[ins];
       });
     }
+
+    void _changestatus(String val){
+      setState(() {
+        selectedStatus = val;
+      });
+    }
+
     Future<void> _selectstartDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
         context: context,
@@ -181,24 +221,35 @@ class _MemberLedgerState extends State<MemberLedger> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(margin: EdgeInsets.only(top: 100, left: 50),
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 50),
               child: Column(
                 children: [
-                  Ledger(selectedstartDate: selectedstartDate,selectstartDate: _selectstartDate,
-                      selectedendDate: selectedendDate,selectendDate: _selectendDate,
-                      onsubmit: _save,setupmemberss: _setupmemberss,
-                      selectedmemberssid: sselectedmemberss,
-                      selectedmemberss: selectedmemberss,selectedStatus: selectedStatus,
-                      onclear: _onclear,
-                      memberss: memberss,selectedledgertype:selectedledgertype,setupledgertype: _setupledgertype, ),
+                  Ledger(
+                    selectedstartDate: selectedstartDate,
+                    selectstartDate: _selectstartDate,
+                    selectedendDate: selectedendDate,
+                    selectendDate: _selectendDate,
+                    onsubmit: _save,changestatus: _changestatus,
+                    setupmemberss: _setupmemberss,
+                    selectedmemberssid: sselectedmemberss,
+                    selectedmemberss: selectedmemberss,
+                    selectedStatus: selectedStatus,
+                    onclear: _onclear,
+                    memberss: memberss,
+                    selectedledgertype: selectedledgertype,
+                    setupledgertype: _setupledgertype,
+                  ),
                 ],
               ),
             ),
-            NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
+            NavbarScreenMFS(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
           ],
         ),
       ),
-
     );
   }
 }
