@@ -4,21 +4,25 @@ import 'package:flutter/services.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../../Model/member.dart';
+import 'package:get/get.dart';
 
 class MemberSelection extends StatefulWidget {
   List<Memberss> memberss = [];
   var selectedmemberss;
   var selectedmemberssid;
-  bool memberssselected;
+  var selectedsamitee;
   void Function(int) setupmemberss;
-  var conwithdrawamount;
-  var conremarks;
+  void Function() onsubmit;
+  void Function() onclear;
+  bool mmems;
 
   MemberSelection(
-      {
+      {required this.onsubmit,
+      required this.onclear,
       required this.setupmemberss,
-      required this.memberssselected,
+        required this.mmems,
       required this.memberss,
+        required this.selectedsamitee,
       required this.selectedmemberss,
       required this.selectedmemberssid});
 
@@ -27,7 +31,6 @@ class MemberSelection extends StatefulWidget {
 }
 
 class _MemberSelectionState extends State<MemberSelection> {
-  bool mmems = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +60,7 @@ class _MemberSelectionState extends State<MemberSelection> {
     return desktop
         ? Container(
             width: 1400,
-            height: 350,
-            // color: Colors.white,
-
+            height: 280,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -81,16 +82,123 @@ class _MemberSelectionState extends State<MemberSelection> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 40.0),
                         child: Text(
-                          "Deposit Withdraw",
+                          "Member Selection",
                           style: TextStyle(
                             color: AppColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
+                      ),
+                      Spacer(),
+                      InkWell(
+                        onTap: () {
+                          widget.onsubmit();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 90,
+                          color: Colors.green,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 15),
+                            child: Text(
+                              "✓ Submit",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 40,
+                          width: 180,
+                          color: Colors.blueAccent,
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 3.0, left: 15),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person_2_outlined,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "View Member Info",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          widget.onclear();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 90,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3.0, left: 15),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.clear_all_sharp,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Clear",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                          color: AppColor_yellow,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 50,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 20),
+                            child: Text(
+                              "X",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
+                          color: Colors.red,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
                       ),
                     ],
                   ),
@@ -136,7 +244,6 @@ class _MemberSelectionState extends State<MemberSelection> {
                                     filterFn: (Memberss item, String query) {
                                       return item.filterFn(query);
                                     },
-                                    enabled: widget.memberssselected,
                                     popupProps: PopupProps.menu(
                                       showSearchBox: true,
                                       itemBuilder: (BuildContext context,
@@ -191,8 +298,6 @@ class _MemberSelectionState extends State<MemberSelection> {
                                         widget.selectedmemberss = newValue;
                                         widget.setupmemberss(
                                             widget.memberss.indexOf(newValue!));
-                                        widget.memberssselected = true;
-                                        mmems = true;
                                       });
                                     },
                                     items: widget.memberss,
@@ -203,67 +308,25 @@ class _MemberSelectionState extends State<MemberSelection> {
                           SizedBox(
                             height: 40,
                           ),
+
                           Row(
                             children: [
-                              RichText(
-                                text: const TextSpan(
-                                  text: 'Withdraw Amount',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 14),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: ' *',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red,
-                                            fontSize: 14)),
-                                    TextSpan(
-                                        text: ' :',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 14)),
-                                  ],
+                              Text(
+                                "Samitee Name :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
                               ),
                               SizedBox(
-                                width: 70,
+                                width: 65,
                               ),
                               SizedBox(
                                 width: 300,
-                                child: TextField(
-                                  controller: widget.conwithdrawamount,
-                                  enabled: mmems,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'[0-9]')),
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  onChanged: (value) {
-                                    if (value.isNotEmpty) {
-                                      double enteredValue = double.parse(value);
-                                      if (enteredValue >=
-                                          widget.selectedmemberss
-                                              .owndepositamount) {
-                                        widget.conwithdrawamount.text = widget
-                                            .selectedmemberss.owndepositamount
-                                            .toString();
-                                      }
-                                    }
-                                    setState(() {});
-                                  },
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Enter Amount",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
-                                  ),
-                                ),
+                                child: Text(widget.mmems
+                                    ? "${widget.selectedmemberss.somiteeid} - ${widget.selectedmemberss.somiteename}"
+                                    .toString()
+                                    : ""),
                               ),
                             ],
                           ),
@@ -277,10 +340,13 @@ class _MemberSelectionState extends State<MemberSelection> {
                       ),
                       Column(
                         children: [
+                          SizedBox(
+                            height: 60,
+                          ),
                           Row(
                             children: [
                               Text(
-                                "Deposit Amount :",
+                                "Branch Name :",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -291,62 +357,12 @@ class _MemberSelectionState extends State<MemberSelection> {
                               ),
                               SizedBox(
                                 width: 300,
-                                child: Text(mmems
-                                    ? widget.selectedmemberss.owndepositamount
+                                child: Text(widget.mmems
+                                    ? widget.selectedsamitee.branch
                                         .toString()
                                     : ""),
                               ),
                             ],
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Remarks',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 14),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: ' *',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red,
-                                            fontSize: 14)),
-                                    TextSpan(
-                                        text: ' :',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 14)),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 110,
-                              ),
-                              SizedBox(
-                                width: 300,
-                                child: TextField(
-                                  controller: widget.conremarks,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: AppColor_greyBorder,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColor_greyBorder),
-                                    ),
-                                    hintText: "Member Deposit Withdraw",
-                                    hintStyle: TextStyle(
-                                      color: AppColor_greyText,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 80,
                           ),
                         ],
                       ),
@@ -443,7 +459,6 @@ class _MemberSelectionState extends State<MemberSelection> {
                                             (Memberss item, String query) {
                                           return item.filterFn(query);
                                         },
-                                        enabled: widget.memberssselected,
                                         popupProps: PopupProps.menu(
                                           showSearchBox: true,
                                           itemBuilder: (BuildContext context,
@@ -508,7 +523,6 @@ class _MemberSelectionState extends State<MemberSelection> {
                                             widget.selectedmemberss = newValue;
                                             widget.setupmemberss(widget.memberss
                                                 .indexOf(newValue!));
-                                            widget.memberssselected = true;
                                           });
                                         },
                                         items: widget.memberss,
@@ -521,68 +535,22 @@ class _MemberSelectionState extends State<MemberSelection> {
                               ),
                               Row(
                                 children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Withdraw Amount',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 14),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: ' *',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                                fontSize: 14)),
-                                        TextSpan(
-                                            text: ' :',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14)),
-                                      ],
+                                  Text(
+                                    "Samitee Name :",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 10,
+                                    width: 65,
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: TextField(
-                                      controller: widget.conwithdrawamount,
-                                      enabled: mmems,
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      onChanged: (value) {
-                                        if (value.isNotEmpty) {
-                                          double enteredValue =
-                                              double.parse(value);
-                                          if (enteredValue >=
-                                              widget.selectedmemberss
-                                                  .owndepositamount) {
-                                            widget.conwithdrawamount.text =
-                                                widget.selectedmemberss
-                                                    .owndepositamount
-                                                    .toString();
-                                          }
-                                        }
-                                        setState(() {});
-                                      },
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Enter Amount",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                        ),
-                                      ),
-                                    ),
+                                    child: Text(widget.mmems
+                                        ? "${widget.selectedmemberss.somiteeid} - ${widget.selectedmemberss.somiteename}"
+                                        .toString()
+                                        : ""),
                                   ),
                                 ],
                               ),
@@ -596,10 +564,13 @@ class _MemberSelectionState extends State<MemberSelection> {
                           ),
                           Column(
                             children: [
+                              SizedBox(
+                                height: 140,
+                              ),
                               Row(
                                 children: [
                                   Text(
-                                    "Deposit Amount :",
+                                    "Branch Name :",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -610,64 +581,13 @@ class _MemberSelectionState extends State<MemberSelection> {
                                   ),
                                   SizedBox(
                                     width: 300,
-                                    child: Text(mmems
+                                    child: Text(widget.mmems
                                         ? widget
-                                            .selectedmemberss.owndepositamount
+                                            .selectedsamitee.branch
                                             .toString()
                                         : ""),
                                   ),
                                 ],
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Remarks',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 14),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: ' *',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                                fontSize: 14)),
-                                        TextSpan(
-                                            text: ' :',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14)),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 80,
-                                  ),
-                                  SizedBox(
-                                    width: 300,
-                                    child: TextField(
-                                      controller: widget.conremarks,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Member Deposit Withdraw",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 80,
                               ),
                             ],
                           ),
@@ -763,7 +683,6 @@ class _MemberSelectionState extends State<MemberSelection> {
                                             (Memberss item, String query) {
                                           return item.filterFn(query);
                                         },
-                                        enabled: widget.memberssselected,
                                         popupProps: PopupProps.menu(
                                           showSearchBox: true,
                                           itemBuilder: (BuildContext context,
@@ -828,7 +747,6 @@ class _MemberSelectionState extends State<MemberSelection> {
                                             widget.selectedmemberss = newValue;
                                             widget.setupmemberss(widget.memberss
                                                 .indexOf(newValue!));
-                                            widget.memberssselected = true;
                                           });
                                         },
                                         items: widget.memberss,
@@ -839,71 +757,25 @@ class _MemberSelectionState extends State<MemberSelection> {
                               SizedBox(
                                 height: 40,
                               ),
+
                               Row(
                                 children: [
-                                  RichText(
-                                    text: const TextSpan(
-                                      text: 'Withdraw Amount',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 8),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: ' *',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                                fontSize: 8)),
-                                        TextSpan(
-                                            text: ' :',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 8)),
-                                      ],
+                                  Text(
+                                    "Samitee Name :",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
+                                  SizedBox(
+                                    width: 65,
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: TextField(
-                                      controller: widget.conwithdrawamount,
-                                      enabled: mmems,
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      onChanged: (value) {
-                                        if (value.isNotEmpty) {
-                                          double enteredValue =
-                                              double.parse(value);
-                                          if (enteredValue >=
-                                              widget.selectedmemberss
-                                                  .owndepositamount) {
-                                            widget.conwithdrawamount.text =
-                                                widget.selectedmemberss
-                                                    .owndepositamount
-                                                    .toString();
-                                          }
-                                        }
-                                        setState(() {});
-                                      },
-                                      decoration: const InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Enter Amount",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                          fontSize: 8,
-                                        ),
-                                      ),
-                                    ),
+                                    child: Text(widget.mmems
+                                        ? "${widget.selectedmemberss.somiteeid} - ${widget.selectedmemberss.somiteename}"
+                                        .toString()
+                                        : ""),
                                   ),
                                 ],
                               ),
@@ -917,10 +789,13 @@ class _MemberSelectionState extends State<MemberSelection> {
                           ),
                           Column(
                             children: [
+                              SizedBox(
+                                height: 130,
+                              ),
                               Row(
                                 children: [
                                   Text(
-                                    "Deposit Amount :",
+                                    "Branch Name :",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 9,
@@ -931,65 +806,13 @@ class _MemberSelectionState extends State<MemberSelection> {
                                   ),
                                   SizedBox(
                                     width: 200,
-                                    child: Text(mmems
+                                    child: Text(widget.mmems
                                         ? widget
-                                            .selectedmemberss.owndepositamount
+                                            .selectedsamitee.branch
                                             .toString()
                                         : ""),
                                   ),
                                 ],
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Remarks',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 8),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: ' *',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                                fontSize: 8)),
-                                        TextSpan(
-                                            text: ' :',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 8)),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 40,
-                                  ),
-                                  SizedBox(
-                                    width: 200,
-                                    child: TextField(
-                                      controller: widget.conremarks,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: AppColor_greyBorder,
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColor_greyBorder),
-                                        ),
-                                        hintText: "Member Deposit Withdraw",
-                                        hintStyle: TextStyle(
-                                          color: AppColor_greyText,
-                                          fontSize: 8,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 80,
                               ),
                             ],
                           ),
