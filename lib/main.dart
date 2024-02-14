@@ -22,6 +22,7 @@ import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
+import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
@@ -358,6 +359,12 @@ class MyApp extends StatelessWidget {
             middlewares: [AuthMiddleware()]),     GetPage(
             name: existingmemberregistrationPageRoute,
             page: () => ExistingSamiteeMember(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),    GetPage(
+            name: newcustomerregistrationPageRoute,
+            page: () => NewCustomerRegistration(
               appbool: appbool,
               navbool: navboolcbs,
             ),
