@@ -27,62 +27,11 @@ class IndividualCustomerRegistration extends StatefulWidget {
 class _IndividualCustomerRegistrationState
     extends State<IndividualCustomerRegistration> {
   int _selectedValue = 1;
-  final _consomitiname = TextEditingController();
-  final _conphone = TextEditingController();
-  final _conbranchname = TextEditingController();
-  final _conaddress = TextEditingController();
 
   void _save() {
-    //   String name = _consomitiname.text;
-    //   String phone = _conphone.text;
-    //   String branch = _conbranchname.text;
-    //   String address = _conaddress.text;
-    //
-    //   if (name.isEmpty || phone.isEmpty || branch.isEmpty || address.isEmpty) {
-    //     Get.snackbar("Somitee Registration Failed.", "All Fields are Required",
-    //         snackPosition: SnackPosition.BOTTOM,
-    //         colorText: Colors.white,
-    //         backgroundColor: Colors.red,
-    //         margin: EdgeInsets.zero,
-    //         duration: const Duration(milliseconds: 2000),
-    //         boxShadows: [
-    //           BoxShadow(
-    //               color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-    //         ],
-    //         borderRadius: 0);
-    //   }
-    //   else {
-    //     const _chars = '1234567890';
-    //     Random _rnd = Random();
-    //     String getRandomString(int length) =>
-    //         String.fromCharCodes(Iterable.generate(
-    //             length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    //     String ss = getRandomString(8);
-    //     FirebaseFirestore.instance.collection('Somitee').doc(ss).set({
-    //       'Name': name,
-    //       'Phone': phone,
-    //       'Branch': branch,
-    //       'Address': address,
-    //       'Active': 0,
-    //       'Closed': 0,
-    //       'Formation Date': DateTime.now(),
-    //       'Last Edited': DateTime.now(),
-    //     }).then((value) {
-    //       Get.offNamed(somiteelistPageRoute);
-    //       Get.snackbar(
-    //           "Somitee Added Successfully.", "Redirecting to Somitee List Page.",
-    //           snackPosition: SnackPosition.BOTTOM,
-    //           colorText: Colors.white,
-    //           backgroundColor: Colors.green,
-    //           margin: EdgeInsets.zero,
-    //           duration: const Duration(milliseconds: 2000),
-    //           boxShadows: [
-    //             const BoxShadow(
-    //                 color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-    //           ],
-    //           borderRadius: 0);
-    //     }).catchError((error) => print("Failed to add user: $error"));
-    //   }
+    if(_selectedValue==1){
+      Get.toNamed(existingmemberregistrationPageRoute);
+    }
   }
 
   @override
@@ -100,7 +49,7 @@ class _IndividualCustomerRegistrationState
               margin: EdgeInsets.only(top: 125),
               child: CustomProgressBar(
                 totalCheckpoints: 9,
-                currentCheckpoint:5,
+                currentCheckpoint:0,
               ),
             ),
 

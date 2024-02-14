@@ -20,6 +20,7 @@ import 'Model/auth_middleware.dart';
 import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
+import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
@@ -161,13 +162,7 @@ class MyApp extends StatelessWidget {
               navbool: navbool,
             ),
             middlewares: [AuthMiddleware()]),
-        GetPage(
-            name: individualmemberregistrationPageRoute,
-            page: () => IndividualCustomerRegistration(
-                  appbool: appbool,
-                  navbool: navboolcbs,
-                ),
-            middlewares: [AuthMiddleware()]),    GetPage(
+      GetPage(
             name: depositwithdrawPageRoute,
             page: () => DepositWithDwarNormal(
               appbool: appbool,
@@ -351,63 +346,23 @@ class MyApp extends StatelessWidget {
                   navbool: navbool,
                 ),
             middlewares: [AuthMiddleware()]),
+
+
+
+        GetPage(
+            name: individualmemberregistrationPageRoute,
+            page: () => IndividualCustomerRegistration(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),     GetPage(
+            name: existingmemberregistrationPageRoute,
+            page: () => ExistingSamiteeMember(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
       ],
-      // onGenerateRoute: (settings) {
-      //   switch (settings.name) {
-      //     // 2nd navbar
-      //     case 'Member Management':
-      //       return PageTransition(
-      //           child: MemberManagement(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Transaction':
-      //       return PageTransition(
-      //           child: Transaction(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Loan':
-      //       return PageTransition(
-      //           child: Loan(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Reports':
-      //       return PageTransition(
-      //           child: Reports(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Accounts':
-      //       return PageTransition(
-      //           child: Accounts(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Employee':
-      //       return PageTransition(
-      //           child: Employee(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Samitee Management':
-      //       return PageTransition(
-      //           child: SamiteeManagement(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Calculators':
-      //       return PageTransition(
-      //           child: Calculators(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //     case 'Special Consideration':
-      //       return PageTransition(
-      //           child: SpecialConsideration(navbool),
-      //           type: PageTransitionType.fade,
-      //           settings: settings);
-      //
-      //     // case 'FoodView':
-      //     //   return PageTransition(
-      //     //       child: FoodView(sideNavbool),
-      //     //       type: PageTransitionType.fade,
-      //     //       settings: settings);
-      //   }
-      // },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

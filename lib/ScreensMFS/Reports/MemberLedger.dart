@@ -105,24 +105,73 @@ class _MemberLedgerState extends State<MemberLedger> {
     List<Itemvaluess> itemvaluess = [];
     _totalamount = 0;
     balancelist = [];
+
+    DateTime startDateTime = DateTime(selectedstartDate.year, selectedstartDate.month, selectedstartDate.day);
+    DateTime endDateTime = DateTime(selectedendDate.year, selectedendDate.month, selectedendDate.day, 23, 59, 59, 999);
+
     await FirebaseFirestore.instance
         .collection('Member')
         .doc(selectedmemberss.id)
         .get()
         .then((element) {
       if (element["Status"]) {
+        int s = 0;
         for (int i = 0; i < element["Deposits"].length; i++) {
-          itemvaluess.add(Itemvaluess(
-              sl: i,
-              date: element["Deposits"][i]['date'],
-              value: element["Deposits"][i]['value'],
-              remarks: element["Deposits"][i]['remarks']));
-          _totalamount = _totalamount + element["Deposits"][i]['value'];
-          if (balancelist.isEmpty) {
-            balancelist.add(element["Deposits"][i]['value']);
-          } else {
-            balancelist.add(element["Deposits"][i]['value'] +
-                balancelist[balancelist.length - 1]);
+          DateTime depositDate = DateTime.parse(element["Deposits"][i]['date']).toLocal();
+
+          if (depositDate.isAfter(startDateTime) && depositDate.isBefore(endDateTime) || depositDate == startDateTime || depositDate==endDateTime) {
+            itemvaluess.add(Itemvaluess(
+                sl:s ,
+                date: element["Deposits"][i]['date'],
+                value: element["Deposits"][i]['value'],
+                remarks: element["Deposits"][i]['remarks']));
+            _totalamount += element["Deposits"][i]['value'];
+            if (balancelist.isEmpty) {
+              balancelist.add(element["Deposits"][i]['value']);
+            } else {
+              balancelist.add(element["Deposits"][i]['value'] + balancelist[balancelist.length - 1]);
+            }
+            s++;
+          }
+        }
+      }
+    });
+    return itemvaluess;
+  }
+  Future<List<Itemvaluess>> getloanlist() async {
+    List<Itemvaluess> itemvaluess = [];
+    _totalamount = 0;
+    balancelist = [];
+
+    DateTime startDateTime = DateTime(selectedstartDate.year, selectedstartDate.month, selectedstartDate.day);
+    DateTime endDateTime = DateTime(selectedendDate.year, selectedendDate.month, selectedendDate.day, 23, 59, 59, 999);
+
+
+
+
+    await FirebaseFirestore.instance
+        .collection('Member')
+        .doc(selectedmemberss.id)
+        .get()
+        .then((element) {
+      if (element["Status"]) {
+        int s = 0;
+        for (int i = 0; i < element["Deposits"].length; i++) {
+          DateTime depositDate = DateTime.parse(element["Deposits"][i]['date']).toLocal();
+
+          if (depositDate.isAfter(startDateTime) && depositDate.isBefore(endDateTime) || depositDate == startDateTime || depositDate==endDateTime) {
+            itemvaluess.add(Itemvaluess(
+                sl:s ,
+                date: element["Deposits"][i]['date'],
+                value: element["Deposits"][i]['value'],
+                remarks: element["Deposits"][i]['remarks']));
+            _totalamount += element["Deposits"][i]['value'];
+            if (balancelist.isEmpty) {
+              balancelist.add(element["Deposits"][i]['value']);
+            } else {
+              balancelist.add(element["Deposits"][i]['value'] + balancelist[balancelist.length - 1]);
+            }
+            s++;
           }
         }
       }
@@ -134,8 +183,6 @@ class _MemberLedgerState extends State<MemberLedger> {
     if (selectedmemberss == null ||
         selectedledgertype == null ||
         selectedStatus == null) {
-
-
       Get.snackbar("Member Ledger Report Generation Failed.",
           "Some Required Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,

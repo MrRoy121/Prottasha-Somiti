@@ -31,12 +31,12 @@ class _LoanSanctionState extends State<LoanSanction> {
   List<String> ssomitee = [];
   List<Memberss> allmemberss = [];
   List<Memberss> memberss = [];
+  var selectedmemberss;
+  var sselectedmemberss;
   bool memberselection = false;
   var selectedsomiti;
   var selectedloanpurpose;
   var sselectedsomiti;
-  var selectedmemberss;
-  var sselectedmemberss;
   var _selectedinstalment;
   var _selectedscheme;
   var _selectedloantype;

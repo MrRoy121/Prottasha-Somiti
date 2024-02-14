@@ -134,8 +134,11 @@ class PdfMemberss {
         Container(
           margin: EdgeInsets.only(
               left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight,
-              top: 25),
+              right: PdfPageFormat.a4.marginRight),
+
+          decoration: BoxDecoration(
+              border:
+              Border.all(width: 0.5, color: PdfColors.black)),
           child: buildTotal(invoice, total, ttfbold),
         ),
       ],
@@ -168,7 +171,7 @@ class PdfMemberss {
 
     final data = invoice.map((item) {
       return [
-        item.date + "TR0001",
+        item.date + "TR00"+ "${item.sl + 1}",
         item.remarks,
         '',
         item.value,
@@ -207,26 +210,24 @@ class PdfMemberss {
               child: Row(children: [
                 Expanded(
                   child: Container(
-                      color: PdfColor.fromHex("#1C1F22"),
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                      child: Text("Total ",
+                      child: Text("Total Debit/Credit :",
                           style: TextStyle(
                               font: ttfbold,
-                              color: PdfColors.white,
+                              color: PdfColors.black,
                               fontSize: 10))),
                   flex: 5,
                 ),
-                Container(width: 2, height: 50, color: PdfColors.white),
+                Container(width: 0.5, height: 30, color: PdfColors.black),
                 Expanded(
                   child: Container(
-                    color: PdfColor.fromHex("#1C1F22"),
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     child: Text(total.toString(),
                         style: TextStyle(
                             font: ttfbold,
-                            color: PdfColors.white,
+                            color: PdfColors.black,
                             fontSize: 10)),
                   ),
                   flex: 3,
