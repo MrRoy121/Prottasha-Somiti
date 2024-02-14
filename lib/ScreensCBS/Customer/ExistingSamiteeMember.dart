@@ -9,6 +9,7 @@ import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:prottashasomit/ScreensCBS/Widgets/ContactInfo.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/somitee.dart';
@@ -461,7 +462,8 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
                   ),
 
                   Padding(
-                    padding: EdgeInsets.only(left: ScreenWidth / 21.94, top: 40),
+                    padding:
+                        EdgeInsets.only(left: ScreenWidth / 21.94, top: 40),
                     child: desktop
                         ? Row(
                             children: [
@@ -497,12 +499,9 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
 
                   Container(
                     margin: EdgeInsets.only(top: 40),
-                    child: ContactForm(
-                        mobiletype: mobiletype,
-                        mobileno: _mobileno,
-                        setupmobileType: _setupmobileType,
-                        preseentaddress: _preseentaddress,
-                        parmaaddress: _parmaaddress),
+                    child: ContactInfo(
+                        memberss: selectedmemberss,
+                        selectedmember: mmems),
                   ),
 
                   // OTHER'S INFORMATION
@@ -523,7 +522,9 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
                         remarks: _remarks),
                   ),
 
-                  SizedBox(height: 50,),
+                  SizedBox(
+                    height: 50,
+                  ),
                 ],
               ),
             ),
