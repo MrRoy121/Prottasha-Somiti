@@ -14,6 +14,8 @@ import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
+import '../../ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
+import '../Widgets/BasicInfoWidget.dart';
 import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
@@ -425,16 +427,22 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-
-            Container(
-              margin: EdgeInsets.only(top: 125),
-              child: CustomProgressBar(
-                totalCheckpoints: 9,
-                currentCheckpoint:1,
-              ),
-            ),
-
             Container(margin:EdgeInsets.only(top: 20),child: Column(children: [
+
+              Container(
+                margin: EdgeInsets.only(top: 125),
+                child: CustomProgressBar(
+                  totalCheckpoints: 9,
+                  currentCheckpoint:1,
+                ),
+              ),
+
+              BasicInfoWidget(
+                title: 'Basic Information',
+                onsubmit: _save,onduplecate: (){},
+                onclear: _onclear,
+              ),
+
               // Container(
               //   margin: EdgeInsets.only(top: 100, left: 50),
               //   child: SamiteeSelection(
