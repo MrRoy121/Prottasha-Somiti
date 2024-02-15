@@ -54,3 +54,4 @@ const newcustomerregistrationPageRoute = "/newcustomerregistrationPageRoute";
 
 
 const regularaccountopenPageRoute = "/regularaccountopenPageRoute";
+const regulardepositaccountopenPageRoute = "/regulardepositaccountopenPageRoute";

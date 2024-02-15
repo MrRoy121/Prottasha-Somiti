@@ -30,9 +30,9 @@ class _RegularACOpenState
 
   void _save() {
     if(_selectedValue==1){
-      Get.toNamed(existingmemberregistrationPageRoute);
+      Get.toNamed(regulardepositaccountopenPageRoute);
     }else if(_selectedValue==2){
-      Get.toNamed(newcustomerregistrationPageRoute);
+
     }
   }
 

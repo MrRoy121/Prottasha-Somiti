@@ -21,6 +21,7 @@ import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
 import 'ScreensCBS/Account/RegularACOpen.dart';
+import 'ScreensCBS/Account/RegularDepositAccount.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
@@ -373,6 +374,13 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: regularaccountopenPageRoute,
             page: () => RegularACOpen(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: regulardepositaccountopenPageRoute,
+            page: () => RegularDepositAccount(
               appbool: appbool,
               navbool: navboolcbs,
             ),
