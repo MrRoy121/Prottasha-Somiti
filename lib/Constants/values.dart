@@ -47,6 +47,9 @@ const List<String> ReverseTypeList = [
   'Partial Reverse',
 ];
 
+const List<String> CustomerTypeList = [
+  'Individual',
+];
 const List<String> LedgerTypeList = [
   'Member Deposit Ledger',
   'Member Loan Ledger',
