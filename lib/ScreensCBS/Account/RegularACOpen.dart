@@ -12,20 +12,20 @@ import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 
-class IndividualCustomerRegistration extends StatefulWidget {
+class RegularACOpen extends StatefulWidget {
   NavboolCBS navbool;
   Appbool appbool;
 
-  IndividualCustomerRegistration(
+  RegularACOpen(
       {required this.appbool, required this.navbool});
 
   @override
-  State<IndividualCustomerRegistration> createState() =>
-      _IndividualCustomerRegistrationState();
+  State<RegularACOpen> createState() =>
+      _RegularACOpenState();
 }
 
-class _IndividualCustomerRegistrationState
-    extends State<IndividualCustomerRegistration> {
+class _RegularACOpenState
+    extends State<RegularACOpen> {
   int _selectedValue = 1;
 
   void _save() {
@@ -50,8 +50,8 @@ class _IndividualCustomerRegistrationState
             Container(
               margin: EdgeInsets.only(top: 125),
               child: CustomProgressBar(
-                totalCheckpoints: 9,
-                currentCheckpoint:0,customeregi: true,
+                totalCheckpoints: 8,
+                currentCheckpoint:0,customeregi: false,
               ),
             ),
 
@@ -88,7 +88,7 @@ class _IndividualCustomerRegistrationState
                         Padding(
                           padding: EdgeInsets.only(left: ScreenWidth / 38.4),
                           child: Text(
-                            "Selection of Customer Creation",
+                            "Regular A/c Opening (Choose A/c Type)",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -211,7 +211,7 @@ class _IndividualCustomerRegistrationState
                                 },activeColor: AppColor_greyText,
                               ),
                             ),SizedBox(width: 10,),
-                            const Text('Existing Samitee Member', style: TextStyle(
+                            const Text('Savings Account', style: TextStyle(
                                 fontSize:16),),
                           ],
                         ),
@@ -228,27 +228,10 @@ class _IndividualCustomerRegistrationState
                                 },activeColor: AppColor_greyText,
                               ),
                             ),SizedBox(width: 10,),
-                            Text('New Customer', style: TextStyle(
+                            Text('Short Notice Deposits (CBS) (SND (CBS))', style: TextStyle(
                                 fontSize:16),),
                           ],
                         ),
-                        Row(
-                          children: [Transform.scale(
-                            scale: 1.5,
-                              child: Radio(
-                                value: 3,
-                                groupValue: _selectedValue,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedValue = newValue as int;
-                                  });
-                                },activeColor: AppColor_greyText,
-                              ),
-                            ),SizedBox(width: 10,),
-                            Text('Pending Entry', style: TextStyle(
-                                fontSize:16),),
-                          ],
-                        )
                       ],
                     ),
                   ),

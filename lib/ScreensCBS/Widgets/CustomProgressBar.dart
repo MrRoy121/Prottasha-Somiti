@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../Constants/values.dart';
+
 class CustomProgressBar extends StatelessWidget {
   final int totalCheckpoints;
   final int currentCheckpoint;
+  bool customeregi;
 
   CustomProgressBar(
-      {required this.totalCheckpoints, required this.currentCheckpoint});
+      {required this.totalCheckpoints, required this.customeregi, required this.currentCheckpoint});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,8 @@ class CustomProgressBar extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(
             top: 7,
-            left: 120,
-            right: 120,
+            left: 130,
+            right: 140,
           ),
           child: LinearProgressIndicator(
             backgroundColor: Colors.grey,
@@ -27,7 +30,7 @@ class CustomProgressBar extends StatelessWidget {
           children: List.generate(
             totalCheckpoints,
             (index) => Checkpoint(
-              index: index,
+              index: index,customeregi: customeregi,
               isCompleted: index < currentCheckpoint,
               isprevious: index == currentCheckpoint,
             ),
@@ -42,19 +45,11 @@ class Checkpoint extends StatelessWidget {
   final int index;
   final bool isCompleted;
   final bool isprevious;
-  List<String> ssss = [
-    "Selection",
-    'Basic Info',
-    'Customer Photo',
-    'Address\nInformation',
-    'Contact\nInformation',
-    'Related\nDocuments',
-    'Bank\nA/C Info',
-    'Know Your\nCustomer',
-    'Review'
-  ];
+  bool customeregi;
+
+
   Checkpoint(
-      {required this.index,
+      {required this.index,required this.customeregi,
       required this.isCompleted,
       required this.isprevious});
 
@@ -85,7 +80,7 @@ class Checkpoint extends StatelessWidget {
           ),
           SizedBox(height: 4.0),
           Text(
-            ssss[index],
+            customeregi?  CustomerRegi[index]: RegularAccopen[index],
             textAlign: TextAlign.center,
           ),
         ],

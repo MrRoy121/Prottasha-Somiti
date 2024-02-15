@@ -463,7 +463,7 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
                     margin: EdgeInsets.only(top: 125),
                     child: CustomProgressBar(
                       totalCheckpoints: 9,
-                      currentCheckpoint: 1,
+                      currentCheckpoint: 1,customeregi: true,
                     ),
                   ),
 

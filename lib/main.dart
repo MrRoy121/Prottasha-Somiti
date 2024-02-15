@@ -20,6 +20,7 @@ import 'Model/auth_middleware.dart';
 import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
+import 'ScreensCBS/Account/RegularACOpen.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
@@ -138,37 +139,37 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: depositcollectionrequestPageRoute,
             page: () => DepositCollectionRequest(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: depositcorrectionrequestPageRoute,
             page: () => DepositCorrectionRequest(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: depositcorrectionrequestlistPageRoute,
             page: () => DepositCorrectionRequestList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: withdrawlistPageRoute,
             page: () => WidthdrawList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
-      GetPage(
+        GetPage(
             name: depositwithdrawPageRoute,
             page: () => DepositWithDwarNormal(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloaneditPageRoute,
@@ -348,23 +349,30 @@ class MyApp extends StatelessWidget {
                 ),
             middlewares: [AuthMiddleware()]),
 
-
-
         GetPage(
             name: individualmemberregistrationPageRoute,
             page: () => IndividualCustomerRegistration(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
-            middlewares: [AuthMiddleware()]),     GetPage(
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
             name: existingmemberregistrationPageRoute,
             page: () => ExistingSamiteeMember(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
-            middlewares: [AuthMiddleware()]),    GetPage(
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
             name: newcustomerregistrationPageRoute,
             page: () => NewCustomerRegistration(
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: regularaccountopenPageRoute,
+            page: () => RegularACOpen(
               appbool: appbool,
               navbool: navboolcbs,
             ),

@@ -50,6 +50,29 @@ const List<String> ReverseTypeList = [
 const List<String> CustomerTypeList = [
   'Individual',
 ];
+
+List<String> CustomerRegi = [
+  "Selection",
+  'Basic Info',
+  'Customer Photo',
+  'Address\nInformation',
+  'Contact\nInformation',
+  'Related\nDocuments',
+  'Bank\nA/C Info',
+  'Know Your\nCustomer',
+  'Review'
+];
+
+List<String> RegularAccopen = [
+  "Account Type",
+  'Account Information',
+  'Account Operator',
+  'Nominee\nInformation',
+  'Introducer\nInformation',
+  'Transaction\nProfile',
+  'Know Your\nCustomer',
+  'Final Submission'
+];
 const List<String> LedgerTypeList = [
   'Member Deposit Ledger',
   'Member Loan Ledger',
