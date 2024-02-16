@@ -723,6 +723,198 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                       ),
                     )
                   : SizedBox(),
+              arr[2]
+                  ? Container(
+                margin: EdgeInsets.only(left: 340),
+                color: AppColor_Blue,
+                // height: 800,
+                width: 200,
+                child: Column(
+                  children: [
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
+                            itemColor14 = AppColor_hover1;
+                            textColor14 = Colors.white;
+                          } else {
+                            itemColor14 = AppColor_Blue;
+                            textColor14 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                        Get.toNamed(cashdeposittransactionPageRoute);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 20, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor14,
+                        child: Row(
+                          children: [
+                            Text(
+                              "Cash Deposit",
+                              style: TextStyle(
+                                color: textColor14,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
+                            itemColor15 = AppColor_hover1;
+                            textColor15 = Colors.white;
+                          } else {
+                            itemColor15 = AppColor_Blue;
+                            textColor15 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 20, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor15,
+                        child: Row(
+                          children: [
+                            Text(
+                              "Cash Withdraw",
+                              style: TextStyle(
+                                color: textColor15,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
+                            itemColor16 = AppColor_hover1;
+                            textColor16 = Colors.white;
+                          } else {
+                            itemColor16 = AppColor_Blue;
+                            textColor16 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 20, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor16,
+                        child: Row(
+                          children: [
+                            Text(
+                              "Reverse Request",
+                              style: TextStyle(
+                                color: textColor16,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
+                            itemColor1 = AppColor_hover1;
+                            textColor1 = Colors.white;
+                          } else {
+                            itemColor1 = AppColor_Blue;
+                            textColor1 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 10, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor1,
+                        child: Row(
+                          children: [
+                            Text(
+                              "Transaction Authorization",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: textColor1,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
+                            itemColor18 = AppColor_hover1;
+                            textColor18 = Colors.white;
+                          } else {
+                            itemColor18 = AppColor_Blue;
+                            textColor18 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 10, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor18,
+                        child: Row(
+                          children: [
+                            Text(
+                              "BO Transaction",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: textColor18,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 65,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  : SizedBox(),
               arr[3]
                   ? Container(
                       margin: EdgeInsets.only(left: 480),

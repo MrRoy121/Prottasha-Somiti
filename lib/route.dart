@@ -55,3 +55,10 @@ const newcustomerregistrationPageRoute = "/newcustomerregistrationPageRoute";
 
 const regularaccountopenPageRoute = "/regularaccountopenPageRoute";
 const regulardepositaccountopenPageRoute = "/regulardepositaccountopenPageRoute";
+
+
+
+const cashdeposittransactionPageRoute = "/cashdeposittransactionPageRoute";
+const cashwithdrawtransactionPageRoute = "/cashwithdrawtransactionPageRoute";
+const reverserequesttransactionPageRoute = "/reverserequesttransactionPageRoute";
+const botransfertransactionPageRoute = "/botransfertransactionPageRoute";

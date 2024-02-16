@@ -77,10 +77,9 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
-  Navbool navbool =
-      Navbool(true, false, false, false, false, false, false, false, false);
+  Navbool navbool = Navbool(false, false, false, false, false, false, false, false, false);
+  NavboolCBS navboolcbs = NavboolCBS(false, false, false, false, false);
 
-  NavboolCBS navboolcbs = NavboolCBS(true, false, false, false, false);
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
