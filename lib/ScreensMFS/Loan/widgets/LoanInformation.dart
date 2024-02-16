@@ -152,7 +152,7 @@ class _LoanInformationState extends State<LoanInformation> {
                                         return Container(
                                           padding: EdgeInsets.all(15),
                                           child: Text(
-                                            item.id,
+                                            item.id +" - " +item.membername,
                                           ),
                                         );
                                       },
@@ -190,7 +190,7 @@ class _LoanInformationState extends State<LoanInformation> {
                                         );
                                       } else {
                                         return Text(
-                                          item.id,
+                                          item.id +" - "+item.membername,
                                         );
                                       }
                                     },

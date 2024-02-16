@@ -28,9 +28,11 @@ const List<String> LoanPeriodList = [
   'December'
 ];
 const List<String> LoanPurposeList = [
+  'Business',
   'Rickshaw',
   'Van',
   'Motor Cycle',
+  'Others',
   'Flower Farming',
   'Tailor Training',
   'Bee Farming'
