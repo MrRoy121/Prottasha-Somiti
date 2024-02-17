@@ -886,6 +886,7 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                         });
                       },
                       onTap: () {
+                        Get.toNamed(botransfertransactionPageRoute);
                       },
                       child: Container(
                         padding: EdgeInsets.only(
