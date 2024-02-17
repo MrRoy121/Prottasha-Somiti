@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:prottashasomit/ScreensCBS/Transaction/CashWithdraw.dart';
 import 'package:prottashasomit/ScreensMFS/Reports/DailyGLSummary.dart';
 import 'package:prottashasomit/ScreensMFS/Reports/DailyTransactionList.dart';
 import 'package:prottashasomit/ScreensMFS/Reports/MemberLedger.dart';
@@ -25,6 +26,7 @@ import 'ScreensCBS/Account/RegularDepositAccount.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
+import 'ScreensCBS/Transaction/CashDeposit.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
@@ -373,6 +375,20 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: regularaccountopenPageRoute,
             page: () => RegularACOpen(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: cashdeposittransactionPageRoute,
+            page: () => CashDeposit(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: cashwithdrawtransactionPageRoute,
+            page: () => CashWithdraw(
               appbool: appbool,
               navbool: navboolcbs,
             ),

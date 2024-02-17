@@ -20,6 +20,7 @@ import '../../ScreensMFS/Widget/Appbool.dart';
 import '../../ScreensMFS/Widget/OtherInfo.dart';
 import '../../ScreensMFS/Widget/PersonalInfoForm.dart';
 import '../../ScreensMFS/Widget/SingleRow.dart';
+import '../Widgets/AccountCashDeposit.dart';
 import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
@@ -46,6 +47,7 @@ class _CashDepositState extends State<CashDeposit> {
   var selectedmemberss;
   var sselectedmemberss;
   var selectedsamitee;
+  var selectedcustomertype;
   late Uint8List pickedImage;
 
   @override
@@ -174,6 +176,11 @@ class _CashDepositState extends State<CashDeposit> {
       });
     }
 
+    void _setupcustomertype(int ins) {
+      setState(() {
+        selectedcustomertype = CustomerTypeList[ins];
+      });
+    }
     if (ResponsiveWidth > 1400) {
       desktop = true;
       tablet = false;
@@ -198,7 +205,6 @@ class _CashDepositState extends State<CashDeposit> {
               margin: EdgeInsets.only(top: 100),
               child: Column(
                 children: [
-
                   Container(
                     margin: EdgeInsets.only(top: 30),
                     width: ScreenWidth / 1.097,
@@ -228,169 +234,165 @@ class _CashDepositState extends State<CashDeposit> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: ScreenWidth / 38.4),
+                                padding: EdgeInsets.only(left: ScreenWidth/38.4),
                                 child: Text(
                                   "Cash Deposit",
                                   style: TextStyle(
                                     color: AppColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: ScreenWidth / 96,
+                                    fontSize: ScreenWidth/96,
                                   ),
                                 ),
                               ),
                               Spacer(),
                               InkWell(
                                 onTap: () {
-                                  Get.back();
-                                },
-                                child: Container(
-                                  height: ScreenWidth / 38.4,
-                                  width: ScreenWidth / 15.2,
-                                  color: Colors.blueAccent,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.fast_rewind,
-                                        color: Colors.white,
-                                        size: ScreenWidth / 109.71,
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 212,
-                                      ),
-                                      Text(
-                                        "Previous",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ScreenWidth / 109.71),
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 768,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: ScreenWidth / 153.6,
-                              ),
-                              InkWell(
-                                onTap: () {
                                   _save();
                                 },
                                 child: Container(
-                                  height: ScreenWidth / 38.4,
-                                  width: ScreenWidth / 19.2,
+                                  height: ScreenWidth/38.4,
+                                  width: ScreenWidth/17.07,
                                   color: Colors.green,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.fast_forward,
-                                        color: Colors.white,
-                                        size: ScreenWidth / 109.71,
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 212,
-                                      ),
-                                      Text(
-                                        "Next",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ScreenWidth / 109.71),
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 768,
-                                      ),
-                                    ],
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: ScreenWidth/153.6, left: ScreenWidth/102.4),
+                                    child: Text(
+                                      "✓ Submit",
+                                      style:
+                                      TextStyle(color: Colors.white, fontSize: ScreenWidth/109.71),
+                                    ),
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: ScreenWidth / 153.6,
+                                width: ScreenWidth/153.6,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  _onclear();
+                                },
+                                child: Container(
+                                  height: ScreenWidth/38.4,
+                                  width: ScreenWidth/17.07,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: ScreenWidth/512, left: ScreenWidth/102.4),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.clear_all_sharp,
+                                          color: Colors.white,
+                                          size: ScreenWidth/85.33,
+                                        ),
+                                        SizedBox(
+                                          width: ScreenWidth/307.2,
+                                        ),
+                                        Text(
+                                          "Clear",
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: ScreenWidth/109.71),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  color: AppColor_yellow,
+                                ),
+                              ),
+                              SizedBox(
+                                width: ScreenWidth/153.6,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Container(
+                                  height: ScreenWidth/38.4,
+                                  width: ScreenWidth/30.72,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: ScreenWidth/153.6, left: ScreenWidth/76.8),
+                                    child: Text(
+                                      "X",
+                                      style:
+                                      TextStyle(color: Colors.white, fontSize: ScreenWidth/109.71),
+                                    ),
+                                  ),
+                                  color: Colors.red,
+                                ),
+                              )
+                              ,
+                              SizedBox(
+                                width: ScreenWidth/153.6,
                               ),
                             ],
                           ),
                         ),
                         Expanded(child: SizedBox()),
                         Container(alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,crossAxisAlignment: CrossAxisAlignment.center,
+                          child:
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  Transform.scale(
-                                    scale: 1.5,
-                                    child: Radio(
-                                      value: 1,
-                                      groupValue: _selectedValue,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _selectedValue = newValue as int;
-                                        });
-                                      },activeColor: AppColor_greyText,
+                              SizedBox(width: 250,),
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Customer Type',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: ScreenWidth / 109.71),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: ScreenWidth / 109.71)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: ScreenWidth / 109.71)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 65,
+                              ),
+                              SizedBox(
+                                height: ScreenWidth / 30.72,
+                                width: ScreenWidth / 5.12,
+                                child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: AppColor_greyBorder,
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: AppColor_greyBorder),
                                     ),
-                                  ),SizedBox(width: 10,),
-                                  const Text('Single Account', style: TextStyle(
-                                      fontSize:16),),
-                                ],
-                              ),
-                              Row(
-                                children: [Transform.scale(
-                                  scale: 1.5,
-                                  child: Radio(
-                                    value: 2,
-                                    groupValue: _selectedValue,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _selectedValue = newValue as int;
-                                      });
-                                    },activeColor: AppColor_greyText,
+                                    hintText: "Select",
+                                    hintStyle: TextStyle(
+                                      fontSize: ScreenWidth / 109.71,
+                                      color: AppColor_greyText,
+                                    ),
                                   ),
-                                ),SizedBox(width: 10,),
-                                  Text('Joint Account', style: TextStyle(
-                                      fontSize:16),),
-                                ],
-                              ),
-                              Row(
-                                children: [Transform.scale(
-                                  scale: 1.5,
-                                  child: Radio(
-                                    value: 3,
-                                    groupValue: _selectedValue,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _selectedValue = newValue as int;
-                                      });
-                                    },activeColor: AppColor_greyText,
-                                  ),
-                                ),SizedBox(width: 10,),
-                                  Text('Company Account', style: TextStyle(
-                                      fontSize:16),),
-                                ],
+                                  value: selectedcustomertype,
+                                  onChanged: (newValue) {
+                                      _setupcustomertype(
+                                          CustomerTypeList.indexOf(newValue!));
+                                  },
+                                  items: CustomerTypeList.map((item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style:
+                                        TextStyle(fontSize: ScreenWidth / 109.71),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ],
                           ),
                         ),
                         Expanded(child: SizedBox()),
                       ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    child: MemberSelection(
-                      memberss: memberss,
-                      onclear: _onclear,
-                      onsubmit: _save,
-                      mmems: mmems,
-                      setupmemberss: _setupmemberss,
-                      selectedsamitee: selectedsamitee,
-                      selectedmemberssid: sselectedmemberss,
-                      selectedmemberss: selectedmemberss,
                     ),
                   ),
 
@@ -400,7 +402,7 @@ class _CashDepositState extends State<CashDeposit> {
                     child: desktop
                         ? Row(
                             children: [
-                              PersonalExistinginfo(
+                              AccountCashDeposit(
                                   memberss: selectedmemberss,
                                   selectedmember: mmems),
                               Spacer(),
@@ -412,7 +414,7 @@ class _CashDepositState extends State<CashDeposit> {
                           )
                         : Column(
                             children: [
-                              PersonalExistinginfo(
+                              AccountCashDeposit(
                                   memberss: selectedmemberss,
                                   selectedmember: mmems),
 

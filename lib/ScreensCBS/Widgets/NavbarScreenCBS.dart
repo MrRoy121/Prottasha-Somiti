@@ -778,6 +778,7 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                         });
                       },
                       onTap: () {
+                        Get.toNamed(cashwithdrawtransactionPageRoute);
                       },
                       child: Container(
                         padding: EdgeInsets.only(
