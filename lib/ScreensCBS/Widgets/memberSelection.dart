@@ -10,9 +10,10 @@ class MemberSelection extends StatefulWidget {
   List<Memberss> memberss = [];
   var selectedmemberss;
   var selectedmemberssid;
-  var selectedsamitee;
+  var selectedsamitee;var nid;
   void Function(int) setupmemberss;
   void Function() onsubmit;
+  void Function() showinfo;
   void Function() onclear;
   bool mmems;
 
@@ -21,7 +22,9 @@ class MemberSelection extends StatefulWidget {
       required this.onclear,
       required this.setupmemberss,
         required this.mmems,
+        required this.nid,
       required this.memberss,
+        required this.showinfo,
         required this.selectedsamitee,
       required this.selectedmemberss,
       required this.selectedmemberssid});
@@ -116,7 +119,9 @@ class _MemberSelectionState extends State<MemberSelection> {
                         width: 10,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          widget.showinfo();
+                        },
                         child: Container(
                           height: 40,
                           width: 180,
@@ -340,9 +345,49 @@ class _MemberSelectionState extends State<MemberSelection> {
                       ),
                       Column(
                         children: [
-                          SizedBox(
-                            height: 60,
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'National ID/ Birth Certificate No',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: ScreenWidth / 109.71),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: ScreenWidth / 109.71)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: ScreenWidth / 109.71)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 22,
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 5.12,
+                                height: ScreenWidth / 30.72,
+                                child: TextField(
+                                  controller: widget.nid,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          SizedBox(
+                            height: 40,
+                          ),
+
                           Row(
                             children: [
                               Text(
@@ -363,6 +408,9 @@ class _MemberSelectionState extends State<MemberSelection> {
                                     : ""),
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 40,
                           ),
                         ],
                       ),

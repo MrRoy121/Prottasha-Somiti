@@ -392,7 +392,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                     child: MemberSelection(
                       memberss: memberss,
                       onclear: _onclear,
-                      onsubmit: _save,
+                      onsubmit: _save,showinfo: (){},nid: TextEditingController(),
                       mmems: mmems,
                       setupmemberss: _setupmemberss,
                       selectedsamitee: selectedsamitee,

@@ -43,6 +43,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
   List<Memberss> memberss = [];
   bool mmems = false;
   var selectedmemberss;
+  var nid = TextEditingController();
   var sselectedmemberss;
   var selectedsamitee;
   late Uint8List pickedImage;
@@ -127,16 +128,54 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
 
   }
 
-  Future<void> _selectImage() async {
-    final fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
+  void _showinfo() async {
+   if(selectedmemberss == null){
+     Get.snackbar(
+         "Select a Member First", "Members National ID or Birth Certificate No Should be Provided!",
+         snackPosition: SnackPosition.BOTTOM,
+         colorText: Colors.white,
+         backgroundColor: Colors.red,
+         margin: EdgeInsets.zero,
+         duration: const Duration(milliseconds: 2000),
+         boxShadows: [
+           const BoxShadow(
+               color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+         ],
+         borderRadius: 0);
+   }else if(nid.text.isEmpty){
+     Get.snackbar(
+         "Select Give The National ID or Birth Certificate Number", "Members National ID or Birth Certificate No Should be Provided!",
+         snackPosition: SnackPosition.BOTTOM,
+         colorText: Colors.white,
+         backgroundColor: Colors.red,
+         margin: EdgeInsets.zero,
+         duration: const Duration(milliseconds: 2000),
+         boxShadows: [
+           const BoxShadow(
+               color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+         ],
+         borderRadius: 0);
+   }else{
+     if(selectedmemberss.birthregi == nid.text || selectedmemberss.nationalid == nid.text){
       setState(() {
-        pickedImage = fromPicker;
-        img = true;
+        mmems = true;
       });
-    }
+     }else{
+       Get.snackbar(
+           "Member View Failed", "Members National ID or Birth Certificate No Did not Matched!",
+           snackPosition: SnackPosition.BOTTOM,
+           colorText: Colors.white,
+           backgroundColor: Colors.red,
+           margin: EdgeInsets.zero,
+           duration: const Duration(milliseconds: 2000),
+           boxShadows: [
+             BoxShadow(
+                 color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+           ],
+           borderRadius: 0);
+     }
+   }
   }
-
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -151,6 +190,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
 
     Future<void> _setupmemberss(int ins) async {
       selectedmemberss = memberss[ins];
+      print(selectedmemberss.birthregi);
       await FirebaseFirestore.instance
           .collection('Somitee')
           .doc(selectedmemberss.somiteeid)
@@ -167,7 +207,6 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
             phone: element["Phone"],
             branch: element["Branch"],
             sl: 0);
-        mmems = true;
         setState(() {});
       });
     }
@@ -196,17 +235,15 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
               margin: EdgeInsets.only(top: 100),
               child: Column(
                 children: [
-                  Container(
-                    child: MemberSelection(
-                      memberss: memberss,
-                      onclear: _onclear,
-                      onsubmit: _save,
-                      mmems: mmems,
-                      setupmemberss: _setupmemberss,
-                      selectedsamitee: selectedsamitee,
-                      selectedmemberssid: sselectedmemberss,
-                      selectedmemberss: selectedmemberss,
-                    ),
+                  MemberSelection(
+                    memberss: memberss,nid: nid,
+                    onclear: _onclear,
+                    onsubmit: _save,
+                    mmems: mmems,showinfo: _showinfo,
+                    setupmemberss: _setupmemberss,
+                    selectedsamitee: selectedsamitee,
+                    selectedmemberssid: sselectedmemberss,
+                    selectedmemberss: selectedmemberss,
                   ),
 
                   Padding(
@@ -219,7 +256,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
                                   memberss: selectedmemberss,
                                   selectedmember: mmems),
                               Spacer(),
-                              selectedmemberss == null
+                              !mmems
                                   ? ImageMember(imgurl: '')
                                   : ImageMember(
                                       imgurl: selectedmemberss.imageurl),
@@ -236,7 +273,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
                                 height: 50,
                               ),
 
-                              selectedmemberss == null
+                              !mmems
                                   ? ImageMember(imgurl: '')
                                   : ImageMember(
                                       imgurl: selectedmemberss.imageurl,
