@@ -812,6 +812,7 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                         });
                       },
                       onTap: () {
+                        Get.toNamed(reverserequesttransactionPageRoute);
                       },
                       child: Container(
                         padding: EdgeInsets.only(

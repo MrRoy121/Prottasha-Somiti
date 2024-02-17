@@ -37,27 +37,20 @@ class CashWithdraw extends StatefulWidget {
 }
 
 class _CashWithdrawState extends State<CashWithdraw> {
-  bool img = false;
   List<Memberss> memberss = [];
   bool mmems = false;
   var selectedmemberss;
   var sselectedmemberss;
   var selectedsamitee;
   var selectedcustomertype;
-  late Uint8List pickedImage;
 
   @override
   void initState() {
-    _loadImage();
     // TODO: implement initState
     super.initState();
     fetch();
   }
 
-  Future<void> _loadImage() async {
-    ByteData data = await rootBundle.load('Assets/person.jpg');
-    pickedImage = data.buffer.asUint8List();
-  }
 
   Future<void> fetch() async {
     await FirebaseFirestore.instance
@@ -114,7 +107,6 @@ class _CashWithdrawState extends State<CashWithdraw> {
   void _onclear() {
     setState(() {
       var ss;
-      img = false;
       selectedmemberss = ss;
       selectedmemberss = ss;
       mmems = false;
@@ -124,15 +116,6 @@ class _CashWithdrawState extends State<CashWithdraw> {
 
   void _save() async {}
 
-  Future<void> _selectImage() async {
-    final fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        pickedImage = fromPicker;
-        img = true;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
