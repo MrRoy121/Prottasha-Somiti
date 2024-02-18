@@ -1,9 +1,18 @@
 class DepositRequest {
   double value;
-  String remarks,date,memberid;
+  String remarks, memberid, membername, user,id;
   int sl;
+  DateTime date;
 
-  DepositRequest({required this.date,required this.memberid, required this.sl,required this.value, required this.remarks});
+  DepositRequest(
+      {required this.membername,
+      required this.user,
+      required this.date,
+      required this.memberid,
+      required this.sl,
+        required this.id,
+      required this.value,
+      required this.remarks});
 
   Map<String, dynamic> toMap() {
     return {
@@ -11,6 +20,8 @@ class DepositRequest {
       'Value': value,
       'Remarks': remarks,
       'Member ID': memberid,
+      'Member Name': membername,
+      'User': user,
     };
   }
 }

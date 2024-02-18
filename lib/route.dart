@@ -38,6 +38,7 @@ const slipreprintPageRoute = "/slipreprint";
 const depositcollectionrequestPageRoute = "/depositcollectionrequestPageRoute";
 const depositcorrectionrequestPageRoute = "/depositcorrectionrequestPageRoute";
 const depositcorrectionrequestlistPageRoute = "/depositcorrectionrequestlistPageRoute";
+const depositcollectionrequestlistPageRoute = "/depositcollectionrequestlistPageRoute";
 const depositwithdrawPageRoute = "/depositwithdrawPageRoute";
 const withdrawlistPageRoute = "/withdrawlistPageRoute";
 

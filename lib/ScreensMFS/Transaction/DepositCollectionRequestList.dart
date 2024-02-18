@@ -36,15 +36,17 @@ class _DepositCollectionRequestListState
       int s = 1;
       await FirebaseFirestore.instance
           .collection('DepositRequest')
-          .orderBy('Approve Date', descending: true)
+          .orderBy('Date', descending: true)
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
           somitee.add(DepositRequest(
-            date: json['Date'],
+            date: json['Date'].toDate(),
             value: json['Value'],
-            remarks: json['Remarks'],
+            remarks: json['Remarks'],id: json.id,
             memberid: json['Member ID'],
+            membername: json['Member Name'],
+            user: json['User'],
             sl: s,
           ));
           s++;
@@ -88,7 +90,7 @@ class _DepositCollectionRequestListState
                         Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                            "All Deposit Reverse List",
+                            "All Deposit Request List",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -106,7 +108,8 @@ class _DepositCollectionRequestListState
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasError) {
                             return const Center(
-                              child: Text("No Loan Data Available.."),
+                              child:
+                                  Text("No Deposit Request List Available.."),
                             );
                           } else if (snapshot.hasData) {
                             return MediaQuery.removePadding(
@@ -132,16 +135,6 @@ class _DepositCollectionRequestListState
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      'Somitee Code',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
                                       'Member Code',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -152,7 +145,7 @@ class _DepositCollectionRequestListState
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      'Transaction Date',
+                                      'Request Date',
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -161,8 +154,7 @@ class _DepositCollectionRequestListState
                                     ),
                                   ),
                                   DataColumn(
-                                    numeric: true,
-                                    label: Text('Paid Amount',
+                                    label: Text('Manager Name',
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
@@ -171,15 +163,7 @@ class _DepositCollectionRequestListState
                                   ),
                                   DataColumn(
                                     numeric: true,
-                                    label: Text('Reversed Amount',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Reverse Type',
+                                    label: Text('Amount',
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
@@ -193,16 +177,6 @@ class _DepositCollectionRequestListState
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         )),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Status',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
                                   ),
                                   DataColumn(
                                     label: Text('ACTION',
@@ -223,15 +197,6 @@ class _DepositCollectionRequestListState
                                           ))),
                                       DataCell(
                                         Text(
-                                            snapshot.data[index].somiteename +
-                                                " " +
-                                                snapshot.data[index].somiteeid,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(
                                             snapshot.data[index].memberid +
                                                 " " +
                                                 snapshot.data[index].membername,
@@ -243,8 +208,8 @@ class _DepositCollectionRequestListState
                                         Center(
                                           child: Text(
                                               DateFormat.yMMMd()
-                                                  .format(snapshot
-                                                      .data[index].requestdate)
+                                                  .format(
+                                                      snapshot.data[index].date)
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -252,22 +217,13 @@ class _DepositCollectionRequestListState
                                         ),
                                       ),
                                       DataCell(Text(
-                                          snapshot.data[index].mainamount
-                                              .toString(),
+                                          snapshot.data[index].user.toString(),
                                           style: TextStyle(
                                             fontSize: 12,
                                           ))),
                                       DataCell(
                                         Text(
-                                            snapshot.data[index].amount
-                                                .toString(),
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                            snapshot.data[index].reveersetype
+                                            snapshot.data[index].value
                                                 .toString(),
                                             style: TextStyle(
                                               fontSize: 12,
@@ -281,186 +237,79 @@ class _DepositCollectionRequestListState
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(
-                                        Text(
-                                            snapshot.data[index].status
-                                                ? snapshot.data[index].approve
-                                                    ? "Approved"
-                                                    : "Rejected"
-                                                : "Requested",
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(snapshot.data[index].status
-                                          ? InkWell(
-                                              onTap: () {},
-                                              child: Container(
-                                                  padding: EdgeInsets.all(4.0),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColor_Blue,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100)),
-                                                  child: const Icon(
-                                                    Icons.edit,
-                                                    size: 16,
-                                                    color: AppColor_White,
-                                                  )),
-                                            )
-                                          : Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () async {
-                                                    if (snapshot.data[index]
-                                                            .reveersetype ==
-                                                        'Full Reverse') {
-                                                      await FirebaseFirestore
-                                                          .instance
-                                                          .collection(
-                                                              'DepositReverse')
-                                                          .doc(snapshot
-                                                              .data[index].id)
-                                                          .update({
-                                                        "Status": true,
-                                                        "Approve": true,
-                                                        'Approve Date':
-                                                            DateTime.now(),
-                                                      }).then((value) async {
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'Member')
-                                                            .doc(snapshot
-                                                                .data[index]
-                                                                .memberid)
-                                                            .update({
-                                                          'Own deposit Amount':
-                                                              FieldValue.increment(
-                                                                  -snapshot
-                                                                      .data[
-                                                                          index]
-                                                                      .mainamount),
-                                                          'Deposits': FieldValue
-                                                              .arrayRemove([
-                                                            {
-                                                              'date': snapshot
-                                                                  .data[index]
-                                                                  .date
-                                                                  .toLocal()
-                                                                  .toString()
-                                                                  .split(
-                                                                      ' ')[0],
-                                                              'value': snapshot
-                                                                  .data[index]
-                                                                  .mainamount,
-                                                            }
-                                                          ]),
-                                                        }).then((value) {
-                                                          setState(() {});
-                                                        });
-                                                      });
-                                                    } else {
-                                                      DocumentSnapshot
-                                                          memberSnapshot =
-                                                          await FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'Member')
-                                                              .doc(snapshot
-                                                                  .data[index]
-                                                                  .memberid)
-                                                              .get();
-
-                                                      List<Map<String, dynamic>>
-                                                          deposits =
-                                                          memberSnapshot[
-                                                              'Deposits'];
-                                                      int depositIndex =
-                                                          deposits.indexWhere(
-                                                        (entry) =>
-                                                            entry['date'] ==
-                                                            snapshot.data[index]
-                                                                .date
-                                                                .toLocal()
-                                                                .toString()
-                                                                .split(' ')[0],
-                                                      );
-
-                                                      if (depositIndex != -1) {
-                                                        deposits[depositIndex]
-                                                                ['value'] =
-                                                            snapshot.data[index]
-                                                                .amount;
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'Member')
-                                                            .doc(snapshot
-                                                                .data[index]
-                                                                .memberid)
-                                                            .update({
-                                                          'Own deposit Amount':
-                                                              FieldValue.increment(
-                                                                  snapshot
-                                                                      .data[
-                                                                          index]
-                                                                      .amount),
-                                                          'Deposits': deposits,
-                                                        }).then((value) {
-                                                          setState(() {});
-                                                        });
-                                                      }
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4.0),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColor_Blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100)),
-                                                      child: const Icon(
-                                                        Icons.check,
-                                                        size: 16,
-                                                        color: AppColor_White,
-                                                      )),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'LoanRepayment')
-                                                        .doc(snapshot
-                                                            .data[index].id)
-                                                        .update({
-                                                      "Status": true,
-                                                      "Approve": false,
-                                                      'Approve Date':
-                                                          DateTime.now(),
-                                                    }).then((value) {
-                                                      setState(() {});
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4.0),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColor_Blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100)),
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        size: 16,
-                                                        color: AppColor_White,
-                                                      )),
-                                                ),
-                                              ],
-                                            )),
+                                      DataCell(Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              FirebaseFirestore.instance
+                                                  .collection('Member')
+                                                  .doc(snapshot.data[index].memberid )
+                                                  .update({
+                                                'Own deposit Amount': FieldValue.increment(
+                                                    snapshot.data[index].value),
+                                                'Deposits': FieldValue.arrayUnion([
+                                                  {
+                                                    'date': snapshot.data[index].date.toString().split(' ')[0],
+                                                    'remarks': snapshot.data[index].remarks,
+                                                    'value': snapshot.data[index].value,
+                                                  }
+                                                ]),
+                                              }).then((value) async {
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                    'DepositRequest')
+                                                    .doc(snapshot
+                                                    .data[index].id)
+                                                    .delete()
+                                                    .then((value) {
+                                                  setState(() {});
+                                                });
+                                              }).catchError((error) => print("Failed to add user: $error"));
+                                            },
+                                            child: Container(
+                                                padding:
+                                                EdgeInsets.all(4.0),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor_Blue,
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(
+                                                        100)),
+                                                child: const Icon(
+                                                  Icons.check,
+                                                  size: 16,
+                                                  color: AppColor_White,
+                                                )),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              FirebaseFirestore.instance
+                                                  .collection(
+                                                  'DepositRequest')
+                                                  .doc(snapshot
+                                                  .data[index].id)
+                                                  .delete()
+                                                  .then((value) {
+                                                setState(() {});
+                                              });
+                                            },
+                                            child: Container(
+                                                padding:
+                                                EdgeInsets.all(4.0),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor_Blue,
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(
+                                                        100)),
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  size: 16,
+                                                  color: AppColor_White,
+                                                )),
+                                          ),
+                                        ],
+                                      )),
                                     ],
                                   );
                                 }),

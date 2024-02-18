@@ -1456,7 +1456,35 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor16 = AppColor_hover2;
+                                    textColor16 = Colors.white;
+                                  } else {
+                                    itemColor16 = AppColor_Blue;
+                                    textColor16 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(depositcollectionrequestlistPageRoute);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  color: itemColor16,
+                                  child: Text(
+                                    "Deposit Collection Request List",
+                                    style: TextStyle(
+                                      color: textColor16,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
                             InkWell(
                               onHover: (val) {
                                 setState(() {

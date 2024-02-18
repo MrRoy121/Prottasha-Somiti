@@ -52,6 +52,7 @@ import 'ScreensMFS/MemberManagement/SamiteeList.dart';
 import 'ScreensMFS/MemberManagement/SamiteeRegistration.dart';
 import 'ScreensMFS/Reports/GeneralLedgerStatement.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
+import 'ScreensMFS/Transaction/DepositCollectionRequestList.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequestList.dart';
 import 'ScreensMFS/Transaction/DepositWithDwarNormal.dart';
@@ -153,6 +154,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navbool,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: depositcollectionrequestlistPageRoute,
+            page: () => DepositCollectionRequestList(
+              appbool: appbool,
+              navbool: navbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: depositcorrectionrequestlistPageRoute,
