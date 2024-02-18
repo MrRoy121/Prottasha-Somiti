@@ -384,13 +384,13 @@ class _MemberSelectionState extends State<MemberSelection> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
 
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Branch Name :",
                                 style: TextStyle(
                                   color: Colors.black,

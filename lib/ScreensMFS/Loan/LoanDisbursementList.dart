@@ -48,6 +48,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
             manegername: json["Manager Name"],
             pincode: json["Pin Code"],
             status: json["Status"],
+            approve: json["Approve"],
             id: json.id,
             sl: json['SL'],
           ));
@@ -208,6 +209,25 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                         color: Colors.white,
                                       ),
                                     ),
+                                  ),DataColumn(
+                                    label: Text(
+                                      'Status',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Action',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ],
                                 rows: List.generate(snapshot.data.length,
@@ -276,6 +296,94 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                               fontSize: 12,
                                             )),
                                       ),
+
+
+                                      DataCell(
+                                        Text(
+                                            snapshot.data[index].status
+                                                ? snapshot.data[index].approve
+                                                ? "Approved"
+                                                : "Rejected"
+                                                : "Requested",
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                            )),
+                                      ),
+                                      DataCell(
+                                          snapshot.data[index].status
+                                              ?InkWell(
+                                            onTap: () {
+
+                                            },
+                                            child: Container(
+                                                padding: EdgeInsets.all(4.0),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor_Blue,
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        100)),
+                                                child: const Icon(
+                                                  Icons.edit,
+                                                  size: 16,
+                                                  color: AppColor_White,
+                                                )),
+                                          ):
+                                          Row(
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection('LoanDisbursed')
+                                                      .doc(snapshot.data[index].id)
+                                                      .update({
+                                                    "Status": true,
+                                                    "Approve": true,
+                                                    'Approve Date': DateTime.now(),
+                                                  }).then((value) {
+                                                    setState(() {});
+                                                  });
+                                                },
+                                                child: Container(
+                                                    padding: EdgeInsets.all(4.0),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColor_Blue,
+                                                        borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                    child: const Icon(
+                                                      Icons.check,
+                                                      size: 16,
+                                                      color: AppColor_White,
+                                                    )),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection('LoanDisbursed')
+                                                      .doc(snapshot.data[index].id)
+                                                      .update({
+                                                    "Status": true,
+                                                    "Approve": false,
+                                                    'Approve Date': DateTime.now(),
+                                                  }).then((value) {
+                                                    setState(() {});
+                                                  });
+                                                },
+                                                child: Container(
+                                                    padding: EdgeInsets.all(4.0),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColor_Blue,
+                                                        borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                    child: const Icon(
+                                                      Icons.close,
+                                                      size: 16,
+                                                      color: AppColor_White,
+                                                    )),
+                                              ),
+                                            ],
+                                          )),
                                     ],
                                   );
                                 }),

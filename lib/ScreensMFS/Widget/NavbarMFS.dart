@@ -79,58 +79,6 @@ class _NavbarState extends State<Navbar> {
                     icon: Icons.arrow_drop_down),
               ),
 
-              InkWell(
-                onTap: () {
-
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.accounts,
-                    text: 'Accounts',
-                    icon: Icons.arrow_drop_down),
-              ),
-
-              InkWell(
-                onTap: () {
-
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.employee,
-                    text: 'Employee',
-                    icon: Icons.arrow_drop_down),
-              ),
-
-              InkWell(
-                onTap: () {
-
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.samiteemanagement,
-                    text: 'Samitee Management',
-                    icon: Icons.arrow_drop_down),
-              ),
-
-              InkWell(
-                onTap: () {
-
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.calculators,
-                    text: 'Calculators',
-                    icon: Icons.arrow_drop_down),
-              ),
-
-              InkWell(
-                onTap: () {
-
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.specialConsideration,
-                    text: 'Special Consideration',
-                    icon: Icons.arrow_drop_down),
-              ),
-
-
-
             ],
           )
           : Align(
