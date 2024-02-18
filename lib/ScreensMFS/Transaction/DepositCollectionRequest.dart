@@ -37,7 +37,6 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetch();
   }
@@ -104,13 +103,13 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                       text: todaysDeposit["remarks"].toString()));
                 } else {
                   memberamount.add(TextEditingController(text: '0'));
-                  memberremarks.add(TextEditingController(
-                      text: "Deposit Collection"));
+                  memberremarks
+                      .add(TextEditingController(text: "Deposit Collection"));
                 }
               } else {
                 memberamount.add(TextEditingController(text: '0'));
-                memberremarks.add(TextEditingController(
-                    text: "Deposit Collection"));
+                memberremarks
+                    .add(TextEditingController(text: "Deposit Collection"));
               }
               somiteemembers.add(Memberss.withDepo(
                   somiteename: element["Somitee Name"],
@@ -158,8 +157,8 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
               setState(() {});
             } else {
               memberamount.add(TextEditingController(text: '0'));
-              memberremarks.add(TextEditingController(
-                  text: "Deposit Collection"));
+              memberremarks
+                  .add(TextEditingController(text: "Deposit Collection"));
               somiteemembers.add(Memberss.withDepo(
                   somiteename: element["Somitee Name"],
                   somiteeid: element["Somitee ID"],
@@ -214,12 +213,78 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
       }
     }
 
+    // void _save() async {
+    //   for (int i = 0; i < somiteemembers.length; i++) {
+    //     DateTime todayDateTime = DateTime.now().toLocal();
+    //
+    //     var existingDeposit = somiteemembers[i].deposit.firstWhere(
+    //           (entry) {
+    //         DateTime entryDate = DateTime.parse(entry["date"]).toLocal();
+    //         return entryDate.year == todayDateTime.year &&
+    //             entryDate.month == todayDateTime.month &&
+    //             entryDate.day == todayDateTime.day;
+    //       },
+    //       orElse: () => null,
+    //     );
+    //
+    //     if (existingDeposit != null) {
+    //       FirebaseFirestore.instance
+    //           .collection('Member')
+    //           .doc(somiteemembers[i].id)
+    //           .update({
+    //         'Own deposit Amount': FieldValue.increment(
+    //           -existingDeposit["value"],
+    //         ),
+    //         'Deposits': FieldValue.arrayRemove([existingDeposit]),
+    //       });
+    //     }
+    //
+    //     FirebaseFirestore.instance
+    //         .collection('Member')
+    //         .doc(somiteemembers[i].id)
+    //         .update({
+    //       'Own deposit Amount': FieldValue.increment(
+    //         double.parse(memberamount[i].text.toString()),
+    //       ),
+    //       'Deposits': FieldValue.arrayUnion([
+    //         {
+    //           'date': todayDateTime.toString().split(' ')[0],
+    //           'remarks': memberremarks[0].text.toString(),
+    //           'value': double.parse(memberamount[i].text.toString()),
+    //         }
+    //       ]),
+    //     }).then((value) async {
+    //       _getData();
+    //     }).catchError((error) => print("Failed to add user: $error"));
+    //
+    //     if (i == somiteemembers.length - 1) {
+    //       Get.snackbar(
+    //         "Members Deposits Added Successfully.",
+    //         "Page is updated.",
+    //         snackPosition: SnackPosition.BOTTOM,
+    //         colorText: Colors.white,
+    //         backgroundColor: Colors.green,
+    //         margin: EdgeInsets.zero,
+    //         duration: const Duration(milliseconds: 2000),
+    //         boxShadows: [
+    //           const BoxShadow(
+    //             color: Colors.grey,
+    //             offset: Offset(-100, 0),
+    //             blurRadius: 20,
+    //           ),
+    //         ],
+    //         borderRadius: 0,
+    //       );
+    //     }
+    //   }
+    // }
+
     void _save() async {
       for (int i = 0; i < somiteemembers.length; i++) {
         DateTime todayDateTime = DateTime.now().toLocal();
 
         var existingDeposit = somiteemembers[i].deposit.firstWhere(
-              (entry) {
+          (entry) {
             DateTime entryDate = DateTime.parse(entry["date"]).toLocal();
             return entryDate.year == todayDateTime.year &&
                 entryDate.month == todayDateTime.month &&
@@ -228,35 +293,16 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
           orElse: () => null,
         );
 
-        if (existingDeposit != null) {
-          FirebaseFirestore.instance
-              .collection('Member')
-              .doc(somiteemembers[i].id)
-              .update({
-            'Own deposit Amount': FieldValue.increment(
-              -existingDeposit["value"],
-            ),
-            'Deposits': FieldValue.arrayRemove([existingDeposit]),
-          });
+        if (existingDeposit == null) {
+          FirebaseFirestore.instance.collection('DepositRequest').add({
+            'Member ID': somiteemembers[i].id,
+            'Date': todayDateTime,
+            'Remarks': memberremarks[0].text.toString(),
+            'Value': double.parse(memberamount[i].text.toString()),
+          }).then((value) async {
+            _getData();
+          }).catchError((error) => print("Failed to add user: $error"));
         }
-
-        FirebaseFirestore.instance
-            .collection('Member')
-            .doc(somiteemembers[i].id)
-            .update({
-          'Own deposit Amount': FieldValue.increment(
-            double.parse(memberamount[i].text.toString()),
-          ),
-          'Deposits': FieldValue.arrayUnion([
-            {
-              'date': todayDateTime.toString().split(' ')[0],
-              'remarks': memberremarks[0].text.toString(),
-              'value': double.parse(memberamount[i].text.toString()),
-            }
-          ]),
-        }).then((value) async {
-          _getData();
-        }).catchError((error) => print("Failed to add user: $error"));
 
         if (i == somiteemembers.length - 1) {
           Get.snackbar(
@@ -284,6 +330,7 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
       selectedsomiti = somitee[ins];
       _getData();
     }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -540,18 +587,18 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                                 width: 120,
                                                 child: TextField(
                                                     controller:
-                                                    memberremarks[index],
+                                                        memberremarks[index],
                                                     decoration: InputDecoration(
                                                       filled: true,
                                                       isDense: true,
                                                       fillColor:
-                                                      AppColor.withOpacity(
-                                                          0.2),
+                                                          AppColor.withOpacity(
+                                                              0.2),
                                                       border:
-                                                      const OutlineInputBorder(
+                                                          const OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                             color:
-                                                            AppColor_greyBorder),
+                                                                AppColor_greyBorder),
                                                       ),
                                                     ),
                                                     style: const TextStyle(
@@ -562,15 +609,14 @@ class _DepositCollectionRequestState extends State<DepositCollectionRequest> {
                                             DataCell(
                                               Center(
                                                 child: Text(
-                                                somiteemembers[index]
-                                                    .deposit
-                                                .length ==
-                                            0
-                                            ? "N\\A"
-                                                :
                                                     somiteemembers[index]
-                                                        .getLastDepositInfo(
-                                                            true),
+                                                                .deposit
+                                                                .length ==
+                                                            0
+                                                        ? "N\\A"
+                                                        : somiteemembers[index]
+                                                            .getLastDepositInfo(
+                                                                true),
                                                     style: const TextStyle(
                                                       fontSize: 12,
                                                     )),

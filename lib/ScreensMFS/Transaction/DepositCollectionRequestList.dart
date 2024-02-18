@@ -5,53 +5,49 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../../Constants/Constants.dart';
-import '../../../../Model/loanSanction.dart';
 import '../../../../Model/member.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
-import '../../Model/loanDisbursement.dart';
+import '../../Model/depositRequest.dart';
+import '../../Model/depositReverse.dart';
+import '../../Model/loanRepayment.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
 
-class LoanDisbursementList extends StatefulWidget {
+class DepositCollectionRequestList extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanDisbursementList({required this.appbool, required this.navbool});
+  DepositCollectionRequestList({required this.appbool, required this.navbool});
 
   @override
-  State<LoanDisbursementList> createState() => _loanDisbursementListState();
+  State<DepositCollectionRequestList> createState() =>
+      _DepositCollectionRequestListState();
 }
 
-class _loanDisbursementListState extends State<LoanDisbursementList> {
+class _DepositCollectionRequestListState
+    extends State<DepositCollectionRequestList> {
   @override
   Widget build(BuildContext context) {
-    Future<List<loanDisbursement>> getCust() async {
-      List<loanDisbursement> somitee = [];
+    Future<List<DepositRequest>> getCust() async {
+      List<DepositRequest> somitee = [];
+      int s = 1;
       await FirebaseFirestore.instance
-          .collection('LoanDisbursed')
+          .collection('DepositRequest')
+          .orderBy('Approve Date', descending: true)
           .get()
           .then((querySnapshot) {
         for (var json in querySnapshot.docs) {
-          somitee.add(loanDisbursement(
-            somiteename: json['Somitee Name'],
-            somiteeid: json['Somitee ID'],
-            lst: loanSanction.fromJson(json['Sanction']),
-            membername: json['Member Name'],
-            disbursedate: json["Disbursed Date"].toDate(),
+          somitee.add(DepositRequest(
+            date: json['Date'],
+            value: json['Value'],
+            remarks: json['Remarks'],
             memberid: json['Member ID'],
-            disburseamount: json["Disbursed Amount"],
-            narration: json["Narration"],
-            approvedate: json["Approve Date"].toDate(),
-            manegername: json["Manager Name"],
-            pincode: json["Pin Code"],
-            status: json["Status"],
-            approve: json["Approve"],
-            id: json.id,
-            sl: json['SL'],
+            sl: s,
           ));
+          s++;
         }
       });
       return somitee;
@@ -92,7 +88,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                         Padding(
                           padding: EdgeInsets.only(left: 40.0),
                           child: Text(
-                            "All Requested Sanction List",
+                            "All Deposit Reverse List",
                             style: TextStyle(
                               color: AppColor,
                               fontWeight: FontWeight.bold,
@@ -136,16 +132,6 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      'Disburse ID',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
                                       'Somitee Code',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -165,24 +151,8 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text('Member Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Manager Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
                                     label: Text(
-                                      'Sanction Limit',
+                                      'Transaction Date',
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -191,14 +161,38 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text(
-                                      'Sanction Date',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    numeric: true,
+                                    label: Text('Paid Amount',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    numeric: true,
+                                    label: Text('Reversed Amount',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Reverse Type',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Remarks',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
                                   ),
                                   DataColumn(
                                     label: Text(
@@ -211,14 +205,12 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text(
-                                      'Action',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    label: Text('ACTION',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        )),
                                   ),
                                 ],
                                 rows: List.generate(snapshot.data.length,
@@ -230,12 +222,6 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                             fontSize: 12,
                                           ))),
                                       DataCell(
-                                        Text(snapshot.data[index].id,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
                                         Text(
                                             snapshot.data[index].somiteename +
                                                 " " +
@@ -245,26 +231,10 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                             )),
                                       ),
                                       DataCell(
-                                        Text(snapshot.data[index].memberid,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                          Text(snapshot.data[index].membername,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                              ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].manegername,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
                                         Text(
-                                            snapshot.data[index].disburseamount
-                                                .toString(),
+                                            snapshot.data[index].memberid +
+                                                " " +
+                                                snapshot.data[index].membername,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
@@ -274,12 +244,42 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                           child: Text(
                                               DateFormat.yMMMd()
                                                   .format(snapshot
-                                                      .data[index].disbursedate)
+                                                      .data[index].requestdate)
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 12,
                                               )),
                                         ),
+                                      ),
+                                      DataCell(Text(
+                                          snapshot.data[index].mainamount
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ))),
+                                      DataCell(
+                                        Text(
+                                            snapshot.data[index].amount
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                            snapshot.data[index].reveersetype
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                            snapshot.data[index].remarks
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
                                       ),
                                       DataCell(
                                         Text(
@@ -311,20 +311,107 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                           : Row(
                                               children: [
                                                 InkWell(
-                                                  onTap: () {
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'LoanDisbursed')
-                                                        .doc(snapshot
-                                                            .data[index].id)
-                                                        .update({
-                                                      "Status": true,
-                                                      "Approve": true,
-                                                      'Approve Date':
-                                                          DateTime.now(),
-                                                    }).then((value) {
-                                                      setState(() {});
-                                                    });
+                                                  onTap: () async {
+                                                    if (snapshot.data[index]
+                                                            .reveersetype ==
+                                                        'Full Reverse') {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection(
+                                                              'DepositReverse')
+                                                          .doc(snapshot
+                                                              .data[index].id)
+                                                          .update({
+                                                        "Status": true,
+                                                        "Approve": true,
+                                                        'Approve Date':
+                                                            DateTime.now(),
+                                                      }).then((value) async {
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Member')
+                                                            .doc(snapshot
+                                                                .data[index]
+                                                                .memberid)
+                                                            .update({
+                                                          'Own deposit Amount':
+                                                              FieldValue.increment(
+                                                                  -snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .mainamount),
+                                                          'Deposits': FieldValue
+                                                              .arrayRemove([
+                                                            {
+                                                              'date': snapshot
+                                                                  .data[index]
+                                                                  .date
+                                                                  .toLocal()
+                                                                  .toString()
+                                                                  .split(
+                                                                      ' ')[0],
+                                                              'value': snapshot
+                                                                  .data[index]
+                                                                  .mainamount,
+                                                            }
+                                                          ]),
+                                                        }).then((value) {
+                                                          setState(() {});
+                                                        });
+                                                      });
+                                                    } else {
+                                                      DocumentSnapshot
+                                                          memberSnapshot =
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Member')
+                                                              .doc(snapshot
+                                                                  .data[index]
+                                                                  .memberid)
+                                                              .get();
+
+                                                      List<Map<String, dynamic>>
+                                                          deposits =
+                                                          memberSnapshot[
+                                                              'Deposits'];
+                                                      int depositIndex =
+                                                          deposits.indexWhere(
+                                                        (entry) =>
+                                                            entry['date'] ==
+                                                            snapshot.data[index]
+                                                                .date
+                                                                .toLocal()
+                                                                .toString()
+                                                                .split(' ')[0],
+                                                      );
+
+                                                      if (depositIndex != -1) {
+                                                        deposits[depositIndex]
+                                                                ['value'] =
+                                                            snapshot.data[index]
+                                                                .amount;
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Member')
+                                                            .doc(snapshot
+                                                                .data[index]
+                                                                .memberid)
+                                                            .update({
+                                                          'Own deposit Amount':
+                                                              FieldValue.increment(
+                                                                  snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .amount),
+                                                          'Deposits': deposits,
+                                                        }).then((value) {
+                                                          setState(() {});
+                                                        });
+                                                      }
+                                                    }
                                                   },
                                                   child: Container(
                                                       padding:
@@ -345,7 +432,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                                   onTap: () {
                                                     FirebaseFirestore.instance
                                                         .collection(
-                                                            'LoanDisbursed')
+                                                            'LoanRepayment')
                                                         .doc(snapshot
                                                             .data[index].id)
                                                         .update({
