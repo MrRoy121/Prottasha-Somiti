@@ -86,7 +86,7 @@ class _GLSummaryState extends State<GLSummary> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Member Ledger",
+                    "Daily GL Summary",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -248,7 +248,7 @@ class _GLSummaryState extends State<GLSummary> {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                    "Member Ledger",
+                    "Daily GL Summary",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,
@@ -410,7 +410,7 @@ class _GLSummaryState extends State<GLSummary> {
                 Padding(
                   padding: EdgeInsets.only(left: ScreenWidth/38.4),
                   child: Text(
-                    "Member Ledger",
+                    "Daily GL Summary",
                     style: TextStyle(
                       color: AppColor,
                       fontWeight: FontWeight.bold,

@@ -100,7 +100,8 @@ class _LoanSanctionState extends State<LoanSanction> {
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],
               occupation: element["Occupation"],
-              firstname: element["First Name"],dead: element['Dead'],
+              firstname: element["First Name"],
+              dead: element['Dead'],
               lastname: element["Last Name"],
               fathername: element["Father Name"],
               mothername: element["Mother Name"],
@@ -175,9 +176,8 @@ class _LoanSanctionState extends State<LoanSanction> {
   }
 
   void _save() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('LoanSanction')
-        .get();
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('LoanSanction').get();
 
     int numberOfItems = querySnapshot.size;
     const _chars = '1234567890';
@@ -237,7 +237,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         'Approve Date': DateTime.now(),
         "Loan Purpose": selectedloanpurpose,
         "Loan Scheme": _selectedscheme.name,
-        'Loan Category':_selectedloantype,
+        'Loan Category': _selectedloantype,
         "Service Charge": double.parse(conservicecharge.text),
         "Installment No": double.parse(coninstallmentno.text),
         "Installment Amount": double.parse(coninstallmentamount.text),
@@ -246,7 +246,7 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Status": "Requested",
         'ID': sanctionloanrequestid,
         "Grantor F Name": congrfname.text,
-        'SL':numberOfItems+1,
+        'SL': numberOfItems + 1,
         "Grantor F FatherName": congrffname.text,
         "Grantor F Relation": congrfrelation.text,
         "Grantor F Mobile": congrfmobile.text,
@@ -363,7 +363,8 @@ class _LoanSanctionState extends State<LoanSanction> {
                       setuplloanscheme: _setuploanscheme,
                       coninstallmentno: coninstallmentno,
                       selectedsomiteeid: selectedsomiti,
-                      setuploanpurpose: _setuploanpurpose,conduratioon: conduratioon,
+                      setuploanpurpose: _setuploanpurpose,
+                      conduratioon: conduratioon,
                       serviceamount: serviceamount,
                       setuplloantype: _setuplloantype,
                       conservicecharge: conservicecharge,

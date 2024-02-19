@@ -6,7 +6,6 @@ import '../Widget/NavBoolMFS.dart';
 import '../Widget/NavbarScreenMFS.dart';
 import 'Widgets/GLSummary.dart';
 
-
 class DailyGLSummary extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
@@ -18,32 +17,30 @@ class DailyGLSummary extends StatefulWidget {
 }
 
 class _DailyGLSummaryState extends State<DailyGLSummary> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
-
-            SizedBox(
-              height: 50,
+            Container(
+              margin: EdgeInsets.only(top: 100,left: 50),
+              child: Column(
+                children: [
+                  GLSummary(),
+                ],
+              ),
             ),
-
-            // Daily GL Summary
-            GLSummary(),
-
-
+            NavbarScreenMFS(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
           ],
         ),
       ),
-
     );
   }
 }
