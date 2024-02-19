@@ -12,7 +12,6 @@ import '../pdf_api.dart';
 class PdfMemberssLoanLedger {
   static Future<File> generate(
       List<ReportModel> invoice,
-      double total,
       String ledgeno,
       ledgertitle,
       ledgertype,
@@ -121,7 +120,7 @@ class PdfMemberssLoanLedger {
               right: PdfPageFormat.a4.marginRight),
           decoration: BoxDecoration(
               border: Border.all(width: 0.5, color: PdfColors.black)),
-          child: buildTotal(invoice, total, ttfbold),
+          child: buildTotal(invoice, ttfbold),
         ),
       ],
       header: (context) => buildHeader(ttf, data, ttfbold,),
@@ -156,9 +155,9 @@ class PdfMemberssLoanLedger {
             " " +
             item.documentno,
         item.naration,
-        item.debit == 0 ? '' : item.debit,
-        item.credit == 0 ? '' : item.credit,
-        item.balance
+        item.debit == 0 ? '' : item.debit.toStringAsFixed(2),
+        item.credit == 0 ? '' : item.credit.toStringAsFixed(2),
+        item.balance.toStringAsFixed(2)
       ];
     }).toList();
 
@@ -183,7 +182,7 @@ class PdfMemberssLoanLedger {
   }
 
   static Widget buildTotal(
-      List<ReportModel> invoice, double total, final ttfbold) {
+      List<ReportModel> invoice, final ttfbold) {
     return Container(
         alignment: Alignment.centerRight,
         child: Row(children: [
@@ -207,7 +206,7 @@ class PdfMemberssLoanLedger {
                   child: Container(
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    child: Text(total.toString(),
+                    child: Text(invoice.last.balance.toStringAsFixed(2),
                         style: TextStyle(
                             font: ttfbold,
                             color: PdfColors.black,

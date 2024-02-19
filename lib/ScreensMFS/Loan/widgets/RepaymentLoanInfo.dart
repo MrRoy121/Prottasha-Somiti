@@ -324,7 +324,7 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                         SizedBox(
                           width: 300,
                           child: Text(
-                            widget.memberselection?widget.disbursed.status:'',
+                            widget.memberselection?widget.disbursed.status?"Approved":"Rejected":'',
                           ),
                         ),
 

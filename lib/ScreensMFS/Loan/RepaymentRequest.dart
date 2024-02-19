@@ -154,7 +154,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
           .get()
           .then((querySnapshot) async {
         for (var json in querySnapshot.docs) {
-          if (json['Member ID'] == selectedmemberss.id) {
+          if (json['Member ID'] == selectedmemberss.id && json["Status"]) {
             disbursed = loanDisbursement(
               somiteename: json['Somitee Name'],
               somiteeid: json['Somitee ID'],

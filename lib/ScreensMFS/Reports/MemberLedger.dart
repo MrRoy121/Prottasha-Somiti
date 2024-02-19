@@ -150,8 +150,10 @@ class _MemberLedgerState extends State<MemberLedger> {
   }
 
   Future<List<ReportModel>> getloanlist() async {
-    List<ReportModel> itemvaluess = [];
+    List<ReportModel> itemvaluess = [];double servicecharge = 0;
     _totalamount = 0;
+    String sanctionid = '';
+    int i = 0;
     await FirebaseFirestore.instance
         .collection('LoanDisbursed')
         .where('Member ID', isEqualTo: selectedmemberss.id)
@@ -160,6 +162,7 @@ class _MemberLedgerState extends State<MemberLedger> {
         .get()
         .then((querySnapshot) {
       for (var json in querySnapshot.docs) {
+        sanctionid =json['Sanction']["ID"];
         itemvaluess.add(
           ReportModel(
             naration: "Loan Disbursement",
@@ -170,20 +173,76 @@ class _MemberLedgerState extends State<MemberLedger> {
             transactiondate: json["Disbursed Date"].toDate(),
           ),
         );
-        double s =
-            json["Disbursed Amount"] * (json['Sanction']["Service Charge"]/100);
+        servicecharge =(json['Sanction']["Service Charge"]/100);
         itemvaluess.add(
           ReportModel(
             naration: "Service Charges Charged",
-            balance: itemvaluess.last.balance - s,
+            balance: itemvaluess.last.balance - (json["Disbursed Amount"] *  servicecharge),
             credit: 0,
-            debit: s,
+            debit:json["Disbursed Amount"] *  servicecharge,
             documentno: "TR0002",
             transactiondate: json["Disbursed Date"].toDate(),
           ),
         );
+        i++;i++;
       }
     });
+    await FirebaseFirestore.instance
+        .collection('LoanRepayment')
+        .orderBy('Approve Date', descending: false)
+        .get()
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        if(json["Status"]&&json['Approve']&&json['Sanction Id']==sanctionid){
+          double aaa = json['Pay Amount']* servicecharge;
+          itemvaluess.add(
+            ReportModel(
+              naration: "Service Charge Adjustment",
+              balance: itemvaluess.last.balance + (aaa),
+              credit: aaa,
+              debit: 0,
+              documentno: "TR00$i",
+              transactiondate: json["Approve Date"].toDate(),
+            ),
+          );
+          i++;
+          itemvaluess.add(
+            ReportModel(
+              naration: "Loan Amount Adjustment",
+              balance: itemvaluess.last.balance + (json['Pay Amount']-aaa),
+              credit: json['Pay Amount']-aaa,
+              debit: 0,
+              documentno: "TR00$i",
+              transactiondate: json["Approve Date"].toDate(),
+            ),
+          );
+          i++;i++;
+        }
+      }
+    });
+
+    await FirebaseFirestore.instance
+        .collection('LoanRepaymentFine')
+        .orderBy('Fine Date', descending: false)
+        .get()
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        if(json['Sanction Id']==sanctionid){
+          itemvaluess.add(
+            ReportModel(
+              naration: "Late Payment Fine Adjustment",
+              balance: itemvaluess.last.balance - (json['Fine Amount']),
+              credit: 0,
+              debit: json['Fine Amount'],
+              documentno: "TR00$i",
+              transactiondate: json["Fine Date"].toDate(),
+            ),
+          );
+          i++;
+        }
+      }
+    });
+    itemvaluess.sort((a, b) => a.transactiondate.compareTo(b.transactiondate));
     return itemvaluess;
   }
 
@@ -218,7 +277,6 @@ class _MemberLedgerState extends State<MemberLedger> {
       } else {
         PdfMemberssLoanLedger.generate(
             await getloanlist(),
-            _totalamount,
             selectedmemberss.id,
             "${selectedmemberss.firstname} ${selectedmemberss.lastname}",
             selectedledgertype,
