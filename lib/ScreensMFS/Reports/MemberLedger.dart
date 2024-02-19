@@ -4,7 +4,9 @@ import '../../../../Constants/Constants.dart';
 import '../../Constants/values.dart';
 import '../../Model/Itemvaluess.dart';
 import '../../Model/member.dart';
-import '../../helpers/pdfs_helpers/pdf_memberledger.dart';
+import '../../Model/reportModel.dart';
+import '../../helpers/pdfs_helpers/pdf_memberdepositledger.dart';
+import '../../helpers/pdfs_helpers/pdf_memberloanledger.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -32,6 +34,7 @@ class _MemberLedgerState extends State<MemberLedger> {
   var sselectedmemberss;
   DateTime selectedstartDate = DateTime.now();
   DateTime selectedendDate = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -106,8 +109,10 @@ class _MemberLedgerState extends State<MemberLedger> {
     _totalamount = 0;
     balancelist = [];
 
-    DateTime startDateTime = DateTime(selectedstartDate.year, selectedstartDate.month, selectedstartDate.day);
-    DateTime endDateTime = DateTime(selectedendDate.year, selectedendDate.month, selectedendDate.day, 23, 59, 59, 999);
+    DateTime startDateTime = DateTime(
+        selectedstartDate.year, selectedstartDate.month, selectedstartDate.day);
+    DateTime endDateTime = DateTime(selectedendDate.year, selectedendDate.month,
+        selectedendDate.day, 23, 59, 59, 999);
 
     await FirebaseFirestore.instance
         .collection('Member')
@@ -117,11 +122,15 @@ class _MemberLedgerState extends State<MemberLedger> {
       if (element["Status"]) {
         int s = 0;
         for (int i = 0; i < element["Deposits"].length; i++) {
-          DateTime depositDate = DateTime.parse(element["Deposits"][i]['date']).toLocal();
+          DateTime depositDate =
+              DateTime.parse(element["Deposits"][i]['date']).toLocal();
 
-          if (depositDate.isAfter(startDateTime) && depositDate.isBefore(endDateTime) || depositDate == startDateTime || depositDate==endDateTime) {
+          if (depositDate.isAfter(startDateTime) &&
+                  depositDate.isBefore(endDateTime) ||
+              depositDate == startDateTime ||
+              depositDate == endDateTime) {
             itemvaluess.add(Itemvaluess(
-                sl:s ,
+                sl: s,
                 date: element["Deposits"][i]['date'],
                 value: element["Deposits"][i]['value'],
                 remarks: element["Deposits"][i]['remarks']));
@@ -129,7 +138,8 @@ class _MemberLedgerState extends State<MemberLedger> {
             if (balancelist.isEmpty) {
               balancelist.add(element["Deposits"][i]['value']);
             } else {
-              balancelist.add(element["Deposits"][i]['value'] + balancelist[balancelist.length - 1]);
+              balancelist.add(element["Deposits"][i]['value'] +
+                  balancelist[balancelist.length - 1]);
             }
             s++;
           }
@@ -138,42 +148,40 @@ class _MemberLedgerState extends State<MemberLedger> {
     });
     return itemvaluess;
   }
-  Future<List<Itemvaluess>> getloanlist() async {
-    List<Itemvaluess> itemvaluess = [];
+
+  Future<List<ReportModel>> getloanlist() async {
+    List<ReportModel> itemvaluess = [];
     _totalamount = 0;
-    balancelist = [];
-
-    DateTime startDateTime = DateTime(selectedstartDate.year, selectedstartDate.month, selectedstartDate.day);
-    DateTime endDateTime = DateTime(selectedendDate.year, selectedendDate.month, selectedendDate.day, 23, 59, 59, 999);
-
-
-
-
     await FirebaseFirestore.instance
-        .collection('Member')
-        .doc(selectedmemberss.id)
+        .collection('LoanDisbursed')
+        .where('Member ID', isEqualTo: selectedmemberss.id)
+        .orderBy('Disbursed Date', descending: true)
+        .limit(1)
         .get()
-        .then((element) {
-      if (element["Status"]) {
-        int s = 0;
-        for (int i = 0; i < element["Deposits"].length; i++) {
-          DateTime depositDate = DateTime.parse(element["Deposits"][i]['date']).toLocal();
-
-          if (depositDate.isAfter(startDateTime) && depositDate.isBefore(endDateTime) || depositDate == startDateTime || depositDate==endDateTime) {
-            itemvaluess.add(Itemvaluess(
-                sl:s ,
-                date: element["Deposits"][i]['date'],
-                value: element["Deposits"][i]['value'],
-                remarks: element["Deposits"][i]['remarks']));
-            _totalamount += element["Deposits"][i]['value'];
-            if (balancelist.isEmpty) {
-              balancelist.add(element["Deposits"][i]['value']);
-            } else {
-              balancelist.add(element["Deposits"][i]['value'] + balancelist[balancelist.length - 1]);
-            }
-            s++;
-          }
-        }
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        itemvaluess.add(
+          ReportModel(
+            naration: "Loan Disbursement",
+            balance: -json["Disbursed Amount"],
+            credit: 0,
+            debit: json["Disbursed Amount"],
+            documentno: "TR0001",
+            transactiondate: json["Disbursed Date"].toDate(),
+          ),
+        );
+        double s =
+            json["Disbursed Amount"] * (json['Sanction']["Service Charge"]/100);
+        itemvaluess.add(
+          ReportModel(
+            naration: "Service Charges Charged",
+            balance: itemvaluess.last.balance - s,
+            credit: 0,
+            debit: s,
+            documentno: "TR0002",
+            transactiondate: json["Disbursed Date"].toDate(),
+          ),
+        );
       }
     });
     return itemvaluess;
@@ -197,7 +205,7 @@ class _MemberLedgerState extends State<MemberLedger> {
           borderRadius: 0);
     } else {
       if (selectedledgertype == LedgerTypeList[0]) {
-        PdfMemberss.generate(
+        PdfMemberssDepositLedger.generate(
             await getdepositlist(),
             _totalamount,
             balancelist,
@@ -207,7 +215,16 @@ class _MemberLedgerState extends State<MemberLedger> {
             selectedStatus == 'yes' ? "Active" : "Closed",
             selectedstartDate,
             selectedendDate);
-      } else {}
+      } else {
+        PdfMemberssLoanLedger.generate(
+            await getloanlist(),
+            _totalamount,
+            selectedmemberss.id,
+            "${selectedmemberss.firstname} ${selectedmemberss.lastname}",
+            selectedledgertype,
+            selectedStatus == 'yes' ? "Active" : "Closed",);
+
+      }
     }
   }
 
@@ -219,7 +236,7 @@ class _MemberLedgerState extends State<MemberLedger> {
       });
     }
 
-    void _changestatus(String val){
+    void _changestatus(String val) {
       setState(() {
         selectedStatus = val;
       });
@@ -277,7 +294,8 @@ class _MemberLedgerState extends State<MemberLedger> {
                     selectstartDate: _selectstartDate,
                     selectedendDate: selectedendDate,
                     selectendDate: _selectendDate,
-                    onsubmit: _save,changestatus: _changestatus,
+                    onsubmit: _save,
+                    changestatus: _changestatus,
                     setupmemberss: _setupmemberss,
                     selectedmemberssid: sselectedmemberss,
                     selectedmemberss: selectedmemberss,

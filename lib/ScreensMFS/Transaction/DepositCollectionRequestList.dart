@@ -43,7 +43,8 @@ class _DepositCollectionRequestListState
           somitee.add(DepositRequest(
             date: json['Date'].toDate(),
             value: json['Value'],
-            remarks: json['Remarks'],id: json.id,
+            remarks: json['Remarks'],
+            id: json.id,
             memberid: json['Member ID'],
             membername: json['Member Name'],
             user: json['User'],
@@ -243,38 +244,46 @@ class _DepositCollectionRequestListState
                                             onTap: () async {
                                               FirebaseFirestore.instance
                                                   .collection('Member')
-                                                  .doc(snapshot.data[index].memberid )
+                                                  .doc(snapshot
+                                                      .data[index].memberid)
                                                   .update({
-                                                'Own deposit Amount': FieldValue.increment(
-                                                    snapshot.data[index].value),
-                                                'Deposits': FieldValue.arrayUnion([
+                                                'Own deposit Amount':
+                                                    FieldValue.increment(
+                                                        snapshot
+                                                            .data[index].value),
+                                                'Deposits':
+                                                    FieldValue.arrayUnion([
                                                   {
-                                                    'date': snapshot.data[index].date.toString().split(' ')[0],
-                                                    'remarks': snapshot.data[index].remarks,
-                                                    'value': snapshot.data[index].value,
+                                                    'date': snapshot
+                                                        .data[index].date
+                                                        .toString()
+                                                        .split(' ')[0],
+                                                    'remarks': snapshot
+                                                        .data[index].remarks,
+                                                    'value': snapshot
+                                                        .data[index].value,
                                                   }
                                                 ]),
                                               }).then((value) async {
                                                 FirebaseFirestore.instance
                                                     .collection(
-                                                    'DepositRequest')
-                                                    .doc(snapshot
-                                                    .data[index].id)
+                                                        'DepositRequest')
+                                                    .doc(
+                                                        snapshot.data[index].id)
                                                     .delete()
                                                     .then((value) {
                                                   setState(() {});
                                                 });
-                                              }).catchError((error) => print("Failed to add user: $error"));
+                                              }).catchError((error) => print(
+                                                      "Failed to add user: $error"));
                                             },
                                             child: Container(
-                                                padding:
-                                                EdgeInsets.all(4.0),
+                                                padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
                                                     color: AppColor_Blue,
                                                     borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        100)),
+                                                        BorderRadius.circular(
+                                                            100)),
                                                 child: const Icon(
                                                   Icons.check,
                                                   size: 16,
@@ -284,24 +293,20 @@ class _DepositCollectionRequestListState
                                           InkWell(
                                             onTap: () {
                                               FirebaseFirestore.instance
-                                                  .collection(
-                                                  'DepositRequest')
-                                                  .doc(snapshot
-                                                  .data[index].id)
+                                                  .collection('DepositRequest')
+                                                  .doc(snapshot.data[index].id)
                                                   .delete()
                                                   .then((value) {
                                                 setState(() {});
                                               });
                                             },
                                             child: Container(
-                                                padding:
-                                                EdgeInsets.all(4.0),
+                                                padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
                                                     color: AppColor_Blue,
                                                     borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        100)),
+                                                        BorderRadius.circular(
+                                                            100)),
                                                 child: const Icon(
                                                   Icons.close,
                                                   size: 16,

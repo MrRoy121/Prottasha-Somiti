@@ -5,13 +5,18 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
-import '../../Model/Itemvaluess.dart';
+import '../../Model/reportModel.dart';
 import '../auth_service.dart';
 import '../pdf_api.dart';
 
-class PdfMemberss {
+class PdfMemberssLoanLedger {
   static Future<File> generate(
-      List<Itemvaluess> invoice, double total, var balancelist, String ledgeno, ledgertitle, ledgertype,acstatus,DateTime startdate, enddate) async {
+      List<ReportModel> invoice,
+      double total,
+      String ledgeno,
+      ledgertitle,
+      ledgertype,
+      acstatus,) async {
     final pdf = Document();
 
     final Uint8List data = await yourBackgroundImageFunction();
@@ -34,8 +39,7 @@ class PdfMemberss {
           width: PdfPageFormat.a4.width,
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              border:
-                  Border.all(width: 0.5, color: PdfColors.black)),
+              border: Border.all(width: 0.5, color: PdfColors.black)),
           child: Row(children: [
             Expanded(
                 child: Column(children: [
@@ -43,50 +47,38 @@ class PdfMemberss {
                 Expanded(
                   child: Text("Ledger No",
                       style: TextStyle(
-                          font: ttfbold,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttfbold, fontSize: 8, color: PdfColors.black)),
                 ),
                 Expanded(
                   child: Text(": $ledgeno",
                       style: TextStyle(
-                          font: ttf,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttf, fontSize: 8, color: PdfColors.black)),
                 )
               ]),
               Row(children: [
                 Expanded(
                   child: Text("Ledger Title",
                       style: TextStyle(
-                          font: ttfbold,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttfbold, fontSize: 8, color: PdfColors.black)),
                 ),
                 Expanded(
                   child: Text(": $ledgertitle",
                       style: TextStyle(
-                          font: ttf,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttf, fontSize: 8, color: PdfColors.black)),
                 )
               ]),
-                  Row(children: [
-                    Expanded(
-                      child: Text("Ledger Type",
-                          style: TextStyle(
-                              font: ttfbold,
-                              fontSize: 8,
-                              color: PdfColors.black)),
-                    ),
-                    Expanded(
-                      child: Text(": $ledgertype",
-                          style: TextStyle(
-                              font: ttf,
-                              fontSize: 8,
-                              color: PdfColors.black)),
-                    )
-                  ])
+              Row(children: [
+                Expanded(
+                  child: Text("Ledger Type",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 8, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": $ledgertype",
+                      style: TextStyle(
+                          font: ttf, fontSize: 8, color: PdfColors.black)),
+                )
+              ])
             ])),
             Expanded(
                 child: Column(children: [
@@ -94,32 +86,24 @@ class PdfMemberss {
                 Expanded(
                   child: Text("Currency",
                       style: TextStyle(
-                          font: ttfbold,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttfbold, fontSize: 8, color: PdfColors.black)),
                 ),
                 Expanded(
                   child: Text(": BDT Bangladeshi Taka",
                       style: TextStyle(
-                          font: ttf,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttf, fontSize: 8, color: PdfColors.black)),
                 )
               ]),
               Row(children: [
                 Expanded(
                   child: Text("A/c Status",
                       style: TextStyle(
-                          font: ttfbold,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttfbold, fontSize: 8, color: PdfColors.black)),
                 ),
                 Expanded(
                   child: Text(": $acstatus",
                       style: TextStyle(
-                          font: ttf,
-                          fontSize: 8,
-                          color: PdfColors.black)),
+                          font: ttf, fontSize: 8, color: PdfColors.black)),
                 )
               ])
             ])),
@@ -129,20 +113,18 @@ class PdfMemberss {
           margin: EdgeInsets.only(
               left: PdfPageFormat.a4.marginLeft,
               right: PdfPageFormat.a4.marginRight),
-          child: buildInvoice(invoice, ttf, ttfbold, balancelist),
+          child: buildInvoice(invoice, ttf, ttfbold),
         ),
         Container(
           margin: EdgeInsets.only(
               left: PdfPageFormat.a4.marginLeft,
               right: PdfPageFormat.a4.marginRight),
-
           decoration: BoxDecoration(
-              border:
-              Border.all(width: 0.5, color: PdfColors.black)),
+              border: Border.all(width: 0.5, color: PdfColors.black)),
           child: buildTotal(invoice, total, ttfbold),
         ),
       ],
-      header: (context) => buildHeader(ttf, data, ttfbold,startdate,enddate),
+      header: (context) => buildHeader(ttf, data, ttfbold,),
       footer: (context) => buildFooter(ttf, ttfbold),
     ));
     return PdfApi.saveDocument(
@@ -156,10 +138,9 @@ class PdfMemberss {
   }
 
   static Widget buildInvoice(
-    List<Itemvaluess> invoice,
+    List<ReportModel> invoice,
     final ttf,
     final ttfbold,
-    var balancelist,
   ) {
     final headers = [
       'Trans Date & Doc No.',
@@ -171,11 +152,13 @@ class PdfMemberss {
 
     final data = invoice.map((item) {
       return [
-        item.date + "TR00"+ "${item.sl + 1}",
-        item.remarks,
-        '',
-        item.value,
-        balancelist[item.sl]
+        DateFormat.yMMMMd().format(item.transactiondate) +
+            " " +
+            item.documentno,
+        item.naration,
+        item.debit == 0 ? '' : item.debit,
+        item.credit == 0 ? '' : item.credit,
+        item.balance
       ];
     }).toList();
 
@@ -192,15 +175,15 @@ class PdfMemberss {
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
-        4: Alignment.centerRight,
-        4: Alignment.centerRight,
+        2: Alignment.centerRight,
+        3: Alignment.centerRight,
         4: Alignment.centerRight,
       },
     );
   }
 
   static Widget buildTotal(
-      List<Itemvaluess> invoice, double total, final ttfbold) {
+      List<ReportModel> invoice, double total, final ttfbold) {
     return Container(
         alignment: Alignment.centerRight,
         child: Row(children: [
@@ -247,7 +230,7 @@ class PdfMemberss {
                 fontSize: 12,
                 color: PdfColor.fromHex("#1E2772"))),
       ]));
-  static Widget buildHeader(final ttf, Uint8List data, final ttfbold, DateTime startdate, enddate) =>
+  static Widget buildHeader(final ttf, Uint8List data, final ttfbold) =>
       Container(
           alignment: Alignment.center,
           child: Column(
@@ -292,11 +275,12 @@ class PdfMemberss {
                         font: ttfbold,
                         fontSize: 10,
                         color: PdfColor.fromHex("#1E2772"))),
-                Text("Statement For Period:  ${DateFormat('dd MMMM, yyyy').format(startdate)} to  ${DateFormat('dd MMMM, yyyy').format(enddate)}",
-                    style: TextStyle(
-                        font: ttf,
-                        fontSize: 10,
-                        color: PdfColor.fromHex("#1E2772"))),
+                // Text(
+                //     "Statement For Period:  ${DateFormat('dd MMMM, yyyy').format(startdate)} to  ${DateFormat('dd MMMM, yyyy').format(enddate)}",
+                //     style: TextStyle(
+                //         font: ttf,
+                //         fontSize: 10,
+                //         color: PdfColor.fromHex("#1E2772"))),
                 SizedBox(height: 30),
               ]));
 }
