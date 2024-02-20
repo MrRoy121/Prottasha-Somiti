@@ -35,14 +35,61 @@ class Memberss {
       imageurl;
   late List<dynamic> deposit;
   late List<dynamic> withdraw;
+  late double totaldeposit,totaldisbursement,totalwithdraw,repayment, dueloan;
+  late DateTime lastrepaymentdate;
   bool img, sts, dead;
   DateTime birthdate;
   double loanpendingamount, owndepositamount;
   int sl;
-
+  Memberss.ForReport(
+      {required this.somiteename,
+        required this.somiteeid,
+        required this.membertype,
+        required this.occupation,
+        required this.totaldeposit,
+        required this.totaldisbursement,
+        required this.totalwithdraw,
+        required this.repayment,
+        required this.dueloan,
+        required this.lastrepaymentdate,
+        required this.loanpendingamount,
+        required this.owndepositamount,
+        required this.firstname,
+        required this.lastname,
+        required this.fathername,
+        required this.deposit,
+        required this.withdraw,
+        required this.annualincome,
+        required this.mothername,
+        required this.gender,
+        required this.religion,
+        required this.nationalid,
+        required this.sts,
+        required this.birthregi,
+        required this.age,
+        required this.nodepenndent,
+        required this.education,
+        required this.maritalstatus,
+        required this.mobilenotype,
+        required this.mobilenno,
+        required this.presentadd,
+        required this.parmaadd,
+        required this.livingperiod,
+        required this.nomaleearner,
+        required this.nofemaleearner,
+        required this.id,
+        required this.headfamily,
+        required this.ownhomestead,
+        required this.relationwithhead,
+        required this.landdesc,
+        required this.housedesc,
+        required this.remarks,
+        required this.imageurl,required this.dead,
+        required this.img,
+        required this.birthdate,
+        required this.sl});
   dynamic getLastDepositInfo(bool returnDate) {
     if (deposit.isNotEmpty) {
-      // Sort 'Deposits' by date in descending order
       deposit.sort((a, b) {
         var dateA = DateTime.parse(a['date']);
         var dateB = DateTime.parse(b['date']);
@@ -57,7 +104,6 @@ class Memberss {
         return deposit[0]['value'].toString();
       }
     } else {
-      // Return default values or handle accordingly
       return returnDate ? '' : '0';
     }
   }
