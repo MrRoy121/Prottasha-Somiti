@@ -87,20 +87,43 @@ class _SamiteeWiseMemberDepositeLoanState
         for (var element in querySnapshot.docs) {
           if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
             if (element["Deposits"] != null || element["Withdraws"] != null) {
-              double totaldeposit =0,totaldisbursement=0,totalwithdraw=0,repayment=0, dueloan=0;
+              double totaldeposit =0,totaldisbursement=0,totalwithdraw=0,repayment=0, totalloan=0;
               DateTime lastrepaymentdate =DateTime(2000, 1, 1);
               var deposits = element["Deposits"] ?? [];
               var withdrawals = element["Withdraws"] ?? [];
               totaldeposit= calculateSum(deposits) + calculateSum(withdrawals);
               totalwithdraw =  calculateSum(withdrawals);
-
-
+              String sanctionid='';
+              await FirebaseFirestore.instance
+                  .collection('LoanDisbursed')
+                  .get()
+                  .then((querySnapshot) {
+                for (var json in querySnapshot.docs) {
+                  if(json['Member ID']==element.id&&json["Status"]&&json["Approve"]){
+                    sanctionid=json['Sanction']['ID'];
+                    totaldisbursement=totaldisbursement+json["Disbursed Amount"];
+                    totalloan = totalloan+json["Disbursed Amount"]+(json["Disbursed Amount"]*(json['Sanction']['Service Charge']/100));
+                  }
+                }
+              });
+              await FirebaseFirestore.instance
+                  .collection('LoanRepayment')
+                  .orderBy('Approve Date', descending: false)
+                  .get()
+                  .then((querySnapshot) {
+                for (var json in querySnapshot.docs) {
+                  if(json['Sanction Id']==sanctionid&&json["Status"]&&json["Approve"]){
+                    repayment=repayment+json['Pay Amount'];
+                    lastrepaymentdate = json['Request Date'].toDate();
+                  }
+                }
+              });
               allmemberss.add(Memberss.ForReport(
                   somiteename: element["Somitee Name"],
                   somiteeid: element["Somitee ID"],
                   membertype: element["Member Type"],
                   deposit: deposits,totaldisbursement: totaldisbursement,totalwithdraw:totalwithdraw ,
-                  withdraw: withdrawals,dueloan: dueloan,lastrepaymentdate: lastrepaymentdate,repayment: repayment,totaldeposit: totaldeposit,
+                  withdraw: withdrawals,totalloan: totalloan,lastrepaymentdate: lastrepaymentdate,repayment: repayment,totaldeposit: totaldeposit,
                   occupation: element["Occupation"],
                   firstname: element["First Name"],
                   lastname: element["Last Name"],
@@ -144,7 +167,6 @@ class _SamiteeWiseMemberDepositeLoanState
       } catch (e) {
         print("Error fetching data from Firestore: $e");
       }
-      print(allmemberss.length);
       return allmemberss;
     }
 
@@ -423,27 +445,29 @@ class _SamiteeWiseMemberDepositeLoanState
                                                           Text(
                                                               snapshot
                                                                   .data[index]
-                                                                  .owndepositamount.toString(),
+                                                                  .totaldisbursement.toString(),
                                                               style: TextStyle(
-                                                                fontSize: 10,
+                                                                fontSize: 12,
                                                               )),
                                                         ),
                                                         DataCell(
                                                           Text(
                                                               snapshot
                                                                   .data[index]
-                                                                  .owndepositamount.toString(),
+                                                                  .repayment.toString(),
                                                               style: TextStyle(
-                                                                fontSize: 10,
+                                                                fontSize: 12,
                                                               )),
                                                         ),
                                                         DataCell(
                                                           Text(
-                                                              snapshot
+                                                              (snapshot
                                                                   .data[index]
-                                                                  .owndepositamount.toString(),
+                                                                  .totalloan-snapshot
+                                                                  .data[index]
+                                                                  .repayment).toString(),
                                                               style: TextStyle(
-                                                                fontSize: 10,
+                                                                fontSize: 12,
                                                               )),
                                                         ),
 

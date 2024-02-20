@@ -35,7 +35,7 @@ class Memberss {
       imageurl;
   late List<dynamic> deposit;
   late List<dynamic> withdraw;
-  late double totaldeposit,totaldisbursement,totalwithdraw,repayment, dueloan;
+  late double totaldeposit,totaldisbursement,totalwithdraw,repayment, totalloan;
   late DateTime lastrepaymentdate;
   bool img, sts, dead;
   DateTime birthdate;
@@ -50,7 +50,7 @@ class Memberss {
         required this.totaldisbursement,
         required this.totalwithdraw,
         required this.repayment,
-        required this.dueloan,
+        required this.totalloan,
         required this.lastrepaymentdate,
         required this.loanpendingamount,
         required this.owndepositamount,
