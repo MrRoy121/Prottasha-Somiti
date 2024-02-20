@@ -92,7 +92,7 @@ class _SamiteeMemberDepositeState extends State<SamiteeMemberDeposite> {
                         ),
                       ),
                       Spacer(),
-                      InkWell(onTap: ()=>widget.onsubmit,
+                      InkWell(onTap: ()=>widget.onsubmit(),
                         child: Container(
                           height: 40,
                           width: 125,
@@ -308,7 +308,7 @@ class _SamiteeMemberDepositeState extends State<SamiteeMemberDeposite> {
                             ),
                           ),
                           Spacer(),
-                          InkWell(onTap: ()=>widget.onsubmit,
+                          InkWell(onTap: ()=>widget.onsubmit(),
                             child: Container(
                               height: 40,
                               width: 125,
@@ -528,7 +528,7 @@ class _SamiteeMemberDepositeState extends State<SamiteeMemberDeposite> {
                             ),
                           ),
                           Spacer(),
-                          InkWell(onTap: ()=>widget.onsubmit,
+                          InkWell(onTap: ()=>widget.onsubmit(),
                             child: Container(
                               height: 30,
                               width: 95,

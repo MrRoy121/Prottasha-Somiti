@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import '../../Constants/Constants.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
+import '../../helpers/pdfs_helpers/pdf_samiteewisememberdepositloanledger.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -57,7 +60,7 @@ class _SamiteeWiseMemberDepositeLoanState
     });
   }
 
-  _save() {}
+
   void _onclear() {
     setState(() {
       var ss;
@@ -66,7 +69,100 @@ class _SamiteeWiseMemberDepositeLoanState
       samiteeselected = false;
     });
   }
-
+  double calculateSum(List<dynamic> array) {
+    return array.fold(0, (sum, map) => sum + (map['value'] as double? ?? 0));
+  }
+  Future<List<Memberss>> getCust() async {
+    List<Memberss> allmemberss = [];
+    int s = 1;
+    try {
+      QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('Member').get();
+      for (var element in querySnapshot.docs) {
+        if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
+          if (element["Deposits"] != null || element["Withdraws"] != null) {
+            double totaldeposit =0,totaldisbursement=0,totalwithdraw=0,repayment=0, totalloan=0;
+            DateTime lastrepaymentdate =DateTime(2000, 1, 1);
+            var deposits = element["Deposits"] ?? [];
+            var withdrawals = element["Withdraws"] ?? [];
+            totaldeposit= calculateSum(deposits) + calculateSum(withdrawals);
+            totalwithdraw =  calculateSum(withdrawals);
+            String sanctionid='';
+            await FirebaseFirestore.instance
+                .collection('LoanDisbursed')
+                .get()
+                .then((querySnapshot) {
+              for (var json in querySnapshot.docs) {
+                if(json['Member ID']==element.id&&json["Status"]&&json["Approve"]){
+                  sanctionid=json['Sanction']['ID'];
+                  totaldisbursement=totaldisbursement+json["Disbursed Amount"];
+                  totalloan = totalloan+json["Disbursed Amount"]+(json["Disbursed Amount"]*(json['Sanction']['Service Charge']/100));
+                }
+              }
+            });
+            await FirebaseFirestore.instance
+                .collection('LoanRepayment')
+                .orderBy('Approve Date', descending: false)
+                .get()
+                .then((querySnapshot) {
+              for (var json in querySnapshot.docs) {
+                if(json['Sanction Id']==sanctionid&&json["Status"]&&json["Approve"]){
+                  repayment=repayment+json['Pay Amount'];
+                  lastrepaymentdate = json['Request Date'].toDate();
+                }
+              }
+            });
+            allmemberss.add(Memberss.ForReport(
+                somiteename: element["Somitee Name"],
+                somiteeid: element["Somitee ID"],
+                membertype: element["Member Type"],
+                deposit: deposits,totaldisbursement: totaldisbursement,totalwithdraw:totalwithdraw ,
+                withdraw: withdrawals,totalloan: totalloan,lastrepaymentdate: lastrepaymentdate,repayment: repayment,totaldeposit: totaldeposit,
+                occupation: element["Occupation"],
+                firstname: element["First Name"],
+                lastname: element["Last Name"],
+                dead: element['Dead'],
+                fathername: element["Father Name"],
+                mothername: element["Mother Name"],
+                loanpendingamount: element["Loan Pending Amount"],
+                owndepositamount: element["Own deposit Amount"],
+                gender: element["Gender"],
+                religion: element["Religion"],
+                sts: element["Status"],
+                nationalid: element["National ID"],
+                birthregi: element["Birth Registration"],
+                annualincome: element["Annual Income"],
+                age: element["Age"],
+                nodepenndent: element["No of Dependent"],
+                education: element["Education"],
+                maritalstatus: element["Marital Status"],
+                mobilenotype: element["Mobile No Type"],
+                mobilenno: element["Mobile No"],
+                presentadd: element["Present Address"],
+                parmaadd: element["Parmanent Address"],
+                livingperiod: element["Living Period"],
+                nomaleearner: element["No Female Earner"],
+                nofemaleearner: element["No Male Earner"],
+                id: element.id,
+                headfamily: element["Head Family"],
+                ownhomestead: element["Own HomeStead"],
+                relationwithhead: element["Relation With Head"],
+                landdesc: element["Land Desc"],
+                housedesc: element["House Desc"],
+                remarks: element["Remarks"],
+                imageurl: element["ImageURL"],
+                img: element["Image"],
+                birthdate: element["Date Of Birth"].toDate(),
+                sl: s));
+            s++;
+          }
+        }
+      }
+    } catch (e) {
+      print("Error fetching data from Firestore: $e");
+    }
+    return allmemberss;
+  }
   @override
   Widget build(BuildContext context) {
     void _setupsomiti(int ins) {
@@ -75,99 +171,25 @@ class _SamiteeWiseMemberDepositeLoanState
         samiteeselected = true;
       });
     }
-    double calculateSum(List<dynamic> array) {
-      return array.fold(0, (sum, map) => sum + (map['value'] as double? ?? 0));
-    }
-    Future<List<Memberss>> getCust() async {
-      List<Memberss> allmemberss = [];
-      int s = 1;
-      try {
-        QuerySnapshot querySnapshot =
-            await FirebaseFirestore.instance.collection('Member').get();
-        for (var element in querySnapshot.docs) {
-          if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
-            if (element["Deposits"] != null || element["Withdraws"] != null) {
-              double totaldeposit =0,totaldisbursement=0,totalwithdraw=0,repayment=0, totalloan=0;
-              DateTime lastrepaymentdate =DateTime(2000, 1, 1);
-              var deposits = element["Deposits"] ?? [];
-              var withdrawals = element["Withdraws"] ?? [];
-              totaldeposit= calculateSum(deposits) + calculateSum(withdrawals);
-              totalwithdraw =  calculateSum(withdrawals);
-              String sanctionid='';
-              await FirebaseFirestore.instance
-                  .collection('LoanDisbursed')
-                  .get()
-                  .then((querySnapshot) {
-                for (var json in querySnapshot.docs) {
-                  if(json['Member ID']==element.id&&json["Status"]&&json["Approve"]){
-                    sanctionid=json['Sanction']['ID'];
-                    totaldisbursement=totaldisbursement+json["Disbursed Amount"];
-                    totalloan = totalloan+json["Disbursed Amount"]+(json["Disbursed Amount"]*(json['Sanction']['Service Charge']/100));
-                  }
-                }
-              });
-              await FirebaseFirestore.instance
-                  .collection('LoanRepayment')
-                  .orderBy('Approve Date', descending: false)
-                  .get()
-                  .then((querySnapshot) {
-                for (var json in querySnapshot.docs) {
-                  if(json['Sanction Id']==sanctionid&&json["Status"]&&json["Approve"]){
-                    repayment=repayment+json['Pay Amount'];
-                    lastrepaymentdate = json['Request Date'].toDate();
-                  }
-                }
-              });
-              allmemberss.add(Memberss.ForReport(
-                  somiteename: element["Somitee Name"],
-                  somiteeid: element["Somitee ID"],
-                  membertype: element["Member Type"],
-                  deposit: deposits,totaldisbursement: totaldisbursement,totalwithdraw:totalwithdraw ,
-                  withdraw: withdrawals,totalloan: totalloan,lastrepaymentdate: lastrepaymentdate,repayment: repayment,totaldeposit: totaldeposit,
-                  occupation: element["Occupation"],
-                  firstname: element["First Name"],
-                  lastname: element["Last Name"],
-                  dead: element['Dead'],
-                  fathername: element["Father Name"],
-                  mothername: element["Mother Name"],
-                  loanpendingamount: element["Loan Pending Amount"],
-                  owndepositamount: element["Own deposit Amount"],
-                  gender: element["Gender"],
-                  religion: element["Religion"],
-                  sts: element["Status"],
-                  nationalid: element["National ID"],
-                  birthregi: element["Birth Registration"],
-                  annualincome: element["Annual Income"],
-                  age: element["Age"],
-                  nodepenndent: element["No of Dependent"],
-                  education: element["Education"],
-                  maritalstatus: element["Marital Status"],
-                  mobilenotype: element["Mobile No Type"],
-                  mobilenno: element["Mobile No"],
-                  presentadd: element["Present Address"],
-                  parmaadd: element["Parmanent Address"],
-                  livingperiod: element["Living Period"],
-                  nomaleearner: element["No Female Earner"],
-                  nofemaleearner: element["No Male Earner"],
-                  id: element.id,
-                  headfamily: element["Head Family"],
-                  ownhomestead: element["Own HomeStead"],
-                  relationwithhead: element["Relation With Head"],
-                  landdesc: element["Land Desc"],
-                  housedesc: element["House Desc"],
-                  remarks: element["Remarks"],
-                  imageurl: element["ImageURL"],
-                  img: element["Image"],
-                  birthdate: element["Date Of Birth"].toDate(),
-                  sl: s));
-              s++;
-            }
-          }
-        }
-      } catch (e) {
-        print("Error fetching data from Firestore: $e");
+
+    _save() async {print("object");
+      if (selectedsomiti == null) {
+        Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
+            "Some Required Fields are Empty",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        PdfSamiteeWiseMemberDepositLoanLedger.generate(
+            await getCust(),selectedsomiti.name,selectedsomiti.id);
       }
-      return allmemberss;
     }
 
     return Scaffold(
@@ -486,7 +508,7 @@ class _SamiteeWiseMemberDepositeLoanState
                                                                     .lastrepaymentdate)
                                                                     .toString(),
                                                                 style:
-                                                                TextStyle(
+                                                                const TextStyle(
                                                                   fontSize: 10,
                                                                 )),
                                                           ),
