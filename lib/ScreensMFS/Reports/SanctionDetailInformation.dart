@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../../Constants/values.dart';
 import '../../Model/loanSanction.dart';
 import '../../Model/somitee.dart';
+import '../../helpers/pdfs_helpers/pdf_sanctoindetails.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -138,23 +142,25 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
     }
 
     _save() async {
-      // if (selectedsomiti == null) {
-      //   Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
-      //       "Some Required Fields are Empty",
-      //       snackPosition: SnackPosition.BOTTOM,
-      //       colorText: Colors.white,
-      //       backgroundColor: Colors.red,
-      //       margin: EdgeInsets.zero,
-      //       duration: const Duration(milliseconds: 2000),
-      //       boxShadows: [
-      //         BoxShadow(
-      //             color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-      //       ],
-      //       borderRadius: 0);
-      // } else {
-      //   PdfSamiteeWiseMemberDepositLoanLedger.generate(
-      //       await getCust(),selectedsomiti.name,selectedsomiti.id);
-      // }
+      if (selectedsomiti == null||selectedsanction == null) {
+        Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
+            "Some Required Fields are Empty",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        PdfSanctionDetails.generate(
+            selectedsanction,
+            LoanSchemes.firstWhere(
+                    (element) => element.name == selectedsanction.scheme));
+      }
     }
 
     return Scaffold(

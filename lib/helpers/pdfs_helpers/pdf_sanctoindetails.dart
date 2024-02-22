@@ -1,0 +1,350 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart';
+import 'package:prottashasomit/Model/loanSanction.dart';
+import 'package:prottashasomit/Model/scheme.dart';
+
+import '../../Model/member.dart';
+import '../auth_service.dart';
+import '../pdf_api.dart';
+
+class PdfSanctionDetails {
+  static Future<File> generate(loanSanction sss, Scheme scc) async {
+    final pdf = Document();
+
+    final Uint8List data = await yourBackgroundImageFunction();
+    final fontData =
+        await rootBundle.load("Assets/fonts/opensans/OpenSans-Regular.ttf");
+    final ttf = Font.ttf(fontData.buffer.asByteData());
+
+    final fontData2 =
+        await rootBundle.load("Assets/fonts/opensans/OpenSans-Bold.ttf");
+    final ttfbold = Font.ttf(fontData2.buffer.asByteData());
+
+    pdf.addPage(MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: EdgeInsets.zero,
+      orientation: PageOrientation.landscape,
+      build: (context) => [
+        Container(
+          margin: EdgeInsets.only(
+              left: PdfPageFormat.a4.marginLeft,
+              right: PdfPageFormat.a4.marginRight),
+          width: PdfPageFormat.a4.height,
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+              border: Border.all(width: 0.5, color: PdfColors.black)),
+          child: Row(children: [
+            Expanded(
+                child: Column(children: [
+              Row(children: [
+                Expanded(
+                  child: Text("Samitee Code",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": ${sss.somiteeid}",
+                      style: TextStyle(
+                          font: ttf, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+              Row(children: [
+                Expanded(
+                  child: Text("Sanction ID",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": ${sss.id}",
+                      style: TextStyle(
+                          font: ttf, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+              Row(children: [
+                Expanded(
+                  child: Text("Sanction Amount",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": ${sss.sanctionlimit}",
+                      style: TextStyle(
+                          font: ttf, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+              Row(children: [
+                Expanded(
+                  child: Text("Service Charge",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": ${sss.servicecharge}%",
+                      style: TextStyle(
+                          font: ttf, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+              Row(children: [
+                Expanded(
+                  child: Text("Loan Purpose",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": ${sss.loanpurpose}",
+                      style: TextStyle(
+                          font: ttf, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+              Row(children: [
+                Expanded(
+                  child: Text("Disbursed By",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                  child: Text(": N/A",
+                      style: TextStyle(
+                          font: ttf, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+            ])),
+            Expanded(
+                child: Column(children: [
+                  Row(children: [
+                    Expanded(
+                      child: Text("Samitee Name",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.somiteename}",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("New Samitee",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": N/A",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Loan Period",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${scc.duration}",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Service Amount",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.serviceamount}%",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Approved By",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": N/A",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Disbursed Date",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": N/A",
+                          style: TextStyle(
+                              font: ttf, fontSize: 8, color: PdfColors.black)),
+                    )
+                  ]),
+                ])),
+            Expanded(
+                child: Column(children: [
+                  Row(children: [
+                    Expanded(
+                      child: Text("Samitee Name",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.somiteename}",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Sanction ID",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.id}",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Sanction Amount",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.sanctionlimit}",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Service Charge",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.servicecharge}%",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Loan Purpose",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": ${sss.loanpurpose}",
+                          style: TextStyle(
+                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Disbursed By",
+                          style: TextStyle(
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    Expanded(
+                      child: Text(": N/A",
+                          style: TextStyle(
+                              font: ttf, fontSize: 8, color: PdfColors.black)),
+                    )
+                  ]),
+                ])),
+          ]),
+        ),
+      ],
+      header: (context) => buildHeader(
+        ttf,
+        data,
+        ttfbold,
+      ),
+      footer: (context) => buildFooter(ttf, ttfbold),
+    ));
+    return PdfApi.saveDocument(
+        "Memberss_List${DateFormat('dd-MMM-yyyy-jms').format(DateTime.now())}.pdf",
+        pdf);
+  }
+
+  static Future<Uint8List> yourBackgroundImageFunction() async {
+    ByteData byteData = await rootBundle.load("Assets/logo.jpg");
+    return byteData.buffer.asUint8List();
+  }
+
+  static Widget buildFooter(final ttf, final ttfbold) => Container(
+      margin: EdgeInsets.only(bottom: PdfPageFormat.a4.marginBottom - 40),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        SizedBox(height: 20),
+        Divider(color: PdfColor.fromHex("#808080")),
+        Text("Developed By MeetTechLab",
+            style: TextStyle(
+                font: ttfbold,
+                fontSize: 12,
+                color: PdfColor.fromHex("#1E2772"))),
+      ]));
+  static Widget buildHeader(final ttf, Uint8List data, final ttfbold) =>
+      Container(
+          alignment: Alignment.center,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Row(children: [
+                  Expanded(child: SizedBox()),
+                  Expanded(child: SizedBox()),
+                  Container(
+                      child: Image(MemoryImage(data),
+                          width: 70, height: 70, fit: BoxFit.fill),
+                      color: PdfColors.black),
+                  Expanded(child: SizedBox()),
+                  Expanded(
+                      child: Container(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                        Text(
+                            'Date: ${DateFormat('dd MMMM, yyyy').format(DateTime.now())}',
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColor.fromHex("#1E2772"))),
+                        Text(
+                            'User: ${AuthService.to.user!.type} - ${AuthService.to.user!.id}',
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize:10,
+                                color: PdfColor.fromHex("#1E2772"))),
+                      ]))),
+                ]),
+                Text("Prottsha Samitee LTD.",
+                    style: TextStyle(
+                        font: ttfbold,
+                        fontSize: 16,
+                        color: PdfColor.fromHex("#1E2772"))),
+                Text("Sunamgonj Sadar",
+                    style: TextStyle(
+                        font: ttfbold,
+                        fontSize: 12,
+                        color: PdfColor.fromHex("#1E2772"))),
+                SizedBox(height: 5),
+                Text("Loan Santion & Disbursement Sheet",
+                    style: TextStyle(
+                        font: ttf,
+                        fontSize: 12,
+                        color: PdfColor.fromHex("#1C1F22"))),
+                SizedBox(height: 30),
+              ]));
+}
