@@ -1,36 +1,43 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:prottashasomit/Model/loanSanction.dart';
 
 import '../../../Constants/Constants.dart';
-
+import '../../../Model/somitee.dart';
 
 class SanctionDetail extends StatefulWidget {
-
+  List<Somitee> somitee;
+  List<String> ssomitee;
+  List<loanSanction> sanction;
+  List<String> ssanction;
+  void Function(int) setupsanction;
+  var selectedsomitee;
+  var selectedsomiteeid;
+  var selectedsanction;
+  var selectedsanctionid;
+  void Function() onsubmit;
+  bool samiteeselected;
+  void Function() onclear;
+  void Function(int) setupsomiti;
+  SanctionDetail(
+      {required this.setupsomiti,
+        required this.somitee,
+        required this.ssomitee,
+        required this.sanction,required this.samiteeselected,
+        required this.ssanction,
+        required this.selectedsomitee,
+        required this.selectedsanction,
+        required this.setupsanction,
+        required this.selectedsanctionid,
+        required this.onsubmit,
+        required this.onclear,
+        required this.selectedsomiteeid});
 
   @override
   State<SanctionDetail> createState() => _SanctionDetailState();
 }
 
 class _SanctionDetailState extends State<SanctionDetail> {
-  DateTime? _selectedDate;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
-
-  String? selectedGender;
-
-
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -57,924 +64,992 @@ class _SanctionDetailState extends State<SanctionDetail> {
       tablet = false;
     }
 
-    return desktop? Container(
-      width: 1400,
-      height: 400,
-      // color: Colors.white,
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-
-      child: Column(
-        children: [
-          Container(
+    return desktop
+        ? Container(
             width: 1400,
-            height: 40,
-            color: navbarColor,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    "Sanction Detail Information",
-                    style: TextStyle(
-                      color: AppColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
+            height: 300,
+            // color: Colors.white,
 
-                Spacer(),
-
-                Container(
-                  height: 40,
-                  width: 125,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 12),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
-                    ),
-                  ),
-                  color: Colors.green,
-                ),
-
-                SizedBox(width: 10,),
-
-                Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 15),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
-                    ),
-                  ),
-                  color: AppColor_yellow,
-                ),
-
-
-                SizedBox(width: 10,),
-
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(top: 50, left: 150),
-            child: Row(
-              children: [
-                Column(
-                  children: [
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Samitee Name',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 60,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somiti Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Disburse From Date',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 30,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: InkWell(
-                            onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
-                                      : "Select a date",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp,
-                                      color: Colors.grey),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Sanction ID',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 80,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Sanction ID",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  width: 150,
-                ),
-
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Disburse To Date',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 65,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: InkWell(
-                            onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
-                                      : "Select a date",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp,
-                                      color: Colors.grey),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-
-
-
-                  ],
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    )
-    : tablet? Container(
-      width: 1400,
-      height: 600,
-      // color: Colors.white,
 
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-
-      child: Column(
-        children: [
-          Container(
-            width: 1400,
-            height: 40,
-            color: navbarColor,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    "Sanction Detail Information",
-                    style: TextStyle(
-                      color: AppColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-
-                Spacer(),
-
-                Container(
-                  height: 40,
-                  width: 125,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 12),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
-                    ),
-                  ),
-                  color: Colors.green,
-                ),
-
-                SizedBox(width: 10,),
-
-                Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 15),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
-                    ),
-                  ),
-                  color: AppColor_yellow,
-                ),
-
-
-                SizedBox(width: 10,),
-
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(top: 50, left: ScreenWidth/10.24),
             child: Column(
               children: [
-                Column(
-                  children: [
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Samitee Name',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
+                Container(
+                  width: 1400,
+                  height: 40,
+                  color: navbarColor,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40.0),
+                        child: Text(
+                          "Sanction Detail Information",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
+                      ),
+                      Spacer(),
 
-                        SizedBox(width: 60,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somiti Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Disburse From Date',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 30,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: InkWell(
-                            onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
-                                      : "Select a date",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp,
-                                      color: Colors.grey),
+                      InkWell(onTap: ()=>widget.onsubmit(),
+                        child: Container(
+                          height: 40,
+                          width: 125,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 2.0, left: 12),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  size: 16,
+                                  color: Colors.white,
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Sanction ID',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 80,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Sanction ID",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
-                ),
-
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Disburse To Date',
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 14)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 55,),
-
-
-                        SizedBox(
-                          width: 300,
-                          child: InkWell(
-                            onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
-                                      : "Select a date",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp,
-                                      color: Colors.grey),
+                                SizedBox(
+                                  width: 3,
                                 ),
-                              ),
+                                Text(
+                                  "View Report",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ],
                             ),
                           ),
+                          color: Colors.green,
                         ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
 
-
-                      ],
-                    ),
-
-
-
-
-
-                  ],
+                      InkWell(onTap: ()=>widget.onclear(),
+                        child: Container(
+                          height: 40,
+                          width: 90,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3.0, left: 15),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.clear_all_sharp,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Clear",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                          color: AppColor_yellow,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    )
-    : Container(
-      width: 1400,
-      height: 600,
-      // color: Colors.white,
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-
-      child: Column(
-        children: [
-          Container(
-            width: 1400,
-            height: 30,
-            color: navbarColor,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
                 Padding(
-                  padding: EdgeInsets.only(left: ScreenWidth/38.4),
-                  child: Text(
-                    "Sanction Detail Information",
-                    style: TextStyle(
-                      color: AppColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-
-                Spacer(),
-
-                Container(
-                  height: 30,
-                  width: 95,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 10, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 8),),
-                      ],
-                    ),
-                  ),
-                  color: Colors.green,
-                ),
-
-                SizedBox(width: 10,),
-
-                Container(
-                  height: 30,
-                  width: 70,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 10),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
-                      ],
-                    ),
-                  ),
-                  color: AppColor_yellow,
-                ),
-
-
-                SizedBox(width: 10,),
-
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(top: 50, left: ScreenWidth/10.24),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Samitee Name',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 50,),
-
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somiti Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                                fontSize: 8,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText, size: 8,),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Disburse From Date',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 30,),
-
-
-                        SizedBox(
-                          width: 200,
-                          child: InkWell(
-                            onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
-                                      : "Select a date",
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp,
-                                      color: Colors.grey),
+                  padding: const EdgeInsets.only(top: 50, left: 150),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Samitee Name',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
+                              SizedBox(
+                                width: 60,
+                              ),
 
+                              Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: AppColor_greyBorder,
+                                    border: Border.all(color: AppColor_Black),
+                                  ),
+                                  child: DropdownSearch<Somitee>(
+                                    filterFn: (Somitee item, String query) {
+                                      return item.filterFn(query);
+                                    },
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      itemBuilder: (BuildContext context,
+                                          Somitee item, bool isSelected) {
+                                        return Container(
+                                          padding: EdgeInsets.all(15),
+                                          child: Text(
+                                            item.name + " - " + item.id,
+                                          ),
+                                        );
+                                      },
+                                      fit: FlexFit.loose,
+                                      showSelectedItems: false,
+                                      menuProps: const MenuProps(
+                                        backgroundColor: Colors.white,
+                                        elevation: 100,
+                                      ),
+                                      searchFieldProps: const TextFieldProps(
+                                        style: TextStyle(fontSize: 12),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: "Search...",
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                    const DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownBuilder: (context, item) {
+                                      if (item == null) {
+                                        return const Text(
+                                          "Enter Somitee/Code",
+                                        );
+                                      } else {
+                                        return Text(
+                                          item.name + " - " + item.id,
+                                        );
+                                      }
+                                    },
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.selectedsomitee = newValue;
+                                        widget.selectedsomiteeid =
+                                        widget.somitee[widget.ssomitee
+                                            .indexOf(newValue!.name)];
+                                        widget.setupsomiti(widget.ssomitee
+                                            .indexOf(newValue.name));
 
-
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Sanction ID',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
+                                      });
+                                    },
+                                    items: widget.somitee,
+                                    selectedItem: widget.selectedsomiteeid,
+                                  )),
                             ],
                           ),
-                        ),
-
-                        SizedBox(width: 60,),
-
-
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Sanction ID",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                                fontSize: 8,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText, size: 8,),
-                            ),
+                          SizedBox(
+                            height: 40,
                           ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-
-                  ],
-                ),
-
-                SizedBox(
-                  height: 50,
-                ),
-
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Disburse To Date',
-                            style: TextStyle(color: Colors.black, fontSize: 8),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 8)),
-                              TextSpan(
-                                  text: ' :',
-                                  style: TextStyle(color: Colors.black, fontSize: 8)),
-
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: 35,),
-
-
-                        SizedBox(
-                          width: 200,
-                          child: InkWell(
-                            onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
-                                      : "Select a date",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 8,
-                                  ),
-                                  suffixIcon: Icon(Icons.calendar_month_sharp, size: 8,
-                                      color: Colors.grey),
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Sanction ID',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
                                 ),
                               ),
-                            ),
+                              SizedBox(
+                                width: 80,
+                              ),
+
+                              Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: AppColor_greyBorder,
+                                    border: Border.all(color: AppColor_Black),
+                                  ),
+                                  child: DropdownSearch<loanSanction>(
+                                    enabled: widget.samiteeselected,
+                                    filterFn:
+                                        (loanSanction item, String query) {
+                                      return item.filterFn(query);
+                                    },
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      itemBuilder: (BuildContext context,
+                                          loanSanction item, bool isSelected) {
+                                        return Container(
+                                          padding: EdgeInsets.all(15),
+                                          child: Text(
+                                            item.id +" - " +item.membername,
+                                          ),
+                                        );
+                                      },
+                                      fit: FlexFit.loose,
+                                      showSelectedItems: false,
+                                      menuProps: const MenuProps(
+                                        backgroundColor: Colors.white,
+                                        elevation: 100,
+                                      ),
+                                      searchFieldProps: const TextFieldProps(
+                                        style: TextStyle(fontSize: 12),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: "Search...",
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                    const DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownBuilder: (context, item) {
+                                      if (item == null) {
+                                        return const Text(
+                                          "Enter Sanction ID",
+                                        );
+                                      } else {
+                                        return Text(
+                                          item.id +" - "+item.membername,
+                                        );
+                                      }
+                                    },
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.selectedsanction = newValue;
+                                        widget.selectedsanctionid =
+                                        widget.sanction[widget.ssanction
+                                            .indexOf(newValue!.id)];
+                                        widget.setupsanction(widget.ssanction
+                                            .indexOf(newValue.id));
+                                      });
+                                    },
+                                    items: widget.sanction,
+                                    selectedItem: widget.selectedsanctionid,
+                                  )),
+                            ],
                           ),
-                        ),
-
-
-                      ],
-                    ),
-
-
-
-
-
-                  ],
+                        ],
+                      ),
+                      SizedBox(
+                        width: 150,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          )
+        : tablet
+            ? Container(
+                width: 1400,
+                height: 600,
+                // color: Colors.white,
+
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+
+                child: Column(
+                  children: [
+                    Container(
+                      width: 1400,
+                      height: 40,
+                      color: navbarColor,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 40.0),
+                            child: Text(
+                              "Sanction Detail Information",
+                              style: TextStyle(
+                                color: AppColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+
+                          InkWell(onTap: ()=>widget.onsubmit(),
+                            child: Container(
+                              height: 40,
+                              width: 125,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 2.0, left: 12),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      "View Report",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              color: Colors.green,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+
+                          InkWell(onTap: ()=>widget.onclear(),
+                            child: Container(
+                              height: 40,
+                              width: 90,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 3.0, left: 15),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.clear_all_sharp,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Clear",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              color: AppColor_yellow,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 50, left: ScreenWidth / 10.24),
+                      child: Column(
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Samitee Name',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 14),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: ' *',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
+                                                fontSize: 14)),
+                                        TextSpan(
+                                            text: ' :',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14)),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 60,
+                                  ),
+                                  Container(
+                                      width: 300,
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: AppColor_greyBorder,
+                                        border: Border.all(color: AppColor_Black),
+                                      ),
+                                      child: DropdownSearch<Somitee>(
+                                        filterFn: (Somitee item, String query) {
+                                          return item.filterFn(query);
+                                        },
+                                        popupProps: PopupProps.menu(
+                                          showSearchBox: true,
+                                          itemBuilder: (BuildContext context,
+                                              Somitee item, bool isSelected) {
+                                            return Container(
+                                              padding: EdgeInsets.all(15),
+                                              child: Text(
+                                                item.name + " - " + item.id,
+                                              ),
+                                            );
+                                          },
+                                          fit: FlexFit.loose,
+                                          showSelectedItems: false,
+                                          menuProps: const MenuProps(
+                                            backgroundColor: Colors.white,
+                                            elevation: 100,
+                                          ),
+                                          searchFieldProps: const TextFieldProps(
+                                            style: TextStyle(fontSize: 12),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              hintText: "Search...",
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                          dropdownSearchDecoration: InputDecoration(
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownBuilder: (context, item) {
+                                          if (item == null) {
+                                            return const Text(
+                                              "Enter Somitee/Code",
+                                            );
+                                          } else {
+                                            return Text(
+                                              item.name + " - " + item.id,
+                                            );
+                                          }
+                                        },
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            widget.selectedsomitee = newValue;
+                                            widget.selectedsomiteeid =
+                                            widget.somitee[widget.ssomitee
+                                                .indexOf(newValue!.name)];
+                                            widget.setupsomiti(widget.ssomitee
+                                                .indexOf(newValue.name));
+
+                                          });
+                                        },
+                                        items: widget.somitee,
+                                        selectedItem: widget.selectedsomiteeid,
+                                      )),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Sanction ID',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 14),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: ' *',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
+                                                fontSize: 14)),
+                                        TextSpan(
+                                            text: ' :',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14)),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 80,
+                                  ),
+
+                                  Container(
+                                      width: 300,
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: AppColor_greyBorder,
+                                        border: Border.all(color: AppColor_Black),
+                                      ),
+                                      child: DropdownSearch<loanSanction>(
+                                        enabled: widget.samiteeselected,
+                                        filterFn:
+                                            (loanSanction item, String query) {
+                                          return item.filterFn(query);
+                                        },
+                                        popupProps: PopupProps.menu(
+                                          showSearchBox: true,
+                                          itemBuilder: (BuildContext context,
+                                              loanSanction item, bool isSelected) {
+                                            return Container(
+                                              padding: EdgeInsets.all(15),
+                                              child: Text(
+                                                item.id +" - " +item.membername,
+                                              ),
+                                            );
+                                          },
+                                          fit: FlexFit.loose,
+                                          showSelectedItems: false,
+                                          menuProps: const MenuProps(
+                                            backgroundColor: Colors.white,
+                                            elevation: 100,
+                                          ),
+                                          searchFieldProps: const TextFieldProps(
+                                            style: TextStyle(fontSize: 12),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              hintText: "Search...",
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                          dropdownSearchDecoration: InputDecoration(
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownBuilder: (context, item) {
+                                          if (item == null) {
+                                            return const Text(
+                                              "Enter Sanction ID",
+                                            );
+                                          } else {
+                                            return Text(
+                                              item.id +" - "+item.membername,
+                                            );
+                                          }
+                                        },
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            widget.selectedsanction = newValue;
+                                            widget.selectedsanctionid =
+                                            widget.sanction[widget.ssanction
+                                                .indexOf(newValue!.id)];
+                                            widget.setupsanction(widget.ssanction
+                                                .indexOf(newValue.id));
+                                          });
+                                        },
+                                        items: widget.sanction,
+                                        selectedItem: widget.selectedsanctionid,
+                                      )),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Container(
+                width: 1400,
+                height: 600,
+                // color: Colors.white,
+
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+
+                child: Column(
+                  children: [
+                    Container(
+                      width: 1400,
+                      height: 30,
+                      color: navbarColor,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: ScreenWidth / 38.4),
+                            child: Text(
+                              "Sanction Detail Information",
+                              style: TextStyle(
+                                color: AppColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+
+                          InkWell(onTap: ()=>widget.onsubmit(),
+                            child: Container(
+                              height: 30,
+                              width: 95,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 2.0, left: 8),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      size: 10,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      "View Report",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 8),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              color: Colors.green,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+
+                          InkWell(onTap: ()=>widget.onclear(),
+                            child: Container(
+                              height: 30,
+                              width: 70,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 3.0, left: 10),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.clear_all_sharp,
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Clear",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 8),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              color: AppColor_yellow,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 50, left: ScreenWidth / 10.24),
+                      child: Column(
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Samitee Name',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 8),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: ' *',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
+                                                fontSize: 8)),
+                                        TextSpan(
+                                            text: ' :',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 8)),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 50,
+                                  ),
+
+                                  Container(
+                                      width: 200,
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: AppColor_greyBorder,
+                                        border: Border.all(color: AppColor_Black),
+                                      ),
+                                      child: DropdownSearch<Somitee>(
+                                        filterFn: (Somitee item, String query) {
+                                          return item.filterFn(query);
+                                        },
+                                        popupProps: PopupProps.menu(
+                                          showSearchBox: true,
+                                          itemBuilder: (BuildContext context,
+                                              Somitee item, bool isSelected) {
+                                            return Container(
+                                              padding: EdgeInsets.all(15),
+                                              child: Text(
+                                                item.name + " - " + item.id,
+                                              ),
+                                            );
+                                          },
+                                          fit: FlexFit.loose,
+                                          showSelectedItems: false,
+                                          menuProps: const MenuProps(
+                                            backgroundColor: Colors.white,
+                                            elevation: 100,
+                                          ),
+                                          searchFieldProps: const TextFieldProps(
+                                            style: TextStyle(fontSize: 12),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              hintText: "Search...",
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                          dropdownSearchDecoration: InputDecoration(
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownBuilder: (context, item) {
+                                          if (item == null) {
+                                            return const Text(
+                                              "Enter Somitee/Code",
+                                            );
+                                          } else {
+                                            return Text(
+                                              item.name + " - " + item.id,
+                                            );
+                                          }
+                                        },
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            widget.selectedsomitee = newValue;
+                                            widget.selectedsomiteeid =
+                                            widget.somitee[widget.ssomitee
+                                                .indexOf(newValue!.name)];
+                                            widget.setupsomiti(widget.ssomitee
+                                                .indexOf(newValue.name));
+
+                                          });
+                                        },
+                                        items: widget.somitee,
+                                        selectedItem: widget.selectedsomiteeid,
+                                      )),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Sanction ID',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 8),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: ' *',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
+                                                fontSize: 8)),
+                                        TextSpan(
+                                            text: ' :',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 8)),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 60,
+                                  ),
+                                  Container(
+                                      width: 200,
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: AppColor_greyBorder,
+                                        border: Border.all(color: AppColor_Black),
+                                      ),
+                                      child: DropdownSearch<loanSanction>(
+                                        enabled: widget.samiteeselected,
+                                        filterFn:
+                                            (loanSanction item, String query) {
+                                          return item.filterFn(query);
+                                        },
+                                        popupProps: PopupProps.menu(
+                                          showSearchBox: true,
+                                          itemBuilder: (BuildContext context,
+                                              loanSanction item, bool isSelected) {
+                                            return Container(
+                                              padding: EdgeInsets.all(15),
+                                              child: Text(
+                                                item.id +" - " +item.membername,
+                                              ),
+                                            );
+                                          },
+                                          fit: FlexFit.loose,
+                                          showSelectedItems: false,
+                                          menuProps: const MenuProps(
+                                            backgroundColor: Colors.white,
+                                            elevation: 100,
+                                          ),
+                                          searchFieldProps: const TextFieldProps(
+                                            style: TextStyle(fontSize: 12),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              hintText: "Search...",
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                          dropdownSearchDecoration: InputDecoration(
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent),
+                                            ),
+                                          ),
+                                        ),
+                                        dropdownBuilder: (context, item) {
+                                          if (item == null) {
+                                            return const Text(
+                                              "Enter Sanction ID",
+                                            );
+                                          } else {
+                                            return Text(
+                                              item.id +" - "+item.membername,
+                                            );
+                                          }
+                                        },
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            widget.selectedsanction = newValue;
+                                            widget.selectedsanctionid =
+                                            widget.sanction[widget.ssanction
+                                                .indexOf(newValue!.id)];
+                                            widget.setupsanction(widget.ssanction
+                                                .indexOf(newValue.id));
+                                          });
+                                        },
+                                        items: widget.sanction,
+                                        selectedItem: widget.selectedsanctionid,
+                                      )),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
   }
 }

@@ -36,8 +36,6 @@ class _MemberWiseDisburseState extends State<MemberWiseDisburse> {
               height: 50,
             ),
 
-
-            // Member Wise Disburse, Over Due & Outstanding
             MemberWiseDisburseWidget(),
 
 

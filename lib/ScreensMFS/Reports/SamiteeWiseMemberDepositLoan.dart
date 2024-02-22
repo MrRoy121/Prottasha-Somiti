@@ -172,7 +172,7 @@ class _SamiteeWiseMemberDepositeLoanState
       });
     }
 
-    _save() async {print("object");
+    _save() async {
       if (selectedsomiti == null) {
         Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
             "Some Required Fields are Empty",

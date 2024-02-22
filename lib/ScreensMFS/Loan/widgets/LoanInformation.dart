@@ -21,11 +21,13 @@ class LoanInformation extends StatefulWidget {
   LoanInformation(
       {required this.sanction,
       required this.bsanction,
-        required this.conpincode,
-        required this.condisbursed,
-        required this.deathriskamount,
-      required this.ssanction,required this.connarration,
-      required this.setupsanction,required this.scheme,
+      required this.conpincode,
+      required this.condisbursed,
+      required this.deathriskamount,
+      required this.ssanction,
+      required this.connarration,
+      required this.setupsanction,
+      required this.scheme,
       required this.selectedsanction,
       required this.selectedsanctionid});
 
@@ -152,7 +154,7 @@ class _LoanInformationState extends State<LoanInformation> {
                                         return Container(
                                           padding: EdgeInsets.all(15),
                                           child: Text(
-                                            item.id +" - " +item.membername,
+                                            item.id + " - " + item.membername,
                                           ),
                                         );
                                       },
@@ -190,7 +192,7 @@ class _LoanInformationState extends State<LoanInformation> {
                                         );
                                       } else {
                                         return Text(
-                                          item.id +" - "+item.membername,
+                                          item.id + " - " + item.membername,
                                         );
                                       }
                                     },
@@ -227,7 +229,9 @@ class _LoanInformationState extends State<LoanInformation> {
                               SizedBox(
                                 width: 300,
                                 child: Text(
-                                  widget.bsanction ? "${widget.selectedsanction.somiteeid}${widget.selectedsanction.memberid}${widget.scheme.sl}${widget.selectedsanction.sl}": "",
+                                  widget.bsanction
+                                      ? "${widget.selectedsanction.somiteeid}${widget.selectedsanction.memberid}${widget.scheme.sl}${widget.selectedsanction.sl}"
+                                      : "",
                                 ),
                               ),
                             ],
@@ -248,7 +252,6 @@ class _LoanInformationState extends State<LoanInformation> {
                               ),
                               SizedBox(
                                 width: 300,
-
                                 child: TextFormField(
                                   controller: widget.condisbursed,
                                   keyboardType: TextInputType.number,
@@ -261,12 +264,12 @@ class _LoanInformationState extends State<LoanInformation> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Disbursed Value",
                                     fillColor: Colors.grey.shade200,
@@ -293,7 +296,6 @@ class _LoanInformationState extends State<LoanInformation> {
                               ),
                               SizedBox(
                                 width: 300,
-
                                 child: TextFormField(
                                   controller: widget.conpincode,
                                   keyboardType: TextInputType.number,
@@ -306,12 +308,12 @@ class _LoanInformationState extends State<LoanInformation> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Pin Code",
                                     fillColor: Colors.grey.shade200,
@@ -349,7 +351,9 @@ class _LoanInformationState extends State<LoanInformation> {
                                 SizedBox(
                                   width: 300,
                                   child: Text(
-                                    widget.bsanction ? widget.selectedsanction.membername : "",
+                                    widget.bsanction
+                                        ? widget.selectedsanction.membername
+                                        : "",
                                   ),
                                 ),
                               ],
@@ -422,12 +426,12 @@ class _LoanInformationState extends State<LoanInformation> {
                                     enabledBorder: const OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     focusedBorder: const OutlineInputBorder(
                                       borderRadius: BorderRadius.zero,
                                       borderSide:
-                                      BorderSide(color: Colors.black),
+                                          BorderSide(color: Colors.black),
                                     ),
                                     hintText: "Narration",
                                     fillColor: Colors.grey.shade200,
