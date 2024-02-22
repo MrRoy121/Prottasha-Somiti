@@ -22,14 +22,12 @@ class SanctionDetailInformation extends StatefulWidget {
 class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
   List<String> ssomitee = [];
   var selectedsomiti;
-  var sselectedsomiti;
   bool samiteeselected = false;
   List<loanSanction> sanction = [];
   List<Somitee> somitee = [];
   List<loanSanction> allsanction = [];
   List<String> ssanction = [];
   var selectedsanction;
-  var selectedsanctionid;
 
   @override
   void initState() {
@@ -99,8 +97,16 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
               status: json["Status"],
               id: json['ID'],
               sl: json['SL']));
-          ssanction.add(json['ID']);
         }
+      }
+    });
+
+    await FirebaseFirestore.instance
+        .collection('LoanDisbursed')
+        .get()
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        allsanction.add(loanSanction.fromJson(json['Sanction']));
       }
     });
   }
@@ -123,6 +129,7 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
         sanction = allsanction
             .where((sanction) => sanction.somiteeid == selectedsomiti.id)
             .toList();
+
       });
     }
 
@@ -162,15 +169,11 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
               child: Column(
                 children: [
                   SanctionDetail(
-                    ssomitee: ssomitee,
                     setupsomiti: _setupsomiti,
-                    selectedsomiteeid: selectedsomiti,
                     sanction: sanction,
                     selectedsanction: selectedsanction,
-                    selectedsanctionid: selectedsanctionid,
                     setupsanction: _setupsanction,
-                    ssanction: ssanction,
-                    selectedsomitee: sselectedsomiti,
+                    selectedsomitee: selectedsomiti,
                     onsubmit: _save,
                     onclear: _onclear,
                     somitee: somitee,

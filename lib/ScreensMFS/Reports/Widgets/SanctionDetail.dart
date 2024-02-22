@@ -7,14 +7,10 @@ import '../../../Model/somitee.dart';
 
 class SanctionDetail extends StatefulWidget {
   List<Somitee> somitee;
-  List<String> ssomitee;
   List<loanSanction> sanction;
-  List<String> ssanction;
   void Function(int) setupsanction;
   var selectedsomitee;
-  var selectedsomiteeid;
   var selectedsanction;
-  var selectedsanctionid;
   void Function() onsubmit;
   bool samiteeselected;
   void Function() onclear;
@@ -22,16 +18,12 @@ class SanctionDetail extends StatefulWidget {
   SanctionDetail(
       {required this.setupsomiti,
         required this.somitee,
-        required this.ssomitee,
         required this.sanction,required this.samiteeselected,
-        required this.ssanction,
         required this.selectedsomitee,
         required this.selectedsanction,
         required this.setupsanction,
-        required this.selectedsanctionid,
         required this.onsubmit,
-        required this.onclear,
-        required this.selectedsomiteeid});
+        required this.onclear,});
 
   @override
   State<SanctionDetail> createState() => _SanctionDetailState();
@@ -262,16 +254,12 @@ class _SanctionDetailState extends State<SanctionDetail> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedsomitee = newValue;
-                                        widget.selectedsomiteeid =
-                                        widget.somitee[widget.ssomitee
-                                            .indexOf(newValue!.name)];
-                                        widget.setupsomiti(widget.ssomitee
-                                            .indexOf(newValue.name));
-
+                                        widget.setupsomiti(widget.somitee
+                                            .indexOf(newValue!));
                                       });
                                     },
                                     items: widget.somitee,
-                                    selectedItem: widget.selectedsomiteeid,
+                                    selectedItem: widget.selectedsomitee,
                                   )),
                             ],
                           ),
@@ -367,16 +355,14 @@ class _SanctionDetailState extends State<SanctionDetail> {
                                     },
                                     onChanged: (newValue) {
                                       setState(() {
+
                                         widget.selectedsanction = newValue;
-                                        widget.selectedsanctionid =
-                                        widget.sanction[widget.ssanction
-                                            .indexOf(newValue!.id)];
-                                        widget.setupsanction(widget.ssanction
-                                            .indexOf(newValue.id));
+                                        widget.setupsanction(widget.sanction
+                                            .indexOf(newValue!));
                                       });
                                     },
                                     items: widget.sanction,
-                                    selectedItem: widget.selectedsanctionid,
+                                    selectedItem: widget.selectedsanction,
                                   )),
                             ],
                           ),
@@ -591,17 +577,15 @@ class _SanctionDetailState extends State<SanctionDetail> {
                                         },
                                         onChanged: (newValue) {
                                           setState(() {
+
                                             widget.selectedsomitee = newValue;
-                                            widget.selectedsomiteeid =
-                                            widget.somitee[widget.ssomitee
-                                                .indexOf(newValue!.name)];
-                                            widget.setupsomiti(widget.ssomitee
-                                                .indexOf(newValue.name));
+                                            widget.setupsomiti(widget.somitee
+                                                .indexOf(newValue!));
 
                                           });
                                         },
                                         items: widget.somitee,
-                                        selectedItem: widget.selectedsomiteeid,
+                                        selectedItem: widget.selectedsomitee,
                                       )),
                                 ],
                               ),
@@ -701,16 +685,14 @@ class _SanctionDetailState extends State<SanctionDetail> {
                                         },
                                         onChanged: (newValue) {
                                           setState(() {
+
                                             widget.selectedsanction = newValue;
-                                            widget.selectedsanctionid =
-                                            widget.sanction[widget.ssanction
-                                                .indexOf(newValue!.id)];
-                                            widget.setupsanction(widget.ssanction
-                                                .indexOf(newValue.id));
+                                            widget.setupsanction(widget.sanction
+                                                .indexOf(newValue!));
                                           });
                                         },
                                         items: widget.sanction,
-                                        selectedItem: widget.selectedsanctionid,
+                                        selectedItem: widget.selectedsanction,
                                       )),
                                 ],
                               ),
@@ -922,16 +904,13 @@ class _SanctionDetailState extends State<SanctionDetail> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             widget.selectedsomitee = newValue;
-                                            widget.selectedsomiteeid =
-                                            widget.somitee[widget.ssomitee
-                                                .indexOf(newValue!.name)];
-                                            widget.setupsomiti(widget.ssomitee
-                                                .indexOf(newValue.name));
+                                            widget.setupsomiti(widget.somitee
+                                                .indexOf(newValue!));
 
                                           });
                                         },
                                         items: widget.somitee,
-                                        selectedItem: widget.selectedsomiteeid,
+                                        selectedItem: widget.selectedsomitee,
                                       )),
                                 ],
                               ),
@@ -1028,15 +1007,12 @@ class _SanctionDetailState extends State<SanctionDetail> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             widget.selectedsanction = newValue;
-                                            widget.selectedsanctionid =
-                                            widget.sanction[widget.ssanction
-                                                .indexOf(newValue!.id)];
-                                            widget.setupsanction(widget.ssanction
-                                                .indexOf(newValue.id));
+                                            widget.setupsanction(widget.sanction
+                                                .indexOf(newValue!));
                                           });
                                         },
                                         items: widget.sanction,
-                                        selectedItem: widget.selectedsanctionid,
+                                        selectedItem: widget.selectedsanction,
                                       )),
                                 ],
                               ),
