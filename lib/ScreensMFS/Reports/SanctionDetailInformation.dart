@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../Constants/values.dart';
 import '../../Model/loanSanction.dart';
+import '../../Model/member.dart';
 import '../../Model/somitee.dart';
 import '../../helpers/pdfs_helpers/pdf_sanctoindetails.dart';
 import '../Widget/Appbar.dart';
@@ -141,6 +142,55 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
       selectedsanction = sanction[ins];
     }
 
+    Future<Memberss> getMember() async {
+    late Memberss meme;
+      int s = 1;
+      await FirebaseFirestore.instance
+          .collection('Member').doc(selectedsanction.memberid)
+          .get()
+          .then((element) {
+            meme = Memberss(
+                somiteename: element["Somitee Name"],
+                somiteeid: element["Somitee ID"],
+                membertype: element["Member Type"],
+                occupation: element["Occupation"],
+                firstname: element["First Name"],
+                lastname: element["Last Name"],dead: element['Dead'],
+                fathername: element["Father Name"],
+                mothername: element["Mother Name"],
+                loanpendingamount: element["Loan Pending Amount"],
+                owndepositamount: element["Own deposit Amount"],
+                gender: element["Gender"],
+                religion: element["Religion"],
+                sts: element["Status"],
+                nationalid: element["National ID"],
+                birthregi: element["Birth Registration"],
+                annualincome: element["Annual Income"],
+                age: element["Age"],
+                nodepenndent: element["No of Dependent"],
+                education: element["Education"],
+                maritalstatus: element["Marital Status"],
+                mobilenotype: element["Mobile No Type"],
+                mobilenno: element["Mobile No"],
+                presentadd: element["Present Address"],
+                parmaadd: element["Parmanent Address"],
+                livingperiod: element["Living Period"],
+                nomaleearner: element["No Female Earner"],
+                nofemaleearner: element["No Male Earner"],
+                id: element.id,
+                headfamily: element["Head Family"],
+                ownhomestead: element["Own HomeStead"],
+                relationwithhead: element["Relation With Head"],
+                landdesc: element["Land Desc"],
+                housedesc: element["House Desc"],
+                remarks: element["Remarks"],
+                imageurl: element["ImageURL"],
+                img: element["Image"],
+                birthdate: element["Date Of Birth"].toDate(),
+                sl: s);
+      });
+      return meme;
+    }
     _save() async {
       if (selectedsomiti == null||selectedsanction == null) {
         Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
@@ -156,10 +206,12 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
             ],
             borderRadius: 0);
       } else {
+
+
         PdfSanctionDetails.generate(
             selectedsanction,
             LoanSchemes.firstWhere(
-                    (element) => element.name == selectedsanction.scheme));
+                    (element) => element.name == selectedsanction.scheme),await getMember());
       }
     }
 
