@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -12,7 +13,8 @@ import '../auth_service.dart';
 import '../pdf_api.dart';
 
 class PdfSanctionDetails {
-  static Future<File> generate(loanSanction sss, Scheme scc, Memberss member) async {
+  static Future<File> generate(
+      loanSanction sss, Scheme scc, Memberss member) async {
     final pdf = Document();
 
     final Uint8List data = await yourBackgroundImageFunction();
@@ -30,387 +32,1006 @@ class PdfSanctionDetails {
       orientation: PageOrientation.landscape,
       build: (context) => [
         Container(
-          margin: EdgeInsets.only(
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          width: PdfPageFormat.a4.height,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              border: Border.all(width: 0.5, color: PdfColors.black)),
-          child: Row(children: [
-            Expanded(
-                child: Column(children: [
-              Row(children: [
-                Expanded(
-                  child: Text("Samitee Code",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.somiteeid}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Sanction ID",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.id}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Sanction Amount",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.sanctionlimit}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Service Charge",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.servicecharge}%",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Loan Purpose",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.loanpurpose}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Disbursed By",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": N/A",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
+            margin: EdgeInsets.only(
+                left: PdfPageFormat.a4.marginLeft,
+                right: PdfPageFormat.a4.marginRight),
+            child: Column(children: [
+              Container(
+                width: PdfPageFormat.a4.height,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5, color: PdfColors.black)),
+                child: Row(children: [
+                  Expanded(
+                      child: Column(children: [
+                    Row(children: [
+                      Expanded(
+                        child: Text("Samitee Code",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.somiteeid}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Sanction ID",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.id}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Sanction Amount",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.sanctionlimit}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Service Charge",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.servicecharge}%",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Loan Purpose",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.loanpurpose}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Disbursed By",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": N/A",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                  ])),
+                  Expanded(
+                      child: Column(children: [
+                    Row(children: [
+                      Expanded(
+                        child: Text("Samitee Name",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.somiteename}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("New Samitee",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": N/A",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Loan Period",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${scc.duration}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Service Amount",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.serviceamount}%",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Approved By",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": N/A",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Disbursed Date",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": N/A",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                  ])),
+                  Expanded(
+                      child: Column(children: [
+                    Row(children: [
+                      Expanded(
+                        child: Text("Samitee Name",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.somiteename}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Sanction ID",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.id}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Sanction Amount",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.sanctionlimit}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Service Charge",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.servicecharge}%",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Loan Purpose",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": ${sss.loanpurpose}",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                    Row(children: [
+                      Expanded(
+                        child: Text("Disbursed By",
+                            style: TextStyle(
+                                font: ttfbold,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      ),
+                      Expanded(
+                        child: Text(": N/A",
+                            style: TextStyle(
+                                font: ttf,
+                                fontSize: 10,
+                                color: PdfColors.black)),
+                      )
+                    ]),
+                  ])),
+                ]),
+              ),
+              SizedBox(height: 10),
+              Container(
+                width: PdfPageFormat.a4.height,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5, color: PdfColors.black)),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Beneficiary Details :",
+                          style: TextStyle(
+                              font: ttfbold,
+                              fontSize: 10,
+                              color: PdfColors.black)),
+                      Container(
+                          width: 100, color: PdfColors.black, height: 0.5),
+                      SizedBox(height: 5),
+                      Row(children: [
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Member Code :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin: const EdgeInsets.only(
+                                        right: 3, bottom: 5)),
+                                Text(sss.memberid,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Member Name :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.membername,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Father/Husband :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(member.fathername,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Mother Name :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(member.mothername,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Mobile No :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(member.mobilenno,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("National ID :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(member.nationalid,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Present Address :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(member.presentadd,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                      ]),
+                    ]),
+              ),
+              SizedBox(height: 10),
+              Container(
+                width: PdfPageFormat.a4.height,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5, color: PdfColors.black)),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Grantor Details : (Social)",
+                          style: TextStyle(
+                              font: ttfbold,
+                              fontSize: 10,
+                              color: PdfColors.black)),
+                      Container(width: 80, color: PdfColors.black, height: 0.5),
+                      SizedBox(height: 5),
+                      Row(children: [
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Grantor Name:",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin: const EdgeInsets.only(
+                                        right: 3, bottom: 5)),
+                                Text(sss.grantorsname,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Father Name :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorsfname,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Mobile Number :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorsmobile,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Occupation :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorsocupasion,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Relation :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorsrelation,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                      ]),
+                    ]),
+              ),
             ])),
-            Expanded(
-                child: Column(children: [
-              Row(children: [
-                Expanded(
-                  child: Text("Samitee Name",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.somiteename}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("New Samitee",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": N/A",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Loan Period",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${scc.duration}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Service Amount",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.serviceamount}%",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Approved By",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": N/A",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Disbursed Date",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": N/A",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-            ])),
-            Expanded(
-                child: Column(children: [
-              Row(children: [
-                Expanded(
-                  child: Text("Samitee Name",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.somiteename}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Sanction ID",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.id}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Sanction Amount",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.sanctionlimit}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Service Charge",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.servicecharge}%",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Loan Purpose",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": ${sss.loanpurpose}",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-              Row(children: [
-                Expanded(
-                  child: Text("Disbursed By",
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
-                ),
-                Expanded(
-                  child: Text(": N/A",
-                      style: TextStyle(
-                          font: ttf, fontSize: 10, color: PdfColors.black)),
-                )
-              ]),
-            ])),
-          ]),
-        ),
-        SizedBox(height: 20),
         Container(
-          margin: EdgeInsets.only(
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          width: PdfPageFormat.a4.height,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              border: Border.all(width: 0.5, color: PdfColors.black)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text("Beneficiary Details :",
-                style: TextStyle(
-                    font: ttfbold, fontSize: 10, color: PdfColors.black)),
-            Container(width: 100, color: PdfColors.black, height: 0.5),
-            SizedBox(height: 5),
-            Row(children: [
-              Expanded(
+            margin: EdgeInsets.only(
+                left: PdfPageFormat.a4.marginLeft,
+                right: PdfPageFormat.a4.marginRight),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                width: PdfPageFormat.a4.height,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5, color: PdfColors.black)),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Member Code :",
+                      Text("Grantor Details : (Family)",
                           style: TextStyle(
                               font: ttfbold,
                               fontSize: 10,
                               color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: const EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(sss.memberid,
-                          style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                      Container(width: 80, color: PdfColors.black, height: 0.5),
+                      SizedBox(height: 5),
+                      Row(children: [
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Grantor Name:",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin: const EdgeInsets.only(
+                                        right: 3, bottom: 5)),
+                                Text(sss.grantorfname,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Father Name :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorffname,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Mobile Number :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorfmobile,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Occupation :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorfocupasion,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Relation :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorfrelation,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                      ]),
                     ]),
               ),
-              Expanded(
+              SizedBox(height: 10),
+              Container(
+                width: PdfPageFormat.a4.height,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5, color: PdfColors.black)),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Member Name :",
+                      Text("Grantor Details : (Bussiness)",
                           style: TextStyle(
                               font: ttfbold,
                               fontSize: 10,
                               color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(sss.membername,
-                          style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
+                      Container(width: 80, color: PdfColors.black, height: 0.5),
+                      SizedBox(height: 5),
+                      Row(children: [
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Grantor Name:",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin: const EdgeInsets.only(
+                                        right: 3, bottom: 5)),
+                                Text(sss.grantorpname,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Father Name :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorpfname,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Mobile Number :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorpmobile,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Occupation :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorpocupasion,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Relation :",
+                                    style: TextStyle(
+                                        font: ttfbold,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                                Container(
+                                    color: PdfColors.black,
+                                    height: 0.5,
+                                    margin:
+                                        EdgeInsets.only(right: 3, bottom: 5)),
+                                Text(sss.grantorprelation,
+                                    style: TextStyle(
+                                        font: ttf,
+                                        fontSize: 10,
+                                        color: PdfColors.black)),
+                              ]),
+                        ),
+                      ]),
                     ]),
               ),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Father/Husband :",
+              SizedBox(height: 10),
+              Text("Request To Disburse : sssssss",
+                  style: TextStyle(
+                      font: ttfbold, fontSize: 10, color: PdfColors.black)),
+              Container(width: 100, color: PdfColors.black, height: 0.5),
+              SizedBox(height: 5),
+              Row(children: [
+                Expanded(
+                  child: Text("Cash Received By Beneficiary:",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                SizedBox(width: 105),
+                Expanded(
+                  child: Text("Field Assistant (FA):",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                )
+              ]),
+              Row(children: [
+                Expanded(
+                    child: Container(
+                        margin: EdgeInsets.only(left: 40),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Sign:",
+                                  style: TextStyle(
+                                      font: ttf,
+                                      fontSize: 10,
+                                      color: PdfColors.black)),
+                              Text("Name:",
+                                  style: TextStyle(
+                                      font: ttf,
+                                      fontSize: 10,
+                                      color: PdfColors.black)),
+                              Text("Date:",
+                                  style: TextStyle(
+                                      font: ttf,
+                                      fontSize: 10,
+                                      color: PdfColors.black)),
+                            ]))),
+                Container(
+                  width: 85,
+                  height: 50,
+                  margin: EdgeInsets.only(right: 25),
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: PdfColors.black)),
+                  alignment: Alignment.center,
+                  child: Text("Stamp",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                ),
+                Expanded(
+                    child: Container(
+                        margin: EdgeInsets.only(left: 40),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Sign:",
+                                  style: TextStyle(
+                                      font: ttf,
+                                      fontSize: 10,
+                                      color: PdfColors.black)),
+                              Text("Name:",
+                                  style: TextStyle(
+                                      font: ttf,
+                                      fontSize: 10,
+                                      color: PdfColors.black)),
+                              Text("Date:",
+                                  style: TextStyle(
+                                      font: ttf,
+                                      fontSize: 10,
+                                      color: PdfColors.black)),
+                            ]))),
+              ]),
+                  SizedBox(height: 5),
+                  Row(children: [
+                    Expanded(
+                      child: Text("Verified By Branch Manager:",
                           style: TextStyle(
-                              font: ttfbold,
-                              fontSize: 10,
-                              color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(member.fathername,
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    ),
+                    SizedBox(width: 105),
+                    Expanded(
+                      child: Text("Disbursed By:\nComputer Operator(CO)/ Cash Assistant(CA)",
                           style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
-                    ]),
-              ),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Mother Name :",
-                          style: TextStyle(
-                              font: ttfbold,
-                              fontSize: 10,
-                              color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(member.mothername,
-                          style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
-                    ]),
-              ),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Mobile No :",
-                          style: TextStyle(
-                              font: ttfbold,
-                              fontSize: 10,
-                              color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(member.mobilenno,
-                          style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
-                    ]),
-              ),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("National ID :",
-                          style: TextStyle(
-                              font: ttfbold,
-                              fontSize: 10,
-                              color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(member.nationalid,
-                          style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
-                    ]),
-              ),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Present Address :",
-                          style: TextStyle(
-                              font: ttfbold,
-                              fontSize: 10,
-                              color: PdfColors.black)),
-                      Container(
-                          color: PdfColors.black,
-                          height: 0.5,
-                          margin: EdgeInsets.only(right: 3, bottom: 5)),
-                      Text(member.presentadd,
-                          style: TextStyle(
-                              font: ttf, fontSize: 10, color: PdfColors.black)),
-                    ]),
-              ),
-            ]),
-          ]),
-        ),
+                              font: ttfbold, fontSize: 10, color: PdfColors.black)),
+                    )
+                  ]),
+                  Row(children: [
+                    Expanded(
+                        child: Container(
+                            margin: EdgeInsets.only(left: 40),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Sign:",
+                                      style: TextStyle(
+                                          font: ttf,
+                                          fontSize: 10,
+                                          color: PdfColors.black)),
+                                  Text("Name:",
+                                      style: TextStyle(
+                                          font: ttf,
+                                          fontSize: 10,
+                                          color: PdfColors.black)),
+                                  Text("Date:",
+                                      style: TextStyle(
+                                          font: ttf,
+                                          fontSize: 10,
+                                          color: PdfColors.black)),
+                                ]))),
+                    Container(
+                      width: 85,
+                      height: 50,
+                      margin: EdgeInsets.only(right: 25),
+                    ),
+                    Expanded(
+                        child: Container(
+                            margin: EdgeInsets.only(left: 40),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Sign:",
+                                      style: TextStyle(
+                                          font: ttf,
+                                          fontSize: 10,
+                                          color: PdfColors.black)),
+                                  Text("Name:",
+                                      style: TextStyle(
+                                          font: ttf,
+                                          fontSize: 10,
+                                          color: PdfColors.black)),
+                                  Text("Date:",
+                                      style: TextStyle(
+                                          font: ttf,
+                                          fontSize: 10,
+                                          color: PdfColors.black)),
+                                ]))),
+                  ]),
+            ])),
       ],
       header: (context) => buildHeader(
         ttf,
@@ -491,6 +1112,6 @@ class PdfSanctionDetails {
                         font: ttf,
                         fontSize: 12,
                         color: PdfColor.fromHex("#1C1F22"))),
-                SizedBox(height: 30),
+                SizedBox(height: 5),
               ]));
 }
