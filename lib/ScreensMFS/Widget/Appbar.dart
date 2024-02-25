@@ -99,7 +99,7 @@ class _NavbarState extends State<Appbar> {
                                     alignment: Alignment.topRight,
                                     child: Container(
                                       width: 300,
-                                      height: 500,
+                                      height: 350,
                                       padding: EdgeInsets.all(20),
                                       child: Column(
                                         children: [
@@ -120,6 +120,13 @@ class _NavbarState extends State<Appbar> {
                                               fontSize: 12,
                                             ),
                                           ),
+                                          Text(
+                                            "Name: ${AuthService.to.user!.name}",
+                                            style: TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: 12,
+                                            ),
+                                          ),
                                           const Expanded(
                                               child: SizedBox(
                                             height: 0,
@@ -134,27 +141,89 @@ class _NavbarState extends State<Appbar> {
                                                   bottom: 10),
                                               child: Row(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                                 children: [
                                                   const Icon(Icons.person,
                                                       color: Colors.black87),
                                                   const SizedBox(
                                                     width: 15,
                                                   ),
-                                              Text(
-                                                "My Profile",
-                                                style: TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 16,
-                                              ),
-                                            ),
+                                                  Text(
+                                                    "My Profile",
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
+                                          AuthService.to.user!.type=="Super Admin"?SizedBox(
                                             height: 5,
-                                          ),
+                                          ):SizedBox(),
+                                          AuthService.to.user!.type=="Super Admin"?InkWell(
+                                            onTap: () {
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20, top: 5),
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  const Icon(Icons.add_circle_outline_outlined,
+                                                      color: Colors.black87),
+                                                  const SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  Text(
+                                                    "Add User",
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ):SizedBox(),
+                                          AuthService.to.user!.type=="Super Admin"? SizedBox(
+                                            height: 5,
+                                          ):SizedBox(),
+                                          AuthService.to.user!.type=="Super Admin"?InkWell(
+                                            onTap: () {
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20, top: 5),
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  const Icon(Icons.list,
+                                                      color: Colors.black87),
+                                                  const SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  Text(
+                                                    "User List",
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ):SizedBox(),
+                                          AuthService.to.user!.type=="Super Admin"? SizedBox(
+                                            height: 5,
+                                          ):SizedBox(),
                                           InkWell(
                                             onTap: () {
                                               AuthService.to.Logout();

@@ -467,7 +467,7 @@ class _MyProfileState extends State<MyProfile> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             elevation: 20,
-                            padding: EdgeInsets.symmetric(vertical: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                           ),
                           child: const Text(
                             "Submit",
