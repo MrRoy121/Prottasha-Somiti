@@ -7,15 +7,9 @@ import '../../../model/User.dart';
 class UsersListItem extends StatefulWidget {
   User cst;
   int index;
-  final void Function(String) changeVal;
-  final void Function() fetchDocuments;
-  final void Function(User) onEditManufact;
-  bool click;
   UsersListItem(
       {required this.cst,
-        required   this.click,
-        required   this.changeVal,
-        required   this.index,required  this.fetchDocuments,required this.onEditManufact
+        required   this.index,
       });
 
   @override
@@ -86,7 +80,7 @@ class _UsersListItemState extends State<UsersListItem> {
                 child: Container(
                   margin: EdgeInsets.only(left: 7),
                   child: Text(
-                   "widget.cst.name",
+                   widget.cst.name,
                     style: TextStyle(
                         fontSize: 12, color: Colors.black, fontFamily: 'inter'),
                   ),
@@ -104,7 +98,7 @@ class _UsersListItemState extends State<UsersListItem> {
                 ),
               ),
               Expanded(
-                flex: 6,
+                flex: 4,
                 child: Container(
                   margin: EdgeInsets.only(left: 7),
                   child: Text(
@@ -115,7 +109,7 @@ class _UsersListItemState extends State<UsersListItem> {
                 ),
               ),
               Expanded(
-                flex: 6,
+                flex: 4,
                 child: Container(
                   margin: EdgeInsets.only(left: 7),
                   child: Text(
@@ -130,7 +124,18 @@ class _UsersListItemState extends State<UsersListItem> {
                 child: Container(
                   margin: EdgeInsets.only(left: 7),
                   child: Text(
-                    widget.cst.sts?"Admin":"Employee",
+                    widget.cst.type,
+                    style: TextStyle(
+                        fontSize: 12, color: Colors.black, fontFamily: 'inter'),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex:3,
+                child: Container(
+                  margin: EdgeInsets.only(left: 7),
+                  child: Text(
+                    widget.cst.sts?"Enabled":"Disabled",
                     style: TextStyle(
                         fontSize: 12, color: Colors.black, fontFamily: 'inter'),
                   ),
@@ -140,82 +145,51 @@ class _UsersListItemState extends State<UsersListItem> {
                 flex: 3,
                 child: Container(
                   margin: EdgeInsets.only(left: 5),
-                  child: widget.click
-                      ? Align(
+                  child: Align(
 
                     alignment: Alignment.center,
-                        child: Container(
-                          margin: EdgeInsets.only(right: _width/35, left: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey.shade200,
-                            ),
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(100)),
-                            color: Colors.grey.shade200,
-                          ),
-                          child: _width>830?Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  widget.onEditManufact(widget.cst);
-                                },
-                                  child: Icon(
-                                    Icons.edit_outlined,
-                                    size: _width/70,
-                                  )),
-                              InkWell(
-                                  onTap: (){
-                                    showDeleteDialog(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete_outline,
-                                    size: _width/70,
-                                  )),
-                            ],
-                          ):Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  child: Icon(
-                                    Icons.edit_outlined,
-                                    size: _width/55,
-                                  )),
-                              InkWell(
-                                  onTap: (){
-                                    showDeleteDialog(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete_outline,
-                                    size: _width/55,
-                                  )),
-                            ],
-                          ),
+                    child: Container(
+                      margin: EdgeInsets.only(right: _width/35, left: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey.shade200,
                         ),
-                      )
-                      : Align(
-                    alignment: Alignment.center,
-                        child: Container(
-                            margin: EdgeInsets.only(right: _width/25),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey.shade200,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: Colors.grey.shade200,
-                            ),
-                            child: InkWell(
-                                onTap: () {
-                                  widget.changeVal(widget.index.toString());
-                                },
-                                child: const Icon(
-                                  Icons.more_vert,
-                                  size: 18,
-                                )),
-                          ),
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(100)),
+                        color: Colors.grey.shade200,
                       ),
+                      child: _width>830?Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                              onTap: (){
+                                showDeleteDialog(context);
+                              },
+                              child: Icon(
+                                Icons.delete_outline,
+                                size: _width/70,
+                              )),
+                        ],
+                      ):Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                              child: Icon(
+                                Icons.edit_outlined,
+                                size: _width/55,
+                              )),
+                          InkWell(
+                              onTap: (){
+                                showDeleteDialog(context);
+                              },
+                              child: Icon(
+                                Icons.delete_outline,
+                                size: _width/55,
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
