@@ -9,10 +9,21 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:prottashasomit/helpers/auth_service.dart';
 import 'package:prottashasomit/route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/values.dart';
+import '../../ScreensCBS/Widgets/NavBoolCBS.dart';
+import '../../ScreensCBS/Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
+import '../../ScreensMFS/Widget/NavBoolMFS.dart';
+import '../../ScreensMFS/Widget/NavbarScreenMFS.dart';
 import '../../model/User.dart';
 
 class AddUser extends StatefulWidget {
+  Appbool appbool;
+  AddUser(
+      {required this.appbool});
+
   @override
   State<AddUser> createState() => _AddUserState();
 }
@@ -27,7 +38,19 @@ class _AddUserState extends State<AddUser> {
   final _conmanid = TextEditingController();
   final _conmanpass = TextEditingController();
   final _conmandetails = TextEditingController();
+  bool sss = false;
+  _getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sss = prefs.getBool('CBS') ?? false;setState(() {
 
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
   _addUser() async {
     String mname = _conmanname.text;
     String mphone = _conmanphone.text;
@@ -50,7 +73,6 @@ class _AddUserState extends State<AddUser> {
     if (mname.isEmpty ||
         mphone.isEmpty ||
         mid.isEmpty ||
-        mdetails.isEmpty ||
         _selectedtype == null ||
         mpass.isEmpty) {
       Get.snackbar("Invalid Format.",
@@ -66,7 +88,7 @@ class _AddUserState extends State<AddUser> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance.collection('User').doc(ss).update({
+      FirebaseFirestore.instance.collection('User').doc(ss).set({
         'Name': mname,
         'Phone': mphone,
         'ID': mid,
@@ -101,6 +123,9 @@ class _AddUserState extends State<AddUser> {
     double _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: Appbar(
+        navbool: widget.appbool,
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -153,12 +178,12 @@ class _AddUserState extends State<AddUser> {
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.transparent),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                             hintText: "Users Name",
@@ -187,12 +212,12 @@ class _AddUserState extends State<AddUser> {
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.transparent),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                             hintText: "Phone Number",
@@ -245,12 +270,12 @@ class _AddUserState extends State<AddUser> {
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.transparent),
                             ),
                             focusedBorder: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                             hintText: "User ID",
@@ -275,12 +300,12 @@ class _AddUserState extends State<AddUser> {
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.transparent),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                             hintText: "Password",
@@ -330,7 +355,7 @@ class _AddUserState extends State<AddUser> {
                       flex: 10,
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                        EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey.shade200,
@@ -432,12 +457,12 @@ class _AddUserState extends State<AddUser> {
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.transparent),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                             hintText: "Details",

@@ -7,10 +7,21 @@ import 'package:intl/intl.dart';
 
 import 'package:get/get.dart';
 import 'package:prottashasomit/helpers/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/values.dart';
+import '../../ScreensCBS/Widgets/NavBoolCBS.dart';
+import '../../ScreensCBS/Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
+import '../../ScreensMFS/Widget/NavBoolMFS.dart';
+import '../../ScreensMFS/Widget/NavbarScreenMFS.dart';
 import '../../model/User.dart';
 
 class MyProfile extends StatefulWidget {
+  Appbool appbool;
+  MyProfile(
+      {required this.appbool,});
+
   @override
   State<MyProfile> createState() => _MyProfileState();
 }
@@ -25,7 +36,19 @@ class _MyProfileState extends State<MyProfile> {
   final _conmanid = TextEditingController();
   final _conmanpass = TextEditingController();
   final _conmandetails = TextEditingController();
+  bool sss = false;
+  _getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sss = prefs.getBool('CBS') ?? false;setState(() {
 
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
   _addUser() async {
     String mname = _conmanname.text;
     String mphone = _conmanphone.text;
@@ -108,6 +131,9 @@ class _MyProfileState extends State<MyProfile> {
 
 
     return Scaffold(
+      appBar: Appbar(
+        navbool: widget.appbool,
+      ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(

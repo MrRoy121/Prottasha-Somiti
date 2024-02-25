@@ -162,17 +162,20 @@ class MyApp extends StatelessWidget {
         GetPage(
           middlewares: [AuthMiddleware()],
           name: userlistPageRoute,
-          page: () => UserList(),
+          page: () => UserList(
+            appbool: appbool,),
         ),
         GetPage(
           middlewares: [AuthMiddleware()],
           name: myprofilePageRoute,
-          page: () => MyProfile(),
+          page: () => MyProfile(
+            appbool: appbool,),
         ),
         GetPage(
           middlewares: [AuthMiddleware()],
           name: adduserPageRoute,
-          page: () => AddUser(),
+          page: () => AddUser(
+            appbool: appbool,),
         ),
         GetPage(
             name: depositcollectionrequestlistPageRoute,

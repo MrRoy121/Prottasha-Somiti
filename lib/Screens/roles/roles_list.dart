@@ -3,23 +3,46 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:prottashasomit/Screens/roles/widgets/users_list_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../ScreensCBS/Widgets/NavBoolCBS.dart';
+import '../../ScreensCBS/Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
+import '../../ScreensMFS/Widget/NavBoolMFS.dart';
+import '../../ScreensMFS/Widget/NavbarScreenMFS.dart';
 import '../../model/User.dart';
 
 class UserList extends StatefulWidget {
+  Appbool appbool;
+  UserList(
+      {required this.appbool,});
+
   @override
   State<UserList> createState() => _UserListState();
 }
 
 class _UserListState extends State<UserList> {
-  List<User> allUsers = [];
 
+  bool sss = false;
+  _getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sss = prefs.getBool('CBS') ?? false;setState(() {
+
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
 
     Future<List<User>> getCust() async {
-      allUsers = [];
+      List<User> allUsers = [];
       await FirebaseFirestore.instance
           .collection('User')
           .get()
@@ -43,9 +66,12 @@ class _UserListState extends State<UserList> {
     }
 
     return Scaffold(
+      appBar: Appbar(
+        navbool: widget.appbool,
+      ),
       extendBodyBehindAppBar: true,
       body: Container(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.only(top: 20,left: 20,right: 20,bottom: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
