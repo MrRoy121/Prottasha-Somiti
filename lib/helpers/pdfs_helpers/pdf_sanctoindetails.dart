@@ -200,7 +200,7 @@ class PdfSanctionDetails {
                                 color: PdfColors.black)),
                       ),
                       Expanded(
-                        child: Text(": ${sss.serviceamount}%",
+                        child: Text(": ${sss.serviceamount}",
                             style: TextStyle(
                                 font: ttf,
                                 fontSize: 10,

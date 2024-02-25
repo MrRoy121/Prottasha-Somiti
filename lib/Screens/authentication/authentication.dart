@@ -20,7 +20,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   bool sts = false;
 
   void handleLogin(User usr) {
-    AuthService.to.updateAuthenticationStatus(usr,sts);
+    AuthService.to.updateAuthenticationStatus(usr, sts);
     Get.offAllNamed(homePageRoute);
   }
 
@@ -181,8 +181,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       String cid = conid.text;
                       String cpass = conpass.text;
                       if (cid.length == 0 || cpass.length == 0) {
-                        Get.snackbar("Login Failed.",
-                            "ID Password Is Cannot Be Empty!!",
+                        Get.snackbar(
+                            "Login Failed.", "ID Password Is Cannot Be Empty!!",
                             snackPosition: SnackPosition.BOTTOM,
                             colorText: Colors.white,
                             backgroundColor: Colors.red,
@@ -197,8 +197,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                             borderRadius: 0);
                       } else {
                         try {
-                          var querySnapshot = await FirebaseFirestore
-                              .instance
+                          var querySnapshot = await FirebaseFirestore.instance
                               .collection('User')
                               .where("ID", isEqualTo: cid)
                               .where("Password", isEqualTo: cpass)
@@ -211,6 +210,10 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                               id: element["ID"],
                               sts: element["Status"],
                               type: element["Type"],
+                              details: element["Details"],
+                              name: element["Name"],
+                              phone: element["Phone"],
+                              user: element["User"],
                               lastlogin: element["Last Login"].toDate(),
                               lastlogout: element["Last Logout"].toDate(),
                               pass: element["Password"],
@@ -228,8 +231,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,
                                 margin: EdgeInsets.zero,
-                                duration:
-                                const Duration(milliseconds: 2000),
+                                duration: const Duration(milliseconds: 2000),
                                 boxShadows: [
                                   const BoxShadow(
                                       color: Colors.grey,

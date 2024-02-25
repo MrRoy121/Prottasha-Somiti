@@ -63,3 +63,8 @@ const cashdeposittransactionPageRoute = "/cashdeposittransactionPageRoute";
 const cashwithdrawtransactionPageRoute = "/cashwithdrawtransactionPageRoute";
 const reverserequesttransactionPageRoute = "/reverserequesttransactionPageRoute";
 const botransfertransactionPageRoute = "/botransfertransactionPageRoute";
+
+
+
+const adduserPageRoute = "/adduserPageRoute";
+const userlistPageRoute = "/userlistPageRoute";

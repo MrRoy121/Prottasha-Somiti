@@ -21,6 +21,8 @@ import 'Model/auth_middleware.dart';
 import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
+import 'Screens/roles/add_role.dart';
+import 'Screens/roles/roles_list.dart';
 import 'ScreensCBS/Account/RegularACOpen.dart';
 import 'ScreensCBS/Account/RegularDepositAccount.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
@@ -82,7 +84,8 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
-  Navbool navbool = Navbool(false, false, false, false, false, false, false, false, false);
+  Navbool navbool =
+      Navbool(false, false, false, false, false, false, false, false, false);
   NavboolCBS navboolcbs = NavboolCBS(false, false, false, false, false);
 
   @override
@@ -156,11 +159,21 @@ class MyApp extends StatelessWidget {
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
+          middlewares: [AuthMiddleware()],
+          name: userlistPageRoute,
+          page: () => UserList(),
+        ),
+        GetPage(
+          middlewares: [AuthMiddleware()],
+          name: userlistPageRoute,
+          page: () => AddUser(),
+        ),
+        GetPage(
             name: depositcollectionrequestlistPageRoute,
             page: () => DepositCollectionRequestList(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: depositcorrectionrequestlistPageRoute,
@@ -385,44 +398,44 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: regularaccountopenPageRoute,
             page: () => RegularACOpen(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: cashdeposittransactionPageRoute,
             page: () => CashDeposit(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: cashwithdrawtransactionPageRoute,
             page: () => CashWithdraw(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: reverserequesttransactionPageRoute,
             page: () => ReverseRequest(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: botransfertransactionPageRoute,
             page: () => BOTransaction(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: regulardepositaccountopenPageRoute,
             page: () => RegularDepositAccount(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
       ],
       theme: ThemeData(
