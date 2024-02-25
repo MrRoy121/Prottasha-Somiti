@@ -68,3 +68,4 @@ const botransfertransactionPageRoute = "/botransfertransactionPageRoute";
 
 const adduserPageRoute = "/adduserPageRoute";
 const userlistPageRoute = "/userlistPageRoute";
+const myprofilePageRoute ="/myprofilePageRoute";

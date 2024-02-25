@@ -22,6 +22,7 @@ import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
 import 'Screens/authentication/authentication.dart';
 import 'Screens/roles/add_role.dart';
+import 'Screens/roles/my_profile.dart';
 import 'Screens/roles/roles_list.dart';
 import 'ScreensCBS/Account/RegularACOpen.dart';
 import 'ScreensCBS/Account/RegularDepositAccount.dart';
@@ -165,7 +166,12 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           middlewares: [AuthMiddleware()],
-          name: userlistPageRoute,
+          name: myprofilePageRoute,
+          page: () => MyProfile(),
+        ),
+        GetPage(
+          middlewares: [AuthMiddleware()],
+          name: adduserPageRoute,
           page: () => AddUser(),
         ),
         GetPage(

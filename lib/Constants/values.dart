@@ -1,5 +1,11 @@
 import '../Model/scheme.dart';
 
+const List<String> UserTypeList = [
+  'Super Admin',
+  'Admin',
+  'Branch Manager',
+  'Field Officer',
+];
 const List<String> MemberTypeList = ['General Member', 'Item 2', 'Item 3'];
 const List<String> OcupationList = ['Agriculture', 'Item 2', 'Item 3'];
 const List<String> MaritalstatusList = ['Single', 'Married', 'Divorced'];

@@ -8,7 +8,6 @@ import '../../route.dart';
 import 'AppBarItem.dart';
 import 'Appbool.dart';
 
-
 class Appbar extends AppBar {
   Appbool navbool;
   Appbar({required this.navbool, Key? key}) : super(key: key);
@@ -92,8 +91,8 @@ class _NavbarState extends State<Appbar> {
                                   barrierColor: Colors.transparent,
                                   barrierDismissible: true,
                                   Dialog(
-                                    insetPadding: EdgeInsets.only(
-                                        right: 10, top: 25),
+                                    insetPadding:
+                                        EdgeInsets.only(right: 10, top: 25),
                                     backgroundColor: Colors.white,
                                     elevation: 20,
                                     alignment: Alignment.topRight,
@@ -133,19 +132,20 @@ class _NavbarState extends State<Appbar> {
                                           )),
                                           InkWell(
                                             onTap: () {
+                                              Get.toNamed(myprofilePageRoute);
                                             },
                                             child: Container(
                                               padding: const EdgeInsets.only(
                                                   left: 20, right: 20, top: 5),
                                               margin: const EdgeInsets.only(
                                                   bottom: 10),
-                                              child: Row(
+                                              child: const Row(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  const Icon(Icons.person,
+                                                  Icon(Icons.person,
                                                       color: Colors.black87),
-                                                  const SizedBox(
+                                                  SizedBox(
                                                     width: 15,
                                                   ),
                                                   Text(
@@ -159,71 +159,103 @@ class _NavbarState extends State<Appbar> {
                                               ),
                                             ),
                                           ),
-                                          AuthService.to.user!.type=="Super Admin"?SizedBox(
-                                            height: 5,
-                                          ):SizedBox(),
-                                          AuthService.to.user!.type=="Super Admin"?InkWell(
-                                            onTap: () {
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20, right: 20, top: 5),
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 10),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                                children: [
-                                                  const Icon(Icons.add_circle_outline_outlined,
-                                                      color: Colors.black87),
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  Text(
-                                                    "Add User",
-                                                    style: TextStyle(
-                                                      color: Colors.black87,
-                                                      fontSize: 16,
+                                          AuthService.to.user!.type ==
+                                                  "Super Admin"
+                                              ? SizedBox(
+                                                  height: 5,
+                                                )
+                                              : SizedBox(),
+                                          AuthService.to.user!.type ==
+                                                  "Super Admin"
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                        adduserPageRoute);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 20,
+                                                            top: 5),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 10),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Icon(
+                                                            Icons
+                                                                .add_circle_outline_outlined,
+                                                            color:
+                                                                Colors.black87),
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text(
+                                                          "Add User",
+                                                          style: TextStyle(
+                                                            color:
+                                                                Colors.black87,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ):SizedBox(),
-                                          AuthService.to.user!.type=="Super Admin"? SizedBox(
-                                            height: 5,
-                                          ):SizedBox(),
-                                          AuthService.to.user!.type=="Super Admin"?InkWell(
-                                            onTap: () {
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20, right: 20, top: 5),
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 10),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                                children: [
-                                                  const Icon(Icons.list,
-                                                      color: Colors.black87),
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  Text(
-                                                    "User List",
-                                                    style: TextStyle(
-                                                      color: Colors.black87,
-                                                      fontSize: 16,
+                                                )
+                                              : SizedBox(),
+                                          AuthService.to.user!.type ==
+                                                  "Super Admin"
+                                              ? SizedBox(
+                                                  height: 5,
+                                                )
+                                              : SizedBox(),
+                                          AuthService.to.user!.type ==
+                                                  "Super Admin"
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                        userlistPageRoute);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 20,
+                                                            top: 5),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 10),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Icon(Icons.list,
+                                                            color:
+                                                                Colors.black87),
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text(
+                                                          "User List",
+                                                          style: TextStyle(
+                                                            color:
+                                                                Colors.black87,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ):SizedBox(),
-                                          AuthService.to.user!.type=="Super Admin"? SizedBox(
+                                                )
+                                              : SizedBox(),
+                                          SizedBox(
                                             height: 5,
-                                          ):SizedBox(),
+                                          ),
                                           InkWell(
                                             onTap: () {
                                               AuthService.to.Logout();
@@ -243,7 +275,8 @@ class _NavbarState extends State<Appbar> {
                                                       color: Colors.black87),
                                                   const SizedBox(
                                                     width: 15,
-                                                  ),Text(
+                                                  ),
+                                                  Text(
                                                     "Logout",
                                                     style: TextStyle(
                                                       color: Colors.black87,
@@ -299,7 +332,8 @@ class _NavbarState extends State<Appbar> {
                                         width: 200,
                                         color: AppColor,
                                         child: Text(
-                                          DateFormat.yMMMMd().format(DateTime.now()),
+                                          DateFormat.yMMMMd()
+                                              .format(DateTime.now()),
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
