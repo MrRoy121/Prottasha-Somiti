@@ -1,36 +1,39 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Constants/Constants.dart';
+import '../../../Constants/values.dart';
+import '../../../Model/somitee.dart';
 
 
 class TransactionList extends StatefulWidget {
 
-
+  List<Somitee> somitee;
+  List<String> ssomitee;
+  var selectedsomitee;
+  DateTime selectedDate;
+  String selectedtransactiontype;
+  var selectedsomiteeid;
+  void Function() onsubmit;
+  void Function() onclear;
+  void Function(int) setuptransactionType;
+  Future<void> Function(BuildContext) selectDate;
+  void Function(int) setupsomiti;
+  TransactionList(
+      {required this.setupsomiti,
+        required this.somitee,required this.selectDate,
+        required this.selectedDate,required this.selectedtransactiontype,
+        required this.ssomitee,required this.setuptransactionType,
+        required this.selectedsomitee,
+        required this.onsubmit,
+        required this.onclear,
+        required this.selectedsomiteeid});
   @override
   State<TransactionList> createState() => _TransactionListState();
 }
 
 class _TransactionListState extends State<TransactionList> {
-  DateTime? _selectedDate;
-
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
-
-  String? selectedGender;
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +61,7 @@ class _TransactionListState extends State<TransactionList> {
       desktop = false;
       tablet = false;
     }
-
-
-    String? SelectType;
+    
 
     return desktop? Container(
       width: 1400,
@@ -102,38 +103,42 @@ class _TransactionListState extends State<TransactionList> {
 
                 Spacer(),
 
-                Container(
-                  height: 40,
-                  width: 125,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 12),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
+                InkWell(onTap: ()=>widget.onsubmit(),
+                  child: Container(
+                    height: 40,
+                    width: 125,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2.0, left: 12),
+                      child: Row(
+                        children: [
+                          Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
+                          SizedBox(width: 3,),
+                          Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        ],
+                      ),
                     ),
+                    color: Colors.green,
                   ),
-                  color: Colors.green,
                 ),
 
                 SizedBox(width: 10,),
 
-                Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 15),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
+                InkWell(onTap: ()=>widget.onclear(),
+                  child: Container(
+                    height: 40,
+                    width: 90,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3.0, left: 15),
+                      child: Row(
+                        children: [
+                          Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
+                          SizedBox(width: 5,),
+                          Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        ],
+                      ),
                     ),
+                    color: AppColor_yellow,
                   ),
-                  color: AppColor_yellow,
                 ),
 
 
@@ -170,23 +175,80 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(width: 60,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somiti Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-                        ),
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.name + " - " + item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Somitee/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.name + " - " + item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedsomitee = newValue;
+                                  widget.selectedsomiteeid =
+                                  widget.somitee[widget.ssomitee
+                                      .indexOf(newValue!.name)];
+                                  widget.setupsomiti(widget.ssomitee
+                                      .indexOf(newValue.name));
+
+                                });
+                              },
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
+                            )),
 
 
                       ],
@@ -220,7 +282,7 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(
                           width: 300,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -229,8 +291,8 @@ class _TransactionListState extends State<TransactionList> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedDate != null
+                                      ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -291,11 +353,13 @@ class _TransactionListState extends State<TransactionList> {
                                 color: AppColor_greyText,
                               ),
                             ),
-                            value: SelectType,
+                            value: widget.selectedtransactiontype,
                             onChanged: (newValue) {
-
+                              widget.selectedtransactiontype = newValue!;
+                              widget.setuptransactionType(
+                                  TranTypeList.indexOf(newValue));
                             },
-                            items: ['Item1', 'Item2', 'Item3 ',].map((item) {
+                            items: TranTypeList.map((item) {
                               return DropdownMenuItem(
                                 value: item,
                                 child: Text(item),
@@ -362,38 +426,42 @@ class _TransactionListState extends State<TransactionList> {
 
                 Spacer(),
 
-                Container(
-                  height: 40,
-                  width: 125,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 12),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
+                InkWell(onTap: ()=>widget.onsubmit(),
+                  child: Container(
+                    height: 40,
+                    width: 125,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2.0, left: 12),
+                      child: Row(
+                        children: [
+                          Icon(Icons.remove_red_eye_outlined, size: 16, color: Colors.white,),
+                          SizedBox(width: 3,),
+                          Text("View Report", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        ],
+                      ),
                     ),
+                    color: Colors.green,
                   ),
-                  color: Colors.green,
                 ),
 
                 SizedBox(width: 10,),
 
-                Container(
-                  height: 40,
-                  width: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 15),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
-                      ],
+                InkWell(onTap: ()=>widget.onclear(),
+                  child: Container(
+                    height: 40,
+                    width: 90,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3.0, left: 15),
+                      child: Row(
+                        children: [
+                          Icon(Icons.clear_all_sharp, color: Colors.white, size: 18,),
+                          SizedBox(width: 5,),
+                          Text("Clear", style: TextStyle(color: Colors.white, fontSize: 14),),
+                        ],
+                      ),
                     ),
+                    color: AppColor_yellow,
                   ),
-                  color: AppColor_yellow,
                 ),
 
 
@@ -430,24 +498,81 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somiti Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText),
-                            ),
-                          ),
-                        ),
 
+                        Container(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
+                            ),
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.name + " - " + item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Somitee/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.name + " - " + item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedsomitee = newValue;
+                                  widget.selectedsomiteeid =
+                                  widget.somitee[widget.ssomitee
+                                      .indexOf(newValue!.name)];
+                                  widget.setupsomiti(widget.ssomitee
+                                      .indexOf(newValue.name));
+
+                                });
+                              },
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
+                            )),
 
                       ],
                     ),
@@ -480,7 +605,7 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(
                           width: 300,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -489,8 +614,8 @@ class _TransactionListState extends State<TransactionList> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedDate != null
+                                      ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -540,7 +665,7 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(
                           width: 300,
                           child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: AppColor_greyBorder,
                               border: OutlineInputBorder(
@@ -551,11 +676,14 @@ class _TransactionListState extends State<TransactionList> {
                                 color: AppColor_greyText,
                               ),
                             ),
-                            value: SelectType,
+                            value: widget.selectedtransactiontype,
                             onChanged: (newValue) {
 
+                              widget.selectedtransactiontype = newValue!;
+                              widget.setuptransactionType(
+                                  TranTypeList.indexOf(newValue));
                             },
-                            items: ['Item1', 'Item2', 'Item3 ',].map((item) {
+                            items: TranTypeList.map((item) {
                               return DropdownMenuItem(
                                 value: item,
                                 child: Text(item),
@@ -622,38 +750,42 @@ class _TransactionListState extends State<TransactionList> {
 
                 Spacer(),
 
-                Container(
-                  height: 30,
-                  width: 95,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 1.0, left: 8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_red_eye_outlined, size: 12, color: Colors.white,),
-                        SizedBox(width: 3,),
-                        Text("View Report", style: TextStyle(color: Colors.white, fontSize: 8),),
-                      ],
+                InkWell(onTap: ()=>widget.onsubmit(),
+                  child: Container(
+                    height: 30,
+                    width: 95,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 1.0, left: 8),
+                      child: Row(
+                        children: [
+                          Icon(Icons.remove_red_eye_outlined, size: 12, color: Colors.white,),
+                          SizedBox(width: 3,),
+                          Text("View Report", style: TextStyle(color: Colors.white, fontSize: 8),),
+                        ],
+                      ),
                     ),
+                    color: Colors.green,
                   ),
-                  color: Colors.green,
                 ),
 
                 SizedBox(width: 10,),
 
-                Container(
-                  height: 30,
-                  width: 70,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 3.0, left: 10),
-                    child: Row(
-                      children: [
-                        Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
-                        SizedBox(width: 5,),
-                        Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
-                      ],
+                InkWell(onTap: ()=>widget.onclear(),
+                  child: Container(
+                    height: 30,
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3.0, left: 10),
+                      child: Row(
+                        children: [
+                          Icon(Icons.clear_all_sharp, color: Colors.white, size: 12,),
+                          SizedBox(width: 5,),
+                          Text("Clear", style: TextStyle(color: Colors.white, fontSize: 8),),
+                        ],
+                      ),
                     ),
+                    color: AppColor_yellow,
                   ),
-                  color: AppColor_yellow,
                 ),
 
 
@@ -690,24 +822,81 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(width: 40,),
 
 
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor_greyBorder,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: AppColor_greyBorder),
-                              ),
-                              hintText: "Enter Somiti Name/ Code",
-                              hintStyle: TextStyle(
-                                color: AppColor_greyText,
-                                fontSize: 8,
-                              ),
-                              suffixIcon: Icon(Icons.search_sharp, color: AppColor_greyText, size: 10,),
+
+                        Container(
+                            width: 200,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor_greyBorder,
+                              border: Border.all(color: AppColor_Black),
                             ),
-                          ),
-                        ),
+                            child: DropdownSearch<Somitee>(
+                              filterFn: (Somitee item, String query) {
+                                return item.filterFn(query);
+                              },
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                itemBuilder: (BuildContext context,
+                                    Somitee item, bool isSelected) {
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    child: Text(
+                                      item.name + " - " + item.id,
+                                    ),
+                                  );
+                                },
+                                fit: FlexFit.loose,
+                                showSelectedItems: false,
+                                menuProps: const MenuProps(
+                                  backgroundColor: Colors.white,
+                                  elevation: 100,
+                                ),
+                                searchFieldProps: const TextFieldProps(
+                                  style: TextStyle(fontSize: 12),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Search...",
+                                  ),
+                                ),
+                              ),
+                              dropdownDecoratorProps:
+                              const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              dropdownBuilder: (context, item) {
+                                if (item == null) {
+                                  return const Text(
+                                    "Enter Somitee/Code",
+                                  );
+                                } else {
+                                  return Text(
+                                    item.name + " - " + item.id,
+                                  );
+                                }
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  widget.selectedsomitee = newValue;
+                                  widget.selectedsomiteeid =
+                                  widget.somitee[widget.ssomitee
+                                      .indexOf(newValue!.name)];
+                                  widget.setupsomiti(widget.ssomitee
+                                      .indexOf(newValue.name));
+
+                                });
+                              },
+                              items: widget.somitee,
+                              selectedItem: widget.selectedsomiteeid,
+                            )),
 
 
                       ],
@@ -741,7 +930,7 @@ class _TransactionListState extends State<TransactionList> {
                         SizedBox(
                           width: 200,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -750,8 +939,8 @@ class _TransactionListState extends State<TransactionList> {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  hintText: _selectedDate != null
-                                      ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
+                                  hintText: widget.selectedDate != null
+                                      ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
                                       : "Select a date",
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -814,11 +1003,13 @@ class _TransactionListState extends State<TransactionList> {
                                 fontSize: 8,
                               ),
                             ),
-                            value: SelectType,
+                            value: widget.selectedtransactiontype,
                             onChanged: (newValue) {
-
+                              widget.selectedtransactiontype = newValue!;
+                              widget.setuptransactionType(
+                                  TranTypeList.indexOf(newValue));
                             },
-                            items: ['Item1', 'Item2', 'Item3 ',].map((item) {
+                            items:TranTypeList.map((item) {
                               return DropdownMenuItem(
                                 value: item,
                                 child: Text(item),

@@ -32,6 +32,10 @@ const List<String> LoanPeriodList = [
   'October',
   'November ',
   'December'
+];const List<String> TranTypeList = [
+  'All Transaction',
+  'Debit Transaction',
+  'Credit Transaction',
 ];
 const List<String> LoanPurposeList = [
   'Business',

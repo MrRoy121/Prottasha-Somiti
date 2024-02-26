@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
+import 'package:get/get.dart';
+import '../../Constants/values.dart';
+import '../../Model/somitee.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -18,11 +22,101 @@ class DailyTransactionList extends StatefulWidget {
 }
 
 class _DailyTransactionListState extends State<DailyTransactionList> {
+  DateTime _selectedDate = DateTime.now();
+  String selectedtransactiontype = "All Transaction";
+  List<Somitee> somitee = [];
+  List<String> ssomitee = [];
+  var selectedsomiti;
+  var sselectedsomiti;
+  bool samiteeselected = false;
 
+  @override
+  void initState() {
+    super.initState();
+    fetch();
+  }
+
+  Future<void> fetch() async {
+    await FirebaseFirestore.instance
+        .collection('Somitee')
+        .get()
+        .then((querySnapshot) {
+      for (var element in querySnapshot.docs) {
+        somitee.add(Somitee(
+            address: element["Address"],
+            id: element.id,
+            lastupdated: element["Last Edited"].toDate(),
+            name: element["Name"],
+            active: element["Active"],
+            closed: element["Closed"],
+            formation: element["Formation Date"].toDate(),
+            phone: element["Phone"],
+            branch: element["Branch"],
+            sl: 0));
+        ssomitee.add(element["Name"]);
+      }
+    });
+  }
+
+
+  void _onclear() {
+    setState(() {
+      var ss;
+      selectedsomiti = ss;
+      selectedsomiti = ss;
+      samiteeselected = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
 
+    void _setupsomiti(int ins) {
+      setState(() {
+        selectedsomiti = somitee[ins];
+        samiteeselected = true;
+      });
+    }
+
+    _save() async {
+      if (selectedsomiti == null) {
+        Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
+            "Some Required Fields are Empty",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        // PdfSamiteeWiseMemberDepositLoanLedger.generate(
+        //     await getCust(),selectedsomiti.name,selectedsomiti.id);
+      }
+    }
+
+    void _setuptransactionType(int ins) {
+      setState(() {
+        selectedtransactiontype = TranTypeList[ins];
+      });
+    }
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+        });
+      }
+    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -35,10 +129,15 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
             SizedBox(
               height: 50,
             ),
-
-
-            // DAILY TRANSACTION LIST
-            TransactionList(),
+            TransactionList(
+              ssomitee: ssomitee,
+              setupsomiti: _setupsomiti,selectDate: _selectDate,selectedDate: _selectedDate, selectedtransactiontype: selectedtransactiontype,
+              selectedsomiteeid: selectedsomiti,
+              selectedsomitee: sselectedsomiti,setuptransactionType: _setuptransactionType,
+              onsubmit: _save,
+              onclear: _onclear,
+              somitee: somitee,
+            ),
 
 
           ],

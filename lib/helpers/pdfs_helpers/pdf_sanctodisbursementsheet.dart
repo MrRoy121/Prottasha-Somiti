@@ -37,7 +37,7 @@ class PdfSanctionDisbursementSheet {
       approvedby = dsc.approvedby.substring(app + 1);
       appdate = DateFormat.yMMMMd().format(dsc.disbursedate);
     }
-    if(disbuse){
+    if (disbuse) {
       sts = "Disbursed";
     }
     if (req != -1) {
