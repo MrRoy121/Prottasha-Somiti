@@ -149,6 +149,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
           "Approved By":'',
           "Approve":false,
+          'Death Risk Amount':deathriskamount,
           'SL':numberOfItems+1,
           'Disbursed Amount': double.parse(condisbursed.text),
           'Pin Code' : conpincode.text,

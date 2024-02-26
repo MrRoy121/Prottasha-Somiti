@@ -38,7 +38,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
         for (var json in querySnapshot.docs) {
           somitee.add(loanDisbursement(
             somiteename: json['Somitee Name'],
-            somiteeid: json['Somitee ID'],
+            somiteeid: json['Somitee ID'],deathriskamount: json["Death Risk Amount"],
             lst: loanSanction.fromJson(json['Sanction']),
             membername: json['Member Name'],approvedby: json["Approved By"],requestedby: json["Requested By"],
             disbursedate: json["Disbursed Date"].toDate(),

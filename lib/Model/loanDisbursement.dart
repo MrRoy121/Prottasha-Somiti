@@ -11,7 +11,7 @@ class loanDisbursement {
       pincode,
       narration;
   bool status, approve;
-  double disburseamount;
+  double disburseamount, deathriskamount;
   DateTime disbursedate, approvedate;
   int sl;
 
@@ -19,7 +19,7 @@ class loanDisbursement {
     required this.lst,
     required this.somiteename,
     required this.somiteeid,
-    required this.membername,
+    required this.membername,required this.deathriskamount,
     required this.memberid,
     required this.approvedate,
     required this.manegername,required this.requestedby, required this.approvedby,
@@ -55,7 +55,7 @@ class loanDisbursement {
 
   factory loanDisbursement.fromJson(Map<String, dynamic> json) {
     return loanDisbursement(
-        somiteename: json['Somitee Name'],
+        somiteename: json['Somitee Name'],deathriskamount: json["Death Risk Amount"],
         somiteeid: json['Somitee ID'],approve: json["Approve"],approvedby: json["Approved By"],requestedby: json["Requested By"],
         lst: loanSanction.fromJson(Map<String, dynamic>.from(json['Sanction'])),
         membername: json['Member Name'],disbursedate: json["Disbursed Date"].toDate(),

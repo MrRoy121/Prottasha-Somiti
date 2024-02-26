@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:prottashasomit/Model/loanDisbursement.dart';
 import '../../Constants/values.dart';
 import '../../Model/loanSanction.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
-import '../../helpers/pdfs_helpers/pdf_sanctoindetails.dart';
+import '../../helpers/pdfs_helpers/pdf_sanctodisbursementsheet.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -73,7 +74,9 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
               memberid: json['Member ID'],
               loanpurpose: json["Loan Purpose"],
               approvedate: json["Approve Date"].toDate(),
-              memberphone: json['Member Phone'],approvedby: json["Approved By"],requestedby: json["Requested By"],
+              memberphone: json['Member Phone'],
+              approvedby: json["Approved By"],
+              requestedby: json["Requested By"],
               scheme: json["Loan Scheme"],
               category: json['Loan Category'],
               sanctionlimit: json["Sanction Limit"],
@@ -134,7 +137,6 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
         sanction = allsanction
             .where((sanction) => sanction.somiteeid == selectedsomiti.id)
             .toList();
-
       });
     }
 
@@ -143,56 +145,59 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
     }
 
     Future<Memberss> getMember() async {
-    late Memberss meme;
+      late Memberss meme;
       int s = 1;
       await FirebaseFirestore.instance
-          .collection('Member').doc(selectedsanction.memberid)
+          .collection('Member')
+          .doc(selectedsanction.memberid)
           .get()
           .then((element) {
-            meme = Memberss(
-                somiteename: element["Somitee Name"],
-                somiteeid: element["Somitee ID"],
-                membertype: element["Member Type"],
-                occupation: element["Occupation"],
-                firstname: element["First Name"],
-                lastname: element["Last Name"],dead: element['Dead'],
-                fathername: element["Father Name"],
-                mothername: element["Mother Name"],
-                loanpendingamount: element["Loan Pending Amount"],
-                owndepositamount: element["Own deposit Amount"],
-                gender: element["Gender"],
-                religion: element["Religion"],
-                sts: element["Status"],
-                nationalid: element["National ID"],
-                birthregi: element["Birth Registration"],
-                annualincome: element["Annual Income"],
-                age: element["Age"],
-                nodepenndent: element["No of Dependent"],
-                education: element["Education"],
-                maritalstatus: element["Marital Status"],
-                mobilenotype: element["Mobile No Type"],
-                mobilenno: element["Mobile No"],
-                presentadd: element["Present Address"],
-                parmaadd: element["Parmanent Address"],
-                livingperiod: element["Living Period"],
-                nomaleearner: element["No Female Earner"],
-                nofemaleearner: element["No Male Earner"],
-                id: element.id,
-                headfamily: element["Head Family"],
-                ownhomestead: element["Own HomeStead"],
-                relationwithhead: element["Relation With Head"],
-                landdesc: element["Land Desc"],
-                housedesc: element["House Desc"],
-                remarks: element["Remarks"],
-                imageurl: element["ImageURL"],
-                img: element["Image"],
-                birthdate: element["Date Of Birth"].toDate(),
-                sl: s);
+        meme = Memberss(
+            somiteename: element["Somitee Name"],
+            somiteeid: element["Somitee ID"],
+            membertype: element["Member Type"],
+            occupation: element["Occupation"],
+            firstname: element["First Name"],
+            lastname: element["Last Name"],
+            dead: element['Dead'],
+            fathername: element["Father Name"],
+            mothername: element["Mother Name"],
+            loanpendingamount: element["Loan Pending Amount"],
+            owndepositamount: element["Own deposit Amount"],
+            gender: element["Gender"],
+            religion: element["Religion"],
+            sts: element["Status"],
+            nationalid: element["National ID"],
+            birthregi: element["Birth Registration"],
+            annualincome: element["Annual Income"],
+            age: element["Age"],
+            nodepenndent: element["No of Dependent"],
+            education: element["Education"],
+            maritalstatus: element["Marital Status"],
+            mobilenotype: element["Mobile No Type"],
+            mobilenno: element["Mobile No"],
+            presentadd: element["Present Address"],
+            parmaadd: element["Parmanent Address"],
+            livingperiod: element["Living Period"],
+            nomaleearner: element["No Female Earner"],
+            nofemaleearner: element["No Male Earner"],
+            id: element.id,
+            headfamily: element["Head Family"],
+            ownhomestead: element["Own HomeStead"],
+            relationwithhead: element["Relation With Head"],
+            landdesc: element["Land Desc"],
+            housedesc: element["House Desc"],
+            remarks: element["Remarks"],
+            imageurl: element["ImageURL"],
+            img: element["Image"],
+            birthdate: element["Date Of Birth"].toDate(),
+            sl: s);
       });
       return meme;
     }
+
     _save() async {
-      if (selectedsomiti == null||selectedsanction == null) {
+      if (selectedsomiti == null || selectedsanction == null) {
         Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
             "Some Required Fields are Empty",
             snackPosition: SnackPosition.BOTTOM,
@@ -206,12 +211,44 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
             ],
             borderRadius: 0);
       } else {
+        bool disburse = false;
+        var dsc;
+        DocumentSnapshot json = await FirebaseFirestore.instance
+            .collection('LoanDisbursed')
+            .doc(selectedsanction.id)
+            .get();
 
+        if (json.exists) {
+          dsc = loanDisbursement(
+              somiteename: json['Somitee Name'],
+              deathriskamount: json["Death Risk Amount"],
+              somiteeid: json['Somitee ID'],
+              approve: json["Approve"],
+              approvedby: json["Approved By"],
+              requestedby: json["Requested By"],
+              lst: loanSanction
+                  .fromJson(Map<String, dynamic>.from(json['Sanction'])),
+              membername: json['Member Name'],
+              disbursedate: json["Disbursed Date"].toDate(),
+              memberid: json['Member ID'],
+              disburseamount: json["Disbursed Amount"],
+              narration: json["Narration"],
+              approvedate: json["Approve Date"].toDate(),
+              manegername: json["Manager Name"],
+              pincode: json["Pin Code"],
+              status: json["Status"],
+              id: "",
+              sl: 0);
+          disburse = true;
+        }
 
-        PdfSanctionDetails.generate(
+        PdfSanctionDisbursementSheet.generate(
             selectedsanction,
             LoanSchemes.firstWhere(
-                    (element) => element.name == selectedsanction.scheme),await getMember());
+                (element) => element.name == selectedsanction.scheme),
+            await getMember(),
+            dsc,
+            disburse);
       }
     }
 
