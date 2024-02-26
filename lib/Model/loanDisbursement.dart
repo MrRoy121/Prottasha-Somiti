@@ -5,7 +5,7 @@ class loanDisbursement {
   String somiteename,
       somiteeid,
       membername,
-      memberid,
+      memberid,requestedby, approvedby,
       id,
       manegername,
       pincode,
@@ -22,7 +22,7 @@ class loanDisbursement {
     required this.membername,
     required this.memberid,
     required this.approvedate,
-    required this.manegername,
+    required this.manegername,required this.requestedby, required this.approvedby,
     required this.pincode,
     required this.status,
     required this.approve,
@@ -56,7 +56,7 @@ class loanDisbursement {
   factory loanDisbursement.fromJson(Map<String, dynamic> json) {
     return loanDisbursement(
         somiteename: json['Somitee Name'],
-        somiteeid: json['Somitee ID'],approve: json["Approve"],
+        somiteeid: json['Somitee ID'],approve: json["Approve"],approvedby: json["Approved By"],requestedby: json["Requested By"],
         lst: loanSanction.fromJson(Map<String, dynamic>.from(json['Sanction'])),
         membername: json['Member Name'],disbursedate: json["Disbursed Date"].toDate(),
         memberid: json['Member ID'],disburseamount: json["Disbursed Amount"],narration: json["Narration"],

@@ -382,7 +382,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
         membername: arguments['LoanSanction']['Member Name'],
         memberid: arguments['LoanSanction']['Member ID'],
         memberphone: arguments['LoanSanction']['Member Phone'],
-        sanctionlimit: arguments['LoanSanction']["Sanction Limit"],
+        sanctionlimit: arguments['LoanSanction']["Sanction Limit"],approvedby: arguments['LoanSanction']["Approved By"],requestedby: arguments['LoanSanction']["Requested By"],
         installmentfrequency: arguments['LoanSanction']
             ["Installment Frequency"],
         sanctiondate: arguments['LoanSanction']["Sanction Date"],

@@ -58,13 +58,6 @@ class _AddUserState extends State<AddUser> {
     String mpass = _conmanpass.text;
     String mdetails = _conmandetails.text;
 
-    const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    Random _rnd = Random();
-    String getRandomString(int length) =>
-        String.fromCharCodes(Iterable.generate(
-            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    String ss = getRandomString(20);
     bool cstats = true;
 
     if (_sts == 2) {
@@ -88,24 +81,15 @@ class _AddUserState extends State<AddUser> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance.collection('User').doc(ss).set({
-        'Name': mname,
-        'Phone': mphone,
-        'ID': mid,
-        'Type': _selectedtype,
-        'Status': cstats,
-        'User': AuthService.to.user!.name,
-        "Last Login": DateTime.now(),
-        "Last Logout": DateTime.now(),
-        'Password': mpass,
-        'Details': mdetails,
-      }).then((valu) {
-        Get.offNamed(userlistPageRoute);
-        Get.snackbar(
-            "Saved User Successfully.", "Redirected to User List Page!",
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+    await FirebaseFirestore.instance.collection('User').doc(mid).get();
+
+      if (snapshot.exists) {
+        Get.snackbar("Invalid User ID.",
+            "User ID Already Exists.",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.red,
             margin: EdgeInsets.zero,
             duration: const Duration(milliseconds: 2000),
             boxShadows: [
@@ -113,7 +97,34 @@ class _AddUserState extends State<AddUser> {
                   color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
             ],
             borderRadius: 0);
-      }).catchError((error) => print("Failed to add user: $error"));
+      } else {
+        FirebaseFirestore.instance.collection('User').doc(mid).set({
+          'Name': mname,
+          'Phone': mphone,
+          'ID': mid,
+          'Type': _selectedtype,
+          'Status': cstats,
+          'User': AuthService.to.user!.name,
+          "Last Login": DateTime.now(),
+          "Last Logout": DateTime.now(),
+          'Password': mpass,
+          'Details': mdetails,
+        }).then((valu) {
+          Get.offNamed(userlistPageRoute);
+          Get.snackbar(
+              "Saved User Successfully.", "Redirected to User List Page!",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                BoxShadow(
+                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+              ],
+              borderRadius: 0);
+        }).catchError((error) => print("Failed to add user: $error"));
+      }
     }
   }
 

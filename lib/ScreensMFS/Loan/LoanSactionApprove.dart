@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
 import '../../Model/scheme.dart';
+import '../../helpers/auth_service.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -52,6 +53,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
         sanctionlimit: arguments['LoanSanction']["Sanction Limit"],
         installmentfrequency: arguments['LoanSanction']
             ["Installment Frequency"],
+        approvedby: arguments['LoanSanction']["Approved By"],
+        requestedby: arguments['LoanSanction']["Requested By"],
         sanctiondate: arguments['LoanSanction']["Sanction Date"],
         servicecharge: arguments['LoanSanction']["Service Charge"],
         installmentno: arguments['LoanSanction']["Installment No"],
@@ -173,6 +176,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 .doc(lst.id)
                                 .update({
                               "Status": "Approved",
+                              "Approved By":
+                                  "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
                               "Approve Date": DateTime.now(),
                             }).then((value) async {
                               Get.offNamed(sanctionloanapprovelistPageRoute);
@@ -219,6 +224,8 @@ class _LoanSanctionApproveState extends State<LoanSanctionApprove> {
                                 .doc(lst.id)
                                 .update({
                               "Status": "Rejected",
+                              "Approved By":
+                                  "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
                               "Approve Date": DateTime.now(),
                             }).then((value) async {
                               Get.offNamed(sanctionloanapprovelistPageRoute);

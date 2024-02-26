@@ -10,6 +10,7 @@ import '../../../../Model/member.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
 import '../../Model/loanDisbursement.dart';
+import '../../helpers/auth_service.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -39,7 +40,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
             somiteename: json['Somitee Name'],
             somiteeid: json['Somitee ID'],
             lst: loanSanction.fromJson(json['Sanction']),
-            membername: json['Member Name'],
+            membername: json['Member Name'],approvedby: json["Approved By"],requestedby: json["Requested By"],
             disbursedate: json["Disbursed Date"].toDate(),
             memberid: json['Member ID'],
             disburseamount: json["Disbursed Amount"],
@@ -319,6 +320,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                                             .data[index].id)
                                                         .update({
                                                       "Status": true,
+                                                      "Approved By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
                                                       "Approve": true,
                                                       'Approve Date':
                                                           DateTime.now(),
@@ -350,6 +352,7 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                                             .data[index].id)
                                                         .update({
                                                       "Status": true,
+                                                      "Approved By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
                                                       "Approve": false,
                                                       'Approve Date':
                                                           DateTime.now(),

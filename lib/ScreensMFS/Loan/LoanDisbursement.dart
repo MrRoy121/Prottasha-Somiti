@@ -7,6 +7,7 @@ import '../../../Model/loanSanction.dart';
 import '../../Constants/values.dart';
 import '../../Model/member.dart';
 import '../../Model/scheme.dart';
+import '../../helpers/auth_service.dart';
 import '../../route.dart';
 import '../Transaction/widget/Image.dart';
 import '../Transaction/widget/LinkACinfo.dart';
@@ -61,7 +62,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
               loanpurpose: json["Loan Purpose"],
               approvedate: json["Approve Date"].toDate(),
               memberphone: json['Member Phone'],
-              scheme: json["Loan Scheme"],
+              scheme: json["Loan Scheme"],approvedby: json["Approved By"],requestedby: json["Requested By"],
               category: json['Loan Category'],
               sanctionlimit: json["Sanction Limit"],
               installmentfrequency: json["Installment Frequency"],
@@ -145,6 +146,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           'Somitee ID': selectedsanction.somiteeid,
           'Member Name':selectedsanction.membername,
           'Member ID': selectedsanction.memberid,
+          "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+          "Approved By":'',
           "Approve":false,
           'SL':numberOfItems+1,
           'Disbursed Amount': double.parse(condisbursed.text),

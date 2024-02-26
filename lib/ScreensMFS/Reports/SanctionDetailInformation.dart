@@ -73,7 +73,7 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
               memberid: json['Member ID'],
               loanpurpose: json["Loan Purpose"],
               approvedate: json["Approve Date"].toDate(),
-              memberphone: json['Member Phone'],
+              memberphone: json['Member Phone'],approvedby: json["Approved By"],requestedby: json["Requested By"],
               scheme: json["Loan Scheme"],
               category: json['Loan Category'],
               sanctionlimit: json["Sanction Limit"],

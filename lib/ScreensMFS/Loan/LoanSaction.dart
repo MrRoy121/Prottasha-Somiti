@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanGuarantor.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanGuarantor.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanSamitteSelection.dart';
+import 'package:prottashasomit/helpers/auth_service.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/member.dart';
@@ -244,6 +245,8 @@ class _LoanSanctionState extends State<LoanSanction> {
         "Remarks": conremarks.text,
         "Service Amount": serviceamount,
         "Status": "Requested",
+        "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+        "Approved By":'',
         'ID': sanctionloanrequestid,
         "Grantor F Name": congrfname.text,
         'SL': numberOfItems + 1,

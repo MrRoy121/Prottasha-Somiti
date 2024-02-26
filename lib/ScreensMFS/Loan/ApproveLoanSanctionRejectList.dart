@@ -44,7 +44,7 @@ class _ApproveLoanSanctionRejectState extends State<ApproveLoanSanctionReject> {
                 memberid: json['Member ID'],approvedate: json["Approve Date"].toDate(),
                 loanpurpose: json["Loan Purpose"],
                 memberphone: json['Member Phone'],
-                sanctionlimit: json["Sanction Limit"],
+                sanctionlimit: json["Sanction Limit"],approvedby: json["Approved By"],requestedby: json["Requested By"],
                 installmentfrequency: json["Installment Frequency"],
                 sanctiondate: json["Sanction Date"].toDate(),
                 scheme: json["Loan Scheme"],

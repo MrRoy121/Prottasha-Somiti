@@ -160,7 +160,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
               somiteeid: json['Somitee ID'],
               approve: json["Approve"],
               lst: loanSanction.fromJson(json['Sanction']),
-              membername: json['Member Name'],
+              membername: json['Member Name'],approvedby: json["Approved By"],requestedby: json["Requested By"],
               disbursedate: json["Disbursed Date"].toDate(),
               memberid: json['Member ID'],
               disburseamount: json["Disbursed Amount"],
