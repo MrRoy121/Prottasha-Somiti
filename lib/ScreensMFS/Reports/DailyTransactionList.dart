@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
 import 'package:get/get.dart';
 import '../../Constants/values.dart';
+import '../../Model/dailyTransactionModel.dart';
+import '../../Model/member.dart';
 import '../../Model/somitee.dart';
+import '../../helpers/pdfs_helpers/pdf_dailytransactionledger.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
 import '../Widget/NavBoolMFS.dart';
@@ -68,6 +71,32 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
     });
   }
 
+  double calculateSum(List<dynamic> array) {
+    return array.fold(0, (sum, map) => sum + (map['value'] as double? ?? 0));
+  }
+  Future<List<DailyTransactionModel>> getmemberdeposit() async {
+    List<DailyTransactionModel> allmemberss = [];
+    int s = 1;
+    try {
+      QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('Member').get();
+      for (var element in querySnapshot.docs) {
+          if (element["Deposits"] != null) {
+            var deposits = element["Deposits"] ?? [];
+            for(int i = 0; i<deposits.length; i++){
+              DateTime ddd=DateTime.parse(deposits[i]["date"]);
+              if(_selectedDate.day == ddd.day && _selectedDate.month == ddd.month && _selectedDate.year == ddd.year){
+                allmemberss.add(DailyTransactionModel(amount: deposits[i]["value"], transacno: s.toString(), drcr: false, acno: element.id, actitle: element["First Name"] +" "+element["Last Name"], naration: deposits[i]["remarks"], transactiondate:ddd));
+                s++;
+              }
+            }
+          }
+      }
+    } catch (e) {
+      print("Error fetching data from Firestore: $e");
+    }
+    return allmemberss;
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -93,8 +122,8 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
             ],
             borderRadius: 0);
       } else {
-        // PdfSamiteeWiseMemberDepositLoanLedger.generate(
-        //     await getCust(),selectedsomiti.name,selectedsomiti.id);
+        PdfDailyTransactionLedger.generate(
+            await getmemberdeposit(),selectedsomiti.name,selectedsomiti.id);
       }
     }
 
