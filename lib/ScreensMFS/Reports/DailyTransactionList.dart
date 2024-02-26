@@ -97,6 +97,31 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
     }
     return allmemberss;
   }
+
+  Future<List<DailyTransactionModel>> getmemberwithdraw() async {
+    List<DailyTransactionModel> allmemberss = [];
+    int s = 1;
+    try {
+      QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('Member').get();
+      for (var element in querySnapshot.docs) {
+        if (element["Withdraws"] != null) {
+          var deposits = element["Withdraws"] ?? [];
+          for(int i = 0; i<deposits.length; i++){
+            DateTime ddd=DateTime.parse(deposits[i]["date"]);
+            if(_selectedDate.day == ddd.day && _selectedDate.month == ddd.month && _selectedDate.year == ddd.year){
+              allmemberss.add(DailyTransactionModel(amount: deposits[i]["value"], transacno: s.toString(), drcr: true, acno: element.id, actitle: element["First Name"] +" "+element["Last Name"], naration: deposits[i]["remarks"], transactiondate:ddd));
+              s++;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      print("Error fetching data from Firestore: $e");
+    }
+    return allmemberss;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -122,8 +147,8 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
             ],
             borderRadius: 0);
       } else {
-        PdfDailyTransactionLedger.generate(
-            await getmemberdeposit(),selectedsomiti.name,selectedsomiti.id);
+        PdfDailyTransactionLedger.generate(cashwithdraw:  await getmemberwithdraw(),
+           cashdeposit:  await getmemberdeposit(),ledgertitle: selectedsomiti.name,ledgeno: selectedsomiti.id);
       }
     }
 
