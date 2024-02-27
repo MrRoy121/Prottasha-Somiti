@@ -163,7 +163,7 @@ class _MemberImageState extends State<MemberImage> {
                                                 child: ElevatedButton(
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                    primary: Colors.white,
+                                                    backgroundColor: Colors.white,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                       side: BorderSide(
@@ -373,7 +373,7 @@ class _MemberImageState extends State<MemberImage> {
                                                     child: ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
-                                                        primary: Colors.white,
+                                                        backgroundColor: Colors.white,
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           side: BorderSide(
@@ -587,7 +587,7 @@ class _MemberImageState extends State<MemberImage> {
                                                     child: ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
-                                                        primary: Colors.white,
+                                                        backgroundColor: Colors.white,
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           side: BorderSide(

@@ -340,6 +340,38 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                             ),
                           ),
                           InkWell(
+                            onTap: () {Get.toNamed(customerlistPageRoute);},
+                            onHover: (val) {
+                              setState(() {
+                                if (val) {
+                                  itemColor9 = AppColor_hover2;
+                                  textColor9 = Colors.white;
+                                } else {
+                                  itemColor9 = AppColor_Blue;
+                                  textColor9 = Colors.black;
+                                }
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: 10, left: 20, right: 20, bottom: 10),
+                              height: 40,
+                              width: 250,
+                              color: itemColor9,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Customers Informations",
+                                    style: TextStyle(
+                                      color: textColor9,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          InkWell(
                             onTap: () {},
                             onHover: (val) {
                               setState(() {

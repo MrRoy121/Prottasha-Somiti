@@ -48,6 +48,7 @@ const withdrawlistPageRoute = "/withdrawlistPageRoute";
 
 const individualmemberregistrationPageRoute = "/individualmemberregistration";
 const existingmemberregistrationPageRoute = "/existingmemberregistrationPageRoute";
+const customerlistPageRoute = "/customerlistPageRoute";
 const newcustomerregistrationPageRoute = "/newcustomerregistrationPageRoute";
 
 

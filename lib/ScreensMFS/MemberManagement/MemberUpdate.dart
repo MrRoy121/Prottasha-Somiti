@@ -752,8 +752,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                                         child: ElevatedButton(
                                                           style: ElevatedButton
                                                               .styleFrom(
-                                                            primary:
-                                                                Colors.white,
+                                                            backgroundColor: Colors.white,
                                                             shape:
                                                                 RoundedRectangleBorder(
                                                               side: BorderSide(
@@ -972,7 +971,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                                               style:
                                                                   ElevatedButton
                                                                       .styleFrom(
-                                                                primary: Colors
+                                                                backgroundColor: Colors
                                                                     .white,
                                                                 shape:
                                                                     RoundedRectangleBorder(
@@ -1182,7 +1181,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                                       ),
                                                       child: Row(
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             "Select an Image File",
                                                             style: TextStyle(
                                                               fontSize: 14,
@@ -1197,7 +1196,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                                                               style:
                                                                   ElevatedButton
                                                                       .styleFrom(
-                                                                primary: Colors
+                                                                backgroundColor: Colors
                                                                     .white,
                                                                 shape:
                                                                     RoundedRectangleBorder(

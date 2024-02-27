@@ -628,8 +628,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                             style:
                                                                 ElevatedButton
                                                                     .styleFrom(
-                                                              primary:
-                                                                  Colors.white,
+                                                              backgroundColor: Colors.white,
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 side: BorderSide(
@@ -848,7 +847,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                   ElevatedButton(
                                                                 style: ElevatedButton
                                                                     .styleFrom(
-                                                                  primary: Colors
+                                                                  backgroundColor: Colors
                                                                       .white,
                                                                   shape:
                                                                       RoundedRectangleBorder(
@@ -1071,7 +1070,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                   ElevatedButton(
                                                                 style: ElevatedButton
                                                                     .styleFrom(
-                                                                  primary: Colors
+                                                                  backgroundColor: Colors
                                                                       .white,
                                                                   shape:
                                                                       RoundedRectangleBorder(

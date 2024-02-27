@@ -125,57 +125,114 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
   }
 
   void _save() async {
+    if (selectedmemberss == null) {
+      Get.snackbar(
+          "Customer Registration Failed.", "Select A member to Add",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('Customer')
+          .doc(selectedmemberss.id);
+      DocumentSnapshot documentSnapshot = await documentReference.get();
 
+      if (documentSnapshot.exists) {
+        Get.snackbar(
+            "Customer Registration Failed.", "Customer Already Exists",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      } else {
+        FirebaseFirestore.instance
+            .collection('Customer')
+            .doc(selectedmemberss.id)
+            .set({
+          'Member': selectedmemberss.toJson(),
+          'Member Bool': true,
+        }).then((value) async {
+          Get.offNamed(customerlistPageRoute);
+          Get.snackbar(
+              "Member Added Successfully.", "Redirecting to Member List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+              ],
+              borderRadius: 0);
+        }).catchError((error) => print("Failed to add user: $error"));
+      }
+    }
   }
 
   void _showinfo() async {
-   if(selectedmemberss == null){
-     Get.snackbar(
-         "Select a Member First", "Members National ID or Birth Certificate No Should be Provided!",
-         snackPosition: SnackPosition.BOTTOM,
-         colorText: Colors.white,
-         backgroundColor: Colors.red,
-         margin: EdgeInsets.zero,
-         duration: const Duration(milliseconds: 2000),
-         boxShadows: [
-           const BoxShadow(
-               color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-         ],
-         borderRadius: 0);
-   }else if(nid.text.isEmpty){
-     Get.snackbar(
-         "Select Give The National ID or Birth Certificate Number", "Members National ID or Birth Certificate No Should be Provided!",
-         snackPosition: SnackPosition.BOTTOM,
-         colorText: Colors.white,
-         backgroundColor: Colors.red,
-         margin: EdgeInsets.zero,
-         duration: const Duration(milliseconds: 2000),
-         boxShadows: [
-           const BoxShadow(
-               color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-         ],
-         borderRadius: 0);
-   }else{
-     if(selectedmemberss.birthregi == nid.text || selectedmemberss.nationalid == nid.text){
-      setState(() {
-        mmems = true;
-      });
-     }else{
-       Get.snackbar(
-           "Member View Failed", "Members National ID or Birth Certificate No Did not Matched!",
-           snackPosition: SnackPosition.BOTTOM,
-           colorText: Colors.white,
-           backgroundColor: Colors.red,
-           margin: EdgeInsets.zero,
-           duration: const Duration(milliseconds: 2000),
-           boxShadows: [
-             BoxShadow(
-                 color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-           ],
-           borderRadius: 0);
-     }
-   }
+    if (selectedmemberss == null) {
+      Get.snackbar("Select a Member First",
+          "Members National ID or Birth Certificate No Should be Provided!",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            const BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else if (nid.text.isEmpty) {
+      Get.snackbar("Select Give The National ID or Birth Certificate Number",
+          "Members National ID or Birth Certificate No Should be Provided!",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            const BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      if (selectedmemberss.birthregi == nid.text ||
+          selectedmemberss.nationalid == nid.text) {
+        setState(() {
+          mmems = true;
+        });
+      } else {
+        Get.snackbar("Member View Failed",
+            "Members National ID or Birth Certificate No Did not Matched!",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      }
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -236,10 +293,12 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
               child: Column(
                 children: [
                   MemberSelection(
-                    memberss: memberss,nid: nid,
+                    memberss: memberss,
+                    nid: nid,
                     onclear: _onclear,
                     onsubmit: _save,
-                    mmems: mmems,showinfo: _showinfo,
+                    mmems: mmems,
+                    showinfo: _showinfo,
                     setupmemberss: _setupmemberss,
                     selectedsamitee: selectedsamitee,
                     selectedmemberssid: sselectedmemberss,

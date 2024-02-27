@@ -1,0 +1,349 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import '../../../../Constants/Constants.dart';
+import '../../../../Model/member.dart';
+import '../../../../Model/somitee.dart';
+import '../../../../route.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+
+class CustomerList extends StatefulWidget {
+  NavboolCBS navbool;
+  Appbool appbool;
+
+  CustomerList({required this.appbool, required this.navbool});
+
+  @override
+  State<CustomerList> createState() => _CustomerListState();
+}
+
+class _CustomerListState extends State<CustomerList> {
+  @override
+  Widget build(BuildContext context) {
+    Future<List<Memberss>> getCust() async {
+      List<Memberss> somitee = [];
+      int s = 1;
+      await FirebaseFirestore.instance
+          .collection('Customer')
+          .get()
+          .then((querySnapshot) {
+        for (var element in querySnapshot.docs) {
+          somitee.add(Memberss(
+              somiteename: element['Member']["Somitee Name"],
+              somiteeid: element['Member']["Somitee ID"],
+              membertype: element['Member']["Member Type"],
+              occupation: element['Member']["Occupation"],
+              firstname: element['Member']["First Name"],
+              lastname: element['Member']["Last Name"],
+              dead: element['Member']['Dead'],
+              fathername: element['Member']["Father Name"],
+              mothername: element['Member']["Mother Name"],
+              loanpendingamount: element['Member']["Loan Pending Amount"],
+              owndepositamount: element['Member']["Own deposit Amount"],
+              gender: element['Member']["Gender"],
+              religion: element['Member']["Religion"],
+              sts: element['Member']["Status"],
+              nationalid: element['Member']["National ID"],
+              birthregi: element['Member']["Birth Registration"],
+              annualincome: element['Member']["Annual Income"],
+              age: element['Member']["Age"],
+              nodepenndent: element['Member']["No of Dependent"],
+              education: element['Member']["Education"],
+              maritalstatus: element['Member']["Marital Status"],
+              mobilenotype: element['Member']["Mobile No Type"],
+              mobilenno: element['Member']["Mobile No"],
+              presentadd: element['Member']["Present Address"],
+              parmaadd: element['Member']["Permanent Address"],
+              livingperiod: element['Member']["Living Period"],
+              nomaleearner: element['Member']["No Female Earner"],
+              nofemaleearner: element['Member']["No Male Earner"],
+              id: element.id,
+              headfamily: element['Member']["Head Family"],
+              ownhomestead: element['Member']["Own HomeStead"],
+              relationwithhead: element['Member']["Relation With Head"],
+              landdesc: element['Member']["Land Desc"],
+              housedesc: element['Member']["House Desc"],
+              remarks: element['Member']["Remarks"],
+              imageurl: element['Member']["ImageURL"],
+              img: element['Member']["Image"],
+              birthdate: element['Member']["Date Of Birth"].toDate(),
+              sl: s));
+          s++;
+        }
+      });
+      return somitee;
+    }
+
+    return Scaffold(
+      appBar: Appbar(
+        navbool: widget.appbool,
+      ),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Container(
+                    width: 1400,
+                    // color: Colors.white,
+
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 1400,
+                          height: 40,
+                          color: navbarColor,
+                          child: const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 40.0),
+                                child: Text(
+                                  "Customers Report",
+                                  style: TextStyle(
+                                    color: AppColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          child: FutureBuilder(
+                            builder: (ctx, AsyncSnapshot snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (snapshot.hasError) {
+                                  print(snapshot.error);
+                                  return const Center(
+                                    child: Text("No Customer Data Available.."),
+                                  );
+                                } else if (snapshot.hasData) {
+                                  return MediaQuery.removePadding(
+                                    context: context,
+                                    removeTop: true,
+                                    child: DataTable(
+                                      showCheckboxColumn: false,
+                                      border: TableBorder.all(
+                                          color: Colors.black26, width: 1),
+                                      headingRowColor:
+                                          MaterialStateProperty.all<Color>(
+                                              AppColor_Blue),
+                                      columns: const [
+                                        DataColumn(
+                                          label: Text(
+                                            'SL',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Text(
+                                            'Member Code',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Member Name',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Mobile No',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text(
+                                            'Member Type',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                            label: Text(
+                                          'National ID',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        )),
+                                        DataColumn(
+                                          label: Text('Father Name',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Date Of Birth',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Present Address',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                      ],
+                                      rows: List.generate(snapshot.data.length,
+                                          (index) {
+                                        return DataRow(
+                                          cells: [
+                                            DataCell(
+                                                Text((index + 1).toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                    ))),
+                                            DataCell(
+                                              Text(snapshot.data[index].id,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(Text(
+                                                snapshot.data[index].firstname +
+                                                    " " +
+                                                    snapshot
+                                                        .data[index].lastname,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ))),
+                                            DataCell(
+                                              Text(
+                                                  snapshot
+                                                      .data[index].mobilenno,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                  snapshot
+                                                      .data[index].membertype,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                  snapshot
+                                                      .data[index].nationalid,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                  snapshot
+                                                      .data[index].fathername,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(
+                                              Center(
+                                                child: Text(
+                                                    DateFormat.yMMMd()
+                                                        .format(snapshot
+                                                            .data[index]
+                                                            .birthdate)
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                    )),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                  snapshot
+                                                      .data[index].presentadd,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                          ],
+                                        );
+                                      }),
+                                    ),
+                                  );
+                                }
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                            future: getCust(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
+            ),
+            NavbarScreenCBS(
+              appbool: widget.appbool,
+              navbool: widget.navbool,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
