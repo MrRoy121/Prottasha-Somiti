@@ -26,8 +26,12 @@ class CustomerList extends StatefulWidget {
 class _CustomerListState extends State<CustomerList> {
   @override
   Widget build(BuildContext context) {
+    List<bool> status = [];
+    List<bool> approve = [];
     Future<List<Memberss>> getCust() async {
       List<Memberss> somitee = [];
+      status = [];
+      approve = [];
       int s = 1;
       await FirebaseFirestore.instance
           .collection('Customer')
@@ -74,6 +78,8 @@ class _CustomerListState extends State<CustomerList> {
               img: element['Member']["Image"],
               birthdate: element['Member']["Date Of Birth"].toDate(),
               sl: s));
+          status.add(element['Status']);
+          approve.add(element['Approve']);
           s++;
         }
       });
@@ -97,7 +103,7 @@ class _CustomerListState extends State<CustomerList> {
                     height: 100,
                   ),
                   Container(
-                    width: 1400,
+                    width: 1450,
                     // color: Colors.white,
 
                     decoration: BoxDecoration(
@@ -115,7 +121,7 @@ class _CustomerListState extends State<CustomerList> {
                     child: Column(
                       children: [
                         Container(
-                          width: 1400,
+                          width: 1450,
                           height: 40,
                           color: navbarColor,
                           child: const Row(
@@ -136,7 +142,7 @@ class _CustomerListState extends State<CustomerList> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(5),
                           child: FutureBuilder(
                             builder: (ctx, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
@@ -237,6 +243,22 @@ class _CustomerListState extends State<CustomerList> {
                                                 color: Colors.white,
                                               )),
                                         ),
+                                        DataColumn(
+                                          label: Text('Status',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Action',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              )),
+                                        ),
                                       ],
                                       rows: List.generate(snapshot.data.length,
                                           (index) {
@@ -314,6 +336,91 @@ class _CustomerListState extends State<CustomerList> {
                                                     fontSize: 12,
                                                   )),
                                             ),
+                                            DataCell(
+                                              Text(
+                                                  status[index]
+                                                      ? approve[index]
+                                                          ? "Approved"
+                                                          : "Rejected"
+                                                      : "Requested",
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(status[index]
+                                                ? SizedBox()
+                                                : Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Customer')
+                                                              .doc(snapshot
+                                                                  .data[index]
+                                                                  .id)
+                                                              .update({
+                                                            "Status": true,
+                                                            "Approve": true,
+                                                          }).then((value) {
+                                                            setState(() {});
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    4.0),
+                                                            decoration: BoxDecoration(
+                                                                color:
+                                                                    AppColor_Blue,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            100)),
+                                                            child: const Icon(
+                                                              Icons.check,
+                                                              size: 16,
+                                                              color:
+                                                                  AppColor_White,
+                                                            )),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Customer')
+                                                              .doc(snapshot
+                                                                  .data[index]
+                                                                  .id)
+                                                              .update({
+                                                            "Status": true,
+                                                            "Approve": false,
+                                                          }).then((value) {
+                                                            setState(() {});
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    4.0),
+                                                            decoration: BoxDecoration(
+                                                                color:
+                                                                    AppColor_Blue,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            100)),
+                                                            child: const Icon(
+                                                              Icons.close,
+                                                              size: 16,
+                                                              color:
+                                                                  AppColor_White,
+                                                            )),
+                                                      ),
+                                                    ],
+                                                  )),
                                           ],
                                         );
                                       }),

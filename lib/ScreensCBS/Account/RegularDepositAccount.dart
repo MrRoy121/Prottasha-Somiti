@@ -27,6 +27,7 @@ import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
 import '../Widgets/OtherInformation.dart';
 import '../Widgets/PersonalExistinginfo.dart';
+import '../Widgets/customerSelection.dart';
 import '../Widgets/memberSelection.dart';
 
 class RegularDepositAccount extends StatefulWidget {
@@ -63,52 +64,50 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
 
   Future<void> fetch() async {
     await FirebaseFirestore.instance
-        .collection('Member')
+        .collection('Customer')
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
-        if (element["Status"]) {
-          memberss.add(Memberss(
-              somiteename: element["Somitee Name"],
-              somiteeid: element["Somitee ID"],
-              membertype: element["Member Type"],
-              occupation: element["Occupation"],
-              firstname: element["First Name"],
-              dead: element['Dead'],
-              lastname: element["Last Name"],
-              fathername: element["Father Name"],
-              mothername: element["Mother Name"],
-              gender: element["Gender"],
-              religion: element["Religion"],
-              nationalid: element["National ID"],
-              loanpendingamount: element["Loan Pending Amount"],
-              owndepositamount: element["Own deposit Amount"],
-              birthregi: element["Birth Registration"],
-              annualincome: element["Annual Income"],
-              sts: element["Status"],
-              age: element["Age"],
-              nodepenndent: element["No of Dependent"],
-              education: element["Education"],
-              maritalstatus: element["Marital Status"],
-              mobilenotype: element["Mobile No Type"],
-              mobilenno: element["Mobile No"],
-              presentadd: element["Present Address"],
-              parmaadd: element["Parmanent Address"],
-              livingperiod: element["Living Period"],
-              nomaleearner: element["No Female Earner"],
-              nofemaleearner: element["No Male Earner"],
-              id: element.id,
-              headfamily: element["Head Family"],
-              ownhomestead: element["Own HomeStead"],
-              relationwithhead: element["Relation With Head"],
-              landdesc: element["Land Desc"],
-              housedesc: element["House Desc"],
-              remarks: element["Remarks"],
-              imageurl: element["ImageURL"],
-              img: element["Image"],
-              birthdate: element["Date Of Birth"].toDate(),
-              sl: 0));
-        }
+        memberss.add(Memberss(
+            somiteename: element['Member']["Somitee Name"],
+            somiteeid: element['Member']["Somitee ID"],
+            membertype: element['Member']["Member Type"],
+            occupation: element['Member']["Occupation"],
+            firstname: element['Member']["First Name"],
+            lastname: element['Member']["Last Name"],
+            dead: element['Member']['Dead'],
+            fathername: element['Member']["Father Name"],
+            mothername: element['Member']["Mother Name"],
+            loanpendingamount: element['Member']["Loan Pending Amount"],
+            owndepositamount: element['Member']["Own deposit Amount"],
+            gender: element['Member']["Gender"],
+            religion: element['Member']["Religion"],
+            sts: element['Member']["Status"],
+            nationalid: element['Member']["National ID"],
+            birthregi: element['Member']["Birth Registration"],
+            annualincome: element['Member']["Annual Income"],
+            age: element['Member']["Age"],
+            nodepenndent: element['Member']["No of Dependent"],
+            education: element['Member']["Education"],
+            maritalstatus: element['Member']["Marital Status"],
+            mobilenotype: element['Member']["Mobile No Type"],
+            mobilenno: element['Member']["Mobile No"],
+            presentadd: element['Member']["Present Address"],
+            parmaadd: element['Member']["Permanent Address"],
+            livingperiod: element['Member']["Living Period"],
+            nomaleearner: element['Member']["No Female Earner"],
+            nofemaleearner: element['Member']["No Male Earner"],
+            id: element.id,
+            headfamily: element['Member']["Head Family"],
+            ownhomestead: element['Member']["Own HomeStead"],
+            relationwithhead: element['Member']["Relation With Head"],
+            landdesc: element['Member']["Land Desc"],
+            housedesc: element['Member']["House Desc"],
+            remarks: element['Member']["Remarks"],
+            imageurl: element['Member']["ImageURL"],
+            img: element['Member']["Image"],
+            birthdate: element['Member']["Date Of Birth"].toDate(),
+            sl: 0));
       }
     });
   }
@@ -389,10 +388,10 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 30),
-                    child: MemberSelection(
+                    child: CustomerSelection(
                       memberss: memberss,
                       onclear: _onclear,
-                      onsubmit: _save,showinfo: (){},nid: TextEditingController(),
+                      onsubmit: _save,
                       mmems: mmems,
                       setupmemberss: _setupmemberss,
                       selectedsamitee: selectedsamitee,

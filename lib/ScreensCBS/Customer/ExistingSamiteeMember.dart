@@ -164,6 +164,8 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
             .set({
           'Member': selectedmemberss.toJson(),
           'Member Bool': true,
+          'Status':false,
+          'Approve':false,
         }).then((value) async {
           Get.offNamed(customerlistPageRoute);
           Get.snackbar(
