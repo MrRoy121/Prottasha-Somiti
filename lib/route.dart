@@ -22,7 +22,6 @@ const repaymentreversePageRoute = "/repaymentreversePageRoute";
 const repaymentreverseListPageRoute = "/repaymentreverselistPageRoute";
 const repaymentrequestlistPageRoute = "/repaymentrequestlistPageRoute";
 
-
 const memberledgerPageRoute = "/memberledger";
 const dailytransactionPageRoute = "/dailytransaction";
 const dailyglsummaryPageRoute = "/dailyglsummary";
@@ -33,40 +32,31 @@ const samiteewisedisbursePageRoute = "/samiteewisedisburse";
 const memberwishdisbursePageRoute = "/memberwishdisburse";
 const slipreprintPageRoute = "/slipreprint";
 
-
-
 const depositcollectionrequestPageRoute = "/depositcollectionrequestPageRoute";
 const depositcorrectionrequestPageRoute = "/depositcorrectionrequestPageRoute";
-const depositcorrectionrequestlistPageRoute = "/depositcorrectionrequestlistPageRoute";
-const depositcollectionrequestlistPageRoute = "/depositcollectionrequestlistPageRoute";
+const depositcorrectionrequestlistPageRoute =
+    "/depositcorrectionrequestlistPageRoute";
+const depositcollectionrequestlistPageRoute =
+    "/depositcollectionrequestlistPageRoute";
 const depositwithdrawPageRoute = "/depositwithdrawPageRoute";
 const withdrawlistPageRoute = "/withdrawlistPageRoute";
 
-
-
-
-
 const individualmemberregistrationPageRoute = "/individualmemberregistration";
-const existingmemberregistrationPageRoute = "/existingmemberregistrationPageRoute";
+const existingmemberregistrationPageRoute =
+    "/existingmemberregistrationPageRoute";
 const customerlistPageRoute = "/customerlistPageRoute";
 const newcustomerregistrationPageRoute = "/newcustomerregistrationPageRoute";
 
-
-
-
-
 const regularaccountopenPageRoute = "/regularaccountopenPageRoute";
-const regulardepositaccountopenPageRoute = "/regulardepositaccountopenPageRoute";
-
-
+const regulardepositaccountopenPageRoute =
+    "/regulardepositaccountopenPageRoute";
 
 const cashdeposittransactionPageRoute = "/cashdeposittransactionPageRoute";
 const cashwithdrawtransactionPageRoute = "/cashwithdrawtransactionPageRoute";
-const reverserequesttransactionPageRoute = "/reverserequesttransactionPageRoute";
+const reverserequesttransactionPageRoute =
+    "/reverserequesttransactionPageRoute";
 const botransfertransactionPageRoute = "/botransfertransactionPageRoute";
-
-
 
 const adduserPageRoute = "/adduserPageRoute";
 const userlistPageRoute = "/userlistPageRoute";
-const myprofilePageRoute ="/myprofilePageRoute";
+const myprofilePageRoute = "/myprofilePageRoute";

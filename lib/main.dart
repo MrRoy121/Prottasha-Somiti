@@ -164,19 +164,22 @@ class MyApp extends StatelessWidget {
           middlewares: [AuthMiddleware()],
           name: userlistPageRoute,
           page: () => UserList(
-            appbool: appbool,),
+            appbool: appbool,
+          ),
         ),
         GetPage(
           middlewares: [AuthMiddleware()],
           name: myprofilePageRoute,
           page: () => MyProfile(
-            appbool: appbool,),
+            appbool: appbool,
+          ),
         ),
         GetPage(
           middlewares: [AuthMiddleware()],
           name: adduserPageRoute,
           page: () => AddUser(
-            appbool: appbool,),
+            appbool: appbool,
+          ),
         ),
         GetPage(
             name: depositcollectionrequestlistPageRoute,
@@ -394,9 +397,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: customerlistPageRoute,
             page: () => CustomerList(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: existingmemberregistrationPageRoute,
