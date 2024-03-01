@@ -23,19 +23,19 @@ class _DashBoardState extends State<DashBoard> {
   bool sss = false;
   _getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    sss = prefs.getBool('CBS') ?? false;setState(() {
-
-    });
+    sss = prefs.getBool('CBS') ?? false;
+    setState(() {});
   }
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getData();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,

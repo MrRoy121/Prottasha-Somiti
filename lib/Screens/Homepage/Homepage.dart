@@ -163,11 +163,16 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                           SingleChildScrollView(
                             child: Column(
                               children: [
-                                InkWell(onTap: () async {
-                                  Get.toNamed(dashboardPageRoute,arguments: {'CBS': true},);
-                                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                                  prefs.setBool('CBS', true);
-                                },
+                                InkWell(
+                                  onTap: () async {
+                                    Get.toNamed(
+                                      dashboardPageRoute,
+                                      arguments: {'CBS': true},
+                                    );
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setBool('CBS', true);
+                                  },
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
@@ -209,11 +214,16 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     ),
                                   ),
                                 ),
-                                InkWell( onTap: () async {
-                                  Get.toNamed(dashboardPageRoute,arguments: {'CBS': false},);
-                                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                                  prefs.setBool('CBS', false);
-                                },
+                                InkWell(
+                                  onTap: () async {
+                                    Get.toNamed(
+                                      dashboardPageRoute,
+                                      arguments: {'CBS': false},
+                                    );
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setBool('CBS', false);
+                                  },
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
