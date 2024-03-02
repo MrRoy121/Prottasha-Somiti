@@ -30,6 +30,7 @@ import 'ScreensCBS/Customer/CustomerList.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
+import 'ScreensCBS/Processing/DayOpenClose.dart';
 import 'ScreensCBS/Transaction/BOTransaction.dart';
 import 'ScreensCBS/Transaction/CashDeposit.dart';
 import 'ScreensCBS/Transaction/ReverseRequest.dart';
@@ -88,7 +89,7 @@ class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
   Navbool navbool =
       Navbool(false, false, false, false, false, false, false, false, false);
-  NavboolCBS navboolcbs = NavboolCBS(false, false, false, false, false);
+  NavboolCBS navboolcbs = NavboolCBS(false, false, false, false, false, false);
 
   @override
   Widget build(BuildContext context) {
@@ -387,6 +388,13 @@ class MyApp extends StatelessWidget {
                 ),
             middlewares: [AuthMiddleware()]),
 
+        GetPage(
+            name: dailyopenclosePageRoute,
+            page: () => DayOpenClose(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
         GetPage(
             name: individualmemberregistrationPageRoute,
             page: () => IndividualCustomerRegistration(

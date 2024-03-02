@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:prottashasomit/route.dart';
 import '../../../Constants/Constants.dart';
 import '../../Screens/Widgets/NavItem.dart';
 import 'NavBoolCBS.dart';
@@ -70,6 +71,15 @@ class _NavbarCBSState extends State<NavbarCBS> {
                       child: NavbarItem(
                           flag: widget.navbool.loanadvance,
                           text: 'Loan & Advances',
+                          icon: Icons.arrow_drop_down),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(dailyopenclosePageRoute);
+                      },
+                      child: NavbarItem(
+                          flag: widget.navbool.processing,
+                          text: 'Processing',
                           icon: Icons.arrow_drop_down),
                     ),
                     InkWell(
@@ -145,6 +155,14 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                       child: NavbarItem(
                                           flag: widget.navbool.loanadvance,
                                           text: 'Loan & Advances',
+                                          icon: Icons.arrow_drop_down),
+                                    ),InkWell(
+                                      onTap: () {
+                                        Get.toNamed(dailyopenclosePageRoute);
+                                      },
+                                      child: NavbarItem(
+                                          flag: widget.navbool.processing,
+                                          text: 'Processing',
                                           icon: Icons.arrow_drop_down),
                                     ),
                                     InkWell(
