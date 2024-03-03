@@ -4,6 +4,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:prottashasomit/route.dart';
 import '../../../Constants/Constants.dart';
 import '../../Screens/Widgets/NavItem.dart';
+import '../../helpers/auth_service.dart';
 import 'NavBoolCBS.dart';
 
 class NavbarCBS extends AppBar {
@@ -156,7 +157,9 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                           flag: widget.navbool.loanadvance,
                                           text: 'Loan & Advances',
                                           icon: Icons.arrow_drop_down),
-                                    ),InkWell(
+                                    ),
+                                    AuthService.to.user!.type ==
+                                        "Super Admin"?InkWell(
                                       onTap: () {
                                         Get.toNamed(dailyopenclosePageRoute);
                                       },
@@ -164,7 +167,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                           flag: widget.navbool.processing,
                                           text: 'Processing',
                                           icon: Icons.arrow_drop_down),
-                                    ),
+                                    ):SizedBox(),
                                     InkWell(
                                       onTap: () {
                                         setState(() {

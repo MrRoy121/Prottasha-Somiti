@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:prottashasomit/route.dart';
 import '../../../../Constants/Constants.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
@@ -23,7 +26,28 @@ class _DayOpenCloseState extends State<DayOpenClose> {
   var selectedString;
   int _selectedValue = 1;
   DateTime selectedDate =  DateTime.now();
+  String electeddate ='';
+  bool click = false;
 
+  Future<void> fetch() async {
+    var collectionReference =
+    FirebaseFirestore.instance.collection('DayOpenClose');
+    var documentReference = collectionReference.doc('98765');
+    var snapshot = await documentReference.get();
+    if (snapshot.exists && snapshot.data()?['OpenClose'] == true) {
+      click = true;
+      electeddate = snapshot.data()?['Date'];
+    }else{
+      click = false;
+    }
+    setState(() {});
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetch();
+  }
   @override
   Widget build(BuildContext context) {Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -74,7 +98,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.only(left: 40.0),
                                   child: Text(
                                     "Day Open Close",
@@ -87,7 +111,34 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                 ),
                                 Spacer(),
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    bool dd = false;
+                                    if(_selectedValue==1) {
+                                      dd=true;
+                                    }
+                                      FirebaseFirestore.instance
+                                        .collection('DayOpenClose')
+                                        .doc("98765")
+                                        .set({
+                                      'OpenClose': dd,
+                                      'Date': DateFormat.yMMMd().format(selectedDate).toString(),
+                                    }).then((value) async {
+                                      Get.offNamed(homePageRoute);
+                                      Get.snackbar(
+                                          "Open Close Updated Successfully.", "Redirecting to Home Page.",
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          colorText: Colors.white,
+                                          backgroundColor: Colors.green,
+                                          margin: EdgeInsets.zero,
+                                          duration: const Duration(milliseconds: 2000),
+                                          boxShadows: [
+                                            const BoxShadow(
+                                                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                                          ],
+                                          borderRadius: 0);
+                                    }).catchError((error) => print("Failed to add user: $error"));
+
+                                  },
                                   child: Container(
                                     height: 40,
                                     width: 90,
@@ -107,7 +158,11 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                   width: 10,
                                 ),
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () { var ss;
+                                    selectedDate = DateTime.now();
+                                    selectedString = ss;
+                                    _selectedValue =1;
+                                  },
                                   child: Container(
                                     height: 40,
                                     width: 90,
@@ -274,7 +329,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                             Transform.scale(
                                               scale: 1,
                                               child: Radio(
-                                                value: 2,
+                                                value:1,
                                                 groupValue: _selectedValue,
                                                 onChanged: (newValue) {
                                                   setState(() {
@@ -299,7 +354,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                             Transform.scale(
                                               scale: 1,
                                               child: Radio(
-                                                value: 3,
+                                                value: 2,
                                                 groupValue: _selectedValue,
                                                 onChanged: (newValue) {
                                                   setState(() {
@@ -310,10 +365,10 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                                 activeColor: AppColor_greyText,
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 2,
                                             ),
-                                            Text(
+                                            const Text(
                                               'Day Close',
                                               style: TextStyle(fontSize: 14),
                                             ),
@@ -330,7 +385,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       RichText(
-                                        text: TextSpan(
+                                        text: const TextSpan(
                                           text: 'Date',
                                           style: TextStyle(
                                               color: Colors.black, fontSize: 14),
@@ -480,13 +535,13 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                       ))),
                                   DataCell(
                                     Text(
-                                        DateFormat.yMMMd().format(DateTime.now()),
+                                        electeddate,
                                         style: TextStyle(
                                           fontSize: 12,
                                         )),
                                   ),
                                   DataCell(Text(
-                                      'Status',
+                                      click?"Day Open":"Day Close",
                                       style: TextStyle(
                                         fontSize: 12,
                                       ))),

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Constants/Constants.dart';
@@ -7,6 +9,7 @@ import '../../../Constants/responsive.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
 import '../../ScreensMFS/Widget/Notice_widget.dart';
+import '../../helpers/auth_service.dart';
 import '../../route.dart';
 
 class DesktopHomePage extends StatefulWidget {
@@ -20,6 +23,33 @@ class DesktopHomePage extends StatefulWidget {
 }
 
 class _DesktopHomePageState extends State<DesktopHomePage> {
+  bool click = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetch();
+  }
+
+  Future<void> fetch() async {
+
+    DateTime selectedDate = DateTime.now();
+    String formattedDate = DateFormat.yMMMd().format(selectedDate).toString();
+    var collectionReference =
+        FirebaseFirestore.instance.collection('DayOpenClose');
+    var documentReference = collectionReference.doc('98765');
+    var snapshot = await documentReference.get();
+    if (snapshot.exists && snapshot.data()?['OpenClose'] == true && snapshot.data()?['Date']==formattedDate ) {
+      click = true;
+    }
+    if(AuthService.to.user!.type ==
+        "Super Admin"){
+      click = true;
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -165,13 +195,31 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    Get.toNamed(
-                                      dashboardPageRoute,
-                                      arguments: {'CBS': true},
-                                    );
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.setBool('CBS', true);
+                                    if (click) {
+                                      Get.toNamed(
+                                        dashboardPageRoute,
+                                        arguments: {'CBS': true},
+                                      );
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      prefs.setBool('CBS', true);
+                                    } else {
+                                      Get.snackbar("Day Is not Opened Yet.",
+                                          "Redirecting to Home Page.",
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          colorText: Colors.white,
+                                          backgroundColor: Colors.red,
+                                          margin: EdgeInsets.zero,
+                                          duration: const Duration(
+                                              milliseconds: 2000),
+                                          boxShadows: [
+                                            const BoxShadow(
+                                                color: Colors.grey,
+                                                offset: Offset(-100, 0),
+                                                blurRadius: 20),
+                                          ],
+                                          borderRadius: 0);
+                                    }
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -216,13 +264,31 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    Get.toNamed(
-                                      dashboardPageRoute,
-                                      arguments: {'CBS': false},
-                                    );
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.setBool('CBS', false);
+                                    if (click) {
+                                      Get.toNamed(
+                                        dashboardPageRoute,
+                                        arguments: {'CBS': false},
+                                      );
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      prefs.setBool('CBS', false);
+                                    } else {
+                                      Get.snackbar("Day Is not Opened Yet.",
+                                          "Redirecting to Home Page.",
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          colorText: Colors.white,
+                                          backgroundColor: Colors.red,
+                                          margin: EdgeInsets.zero,
+                                          duration: const Duration(
+                                              milliseconds: 2000),
+                                          boxShadows: [
+                                            const BoxShadow(
+                                                color: Colors.grey,
+                                                offset: Offset(-100, 0),
+                                                blurRadius: 20),
+                                          ],
+                                          borderRadius: 0);
+                                    }
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
