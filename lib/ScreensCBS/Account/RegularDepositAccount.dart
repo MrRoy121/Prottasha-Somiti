@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:intl/intl.dart';
 import 'package:prottashasomit/ScreensCBS/Widgets/ContactInfo.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
@@ -31,10 +33,19 @@ import '../Widgets/customerSelection.dart';
 import '../Widgets/memberSelection.dart';
 
 class RegularDepositAccount extends StatefulWidget {
-  NavboolCBS navbool;
-  Appbool appbool;
-
-  RegularDepositAccount({required this.appbool, required this.navbool});
+  List<Memberss> memberss;
+  bool mmems;
+  var selectedmemberss;
+  var selectedsamitee;
+  var selectedsector;
+  Function(int) save;
+  RegularDepositAccount(
+      {required this.memberss,
+        required this.save,
+      required this.selectedsector,
+      required this.selectedmemberss,
+      required this.selectedsamitee,
+      required this.mmems});
 
   @override
   State<RegularDepositAccount> createState() => _RegularDepositAccountState();
@@ -42,11 +53,6 @@ class RegularDepositAccount extends StatefulWidget {
 
 class _RegularDepositAccountState extends State<RegularDepositAccount> {
   bool img = false;
-  List<Memberss> memberss = [];
-  bool mmems = false;
-  var selectedmemberss;
-  var sselectedmemberss;
-  var selectedsamitee;
   late Uint8List pickedImage;
 
   @override
@@ -68,7 +74,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
-        memberss.add(Memberss(
+        widget.memberss.add(Memberss(
             somiteename: element['Member']["Somitee Name"],
             somiteeid: element['Member']["Somitee ID"],
             membertype: element['Member']["Member Type"],
@@ -116,16 +122,13 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
     setState(() {
       var ss;
       img = false;
-      selectedmemberss = ss;
-      sselectedmemberss = ss;
-      mmems = false;
-      selectedsamitee = ss;
+      widget.selectedmemberss = ss;
+      widget.mmems = false;
+      widget.selectedsamitee = ss;
     });
   }
 
-  void _save() async {
-
-  }
+  void _save() async {}
 
   Future<void> _selectImage() async {
     final fromPicker = await ImagePickerWeb.getImageAsBytes();
@@ -151,13 +154,13 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
     bool mobile = false;
 
     Future<void> _setupmemberss(int ins) async {
-      selectedmemberss = memberss[ins];
+      widget.selectedmemberss = widget.memberss[ins];
       await FirebaseFirestore.instance
           .collection('Somitee')
-          .doc(selectedmemberss.somiteeid)
+          .doc(widget.selectedmemberss.somiteeid)
           .get()
           .then((element) {
-        selectedsamitee = Somitee(
+        widget.selectedsamitee = Somitee(
             address: element["Address"],
             id: element.id,
             lastupdated: element["Last Edited"].toDate(),
@@ -168,7 +171,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
             phone: element["Phone"],
             branch: element["Branch"],
             sl: 0);
-        mmems = true;
+        widget.mmems = true;
         setState(() {});
       });
     }
@@ -186,268 +189,614 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
       desktop = false;
       tablet = false;
     }
-    return Scaffold(
-      appBar: Appbar(
-        navbool: widget.appbool,
-      ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 100),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 15),
-                    child: CustomProgressBar(
-                      totalCheckpoints: 8,
-                      currentCheckpoint:0,customeregi: false,
-                    ),
-                  ),
+    return Container(
+      margin: EdgeInsets.only(top: 100),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 120),
+            width: ScreenWidth / 1.097,
+            height: 200,
+            // color: Colors.white,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
 
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    width: ScreenWidth / 1.097,
-                    height: 200,
-                    // color: Colors.white,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 2),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: ScreenWidth / 1.097,
+                  height: ScreenWidth / 38.4,
+                  color: navbarColor,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: ScreenWidth / 38.4),
+                        child: Text(
+                          "Regular A/c Opening (Choose A/c Type)",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: ScreenWidth / 96,
+                          ),
                         ),
-                      ],
-                    ),
-
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: ScreenWidth / 1.097,
+                      ),
+                      Spacer(),
+                      InkWell(
+                        onTap: () {
+                          widget.save(0);
+                        },
+                        child: Container(
                           height: ScreenWidth / 38.4,
-                          color: navbarColor,
+                          width: ScreenWidth / 15.2,
+                          color: Colors.blueAccent,
+                          alignment: Alignment.center,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: ScreenWidth / 38.4),
-                                child: Text(
-                                  "Regular A/c Opening (Choose A/c Type)",
-                                  style: TextStyle(
-                                    color: AppColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: ScreenWidth / 96,
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                child: Container(
-                                  height: ScreenWidth / 38.4,
-                                  width: ScreenWidth / 15.2,
-                                  color: Colors.blueAccent,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.fast_rewind,
-                                        color: Colors.white,
-                                        size: ScreenWidth / 109.71,
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 212,
-                                      ),
-                                      Text(
-                                        "Previous",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ScreenWidth / 109.71),
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 768,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              Icon(
+                                Icons.fast_rewind,
+                                color: Colors.white,
+                                size: ScreenWidth / 109.71,
                               ),
                               SizedBox(
-                                width: ScreenWidth / 153.6,
+                                width: ScreenWidth / 212,
                               ),
-                              InkWell(
-                                onTap: () {
-                                  _save();
-                                },
-                                child: Container(
-                                  height: ScreenWidth / 38.4,
-                                  width: ScreenWidth / 19.2,
-                                  color: Colors.green,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.fast_forward,
-                                        color: Colors.white,
-                                        size: ScreenWidth / 109.71,
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 212,
-                                      ),
-                                      Text(
-                                        "Next",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ScreenWidth / 109.71),
-                                      ),
-                                      SizedBox(
-                                        width: ScreenWidth / 768,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              Text(
+                                "Previous",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenWidth / 109.71),
                               ),
                               SizedBox(
-                                width: ScreenWidth / 153.6,
+                                width: ScreenWidth / 768,
                               ),
                             ],
                           ),
                         ),
-                        Expanded(child: SizedBox()),
-                        Container(alignment: Alignment.center,
+                      ),
+                      SizedBox(
+                        width: ScreenWidth / 153.6,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if(widget.selectedsector == null && widget.selectedsamitee==null){
+                            Get.snackbar(
+                                "Next Page Error","Some Required Field is empty.",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                                margin: EdgeInsets.zero,
+                                duration: const Duration(milliseconds: 2000),
+                                boxShadows: [
+                                  const BoxShadow(
+                                      color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                                ],
+                                borderRadius: 0);
+                          }else{
+                            widget.save(0);
+                          }
+                        },
+                        child: Container(
+                          height: ScreenWidth / 38.4,
+                          width: ScreenWidth / 19.2,
+                          color: Colors.green,
+                          alignment: Alignment.center,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                children: [
-                                  Transform.scale(
-                                    scale: 1.5,
-                                    child: Radio(
-                                      value: 1,
-                                      groupValue: _selectedValue,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _selectedValue = newValue as int;
-                                        });
-                                      },activeColor: AppColor_greyText,
-                                    ),
-                                  ),SizedBox(width: 10,),
-                                  const Text('Single Account', style: TextStyle(
-                                      fontSize:16),),
-                                ],
+                              Icon(
+                                Icons.fast_forward,
+                                color: Colors.white,
+                                size: ScreenWidth / 109.71,
                               ),
-                              Row(
-                                children: [Transform.scale(
-                                  scale: 1.5,
-                                  child: Radio(
-                                    value: 2,
-                                    groupValue: _selectedValue,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _selectedValue = newValue as int;
-                                      });
-                                    },activeColor: AppColor_greyText,
-                                  ),
-                                ),SizedBox(width: 10,),
-                                  Text('Joint Account', style: TextStyle(
-                                      fontSize:16),),
-                                ],
+                              SizedBox(
+                                width: ScreenWidth / 212,
                               ),
-                              Row(
-                                children: [Transform.scale(
-                                  scale: 1.5,
-                                  child: Radio(
-                                    value: 3,
-                                    groupValue: _selectedValue,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _selectedValue = newValue as int;
-                                      });
-                                    },activeColor: AppColor_greyText,
-                                  ),
-                                ),SizedBox(width: 10,),
-                                  Text('Company Account', style: TextStyle(
-                                      fontSize:16),),
-                                ],
+                              Text(
+                                "Next",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenWidth / 109.71),
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 768,
                               ),
                             ],
                           ),
                         ),
-                        Expanded(child: SizedBox()),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        width: ScreenWidth / 153.6,
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    child: CustomerSelection(
-                      memberss: memberss,
-                      onclear: _onclear,
-                      onsubmit: _save,
-                      mmems: mmems,
-                      setupmemberss: _setupmemberss,
-                      selectedsamitee: selectedsamitee,
-                      selectedmemberssid: sselectedmemberss,
-                      selectedmemberss: selectedmemberss,
-                    ),
+                ),
+                Expanded(child: SizedBox()),
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Radio(
+                              value: 1,
+                              groupValue: _selectedValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedValue = newValue as int;
+                                });
+                              },
+                              activeColor: AppColor_greyText,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            'Single Account',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Radio(
+                              value: 2,
+                              groupValue: _selectedValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedValue = newValue as int;
+                                });
+                              },
+                              activeColor: AppColor_greyText,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Joint Account',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Radio(
+                              value: 3,
+                              groupValue: _selectedValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedValue = newValue as int;
+                                });
+                              },
+                              activeColor: AppColor_greyText,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Company Account',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: ScreenWidth / 21.94, top: 40),
-                    child: desktop
-                        ? Row(
+                ),
+                Expanded(child: SizedBox()),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 30),
+            width: 1400,
+            height: 380,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  width: 1400,
+                  height: 40,
+                  color: navbarColor,
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 40.0),
+                        child: Text(
+                          "Account Opening",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50, left: 150),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
                             children: [
-                              PersonalExistinginfo(
-                                  memberss: selectedmemberss,
-                                  selectedmember: mmems),
-                              Spacer(),
-                              selectedmemberss == null
-                                  ? ImageMember(imgurl: '')
-                                  : ImageMember(
-                                      imgurl: selectedmemberss.imageurl),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              PersonalExistinginfo(
-                                  memberss: selectedmemberss,
-                                  selectedmember: mmems),
-
-                              // Spacer(),
-                              SizedBox(
-                                height: 50,
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'Select Customer',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
+                                ),
                               ),
-
-                              selectedmemberss == null
-                                  ? ImageMember(imgurl: '')
-                                  : ImageMember(
-                                      imgurl: selectedmemberss.imageurl,
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: AppColor_greyBorder,
+                                    border: Border.all(color: AppColor_Black),
+                                  ),
+                                  child: DropdownSearch<Memberss>(
+                                    filterFn: (Memberss item, String query) {
+                                      return item.filterFn(query);
+                                    },
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      itemBuilder: (BuildContext context,
+                                          Memberss item, bool isSelected) {
+                                        return Container(
+                                          padding: EdgeInsets.all(15),
+                                          child: Text(
+                                            "${item.firstname} ${item.lastname} - ${item.id}",
+                                          ),
+                                        );
+                                      },
+                                      fit: FlexFit.loose,
+                                      showSelectedItems: false,
+                                      menuProps: const MenuProps(
+                                        backgroundColor: Colors.white,
+                                        elevation: 100,
+                                      ),
+                                      searchFieldProps: const TextFieldProps(
+                                        style: TextStyle(fontSize: 12),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: "Search...",
+                                        ),
+                                      ),
                                     ),
+                                    dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownBuilder: (context, item) {
+                                      if (item == null) {
+                                        return const Text(
+                                          "Enter Member Name/Code",
+                                        );
+                                      } else {
+                                        return Text(
+                                          "${item.firstname} ${item.lastname} - ${item.id}",
+                                        );
+                                      }
+                                    },
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.selectedmemberss = newValue;
+                                        _setupmemberss(
+                                            widget.memberss.indexOf(newValue!));
+                                      });
+                                    },
+                                    items: widget.memberss,
+                                    selectedItem: widget.selectedmemberss,
+                                  )),
                             ],
                           ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Open Date :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 65,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: Text(
+                                    DateFormat.yMMMd().format(DateTime.now())),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'Select Sector',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Container(
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: AppColor_greyBorder,
+                                    border: Border.all(color: AppColor_Black),
+                                  ),
+                                  child: DropdownSearch<String>(
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      itemBuilder: (BuildContext context,
+                                          String item, bool isSelected) {
+                                        return Container(
+                                          padding: EdgeInsets.all(15),
+                                          child: Text(
+                                            item,
+                                          ),
+                                        );
+                                      },
+                                      fit: FlexFit.loose,
+                                      showSelectedItems: false,
+                                      menuProps: const MenuProps(
+                                        backgroundColor: Colors.white,
+                                        elevation: 100,
+                                      ),
+                                      searchFieldProps: const TextFieldProps(
+                                        style: TextStyle(fontSize: 12),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: "Search...",
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                        const DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownBuilder: (context, item) {
+                                      if (item == null) {
+                                        return const Text(
+                                          "Enter Member Name/Code",
+                                        );
+                                      } else {
+                                        return Text(
+                                          item,
+                                        );
+                                      }
+                                    },
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        widget.selectedsector = newValue;
+                                      });
+                                    },
+                                    items: SectorList,
+                                    selectedItem: widget.selectedsector,
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 150,
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "Branch Name :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 65,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: Text(widget.mmems
+                                    ? widget.selectedsamitee.branch.toString()
+                                    : ""),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "Account Type :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 65,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: Text(_selectedValue == 1
+                                    ? "Single Account"
+                                    : _selectedValue == 2
+                                        ? "Joint Account"
+                                        : _selectedValue == 3
+                                            ? "Company Account"
+                                            : ""),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          const Row(
+                            children: [
+                              Text(
+                                "Currency :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 65,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: Text("BDT"),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: ScreenWidth / 21.94, top: 40),
+            child: desktop
+                ? Row(
+                    children: [
+                      PersonalExistinginfo(
+                          memberss: widget.selectedmemberss,
+                          selectedmember: widget.mmems),
+                      Spacer(),
+                      widget.selectedmemberss == null
+                          ? ImageMember(imgurl: '')
+                          : ImageMember(
+                              imgurl: widget.selectedmemberss.imageurl),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      PersonalExistinginfo(
+                          memberss: widget.selectedmemberss,
+                          selectedmember: widget.mmems),
 
-                  SizedBox(
-                    height: 50,
+                      // Spacer(),
+                      SizedBox(
+                        height: 50,
+                      ),
+
+                      widget.selectedmemberss == null
+                          ? ImageMember(imgurl: '')
+                          : ImageMember(
+                              imgurl: widget.selectedmemberss.imageurl,
+                            ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            NavbarScreenCBS(
-              appbool: widget.appbool,
-              navbool: widget.navbool,
-            ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }

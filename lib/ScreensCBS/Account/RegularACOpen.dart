@@ -6,34 +6,39 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../route.dart';
+import '../../Model/member.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
 import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
+import 'RegularDepositAccount.dart';
 
 class RegularACOpen extends StatefulWidget {
   NavboolCBS navbool;
   Appbool appbool;
 
-  RegularACOpen(
-      {required this.appbool, required this.navbool});
+  RegularACOpen({required this.appbool, required this.navbool});
 
   @override
-  State<RegularACOpen> createState() =>
-      _RegularACOpenState();
+  State<RegularACOpen> createState() => _RegularACOpenState();
 }
 
-class _RegularACOpenState
-    extends State<RegularACOpen> {
+class _RegularACOpenState extends State<RegularACOpen> {
+  int index = 0;
   int _selectedValue = 1;
+  bool img = false;
+  List<Memberss> memberss = [];
+  bool mmems = false;
+  var selectedmemberss;
+  var sselectedmemberss;
+  var selectedsamitee;
+  var selectedsector;
+  late Uint8List pickedImage;
 
-  void _save() {
-    if(_selectedValue==1){
-      Get.toNamed(regulardepositaccountopenPageRoute);
-    }else if(_selectedValue==2){
-
-    }
+  void _save(int index) {
+    index = index;
+    setState(() {});
   }
 
   @override
@@ -46,199 +51,225 @@ class _RegularACOpenState
       body: SingleChildScrollView(
         child: Stack(
           children: [
-
             Container(
               margin: EdgeInsets.only(top: 125),
               child: CustomProgressBar(
                 totalCheckpoints: 8,
-                currentCheckpoint:0,customeregi: false,
+                currentCheckpoint: index,
+                customeregi: false,
               ),
             ),
-
-
-            Container(
-              margin: EdgeInsets.only(top: 250, left: 50),
-              // margin: EdgeInsets.only(top: 100, left: 50),
-              width: ScreenWidth / 1.097,
-              height: 200,
-              // color: Colors.white,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
+            index == 0
+                ? Container(
+                    margin: EdgeInsets.only(top: 250, left: 50),
+                    // margin: EdgeInsets.only(top: 100, left: 50),
                     width: ScreenWidth / 1.097,
-                    height: ScreenWidth / 38.4,
-                    color: navbarColor,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    height: 200,
+                    // color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: ScreenWidth / 38.4),
-                          child: Text(
-                            "Regular A/c Opening (Choose A/c Type)",
-                            style: TextStyle(
-                              color: AppColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: ScreenWidth / 96,
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () {
-                            _save();
-                          },
-                          child: Container(
-                            height: ScreenWidth / 38.4,
-                            width: ScreenWidth / 19.2,
-                            color: Colors.green,
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.fast_forward,
-                                  color: Colors.white,
-                                  size: ScreenWidth / 109.71,
-                                ),
-                                SizedBox(
-                                  width: ScreenWidth / 212,
-                                ),
-                                Text(
-                                  "Next",
+                        Container(
+                          width: ScreenWidth / 1.097,
+                          height: ScreenWidth / 38.4,
+                          color: navbarColor,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: ScreenWidth / 38.4),
+                                child: Text(
+                                  "Regular A/c Opening (Choose A/c Type)",
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: ScreenWidth / 109.71),
+                                    color: AppColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: ScreenWidth / 96,
+                                  ),
                                 ),
-                                SizedBox(
-                                  width: ScreenWidth / 768,
+                              ),
+                              Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  _save(1);
+                                },
+                                child: Container(
+                                  height: ScreenWidth / 38.4,
+                                  width: ScreenWidth / 19.2,
+                                  color: Colors.green,
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.fast_forward,
+                                        color: Colors.white,
+                                        size: ScreenWidth / 109.71,
+                                      ),
+                                      SizedBox(
+                                        width: ScreenWidth / 212,
+                                      ),
+                                      Text(
+                                        "Next",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: ScreenWidth / 109.71),
+                                      ),
+                                      SizedBox(
+                                        width: ScreenWidth / 768,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 153.6,
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  height: ScreenWidth / 38.4,
+                                  width: ScreenWidth / 19.2,
+                                  color: AppColor_yellow,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: ScreenWidth / 512,
+                                        left: ScreenWidth / 102.4),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.clear_all,
+                                          color: Colors.white,
+                                          size: ScreenWidth / 85.33,
+                                        ),
+                                        Text(
+                                          "Clear",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: ScreenWidth / 109.71),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 153.6,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Container(
+                                  height: ScreenWidth / 38.4,
+                                  width: ScreenWidth / 30.72,
+                                  color: Colors.red,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: ScreenWidth / 153.6,
+                                        left: ScreenWidth / 76.8),
+                                    child: Text(
+                                      "X",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: ScreenWidth / 109.71),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 153.6,
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          width: ScreenWidth / 153.6,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            height: ScreenWidth / 38.4,
-                            width: ScreenWidth / 19.2,
-                            color: AppColor_yellow,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: ScreenWidth / 512,
-                                  left: ScreenWidth / 102.4),
-                              child: Row(
+                        Expanded(child: SizedBox()),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
                                 children: [
-                                  Icon(
-                                    Icons.clear_all,
-                                    color: Colors.white,
-                                    size: ScreenWidth / 85.33,
+                                  Transform.scale(
+                                    scale: 1.5,
+                                    child: Radio(
+                                      value: 1,
+                                      groupValue: _selectedValue,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _selectedValue = newValue as int;
+                                        });
+                                      },
+                                      activeColor: AppColor_greyText,
+                                    ),
                                   ),
-                                  Text(
-                                    "Clear",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ScreenWidth / 109.71),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text(
+                                    'Savings Account',
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                 ],
                               ),
-                            ),
+                              Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 1.5,
+                                    child: Radio(
+                                      value: 2,
+                                      groupValue: _selectedValue,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _selectedValue = newValue as int;
+                                        });
+                                      },
+                                      activeColor: AppColor_greyText,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Short Notice Deposits (CBS) (SND (CBS))',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          width: ScreenWidth / 153.6,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            height: ScreenWidth / 38.4,
-                            width: ScreenWidth / 30.72,
-                            color: Colors.red,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: ScreenWidth / 153.6,
-                                  left: ScreenWidth / 76.8),
-                              child: Text(
-                                "X",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenWidth / 109.71),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenWidth / 153.6,
-                        ),
+                        Expanded(child: SizedBox()),
                       ],
                     ),
-                  ),
-                  Expanded(child: SizedBox()),
-                  Container(alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Transform.scale(
-                              scale: 1.5,
-                              child: Radio(
-                                value: 1,
-                                groupValue: _selectedValue,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedValue = newValue as int;
-                                  });
-                                },activeColor: AppColor_greyText,
-                              ),
-                            ),SizedBox(width: 10,),
-                            const Text('Savings Account', style: TextStyle(
-                                fontSize:16),),
-                          ],
-                        ),
-                        Row(
-                          children: [Transform.scale(
-                            scale: 1.5,
-                              child: Radio(
-                                value: 2,
-                                groupValue: _selectedValue,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedValue = newValue as int;
-                                  });
-                                },activeColor: AppColor_greyText,
-                              ),
-                            ),SizedBox(width: 10,),
-                            Text('Short Notice Deposits (CBS) (SND (CBS))', style: TextStyle(
-                                fontSize:16),),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(child: SizedBox()),
-                ],
-              ),
-            ),
+                  )
+                : SizedBox(),
+            index == 1
+                ? RegularDepositAccount(
+                    memberss: memberss,
+                    mmems: mmems,save: _save,
+                    selectedmemberss: selectedmemberss,
+                    selectedsamitee: selectedsamitee,
+                    selectedsector: selectedsector,
+                  )
+                : SizedBox(),
             NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,

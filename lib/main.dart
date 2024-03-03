@@ -458,13 +458,6 @@ class MyApp extends StatelessWidget {
                   navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
-        GetPage(
-            name: regulardepositaccountopenPageRoute,
-            page: () => RegularDepositAccount(
-                  appbool: appbool,
-                  navbool: navboolcbs,
-                ),
-            middlewares: [AuthMiddleware()]),
       ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

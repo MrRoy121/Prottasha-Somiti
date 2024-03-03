@@ -37,6 +37,24 @@ const List<String> LoanPeriodList = [
   'Debit Transaction',
   'Credit Transaction',
 ];
+const List<String> SectorList = [
+  '901002 - Fishing Farms(Hatchery,Shrimp Culture Etc)',
+  '901003 - Dairy Farms',
+  '901004 - Poultry Farms',
+  '901009 - Farmers/Fishermen',
+  '902118 - Rice Mills',
+  '902133 - Bricks Manufacturers & Sand Elevators',
+  '902450 - Restaurant/Fast Food',
+  '902451 - Photo Studio & Color Labs',
+  '902452 - Travel agencies',
+  '902454 - Beauty Parlors/Saloons',
+  '902462 - Stone Crasher',
+  '902463 - Jewelry Service',
+  '902465 - Auto Mobile Service',
+  '902050 - Foreign Individual',
+  '905001 - Student',
+  '905002 - Housewive',
+];
 const List<String> LoanPurposeList = [
   'Business',
   'Rickshaw',
