@@ -270,6 +270,16 @@ class _RegularACOpenState extends State<RegularACOpen> {
                     selectedsector: selectedsector,
                   )
                 : SizedBox(),
+
+            index == 3
+                ? RegularDepositAccount(
+              memberss: memberss,
+              mmems: mmems,save: _save,
+              selectedmemberss: selectedmemberss,
+              selectedsamitee: selectedsamitee,
+              selectedsector: selectedsector,
+            )
+                : SizedBox(),
             NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,

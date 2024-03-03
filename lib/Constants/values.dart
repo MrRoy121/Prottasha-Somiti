@@ -55,6 +55,11 @@ const List<String> SectorList = [
   '905001 - Student',
   '905002 - Housewive',
 ];
+const List<String> DocumentList = [
+  'National ID Card',
+  'Passport',
+  'Birth Certificate',
+];
 const List<String> LoanPurposeList = [
   'Business',
   'Rickshaw',
