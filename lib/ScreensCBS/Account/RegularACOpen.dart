@@ -13,6 +13,7 @@ import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import 'RegularDepositAccount.dart';
+import 'RegularDepositIntroducer.dart';
 import 'RegularDepositNominee.dart';
 
 class RegularACOpen extends StatefulWidget {
@@ -34,6 +35,8 @@ class _RegularACOpenState extends State<RegularACOpen> {
   var selectedmemberss;
   var sselectedmemberss;
   var selectedsamitee;
+  var selectedintroducertype;
+  var selectedaccountno;
   var selectedsector;
   var nomineename;
   var fathername;
@@ -286,13 +289,23 @@ class _RegularACOpenState extends State<RegularACOpen> {
                 ? RegularDepositNominee(
                     nomineepercentage: nomineepercentage,
                     save: _save,
-                    selectedDate: selectedDate,pickedImage: pickedImage,
-                    documentno: documentno,pickeddfImage: pickeddfImage,
-                    fathername: fathername,pickeddbImage: pickeddbImage,
+                    selectedDate: selectedDate,
+                    pickedImage: pickedImage,
+                    documentno: documentno,
+                    pickeddfImage: pickeddfImage,
+                    fathername: fathername,
+                    pickeddbImage: pickeddbImage,
                     nomineename: nomineename,
                     selectedrelation: selectedrelation,
                     selecteddocumenttype: selecteddocumenttype,
                     mothername: mothername)
+                : SizedBox(),
+            index == 4
+                ? RegularDepositIntroducer(
+                    save: _save,
+                    selectedaccountno: selectedaccountno,
+                    selectedintroducertype: selectedintroducertype,
+                  )
                 : SizedBox(),
             NavbarScreenCBS(
               appbool: widget.appbool,

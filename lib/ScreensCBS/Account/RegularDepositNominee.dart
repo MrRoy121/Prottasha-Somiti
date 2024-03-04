@@ -66,7 +66,6 @@ class RegularDepositNominee extends StatefulWidget {
 class _RegularDepositNomineeState extends State<RegularDepositNominee> {
   bool img = false, dfimg = false, dbimg = false;
 
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -230,7 +229,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                           //       ],
                           //       borderRadius: 0);
                           // }else{
-                          //   widget.save(3);
+                          widget.save(4);
                           // }
                         },
                         child: Container(
@@ -871,7 +870,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                               ),
                               child: img
                                   ? Image.memory(
-                                widget.pickedImage,
+                                      widget.pickedImage,
                                       fit: BoxFit.cover,
                                     )
                                   : Center(
@@ -1047,11 +1046,12 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                               ),
                               child: dfimg
                                   ? Image.memory(
-                                widget.pickeddfImage,
+                                      widget.pickeddfImage,
                                       fit: BoxFit.cover,
                                     )
                                   : Center(
-                                      child: Icon(Icons.document_scanner_outlined,
+                                      child: Icon(
+                                          Icons.document_scanner_outlined,
                                           size: 58),
                                     ),
                             )
@@ -1223,11 +1223,12 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                               ),
                               child: dbimg
                                   ? Image.memory(
-                                widget.pickeddbImage,
+                                      widget.pickeddbImage,
                                       fit: BoxFit.cover,
                                     )
                                   : Center(
-                                      child: Icon(Icons.document_scanner_outlined,
+                                      child: Icon(
+                                          Icons.document_scanner_outlined,
                                           size: 58),
                                     ),
                             )

@@ -66,6 +66,14 @@ const List<String> DocumentList = [
   'Land Deed'
 ];
 
+const List<String> IntroducerTypeList = [
+  'Existing Customer',
+];
+
+
+const List<Map<String, String>> IntroducerList = [{'ID':'7210220058837101', 'Name':'Titas Ranjan Talukdar'}
+
+];
 const List<String> RelationList = [
   'Wife',
   'Husband',
