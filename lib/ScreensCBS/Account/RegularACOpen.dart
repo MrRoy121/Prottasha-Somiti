@@ -14,7 +14,9 @@ import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import 'RegularDepositAccount.dart';
 import 'RegularDepositIntroducer.dart';
+import 'RegularDepositKYCprofile.dart';
 import 'RegularDepositNominee.dart';
+import 'RegularDepositTransactionProfile.dart';
 
 class RegularACOpen extends StatefulWidget {
   NavboolCBS navbool;
@@ -306,6 +308,17 @@ class _RegularACOpenState extends State<RegularACOpen> {
                     selectedaccountno: selectedaccountno,
                     selectedintroducertype: selectedintroducertype,
                   )
+                : SizedBox(),
+
+            index == 5
+                ? RegularDepositTransactionProfile(
+              save: _save,
+            )
+                : SizedBox(),
+            index == 6
+                ? RegularDepositKycProfile(
+              save: _save,
+            )
                 : SizedBox(),
             NavbarScreenCBS(
               appbool: widget.appbool,
