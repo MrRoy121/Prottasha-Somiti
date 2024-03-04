@@ -36,19 +36,25 @@ class RegularDepositNominee extends StatefulWidget {
   var nomineename;
   var fathername;
   var mothername;
-  var selectedDate;
+  DateTime selectedDate;
   var documentno;
   var nomineepercentage;
   var selectedrelation;
   var selecteddocumenttype;
+  var pickedImage;
+  var pickeddfImage;
+  var pickeddbImage;
   Function(int) save;
   RegularDepositNominee(
       {required this.nomineepercentage,
-        required this.save,
-        required this.selectedDate,
-        required this.documentno,
-        required this.fathername,
-        required this.nomineename,
+      required this.save,
+      required this.selectedDate,
+      required this.pickedImage,
+      required this.pickeddbImage,
+      required this.pickeddfImage,
+      required this.documentno,
+      required this.fathername,
+      required this.nomineename,
       required this.selectedrelation,
       required this.selecteddocumenttype,
       required this.mothername});
@@ -58,14 +64,9 @@ class RegularDepositNominee extends StatefulWidget {
 }
 
 class _RegularDepositNomineeState extends State<RegularDepositNominee> {
-  bool img = false;
-  late Uint8List pickedImage;
+  bool img = false, dfimg = false, dbimg = false;
 
 
-  Future<void> _loadImage() async {
-    ByteData data = await rootBundle.load('Assets/person.jpg');
-    pickedImage = data.buffer.asUint8List();
-  }
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -81,12 +82,32 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
     }
   }
 
-  Future<void> _selectImage() async {
+  Future<void> _selectNomineeImage() async {
     final fromPicker = await ImagePickerWeb.getImageAsBytes();
     if (fromPicker != null) {
       setState(() {
-        pickedImage = fromPicker;
+        widget.pickedImage = fromPicker;
         img = true;
+      });
+    }
+  }
+
+  Future<void> _selectdocumentfrontimage() async {
+    final fromPicker = await ImagePickerWeb.getImageAsBytes();
+    if (fromPicker != null) {
+      setState(() {
+        widget.pickeddfImage = fromPicker;
+        dfimg = true;
+      });
+    }
+  }
+
+  Future<void> _selectdocumentbackImage() async {
+    final fromPicker = await ImagePickerWeb.getImageAsBytes();
+    if (fromPicker != null) {
+      setState(() {
+        widget.pickeddbImage = fromPicker;
+        dbimg = true;
       });
     }
   }
@@ -122,10 +143,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 120),
-            width: ScreenWidth / 1.097,
-            height: 200,
-            // color: Colors.white,
+            margin: EdgeInsets.only(top: 120, left: 50),
+            width: 1400,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -137,14 +156,11 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                 ),
               ],
             ),
-
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: ScreenWidth / 1.097,
-                  height: ScreenWidth / 38.4,
+                  width: 1400,
+                  height: 40,
                   color: navbarColor,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,7 +168,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                       Padding(
                         padding: EdgeInsets.only(left: ScreenWidth / 38.4),
                         child: Text(
-                          "Regular A/c Opening (Choose A/c Type)",
+                          "Nominee Information",
                           style: TextStyle(
                             color: AppColor,
                             fontWeight: FontWeight.bold,
@@ -214,7 +230,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                           //       ],
                           //       borderRadius: 0);
                           // }else{
-                          //   widget.save(0);
+                          //   widget.save(3);
                           // }
                         },
                         child: Container(
@@ -253,133 +269,10 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                     ],
                   ),
                 ),
-                Expanded(child: SizedBox()),
-                Container(
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Radio(
-                              value: 1,
-                              groupValue: _selectedValue,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _selectedValue = newValue as int;
-                                });
-                              },
-                              activeColor: AppColor_greyText,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            'Single Account',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Radio(
-                              value: 2,
-                              groupValue: _selectedValue,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _selectedValue = newValue as int;
-                                });
-                              },
-                              activeColor: AppColor_greyText,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Joint Account',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Radio(
-                              value: 3,
-                              groupValue: _selectedValue,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _selectedValue = newValue as int;
-                                });
-                              },
-                              activeColor: AppColor_greyText,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Company Account',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(child: SizedBox()),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 30),
-            width: 1400,
-            height: 380,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Container(
-                  width: 1400,
-                  height: 40,
-                  color: navbarColor,
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 40.0),
-                        child: Text(
-                          "Account Opening",
-                          style: TextStyle(
-                            color: AppColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 50, left: 150),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -405,7 +298,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                 ),
                               ),
                               SizedBox(
-                                width: 40,
+                                width: 110,
                               ),
                               Container(
                                   width: 300,
@@ -441,7 +334,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                       ),
                                     ),
                                     dropdownDecoratorProps:
-                                    const DropDownDecoratorProps(
+                                        const DropDownDecoratorProps(
                                       dropdownSearchDecoration: InputDecoration(
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
@@ -456,7 +349,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                     dropdownBuilder: (context, item) {
                                       if (item == null) {
                                         return const Text(
-                                          "Enter Member Name/Code",
+                                          "Enter Relation",
                                         );
                                       } else {
                                         return Text(
@@ -469,7 +362,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                         widget.selectedrelation = newValue;
                                       });
                                     },
-                                    items: SectorList,
+                                    items: RelationList,
                                     selectedItem: widget.selectedrelation,
                                   )),
                             ],
@@ -510,7 +403,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.fathername,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 2),
                                   ),
                                 ),
                               ),
@@ -556,7 +450,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                         filled: true,
                                         fillColor: Colors.white,
                                         border: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.grey),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey),
                                         ),
                                         hintText: widget.selectedDate != null
                                             ? "${widget.selectedDate!.day}-${widget.selectedDate!.month}-${widget.selectedDate!.year}"
@@ -565,7 +460,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                           color: Colors.grey,
                                           fontSize: ScreenWidth / 109.71,
                                         ),
-                                        suffixIcon: Icon(Icons.calendar_month_sharp,
+                                        suffixIcon: Icon(
+                                            Icons.calendar_month_sharp,
                                             size: ScreenWidth / 109.71,
                                             color: Colors.grey),
                                       ),
@@ -600,7 +496,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                 ),
                               ),
                               SizedBox(
-                                width: 40,
+                                width: 70,
                               ),
                               Container(
                                   width: 300,
@@ -679,10 +575,6 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                       ),
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 40,
-                          ),
-
                           Row(
                             children: [
                               RichText(
@@ -716,7 +608,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.nomineename,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 2),
                                   ),
                                 ),
                               ),
@@ -725,7 +618,6 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                           const SizedBox(
                             height: 40,
                           ),
-
                           Row(
                             children: [
                               RichText(
@@ -759,7 +651,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.mothername,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 2),
                                   ),
                                 ),
                               ),
@@ -801,7 +694,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.documentno,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 2),
                                   ),
                                 ),
                               ),
@@ -815,43 +709,537 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                     ],
                   ),
                 ),
+                Divider(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 50, left: 300, bottom: 50),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 295,
+                                height: 30,
+                                color: navbarColor,
+                                child: const Center(
+                                  child: Text(
+                                    "Choose Nominee Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                height: 120,
+                                width: 295,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 80,
+                                      width: 265,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 0.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 20,
+                                              left: 10,
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const Text(
+                                                  "Select an Image File",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 96,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        side: const BorderSide(
+                                                            color: Colors.blue),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                      ),
+                                                    ),
+                                                    onPressed:
+                                                        _selectNomineeImage,
+                                                    child: const Text(
+                                                      "Select",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(top: 10, right: 250),
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 200,
+                              height: 30,
+                              color: navbarColor,
+                              child: Center(
+                                child: Text(
+                                  "Preview Image",
+                                  style: TextStyle(
+                                    color: AppColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 25),
+                              padding: EdgeInsets.only(top: 25),
+                              height: 120,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: img
+                                  ? Image.memory(
+                                widget.pickedImage,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Center(
+                                      child: Icon(Icons.person_2_outlined,
+                                          size: 58),
+                                    ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 100, left: 300, bottom: 50),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 295,
+                                height: 30,
+                                color: navbarColor,
+                                child: const Center(
+                                  child: Text(
+                                    "Choose Document Front Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                height: 120,
+                                width: 295,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 80,
+                                      width: 265,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 0.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 20,
+                                              left: 10,
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const Text(
+                                                  "Select an Image File",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 96,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        side: const BorderSide(
+                                                            color: Colors.blue),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                      ),
+                                                    ),
+                                                    onPressed:
+                                                        _selectdocumentfrontimage,
+                                                    child: const Text(
+                                                      "Select",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(top: 50, right: 250),
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 200,
+                              height: 30,
+                              color: navbarColor,
+                              child: Center(
+                                child: Text(
+                                  "Preview Image",
+                                  style: TextStyle(
+                                    color: AppColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 25),
+                              padding: EdgeInsets.only(top: 25),
+                              height: 120,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: dfimg
+                                  ? Image.memory(
+                                widget.pickeddfImage,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Center(
+                                      child: Icon(Icons.document_scanner_outlined,
+                                          size: 58),
+                                    ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 100, left: 300, bottom: 50),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 295,
+                                height: 30,
+                                color: navbarColor,
+                                child: const Center(
+                                  child: Text(
+                                    "Choose Document Back Image",
+                                    style: TextStyle(
+                                      color: AppColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                height: 120,
+                                width: 295,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 80,
+                                      width: 265,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: 0.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 20,
+                                              left: 10,
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const Text(
+                                                  "Select an Image File",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 96,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        side: const BorderSide(
+                                                            color: Colors.blue),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                      ),
+                                                    ),
+                                                    onPressed:
+                                                        _selectdocumentbackImage,
+                                                    child: const Text(
+                                                      "Select",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(top: 50, right: 250),
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 200,
+                              height: 30,
+                              color: navbarColor,
+                              child: Center(
+                                child: Text(
+                                  "Preview Image",
+                                  style: TextStyle(
+                                    color: AppColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 25),
+                              padding: EdgeInsets.only(top: 25),
+                              height: 120,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 0.5,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: dbimg
+                                  ? Image.memory(
+                                widget.pickeddbImage,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Center(
+                                      child: Icon(Icons.document_scanner_outlined,
+                                          size: 58),
+                                    ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          // Padding(
-          //   padding: EdgeInsets.only(left: ScreenWidth / 21.94, top: 40),
-          //   child: desktop
-          //       ? Row(
-          //           children: [
-          //             PersonalExistinginfo(
-          //                 memberss: widget.selectedmemberss,
-          //                 selectedmember: widget.mmems),
-          //             Spacer(),
-          //             widget.selectedmemberss == null
-          //                 ? ImageMember(imgurl: '')
-          //                 : ImageMember(
-          //                     imgurl: widget.selectedmemberss.imageurl),
-          //           ],
-          //         )
-          //       : Column(
-          //           children: [
-          //             PersonalExistinginfo(
-          //                 memberss: widget.selectedmemberss,
-          //                 selectedmember: widget.mmems),
-          //
-          //             // Spacer(),
-          //             SizedBox(
-          //               height: 50,
-          //             ),
-          //
-          //             widget.selectedmemberss == null
-          //                 ? ImageMember(imgurl: '')
-          //                 : ImageMember(
-          //                     imgurl: widget.selectedmemberss.imageurl,
-          //                   ),
-          //           ],
-          //         ),
-          // ),
           SizedBox(
             height: 50,
           ),

@@ -68,7 +68,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
     pickedImage = data.buffer.asUint8List();
   }
 
-  Future<void> fetch() async {
+  Future<void> fetch() async {widget.memberss =[];
     await FirebaseFirestore.instance
         .collection('Customer')
         .get()
@@ -127,8 +127,6 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
       widget.selectedsamitee = ss;
     });
   }
-
-  void _save() async {}
 
   Future<void> _selectImage() async {
     final fromPicker = await ImagePickerWeb.getImageAsBytes();
@@ -286,7 +284,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                                 ],
                                 borderRadius: 0);
                           }else{
-                            widget.save(0);
+                            widget.save(3);
                           }
                         },
                         child: Container(
@@ -649,7 +647,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                                     dropdownBuilder: (context, item) {
                                       if (item == null) {
                                         return const Text(
-                                          "Enter Member Name/Code",
+                                          "Enter Sector Code",
                                         );
                                       } else {
                                         return Text(

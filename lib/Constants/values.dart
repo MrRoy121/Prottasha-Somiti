@@ -32,7 +32,8 @@ const List<String> LoanPeriodList = [
   'October',
   'November ',
   'December'
-];const List<String> TranTypeList = [
+];
+const List<String> TranTypeList = [
   'All Transaction',
   'Debit Transaction',
   'Credit Transaction',
@@ -59,6 +60,19 @@ const List<String> DocumentList = [
   'National ID Card',
   'Passport',
   'Birth Certificate',
+  'Driver License',
+  'General Deed',
+  'School Certificate',
+  'Land Deed'
+];
+
+const List<String> RelationList = [
+  'Wife',
+  'Husband',
+  'Son',
+  'Daughter',
+  'Father',
+  'Mother',
 ];
 const List<String> LoanPurposeList = [
   'Business',

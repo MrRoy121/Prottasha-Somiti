@@ -13,6 +13,7 @@ import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import 'RegularDepositAccount.dart';
+import 'RegularDepositNominee.dart';
 
 class RegularACOpen extends StatefulWidget {
   NavboolCBS navbool;
@@ -34,10 +35,20 @@ class _RegularACOpenState extends State<RegularACOpen> {
   var sselectedmemberss;
   var selectedsamitee;
   var selectedsector;
-  late Uint8List pickedImage;
+  var nomineename;
+  var fathername;
+  var mothername;
+  var pickedImage;
+  var pickeddfImage;
+  var pickeddbImage;
+  DateTime selectedDate = DateTime.now();
+  var documentno;
+  var nomineepercentage;
+  var selectedrelation;
+  var selecteddocumenttype;
 
-  void _save(int index) {
-    index = index;
+  void _save(int indx) {
+    index = indx;
     setState(() {});
   }
 
@@ -264,21 +275,24 @@ class _RegularACOpenState extends State<RegularACOpen> {
             index == 1
                 ? RegularDepositAccount(
                     memberss: memberss,
-                    mmems: mmems,save: _save,
+                    mmems: mmems,
+                    save: _save,
                     selectedmemberss: selectedmemberss,
                     selectedsamitee: selectedsamitee,
                     selectedsector: selectedsector,
                   )
                 : SizedBox(),
-
             index == 3
-                ? RegularDepositAccount(
-              memberss: memberss,
-              mmems: mmems,save: _save,
-              selectedmemberss: selectedmemberss,
-              selectedsamitee: selectedsamitee,
-              selectedsector: selectedsector,
-            )
+                ? RegularDepositNominee(
+                    nomineepercentage: nomineepercentage,
+                    save: _save,
+                    selectedDate: selectedDate,pickedImage: pickedImage,
+                    documentno: documentno,pickeddfImage: pickeddfImage,
+                    fathername: fathername,pickeddbImage: pickeddbImage,
+                    nomineename: nomineename,
+                    selectedrelation: selectedrelation,
+                    selecteddocumenttype: selecteddocumenttype,
+                    mothername: mothername)
                 : SizedBox(),
             NavbarScreenCBS(
               appbool: widget.appbool,
