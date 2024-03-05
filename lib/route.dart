@@ -48,6 +48,7 @@ const customerlistPageRoute = "/customerlistPageRoute";
 const newcustomerregistrationPageRoute = "/newcustomerregistrationPageRoute";
 
 const regularaccountopenPageRoute = "/regularaccountopenPageRoute";
+const accountlistPageRoute = "/accountlistPageRoute";
 
 const cashdeposittransactionPageRoute = "/cashdeposittransactionPageRoute";
 const cashwithdrawtransactionPageRoute = "/cashwithdrawtransactionPageRoute";

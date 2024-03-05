@@ -24,6 +24,7 @@ import 'Screens/authentication/authentication.dart';
 import 'Screens/roles/add_role.dart';
 import 'Screens/roles/my_profile.dart';
 import 'Screens/roles/roles_list.dart';
+import 'ScreensCBS/Account/AccountList.dart';
 import 'ScreensCBS/Account/RegularACOpen.dart';
 import 'ScreensCBS/Account/RegularDepositAccount.dart';
 import 'ScreensCBS/Customer/CustomerList.dart';
@@ -408,6 +409,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navboolcbs,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: accountlistPageRoute,
+            page: () => AccountList(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: existingmemberregistrationPageRoute,

@@ -117,6 +117,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
         'Introducer Name': selectedaccountno['Name'],
         "Account Type": 'Single Account'
       }).then((value) async {
+        Get.offNamed(accountlistPageRoute);
         Get.snackbar(
             "Account Added Successfully.", "Redirecting to Account List Page.",
             snackPosition: SnackPosition.BOTTOM,

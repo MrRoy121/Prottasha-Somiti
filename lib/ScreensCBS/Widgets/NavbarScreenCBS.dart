@@ -688,6 +688,41 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                             ),
                           ),
                           InkWell(
+                            onTap: () {
+                              Get.toNamed(
+                                  accountlistPageRoute);
+                            },
+                            onHover: (val) {
+                              setState(() {
+                                if (val) {
+                                  itemColor10 = AppColor_hover2;
+                                  textColor10 = Colors.white;
+                                } else {
+                                  itemColor10 = AppColor_Blue;
+                                  textColor10 = Colors.black;
+                                }
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: 10, left: 20, right: 20, bottom: 10),
+                              height: 40,
+                              width: 250,
+                              color: itemColor10,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Account List",
+                                    style: TextStyle(
+                                      color: textColor10,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          InkWell(
                             onTap: () {},
                             onHover: (val) {
                               setState(() {
