@@ -39,10 +39,14 @@ class RegularDepositAccount extends StatefulWidget {
   var selectedsamitee;
   var selectedsector;
   Function(int) save;
+  Function(int) setupmembers;
+  Function(int) setupsector;
   RegularDepositAccount(
       {required this.memberss,
         required this.save,
       required this.selectedsector,
+        required this.setupsector,
+        required this.setupmembers,
       required this.selectedmemberss,
       required this.selectedsamitee,
       required this.mmems});
@@ -52,92 +56,6 @@ class RegularDepositAccount extends StatefulWidget {
 }
 
 class _RegularDepositAccountState extends State<RegularDepositAccount> {
-  bool img = false;
-  late Uint8List pickedImage;
-
-  @override
-  void initState() {
-    _loadImage();
-    // TODO: implement initState
-    super.initState();
-    fetch();
-  }
-
-  Future<void> _loadImage() async {
-    ByteData data = await rootBundle.load('Assets/person.jpg');
-    pickedImage = data.buffer.asUint8List();
-  }
-
-  Future<void> fetch() async {widget.memberss =[];
-    await FirebaseFirestore.instance
-        .collection('Customer')
-        .get()
-        .then((querySnapshot) {
-      for (var element in querySnapshot.docs) {
-        widget.memberss.add(Memberss(
-            somiteename: element['Member']["Somitee Name"],
-            somiteeid: element['Member']["Somitee ID"],
-            membertype: element['Member']["Member Type"],
-            occupation: element['Member']["Occupation"],
-            firstname: element['Member']["First Name"],
-            lastname: element['Member']["Last Name"],
-            dead: element['Member']['Dead'],
-            fathername: element['Member']["Father Name"],
-            mothername: element['Member']["Mother Name"],
-            loanpendingamount: element['Member']["Loan Pending Amount"],
-            owndepositamount: element['Member']["Own deposit Amount"],
-            gender: element['Member']["Gender"],
-            religion: element['Member']["Religion"],
-            sts: element['Member']["Status"],
-            nationalid: element['Member']["National ID"],
-            birthregi: element['Member']["Birth Registration"],
-            annualincome: element['Member']["Annual Income"],
-            age: element['Member']["Age"],
-            nodepenndent: element['Member']["No of Dependent"],
-            education: element['Member']["Education"],
-            maritalstatus: element['Member']["Marital Status"],
-            mobilenotype: element['Member']["Mobile No Type"],
-            mobilenno: element['Member']["Mobile No"],
-            presentadd: element['Member']["Present Address"],
-            parmaadd: element['Member']["Permanent Address"],
-            livingperiod: element['Member']["Living Period"],
-            nomaleearner: element['Member']["No Female Earner"],
-            nofemaleearner: element['Member']["No Male Earner"],
-            id: element.id,
-            headfamily: element['Member']["Head Family"],
-            ownhomestead: element['Member']["Own HomeStead"],
-            relationwithhead: element['Member']["Relation With Head"],
-            landdesc: element['Member']["Land Desc"],
-            housedesc: element['Member']["House Desc"],
-            remarks: element['Member']["Remarks"],
-            imageurl: element['Member']["ImageURL"],
-            img: element['Member']["Image"],
-            birthdate: element['Member']["Date Of Birth"].toDate(),
-            sl: 0));
-      }
-    });
-  }
-
-  void _onclear() {
-    setState(() {
-      var ss;
-      img = false;
-      widget.selectedmemberss = ss;
-      widget.mmems = false;
-      widget.selectedsamitee = ss;
-    });
-  }
-
-  Future<void> _selectImage() async {
-    final fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        pickedImage = fromPicker;
-        img = true;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     int _selectedValue = 1;
@@ -151,28 +69,6 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
     bool tablet = false;
     bool mobile = false;
 
-    Future<void> _setupmemberss(int ins) async {
-      widget.selectedmemberss = widget.memberss[ins];
-      await FirebaseFirestore.instance
-          .collection('Somitee')
-          .doc(widget.selectedmemberss.somiteeid)
-          .get()
-          .then((element) {
-        widget.selectedsamitee = Somitee(
-            address: element["Address"],
-            id: element.id,
-            lastupdated: element["Last Edited"].toDate(),
-            name: element["Name"],
-            active: element["Active"],
-            closed: element["Closed"],
-            formation: element["Formation Date"].toDate(),
-            phone: element["Phone"],
-            branch: element["Branch"],
-            sl: 0);
-        widget.mmems = true;
-        setState(() {});
-      });
-    }
 
     if (ResponsiveWidth > 1400) {
       desktop = true;
@@ -270,7 +166,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                       ),
                       InkWell(
                         onTap: () {
-                          if(widget.selectedsector == null && widget.selectedsamitee==null){
+                          if(widget.selectedsector == null && widget.selectedmemberss == null){
                             Get.snackbar(
                                 "Next Page Error","Some Required Field is empty.",
                                 snackPosition: SnackPosition.BOTTOM,
@@ -540,7 +436,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedmemberss = newValue;
-                                        _setupmemberss(
+                                        widget.setupmembers(
                                             widget.memberss.indexOf(newValue!));
                                       });
                                     },
@@ -658,6 +554,8 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedsector = newValue;
+                                        widget.setupsector(
+                                            SectorList.indexOf(newValue!));
                                       });
                                     },
                                     items: SectorList,

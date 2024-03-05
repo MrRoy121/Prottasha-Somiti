@@ -149,22 +149,7 @@ class _RegularDepositKycProfileState extends State<RegularDepositKycProfile> {
                       ),
                       InkWell(
                         onTap: () {
-                          // if(widget.selectedsector == null && widget.selectedsamitee==null){
-                          //   Get.snackbar(
-                          //       "Next Page Error","Some Required Field is empty.",
-                          //       snackPosition: SnackPosition.BOTTOM,
-                          //       colorText: Colors.white,
-                          //       backgroundColor: Colors.red,
-                          //       margin: EdgeInsets.zero,
-                          //       duration: const Duration(milliseconds: 2000),
-                          //       boxShadows: [
-                          //         const BoxShadow(
-                          //             color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-                          //       ],
-                          //       borderRadius: 0);
-                          // }else{
-                             widget.save(6);
-                          // }
+                             widget.save(7);
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,

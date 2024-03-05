@@ -4,15 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:prottashasomit/Constants/values.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../route.dart';
 import '../../Model/member.dart';
+import '../../Model/somitee.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
 import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import 'RegularDepositAccount.dart';
+import 'RegularDepositFinalSubmission.dart';
 import 'RegularDepositIntroducer.dart';
 import 'RegularDepositKYCprofile.dart';
 import 'RegularDepositNominee.dart';
@@ -58,8 +61,94 @@ class _RegularACOpenState extends State<RegularACOpen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    fetch();
+  }
+
+  Future<void> fetch() async {memberss =[];
+  await FirebaseFirestore.instance
+      .collection('Customer')
+      .get()
+      .then((querySnapshot) {
+    for (var element in querySnapshot.docs) {
+     memberss.add(Memberss(
+          somiteename: element['Member']["Somitee Name"],
+          somiteeid: element['Member']["Somitee ID"],
+          membertype: element['Member']["Member Type"],
+          occupation: element['Member']["Occupation"],
+          firstname: element['Member']["First Name"],
+          lastname: element['Member']["Last Name"],
+          dead: element['Member']['Dead'],
+          fathername: element['Member']["Father Name"],
+          mothername: element['Member']["Mother Name"],
+          loanpendingamount: element['Member']["Loan Pending Amount"],
+          owndepositamount: element['Member']["Own deposit Amount"],
+          gender: element['Member']["Gender"],
+          religion: element['Member']["Religion"],
+          sts: element['Member']["Status"],
+          nationalid: element['Member']["National ID"],
+          birthregi: element['Member']["Birth Registration"],
+          annualincome: element['Member']["Annual Income"],
+          age: element['Member']["Age"],
+          nodepenndent: element['Member']["No of Dependent"],
+          education: element['Member']["Education"],
+          maritalstatus: element['Member']["Marital Status"],
+          mobilenotype: element['Member']["Mobile No Type"],
+          mobilenno: element['Member']["Mobile No"],
+          presentadd: element['Member']["Present Address"],
+          parmaadd: element['Member']["Permanent Address"],
+          livingperiod: element['Member']["Living Period"],
+          nomaleearner: element['Member']["No Female Earner"],
+          nofemaleearner: element['Member']["No Male Earner"],
+          id: element.id,
+          headfamily: element['Member']["Head Family"],
+          ownhomestead: element['Member']["Own HomeStead"],
+          relationwithhead: element['Member']["Relation With Head"],
+          landdesc: element['Member']["Land Desc"],
+          housedesc: element['Member']["House Desc"],
+          remarks: element['Member']["Remarks"],
+          imageurl: element['Member']["ImageURL"],
+          img: element['Member']["Image"],
+          birthdate: element['Member']["Date Of Birth"].toDate(),
+          sl: 0));
+    }
+  });
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
+
+    Future<void> _setupmemberss(int ins) async {
+      print(memberss);
+      print(ins);
+      selectedmemberss = memberss[ins];
+      print(selectedmemberss.id);
+      await FirebaseFirestore.instance
+          .collection('Somitee')
+          .doc(selectedmemberss.somiteeid)
+          .get()
+          .then((element) {
+        selectedsamitee = Somitee(
+            address: element["Address"],
+            id: element.id,
+            lastupdated: element["Last Edited"].toDate(),
+            name: element["Name"],
+            active: element["Active"],
+            closed: element["Closed"],
+            formation: element["Formation Date"].toDate(),
+            phone: element["Phone"],
+            branch: element["Branch"],
+            sl: 0);
+        mmems = true;
+        setState(() {});
+      });
+    }
+   void _setupsector(int ins) {
+     selectedsector = SectorList[ins];
+    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -281,8 +370,8 @@ class _RegularACOpenState extends State<RegularACOpen> {
                 ? RegularDepositAccount(
                     memberss: memberss,
                     mmems: mmems,
-                    save: _save,
-                    selectedmemberss: selectedmemberss,
+                    save: _save,setupmembers: _setupmemberss,
+                    selectedmemberss: selectedmemberss,setupsector: _setupsector,
                     selectedsamitee: selectedsamitee,
                     selectedsector: selectedsector,
                   )
@@ -309,16 +398,28 @@ class _RegularACOpenState extends State<RegularACOpen> {
                     selectedintroducertype: selectedintroducertype,
                   )
                 : SizedBox(),
-
             index == 5
                 ? RegularDepositTransactionProfile(
-              save: _save,
-            )
+                    save: _save,
+                  )
                 : SizedBox(),
             index == 6
                 ? RegularDepositKycProfile(
-              save: _save,
-            )
+                    save: _save,
+                  )
+                : SizedBox(),
+            index == 7
+                ? RegularDepositFinalSubmission(
+                    accid: selectedmemberss.id,
+                    acctitle: selectedmemberss.firstname +
+                        ' ' +
+                        selectedmemberss.lastname,
+                    save: _save,
+                    acctype: _selectedValue == 1
+                        ? "Savings Account"
+                        : 'Short Notice Deposits (CBS) (SND (CBS))',
+                    sectorcode: selectedsector,
+                  )
                 : SizedBox(),
             NavbarScreenCBS(
               appbool: widget.appbool,
@@ -327,238 +428,6 @@ class _RegularACOpenState extends State<RegularACOpen> {
           ],
         ),
       ),
-      // body: Column(
-      //   children: [
-      //     Navbar(
-      //       navbool: widget.navbool,
-      //       toglechnage: _toglechnage,
-      //     ),
-      //     SizedBox(width: double.infinity,
-      //       child: Row(
-      //         children: [
-      //           arr[0]
-      //               ? Container(
-      //                   color: Colors.blue,
-      //                   // height: 800,
-      //                   width: 200,
-      //                   child: Column(
-      //                     children: [
-      //                       GestureDetector(
-      //                         onTap: (){
-      //                           Get.to(SamiteeRegistration());
-      //                         },
-      //                         child: Container(
-      //                           padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                           height: 40,
-      //                             width: 200,
-      //                             // color: Colors.grey,
-      //                             child: Text(
-      //                                 "Samitee Registration",
-      //                               style: TextStyle(
-      //                                 fontSize: 12,
-      //                               ),
-      //                             ),
-      //                         ),
-      //                       ),
-      //                       Container(
-      //                           padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                           height: 40,
-      //                           width: 200,
-      //                           child: Text(
-      //                               "Member Registration",
-      //                             style: TextStyle(
-      //                               fontSize: 12,
-      //                             ),
-      //                           )
-      //                       ),
-      //                       Container(
-      //                           padding: EdgeInsets.only(top: 10, left: 20, bottom: 10),
-      //                           height: 40,
-      //                           width: 200,
-      //                           child: Text(
-      //                               "Edit Member",
-      //                             style: TextStyle(
-      //                               fontSize: 12,
-      //                             ),
-      //                           )
-      //                       ),
-      //                       Container(
-      //                         padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                         height: 40,
-      //                         width: 200,
-      //                           child: Row(
-      //                             children: [
-      //                               Text(
-      //                                   "Member Closing",
-      //                                 style: TextStyle(
-      //                                   fontSize: 12,
-      //                                 ),
-      //                               ),
-      //                               SizedBox(width: 55,),
-      //                               Icon(Icons.arrow_forward_ios, size: 12,)
-      //                             ],
-      //                           ),
-      //                       ),
-      //                       Container(
-      //                           padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                           height: 40,
-      //                           width: 200,
-      //                           child: Row(
-      //                             children: [
-      //                               Text(
-      //                                   "Dead Member Information",
-      //                                 style: TextStyle(
-      //                                   fontSize: 12,
-      //                                 ),
-      //                               ),
-      //                               SizedBox(width: 0,),
-      //                               Icon(Icons.arrow_forward_ios, size: 12,)
-      //                             ],
-      //                           )
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 )
-      //               : SizedBox(),
-      //
-      //           arr[1]
-      //               ? Container(
-      //             margin: EdgeInsets.only(left: 180),
-      //             color: Colors.blue,
-      //             // height: 800,
-      //             width: 180,
-      //             child: Column(
-      //               children: [
-      //                 Container(
-      //                     padding: EdgeInsets.only(top: 10, left: 20, bottom: 10),
-      //                     height: 40,
-      //                     width: 180,
-      //                     child: Text(
-      //                       "Deposit",
-      //                       style: TextStyle(
-      //                         fontSize: 12,
-      //                       ),
-      //                     )
-      //                 ),
-      //                 Container(
-      //                   padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                   height: 40,
-      //                   width: 200,
-      //                   child: Row(
-      //                     children: [
-      //                       Text(
-      //                         "Withdraw",
-      //                         style: TextStyle(
-      //                           fontSize: 12,
-      //                         ),
-      //                       ),
-      //                       SizedBox(width: 73,),
-      //                       Icon(Icons.arrow_forward_ios, size: 12,)
-      //                     ],
-      //                   ),
-      //                 ),
-      //                 Container(
-      //                     padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                     height: 40,
-      //                     width: 200,
-      //                     child: Row(
-      //                       children: [
-      //                         Text(
-      //                           "Samitee Transaction",
-      //                           style: TextStyle(
-      //                             fontSize: 12,
-      //                           ),
-      //                         ),
-      //                         SizedBox(width: 10,),
-      //                         Icon(Icons.arrow_forward_ios, size: 12,)
-      //                       ],
-      //                     )
-      //                 ),
-      //               ],
-      //             ),
-      //           )
-      //               : SizedBox(),
-      //
-      //           arr[2]
-      //               ? Container(
-      //             margin: EdgeInsets.only(left: 340),
-      //             color: Colors.blue,
-      //             // height: 800,
-      //             width: 200,
-      //             child: Column(
-      //               children: [
-      //                 Container(
-      //                   padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                   height: 40,
-      //                   width: 200,
-      //                   // color: Colors.grey,
-      //                   child: Row(
-      //                     children: [
-      //                       Text(
-      //                         "Loan Saction",
-      //                         style: TextStyle(
-      //                           fontSize: 12,
-      //                         ),
-      //                       ),
-      //                       SizedBox(width: 75,),
-      //                       Icon(Icons.arrow_forward_ios, size: 12,),
-      //                     ],
-      //                   ),
-      //                 ),
-      //                 Container(
-      //                     padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                     height: 40,
-      //                     width: 200,
-      //                     child: Text(
-      //                       "Loan Disbursement",
-      //                       style: TextStyle(
-      //                         fontSize: 12,
-      //                       ),
-      //                     )
-      //                 ),
-      //                 Container(
-      //                     padding: EdgeInsets.only(top: 10, left: 20, bottom: 10),
-      //                     height: 40,
-      //                     width: 200,
-      //                     child: Row(
-      //                       children: [
-      //                         Text(
-      //                           "Loan Repayment",
-      //                           style: TextStyle(
-      //                             fontSize: 12,
-      //                           ),
-      //                         ),
-      //                         SizedBox(width: 55,),
-      //                         Icon(Icons.arrow_forward_ios, size: 12,)
-      //                       ],
-      //                     )
-      //                 ),
-      //                 Container(
-      //                   padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-      //                   height: 40,
-      //                   width: 200,
-      //                   child: Row(
-      //                     children: [
-      //                       Text(
-      //                         "Reschedule",
-      //                         style: TextStyle(
-      //                           fontSize: 12,
-      //                         ),
-      //                       ),
-      //
-      //                     ],
-      //                   ),
-      //                 ),
-      //
-      //               ],
-      //             ),
-      //           )
-      //               : SizedBox(),
-      //         ],
-      //       ),
-      //     ),
-      //   ],
-      // )
     );
   }
 }

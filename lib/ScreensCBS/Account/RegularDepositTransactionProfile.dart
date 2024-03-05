@@ -113,7 +113,7 @@ class _RegularDepositTransactionProfileState
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          widget.save(7);
+                          widget.save(4);
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,

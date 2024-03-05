@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -33,22 +32,26 @@ import '../Widgets/PersonalExistinginfo.dart';
 import '../Widgets/customerSelection.dart';
 import '../Widgets/memberSelection.dart';
 
-class RegularDepositIntroducer extends StatefulWidget {
-  var selectedintroducertype;
-  var selectedaccountno;
+class RegularDepositFinalSubmission extends StatefulWidget {
   Function(int) save;
-  RegularDepositIntroducer({
-    required this.selectedintroducertype,
-    required this.save,
-    required this.selectedaccountno,
-  });
+  var accid;
+  var acctype;
+  var acctitle;
+  var sectorcode;
+  RegularDepositFinalSubmission(
+      {
+        required this. accid,
+        required this. acctype,
+        required this. acctitle,
+        required this. sectorcode,
+      required this.save,});
 
   @override
-  State<RegularDepositIntroducer> createState() =>
-      _RegularDepositIntroducerState();
+  State<RegularDepositFinalSubmission> createState() => _RegularDepositFinalSubmissionState();
 }
 
-class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
+class _RegularDepositFinalSubmissionState extends State<RegularDepositFinalSubmission> {
+
   @override
   Widget build(BuildContext context) {
     int _selectedValue = 1;
@@ -105,7 +108,7 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                       Padding(
                         padding: EdgeInsets.only(left: ScreenWidth / 38.4),
                         child: Text(
-                          "Nominee Information",
+                          "Final Submission",
                           style: TextStyle(
                             color: AppColor,
                             fontWeight: FontWeight.bold,
@@ -116,7 +119,7 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          widget.save(3);
+                          widget.save(6);
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,
@@ -153,26 +156,11 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                       ),
                       InkWell(
                         onTap: () {
-                          // if(widget.selectedsector == null && widget.selectedsamitee==null){
-                          //   Get.snackbar(
-                          //       "Next Page Error","Some Required Field is empty.",
-                          //       snackPosition: SnackPosition.BOTTOM,
-                          //       colorText: Colors.white,
-                          //       backgroundColor: Colors.red,
-                          //       margin: EdgeInsets.zero,
-                          //       duration: const Duration(milliseconds: 2000),
-                          //       boxShadows: [
-                          //         const BoxShadow(
-                          //             color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-                          //       ],
-                          //       borderRadius: 0);
-                          // }else{
-                             widget.save(5);
-                          // }
+                         // widget.save(106);
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,
-                          width: ScreenWidth / 19.2,
+                          width: 150,
                           color: Colors.green,
                           alignment: Alignment.center,
                           child: Row(
@@ -180,7 +168,7 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.fast_forward,
+                                Icons.drive_folder_upload,
                                 color: Colors.white,
                                 size: ScreenWidth / 109.71,
                               ),
@@ -188,7 +176,7 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                                 width: ScreenWidth / 212,
                               ),
                               Text(
-                                "Next",
+                                "Final Submission",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: ScreenWidth / 109.71),
@@ -217,7 +205,7 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                             children: [
                               RichText(
                                 text: const TextSpan(
-                                  text: 'Introducer Type',
+                                  text: 'Account Type',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14),
                                   children: <TextSpan>[
@@ -235,74 +223,42 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                                 ),
                               ),
                               SizedBox(
-                                width: 50,
+                                width: 110,
                               ),
-                              Container(
-                                  width: 300,
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  decoration: BoxDecoration(
-                                    color: AppColor_greyBorder,
-                                    border: Border.all(color: AppColor_Black),
-                                  ),
-                                  child: DropdownSearch<String>(
-                                    popupProps: PopupProps.menu(
-                                      showSearchBox: true,
-                                      itemBuilder: (BuildContext context,
-                                          String item, bool isSelected) {
-                                        return Container(
-                                          padding: EdgeInsets.all(15),
-                                          child: Text(
-                                            item,
-                                          ),
-                                        );
-                                      },
-                                      fit: FlexFit.loose,
-                                      showSelectedItems: false,
-                                      menuProps: const MenuProps(
-                                        backgroundColor: Colors.white,
-                                        elevation: 100,
-                                      ),
-                                      searchFieldProps: const TextFieldProps(
-                                        style: TextStyle(fontSize: 12),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          hintText: "Search...",
-                                        ),
-                                      ),
-                                    ),
-                                    dropdownDecoratorProps:
-                                        const DropDownDecoratorProps(
-                                      dropdownSearchDecoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent),
-                                        ),
-                                      ),
-                                    ),
-                                    dropdownBuilder: (context, item) {
-                                      if (item == null) {
-                                        return const Text(
-                                          "Enter Type",
-                                        );
-                                      } else {
-                                        return Text(
-                                          item,
-                                        );
-                                      }
-                                    },
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        widget.selectedintroducertype =
-                                            newValue;
-                                      });
-                                    },
-                                    items: IntroducerTypeList,
-                                    selectedItem: widget.selectedintroducertype,
-                                  )),
+                              Text(widget.acctype,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
+                            children: [
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'Operating Instruction',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 110,
+                              ),
+                              Text('Single Account',
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -312,7 +268,7 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                             children: [
                               RichText(
                                 text: const TextSpan(
-                                  text: 'Account No',
+                                  text: 'Currency BDT',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 14),
                                   children: <TextSpan>[
@@ -330,112 +286,9 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                                 ),
                               ),
                               SizedBox(
-                                width: 70,
+                                width: 110,
                               ),
-                              Container(
-                                  width: 300,
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  decoration: BoxDecoration(
-                                    color: AppColor_greyBorder,
-                                    border: Border.all(color: AppColor_Black),
-                                  ),
-                                  child: DropdownSearch<Map<String, String>>(
-                                    popupProps: PopupProps.menu(
-                                      showSearchBox: true,
-                                      itemBuilder: (BuildContext context,
-                                          Map<String, String> item,
-                                          bool isSelected) {
-                                        return Container(
-                                          padding: EdgeInsets.all(15),
-                                          child: Text(
-                                            item['ID']!,
-                                          ),
-                                        );
-                                      },
-                                      fit: FlexFit.loose,
-                                      showSelectedItems: false,
-                                      menuProps: const MenuProps(
-                                        backgroundColor: Colors.white,
-                                        elevation: 100,
-                                      ),
-                                      searchFieldProps: const TextFieldProps(
-                                        style: TextStyle(fontSize: 12),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          hintText: "Search...",
-                                        ),
-                                      ),
-                                    ),
-                                    dropdownDecoratorProps:
-                                        const DropDownDecoratorProps(
-                                      dropdownSearchDecoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent),
-                                        ),
-                                      ),
-                                    ),
-                                    dropdownBuilder: (context, item) {
-                                      if (item == null) {
-                                        return const Text(
-                                          "Enter Account No",
-                                        );
-                                      } else {
-                                        return Text(
-                                          item['ID']!,
-                                        );
-                                      }
-                                    },
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        widget.selectedaccountno = newValue;
-                                      });
-                                    },
-                                    items: IntroducerList,
-                                    selectedItem: widget.selectedaccountno,
-                                  )),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Account Name',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: ScreenWidth / 109.71),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: ' *',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red,
-                                            fontSize: ScreenWidth / 109.71)),
-                                    TextSpan(
-                                        text: ' :',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: ScreenWidth / 109.71)),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              Container(
-                                width: ScreenWidth / 5.12,
-                                height: ScreenWidth / 30.72,
-                                margin: EdgeInsets.only(top: 25),
-                                child: Text(widget.selectedaccountno==null?"":
-                                    widget.selectedaccountno['Name'],
-                                ),
+                              Text("BDT",
                               ),
                             ],
                           ),
@@ -445,11 +298,205 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                         ],
                       ),
                       SizedBox(
-                        width: 550,
+                        width: 150,
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'Account Title',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(widget.acctitle,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'Opening Date',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(widget.acctitle,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'Sector Code',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 14)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(widget.sectorcode,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
+              ],
+            ),
+          ),
+          SizedBox(height: 25,),
+          Container(
+            height: 250,
+            margin: EdgeInsets.only(left: 100, right: 50),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 40,
+                  color: navbarColor,
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 40.0),
+                        child: Text(
+                          "Operator/Signatory Information",
+                          style: TextStyle(
+                            color: AppColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 25,),
+                MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: DataTable(
+                    showCheckboxColumn: false,
+                    border: TableBorder.all(
+                        color: Colors.black26,
+                        width: 1),
+                    headingRowColor:
+                    MaterialStateProperty.all<
+                        Color>(AppColor_Blue),
+                    columns: const [
+                      DataColumn(
+                        label: Text(
+                          'Customer ID',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Customer Name',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text('Account Type',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight:
+                              FontWeight.bold,
+                              color: Colors.white,
+                            )),
+                      ),
+                    ],
+                    rows: [DataRow(
+                      cells: [
+                        DataCell(Text(
+                            widget.accid,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ))),
+                        DataCell(
+                          Text(
+                              widget.acctitle,
+                              style: TextStyle(
+                                fontSize: 12,
+                              )),
+                        ),
+                        DataCell(Text(
+                            widget.acctype,
+                            style: TextStyle(
+                              fontSize: 12,
+                            ))),
+                      ],
+                    )],
+                  ),
+                )
               ],
             ),
           ),
