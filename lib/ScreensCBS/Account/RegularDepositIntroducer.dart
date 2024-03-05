@@ -37,9 +37,10 @@ class RegularDepositIntroducer extends StatefulWidget {
   var selectedintroducertype;
   var selectedaccountno;
   Function(int) save;
+  Function(int) setupintroducertype;Function(int)setupintroducer;
   RegularDepositIntroducer({
     required this.selectedintroducertype,
-    required this.save,
+    required this.save,required this.setupintroducertype,required this.setupintroducer,
     required this.selectedaccountno,
   });
 
@@ -153,22 +154,22 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                       ),
                       InkWell(
                         onTap: () {
-                          // if(widget.selectedsector == null && widget.selectedsamitee==null){
-                          //   Get.snackbar(
-                          //       "Next Page Error","Some Required Field is empty.",
-                          //       snackPosition: SnackPosition.BOTTOM,
-                          //       colorText: Colors.white,
-                          //       backgroundColor: Colors.red,
-                          //       margin: EdgeInsets.zero,
-                          //       duration: const Duration(milliseconds: 2000),
-                          //       boxShadows: [
-                          //         const BoxShadow(
-                          //             color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-                          //       ],
-                          //       borderRadius: 0);
-                          // }else{
+                          if(widget.selectedintroducertype == null || widget.selectedaccountno==null){
+                            Get.snackbar(
+                                "Next Page Error","Some Required Field is empty.",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                                margin: EdgeInsets.zero,
+                                duration: const Duration(milliseconds: 2000),
+                                boxShadows: [
+                                  const BoxShadow(
+                                      color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                                ],
+                                borderRadius: 0);
+                          }else{
                              widget.save(5);
-                          // }
+                           }
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,
@@ -298,6 +299,8 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                                       setState(() {
                                         widget.selectedintroducertype =
                                             newValue;
+                                        widget.setupintroducertype(
+                                            IntroducerTypeList.indexOf(newValue!));
                                       });
                                     },
                                     items: IntroducerTypeList,
@@ -393,6 +396,8 @@ class _RegularDepositIntroducerState extends State<RegularDepositIntroducer> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedaccountno = newValue;
+                                        widget.setupintroducer(
+                                            IntroducerList.indexOf(newValue!));
                                       });
                                     },
                                     items: IntroducerList,

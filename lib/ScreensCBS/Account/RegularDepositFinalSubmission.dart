@@ -156,7 +156,7 @@ class _RegularDepositFinalSubmissionState extends State<RegularDepositFinalSubmi
                       ),
                       InkWell(
                         onTap: () {
-                         // widget.save(106);
+                          widget.save(106);
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,

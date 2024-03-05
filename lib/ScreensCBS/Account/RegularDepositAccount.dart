@@ -166,7 +166,7 @@ class _RegularDepositAccountState extends State<RegularDepositAccount> {
                       ),
                       InkWell(
                         onTap: () {
-                          if(widget.selectedsector == null && widget.selectedmemberss == null){
+                          if(widget.selectedsector == null || widget.selectedmemberss == null){
                             Get.snackbar(
                                 "Next Page Error","Some Required Field is empty.",
                                 snackPosition: SnackPosition.BOTTOM,

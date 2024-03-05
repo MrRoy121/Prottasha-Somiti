@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:prottashasomit/Constants/values.dart';
+import 'package:prottashasomit/helpers/auth_service.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../route.dart';
 import '../../Model/member.dart';
@@ -34,7 +37,8 @@ class RegularACOpen extends StatefulWidget {
 class _RegularACOpenState extends State<RegularACOpen> {
   int index = 0;
   int _selectedValue = 1;
-  bool img = false;
+  bool img = false, dfimg = false, dbimg = false;
+
   List<Memberss> memberss = [];
   bool mmems = false;
   var selectedmemberss;
@@ -43,19 +47,90 @@ class _RegularACOpenState extends State<RegularACOpen> {
   var selectedintroducertype;
   var selectedaccountno;
   var selectedsector;
-  var nomineename;
-  var fathername;
-  var mothername;
+  var nomineename = TextEditingController();
+  var fathername = TextEditingController();
+  var mothername = TextEditingController();
   var pickedImage;
   var pickeddfImage;
   var pickeddbImage;
   DateTime selectedDate = DateTime.now();
-  var documentno;
-  var nomineepercentage;
+  var documentno = TextEditingController();
+  var nomineepercentage = TextEditingController();
   var selectedrelation;
   var selecteddocumenttype;
 
-  void _save(int indx) {
+  void _save(int indx) async {
+    if (indx == 106) {
+      const _chars = '1234567890';
+      Random _rnd = Random();
+      String getRandomString(int length) =>
+          String.fromCharCodes(Iterable.generate(
+              length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+      String memberid = getRandomString(10);
+
+      final photoRef =
+          FirebaseStorage.instance.ref("NomineeImage/$memberid.jpeg");
+      final photoRef2 =
+          FirebaseStorage.instance.ref("NomineeImage/df$memberid.jpeg");
+      final photoRef3 =
+          FirebaseStorage.instance.ref("NomineeImage/db$memberid.jpeg");
+      UploadTask uploadTask = photoRef.putData(
+          pickedImage,
+          SettableMetadata(
+            contentType: "image/jpeg",
+          ));
+      UploadTask uploadTask2 = photoRef2.putData(
+          pickeddfImage,
+          SettableMetadata(
+            contentType: "image/jpeg",
+          ));
+      UploadTask uploadTask3 = photoRef3.putData(
+          pickeddbImage,
+          SettableMetadata(
+            contentType: "image/jpeg",
+          ));
+      String url = await (await uploadTask).ref.getDownloadURL();
+      String url2 = await (await uploadTask2).ref.getDownloadURL();
+      String url3 = await (await uploadTask3).ref.getDownloadURL();
+      FirebaseFirestore.instance.collection('Account').doc(memberid).set({
+        'Nominee Image': url,
+        'Document Front': url2,
+        'Document Back': url3,
+        'Status': false,
+        'Approve': false,
+        'Approve Date': DateTime.now(),
+        'Request Date': DateTime.now(),
+        "Requested By": AuthService.to.user?.name,
+        'Approve By': '',
+        'Member': selectedmemberss.toJson(),
+        "Sector": selectedsector,
+        "Relation": selectedrelation,
+        "Nominee Name": nomineename.text,
+        'Father Name': fathername.text,
+        'Mother Name': mothername.text,
+        'Nominee Percentage': nomineepercentage.text,
+        'Date Of Birth': selectedDate,
+        'Document No': documentno.text,
+        'Document Type': selecteddocumenttype,
+        'Introducer Type': selectedintroducertype,
+        'Introducer No': selectedaccountno['ID'],
+        'Introducer Name': selectedaccountno['Name'],
+        "Account Type": 'Single Account'
+      }).then((value) async {
+        Get.snackbar(
+            "Account Added Successfully.", "Redirecting to Account List Page.",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.green,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      }).catchError((error) => print("Failed to add user: $error"));
+    }
     index = indx;
     setState(() {});
   }
@@ -66,66 +141,63 @@ class _RegularACOpenState extends State<RegularACOpen> {
     fetch();
   }
 
-  Future<void> fetch() async {memberss =[];
-  await FirebaseFirestore.instance
-      .collection('Customer')
-      .get()
-      .then((querySnapshot) {
-    for (var element in querySnapshot.docs) {
-     memberss.add(Memberss(
-          somiteename: element['Member']["Somitee Name"],
-          somiteeid: element['Member']["Somitee ID"],
-          membertype: element['Member']["Member Type"],
-          occupation: element['Member']["Occupation"],
-          firstname: element['Member']["First Name"],
-          lastname: element['Member']["Last Name"],
-          dead: element['Member']['Dead'],
-          fathername: element['Member']["Father Name"],
-          mothername: element['Member']["Mother Name"],
-          loanpendingamount: element['Member']["Loan Pending Amount"],
-          owndepositamount: element['Member']["Own deposit Amount"],
-          gender: element['Member']["Gender"],
-          religion: element['Member']["Religion"],
-          sts: element['Member']["Status"],
-          nationalid: element['Member']["National ID"],
-          birthregi: element['Member']["Birth Registration"],
-          annualincome: element['Member']["Annual Income"],
-          age: element['Member']["Age"],
-          nodepenndent: element['Member']["No of Dependent"],
-          education: element['Member']["Education"],
-          maritalstatus: element['Member']["Marital Status"],
-          mobilenotype: element['Member']["Mobile No Type"],
-          mobilenno: element['Member']["Mobile No"],
-          presentadd: element['Member']["Present Address"],
-          parmaadd: element['Member']["Permanent Address"],
-          livingperiod: element['Member']["Living Period"],
-          nomaleearner: element['Member']["No Female Earner"],
-          nofemaleearner: element['Member']["No Male Earner"],
-          id: element.id,
-          headfamily: element['Member']["Head Family"],
-          ownhomestead: element['Member']["Own HomeStead"],
-          relationwithhead: element['Member']["Relation With Head"],
-          landdesc: element['Member']["Land Desc"],
-          housedesc: element['Member']["House Desc"],
-          remarks: element['Member']["Remarks"],
-          imageurl: element['Member']["ImageURL"],
-          img: element['Member']["Image"],
-          birthdate: element['Member']["Date Of Birth"].toDate(),
-          sl: 0));
-    }
-  });
+  Future<void> fetch() async {
+    memberss = [];
+    await FirebaseFirestore.instance
+        .collection('Customer')
+        .get()
+        .then((querySnapshot) {
+      for (var element in querySnapshot.docs) {
+        memberss.add(Memberss(
+            somiteename: element['Member']["Somitee Name"],
+            somiteeid: element['Member']["Somitee ID"],
+            membertype: element['Member']["Member Type"],
+            occupation: element['Member']["Occupation"],
+            firstname: element['Member']["First Name"],
+            lastname: element['Member']["Last Name"],
+            dead: element['Member']['Dead'],
+            fathername: element['Member']["Father Name"],
+            mothername: element['Member']["Mother Name"],
+            loanpendingamount: element['Member']["Loan Pending Amount"],
+            owndepositamount: element['Member']["Own deposit Amount"],
+            gender: element['Member']["Gender"],
+            religion: element['Member']["Religion"],
+            sts: element['Member']["Status"],
+            nationalid: element['Member']["National ID"],
+            birthregi: element['Member']["Birth Registration"],
+            annualincome: element['Member']["Annual Income"],
+            age: element['Member']["Age"],
+            nodepenndent: element['Member']["No of Dependent"],
+            education: element['Member']["Education"],
+            maritalstatus: element['Member']["Marital Status"],
+            mobilenotype: element['Member']["Mobile No Type"],
+            mobilenno: element['Member']["Mobile No"],
+            presentadd: element['Member']["Present Address"],
+            parmaadd: element['Member']["Permanent Address"],
+            livingperiod: element['Member']["Living Period"],
+            nomaleearner: element['Member']["No Female Earner"],
+            nofemaleearner: element['Member']["No Male Earner"],
+            id: element.id,
+            headfamily: element['Member']["Head Family"],
+            ownhomestead: element['Member']["Own HomeStead"],
+            relationwithhead: element['Member']["Relation With Head"],
+            landdesc: element['Member']["Land Desc"],
+            housedesc: element['Member']["House Desc"],
+            remarks: element['Member']["Remarks"],
+            imageurl: element['Member']["ImageURL"],
+            img: element['Member']["Image"],
+            birthdate: element['Member']["Date Of Birth"].toDate(),
+            sl: 0));
+      }
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
 
     Future<void> _setupmemberss(int ins) async {
-      print(memberss);
-      print(ins);
       selectedmemberss = memberss[ins];
-      print(selectedmemberss.id);
       await FirebaseFirestore.instance
           .collection('Somitee')
           .doc(selectedmemberss.somiteeid)
@@ -146,9 +218,70 @@ class _RegularACOpenState extends State<RegularACOpen> {
         setState(() {});
       });
     }
-   void _setupsector(int ins) {
-     selectedsector = SectorList[ins];
+
+    void _setupsector(int ins) {
+      selectedsector = SectorList[ins];
     }
+
+    void _setuprelation(int ins) {
+      selectedrelation = RelationList[ins];
+    }
+
+    void _setupdocumenttype(int ins) {
+      selecteddocumenttype = DocumentList[ins];
+    }
+    void _setupintroducertype(int ins) {
+      selectedintroducertype = IntroducerTypeList[ins];
+    }
+
+    void _setupintroducer(int ins) {
+      selectedaccountno = IntroducerList[ins];
+    }
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2101),
+      );
+
+      if (picked != null && picked != selectedDate) {
+        setState(() {
+          selectedDate = picked;
+        });
+      }
+    }
+
+    Future<void> _selectNomineeImage() async {
+      final fromPicker = await ImagePickerWeb.getImageAsBytes();
+      if (fromPicker != null) {
+        setState(() {
+          pickedImage = fromPicker;
+          img = true;
+        });
+      }
+    }
+
+    Future<void> _selectdocumentfrontimage() async {
+      final fromPicker = await ImagePickerWeb.getImageAsBytes();
+      if (fromPicker != null) {
+        setState(() {
+          pickeddfImage = fromPicker;
+          dfimg = true;
+        });
+      }
+    }
+
+    Future<void> _selectdocumentbackImage() async {
+      final fromPicker = await ImagePickerWeb.getImageAsBytes();
+      if (fromPicker != null) {
+        setState(() {
+          pickeddbImage = fromPicker;
+          dbimg = true;
+        });
+      }
+    }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -370,8 +503,10 @@ class _RegularACOpenState extends State<RegularACOpen> {
                 ? RegularDepositAccount(
                     memberss: memberss,
                     mmems: mmems,
-                    save: _save,setupmembers: _setupmemberss,
-                    selectedmemberss: selectedmemberss,setupsector: _setupsector,
+                    save: _save,
+                    setupmembers: _setupmemberss,
+                    selectedmemberss: selectedmemberss,
+                    setupsector: _setupsector,
                     selectedsamitee: selectedsamitee,
                     selectedsector: selectedsector,
                   )
@@ -383,7 +518,16 @@ class _RegularACOpenState extends State<RegularACOpen> {
                     selectedDate: selectedDate,
                     pickedImage: pickedImage,
                     documentno: documentno,
+                    setuprelation: _setuprelation,
+                    setupdocumenttype: _setupdocumenttype,
                     pickeddfImage: pickeddfImage,
+                    selectNomineeImage: _selectNomineeImage,
+                    dbimg: dbimg,
+                    selectdocumentfrontimage: _selectdocumentfrontimage,
+                    dfimg: dfimg,
+                    selectdocumentbackImage: _selectdocumentbackImage,
+                    img: img,
+                    selectDate: _selectDate,
                     fathername: fathername,
                     pickeddbImage: pickeddbImage,
                     nomineename: nomineename,
@@ -394,7 +538,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
             index == 4
                 ? RegularDepositIntroducer(
                     save: _save,
-                    selectedaccountno: selectedaccountno,
+                    selectedaccountno: selectedaccountno,setupintroducer: _setupintroducer,setupintroducertype: _setupintroducertype,
                     selectedintroducertype: selectedintroducertype,
                   )
                 : SizedBox(),

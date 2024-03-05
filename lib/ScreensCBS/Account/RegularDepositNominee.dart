@@ -45,10 +45,26 @@ class RegularDepositNominee extends StatefulWidget {
   var pickeddfImage;
   var pickeddbImage;
   Function(int) save;
+  bool img, dfimg, dbimg;
+  Function(int) setuprelation;
+  Function(BuildContext) selectDate;
+  Function(int) setupdocumenttype;
+  Function() selectdocumentbackImage;
+  Function() selectNomineeImage;
+  Function() selectdocumentfrontimage;
   RegularDepositNominee(
       {required this.nomineepercentage,
       required this.save,
+      required this.img,
+      required this.selectNomineeImage,
+      required this.selectdocumentfrontimage,
+      required this.dfimg,
+      required this.selectdocumentbackImage,
+      required this.dbimg,
       required this.selectedDate,
+      required this.selectDate,
+      required this.setuprelation,
+      required this.setupdocumenttype,
       required this.pickedImage,
       required this.pickeddbImage,
       required this.pickeddfImage,
@@ -64,53 +80,6 @@ class RegularDepositNominee extends StatefulWidget {
 }
 
 class _RegularDepositNomineeState extends State<RegularDepositNominee> {
-  bool img = false, dfimg = false, dbimg = false;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: widget.selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != widget.selectedDate) {
-      setState(() {
-        widget.selectedDate = picked;
-      });
-    }
-  }
-
-  Future<void> _selectNomineeImage() async {
-    final fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        widget.pickedImage = fromPicker;
-        img = true;
-      });
-    }
-  }
-
-  Future<void> _selectdocumentfrontimage() async {
-    final fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        widget.pickeddfImage = fromPicker;
-        dfimg = true;
-      });
-    }
-  }
-
-  Future<void> _selectdocumentbackImage() async {
-    final fromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (fromPicker != null) {
-      setState(() {
-        widget.pickeddbImage = fromPicker;
-        dbimg = true;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     int _selectedValue = 1;
@@ -120,23 +89,6 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
     double ResponsiveHeight =
         MediaQuery.of(context as BuildContext).size.height;
 
-    bool desktop = false;
-    bool tablet = false;
-    bool mobile = false;
-
-    if (ResponsiveWidth > 1400) {
-      desktop = true;
-      tablet = false;
-      mobile = false;
-    } else if (ResponsiveWidth > 540) {
-      tablet = true;
-      desktop = false;
-      mobile = false;
-    } else {
-      mobile = true;
-      desktop = false;
-      tablet = false;
-    }
     return Container(
       margin: EdgeInsets.only(top: 100),
       child: Column(
@@ -215,22 +167,33 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                       ),
                       InkWell(
                         onTap: () {
-                          // if(widget.selectedsector == null && widget.selectedsamitee==null){
-                          //   Get.snackbar(
-                          //       "Next Page Error","Some Required Field is empty.",
-                          //       snackPosition: SnackPosition.BOTTOM,
-                          //       colorText: Colors.white,
-                          //       backgroundColor: Colors.red,
-                          //       margin: EdgeInsets.zero,
-                          //       duration: const Duration(milliseconds: 2000),
-                          //       boxShadows: [
-                          //         const BoxShadow(
-                          //             color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-                          //       ],
-                          //       borderRadius: 0);
-                          // }else{
-                          widget.save(4);
-                          // }
+                          if (widget.selectedrelation == null ||
+                              widget.selecteddocumenttype == null ||
+                              widget.pickedImage == null ||
+                              widget.pickeddbImage == null ||
+                              widget.pickeddfImage == null ||
+                              widget.fathername.text == '' ||
+                              widget.nomineename.text == '' ||
+                              widget.nomineepercentage.text == '' ||
+                              widget.mothername.text == '' ||
+                              widget.documentno.text == '') {
+                            Get.snackbar("Next Page Error",
+                                "Some Required Field is empty.",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                                margin: EdgeInsets.zero,
+                                duration: const Duration(milliseconds: 2000),
+                                boxShadows: [
+                                  const BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(-100, 0),
+                                      blurRadius: 20),
+                                ],
+                                borderRadius: 0);
+                          } else {
+                            widget.save(4);
+                          }
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,
@@ -359,6 +322,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedrelation = newValue;
+                                        widget.setuprelation(
+                                            RelationList.indexOf(newValue!));
                                       });
                                     },
                                     items: RelationList,
@@ -402,8 +367,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.fathername,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 5),
                                   ),
                                 ),
                               ),
@@ -442,7 +407,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                 width: ScreenWidth / 5.12,
                                 height: ScreenWidth / 30.72,
                                 child: InkWell(
-                                  onTap: () => _selectDate(context),
+                                  onTap: () => widget.selectDate(context),
                                   child: AbsorbPointer(
                                     child: TextField(
                                       decoration: InputDecoration(
@@ -557,6 +522,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selecteddocumenttype = newValue;
+                                        widget.setupdocumenttype(
+                                            DocumentList.indexOf(newValue!));
                                       });
                                     },
                                     items: DocumentList,
@@ -607,8 +574,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.nomineename,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 5),
                                   ),
                                 ),
                               ),
@@ -650,8 +617,55 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.mothername,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 5),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Nominee Percentage',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: ScreenWidth / 109.71),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: ScreenWidth / 109.71)),
+                                    TextSpan(
+                                        text: ' :',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: ScreenWidth / 109.71)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 19.2,
+                              ),
+                              SizedBox(
+                                width: ScreenWidth / 5.12,
+                                height: ScreenWidth / 30.72,
+                                child: TextField(
+                                  controller: widget.nomineepercentage,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 5),
                                   ),
                                 ),
                               ),
@@ -693,8 +707,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                   controller: widget.documentno,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 2),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 5),
                                   ),
                                 ),
                               ),
@@ -797,8 +811,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                                                 .circular(5.0),
                                                       ),
                                                     ),
-                                                    onPressed:
-                                                        _selectNomineeImage,
+                                                    onPressed: widget
+                                                        .selectNomineeImage,
                                                     child: const Text(
                                                       "Select",
                                                       style: TextStyle(
@@ -868,7 +882,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                 ),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
-                              child: img
+                              child: widget.img
                                   ? Image.memory(
                                       widget.pickedImage,
                                       fit: BoxFit.cover,
@@ -973,8 +987,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                                                 .circular(5.0),
                                                       ),
                                                     ),
-                                                    onPressed:
-                                                        _selectdocumentfrontimage,
+                                                    onPressed: widget
+                                                        .selectdocumentfrontimage,
                                                     child: const Text(
                                                       "Select",
                                                       style: TextStyle(
@@ -1044,7 +1058,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                 ),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
-                              child: dfimg
+                              child: widget.dfimg
                                   ? Image.memory(
                                       widget.pickeddfImage,
                                       fit: BoxFit.cover,
@@ -1150,8 +1164,8 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                                                 .circular(5.0),
                                                       ),
                                                     ),
-                                                    onPressed:
-                                                        _selectdocumentbackImage,
+                                                    onPressed: widget
+                                                        .selectdocumentbackImage,
                                                     child: const Text(
                                                       "Select",
                                                       style: TextStyle(
@@ -1221,7 +1235,7 @@ class _RegularDepositNomineeState extends State<RegularDepositNominee> {
                                 ),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
-                              child: dbimg
+                              child: widget.dbimg
                                   ? Image.memory(
                                       widget.pickeddbImage,
                                       fit: BoxFit.cover,
