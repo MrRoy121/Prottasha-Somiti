@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,9 +16,11 @@ import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
+import '../../Model/account.dart';
 import '../../Model/member.dart';
 import '../../ScreensMFS/Transaction/widget/Image.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
+import '../../helpers/auth_service.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
@@ -37,13 +40,20 @@ class CashWithdraw extends StatefulWidget {
 }
 
 class _CashWithdrawState extends State<CashWithdraw> {
-  List<Memberss> memberss = [];
-  bool mmems = false;
-  var selectedmemberss;
+  List<Accountss> memberss = [];
+  var selectedaccount;
   var sselectedmemberss;
+  DateTime selectedDate = DateTime.now();
   var selectedsamitee;
+  double disburse = 0;
+  var chequeseries = TextEditingController();
+  var withdrawamount = TextEditingController();
+  var chequeno = TextEditingController();
+  var amountinwords = TextEditingController();
+  var remarks = TextEditingController(text: "Cash Withdraw");
   var selectedcustomertype;
 
+  bool mmems = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -51,55 +61,40 @@ class _CashWithdrawState extends State<CashWithdraw> {
     fetch();
   }
 
-
   Future<void> fetch() async {
+    int s = 0;
     await FirebaseFirestore.instance
-        .collection('Member')
+        .collection('Account')
         .get()
         .then((querySnapshot) {
       for (var element in querySnapshot.docs) {
-        if (element["Status"]) {
-          memberss.add(Memberss(
-              somiteename: element["Somitee Name"],
-              somiteeid: element["Somitee ID"],
-              membertype: element["Member Type"],
-              occupation: element["Occupation"],
-              firstname: element["First Name"],
-              dead: element['Dead'],
-              lastname: element["Last Name"],
-              fathername: element["Father Name"],
-              mothername: element["Mother Name"],
-              gender: element["Gender"],
-              religion: element["Religion"],
-              nationalid: element["National ID"],
-              loanpendingamount: element["Loan Pending Amount"],
-              owndepositamount: element["Own deposit Amount"],
-              birthregi: element["Birth Registration"],
-              annualincome: element["Annual Income"],
-              sts: element["Status"],
-              age: element["Age"],
-              nodepenndent: element["No of Dependent"],
-              education: element["Education"],
-              maritalstatus: element["Marital Status"],
-              mobilenotype: element["Mobile No Type"],
-              mobilenno: element["Mobile No"],
-              presentadd: element["Present Address"],
-              parmaadd: element["Parmanent Address"],
-              livingperiod: element["Living Period"],
-              nomaleearner: element["No Female Earner"],
-              nofemaleearner: element["No Male Earner"],
-              id: element.id,
-              headfamily: element["Head Family"],
-              ownhomestead: element["Own HomeStead"],
-              relationwithhead: element["Relation With Head"],
-              landdesc: element["Land Desc"],
-              housedesc: element["House Desc"],
-              remarks: element["Remarks"],
-              imageurl: element["ImageURL"],
-              img: element["Image"],
-              birthdate: element["Date Of Birth"].toDate(),
-              sl: 0));
-        }
+        memberss.add(Accountss(
+            introducertype: element["Introducer Type"],
+            member: element["Member"],
+            introducerno: element["Introducer No"],
+            nomineename: element["Nominee Name"],
+            nomineepercentage: element["Nominee Percentage"],
+            accounttype: element["Account Type"],
+            nomineeimage: element["Nominee Image"],
+            relation: element["Relation"],
+            introducername: element["Introducer Name"],
+            requestdate: element["Request Date"].toDate(),
+            requestedby: element["Requested By"],
+            approvedby: element["Approve By"],
+            sector: element["Sector"],
+            documenttype: element["Document Type"],
+            fathername: element["Father Name"],
+            documentno: element["Document No"],
+            docmentfront: element["Document Front"],
+            documentback: element["Document Back"],
+            dateofbirth: element["Date Of Birth"].toDate(),
+            mothername: element["Mother Name"],
+            id: element.id,
+            approvedate: element["Approve Date"].toDate(),
+            status: element["Status"],
+            approve: element["Approve"],
+            sl: s));
+        s++;
       }
     });
   }
@@ -107,19 +102,80 @@ class _CashWithdrawState extends State<CashWithdraw> {
   void _onclear() {
     setState(() {
       var ss;
-      selectedmemberss = ss;
-      selectedmemberss = ss;
+      selectedaccount = ss;
       mmems = false;
       selectedsamitee = ss;
     });
   }
 
-  void _save() async {}
-
+  void _save() async {
+    if (selectedaccount == null ||
+        chequeno.text == "" ||
+        chequeseries.text == "" ||
+        withdrawamount.text == "" ||
+        amountinwords.text == "") {
+      Get.snackbar(
+          "Balance Withdraw Request Failed.", "Some Required Fields are Empty",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            const BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      FirebaseFirestore.instance.collection('Cash Withdraw').add({
+        'Member Name': selectedaccount.member['First Name'] +
+            ' ' +
+            selectedaccount.member['Last Name'],
+        'Member ID': selectedaccount.member['ID'],
+        "Requested By":
+            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+        "Approved By": '',
+        "Approve": false,
+        "Cheque No": chequeno.text,
+        'Cheque Series': chequeseries.text,
+        'Withdraw Amount': double.parse(withdrawamount.text),
+        'Amount In Words': amountinwords.text,
+        'Disbursed Amount': disburse,
+        'Requested Date': DateTime.now(),
+        'Cheque Date': selectedDate,
+        'Approve Date': DateTime.now(),
+        'Status': false,
+        'Remarks': remarks.text,
+      }).then((value) async {
+        await FirebaseFirestore.instance
+            .collection('Member')
+            .doc(selectedaccount.member['ID'])
+            .update({
+          'Loan Pending Amount':
+              FieldValue.increment(-double.parse(withdrawamount.text)),
+        }).then((value) {
+       //   Get.offNamed(loandisbursementlistPageRoute);
+          Get.snackbar("Cash Withdraw Successful.",
+              "Redirecting to Cash Withdraw List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(-100, 0),
+                    blurRadius: 20),
+              ],
+              borderRadius: 0);
+        });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int _selectedValue = 1;
     var ScreenWidth = MediaQuery.of(context).size.width;
     var ScreenHeight = MediaQuery.of(context).size.height;
 
@@ -127,52 +183,21 @@ class _CashWithdrawState extends State<CashWithdraw> {
     double ResponsiveHeight =
         MediaQuery.of(context as BuildContext).size.height;
 
-    bool desktop = false;
-    bool tablet = false;
-    bool mobile = false;
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2101),
+      );
 
-    Future<void> _setupmemberss(int ins) async {
-      selectedmemberss = memberss[ins];
-      await FirebaseFirestore.instance
-          .collection('Somitee')
-          .doc(selectedmemberss.somiteeid)
-          .get()
-          .then((element) {
-        selectedsamitee = Somitee(
-            address: element["Address"],
-            id: element.id,
-            lastupdated: element["Last Edited"].toDate(),
-            name: element["Name"],
-            active: element["Active"],
-            closed: element["Closed"],
-            formation: element["Formation Date"].toDate(),
-            phone: element["Phone"],
-            branch: element["Branch"],
-            sl: 0);
-        mmems = true;
-        setState(() {});
-      });
+      if (picked != null && picked != selectedDate) {
+        setState(() {
+          selectedDate = picked;
+        });
+      }
     }
 
-    void _setupcustomertype(int ins) {
-      setState(() {
-        selectedcustomertype = CustomerTypeList[ins];
-      });
-    }
-
-    if (ResponsiveWidth > 1400) {
-      desktop = true;
-      tablet = false;
-      mobile = false;
-    } else if (ResponsiveWidth > 540) {
-      tablet = true;
-      desktop = false;
-      mobile = false;
-    } else {
-      mobile = true;
-      desktop = false;
-      tablet = false;
-    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -215,7 +240,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                 padding:
                                     EdgeInsets.only(left: ScreenWidth / 38.4),
                                 child: Text(
-                                  "Cash Deposit",
+                                  "Cash Withdraw",
                                   style: TextStyle(
                                     color: AppColor,
                                     fontWeight: FontWeight.bold,
@@ -315,9 +340,10 @@ class _CashWithdrawState extends State<CashWithdraw> {
                         Container(
                           alignment: Alignment.center,
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0, left: 80, right: 50),
+                            padding: const EdgeInsets.only(
+                                top: 20.0, left: 80, right: 50),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,22 +352,166 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                   children: [
                                     Row(
                                       children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Select Account No',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<Accountss>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        Accountss item,
+                                                        bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item.id,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                    const TextFieldProps(
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                                  const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Account No",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item.id,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                selectedaccount = newValue;
+                                                mmems = true;
+                                                await FirebaseFirestore.instance
+                                                    .collection('Member')
+                                                    .doc(selectedaccount
+                                                        .member['ID'])
+                                                    .get()
+                                                    .then((firstDocument) {
+                                                  setState(() {
+                                                    disburse = firstDocument[
+                                                        "Loan Pending Amount"];
+                                                  });
+                                                });
+                                              },
+                                              items: memberss,
+                                              selectedItem: selectedaccount,
+                                            )),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
                                         Text(
+                                          "Account Type: ",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 80,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            mmems
+                                                ? selectedaccount.accounttype
+                                                : "",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
                                           "Customer Name: ",
                                           style: TextStyle(
                                             fontSize: 14,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 10,
+                                          width: 60,
                                         ),
                                         SizedBox(
-                                          width: 200,
+                                          width: 300,
                                           child: Text(
                                             mmems
-                                                ? selectedmemberss.firstname +
+                                                ? selectedaccount
+                                                        .member['First Name'] +
                                                     ' ' +
-                                                    selectedmemberss.lastname
+                                                    selectedaccount
+                                                        .member['Last Name']
                                                 : "",
                                           ),
                                         ),
@@ -352,21 +522,78 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     ),
                                     Row(
                                       children: [
-                                        Text(
-                                          "Mother Name :",
+                                        const Text(
+                                          "Cheque Series :",
                                           style: TextStyle(
                                             fontSize: 14,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 15,
+                                          width: 70,
                                         ),
                                         SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? selectedmemberss.mothername
-                                                : "",
+                                          width: 300,
+                                          child: TextField(
+                                            controller: chequeseries,
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Cheque Date :",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 80,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: InkWell(
+                                            onTap: () => _selectDate(context),
+                                            child: AbsorbPointer(
+                                              child: TextField(
+                                                decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  border:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.grey),
+                                                  ),
+                                                  hintText: selectedDate != null
+                                                      ? "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}"
+                                                      : "Select a date",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        ScreenWidth / 109.71,
+                                                  ),
+                                                  suffixIcon: Icon(
+                                                      Icons
+                                                          .calendar_month_sharp,
+                                                      size:
+                                                          ScreenWidth / 109.71,
+                                                      color: Colors.grey),
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -377,20 +604,20 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Religion :",
+                                          "Current Balance :",
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 10,
+                                          width: 60,
                                         ),
                                         SizedBox(
-                                          width: 200,
+                                          width: 300,
                                           child: Text(
                                             mmems
-                                                ? selectedmemberss.religion
+                                                ? disburse.toStringAsFixed(2)
                                                 : '',
                                           ),
                                         ),
@@ -402,69 +629,33 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Birth Certificate No :",
+                                          "Withdraw Amount :",
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 10,
+                                          width: 45,
                                         ),
                                         SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? selectedmemberss.birthregi
-                                                : '',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Age :",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems ? selectedmemberss.age : '',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Educational Qualifiction :",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? selectedmemberss.education
-                                                : '',
+                                          width: 300,
+                                          child: TextField(
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            controller: withdrawamount,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -472,7 +663,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                   ],
                                 ),
                                 SizedBox(
-                                  width: 20,
+                                  width: 250,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -482,21 +673,24 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Father Name :",
+                                          "Customer ID: ",
                                           style: TextStyle(
                                             fontSize: 14,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 12,
+                                          width: 30,
                                         ),
                                         SizedBox(
-                                          width: 200,
+                                          width: 300,
                                           child: Text(
                                             mmems
-                                                ? selectedmemberss.fathername
-                                                : '',
+                                                ? selectedaccount.member['ID']
+                                                : "",
                                           ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
                                         ),
                                       ],
                                     ),
@@ -506,21 +700,25 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Gender :",
+                                          "Mobile No: ",
                                           style: TextStyle(
                                             fontSize: 14,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 12,
+                                          width: 43,
                                         ),
                                         SizedBox(
-                                          width: 200,
+                                          width: 300,
                                           child: Text(
                                             mmems
-                                                ? selectedmemberss.gender
-                                                : '',
+                                                ? selectedaccount
+                                                    .member['Mobile No']
+                                                : "",
                                           ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
                                         ),
                                       ],
                                     ),
@@ -530,21 +728,37 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     Row(
                                       children: [
                                         Text(
-                                          "National ID :",
+                                          "Cheque No :",
                                           style: TextStyle(
                                             fontSize: 14,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 12,
+                                          width: 35,
                                         ),
                                         SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? selectedmemberss.nationalid
-                                                : '',
+                                          width: 300,
+                                          child: TextField(
+                                            controller: chequeno,
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
                                           ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
                                         ),
                                       ],
                                     ),
@@ -554,75 +768,72 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Date Of Birth :",
+                                          "Remarks :",
                                           style: TextStyle(
                                             fontSize: 14,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 12,
+                                          width: 50,
                                         ),
                                         SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? DateFormat.yMMMMd().format(
-                                                    selectedmemberss.birthdate)
-                                                : '',
+                                          width: 300,
+                                          child: TextField(
+                                            controller: remarks,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.grey[400],
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
                                           ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
                                         ),
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 20,
+                                      height: 120,
                                     ),
                                     Row(
                                       children: [
                                         Text(
-                                          "No of Dependable Members :",
+                                          "Amount In Words :",
                                           style: TextStyle(
                                             fontSize: 14,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 12,
+                                          width: 10,
                                         ),
                                         SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? selectedmemberss.nodepenndent
-                                                : '',
+                                          width: 300,
+                                          child: TextField(
+                                            controller: amountinwords,
+                                            style: TextStyle(fontSize: 16),
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
                                           ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
                                         ),
                                       ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Marital Status :",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            mmems
-                                                ? selectedmemberss.maritalstatus
-                                                : '',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
                                     ),
                                   ],
                                 )

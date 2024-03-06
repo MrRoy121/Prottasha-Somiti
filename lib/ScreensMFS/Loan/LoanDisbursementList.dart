@@ -312,7 +312,13 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                           : Row(
                                               children: [
                                                 InkWell(
-                                                  onTap: () {
+                                                  onTap: () async {
+                                                    await FirebaseFirestore.instance
+                                                        .collection('Member')
+                                                        .doc(snapshot.data[index].memberid)
+                                                        .update({
+                                                      'Loan Pending Amount': FieldValue.increment(snapshot.data[index].disburseamount),
+                                                    });
                                                     FirebaseFirestore.instance
                                                         .collection(
                                                             'LoanDisbursed')
