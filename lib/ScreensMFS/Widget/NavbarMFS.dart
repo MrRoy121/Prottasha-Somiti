@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:prottashasomit/route.dart';
 import '../../../Constants/Constants.dart';
 import 'NavBoolMFS.dart';
 import '../../Screens/Widgets/NavItem.dart';
@@ -79,6 +80,15 @@ class _NavbarState extends State<Navbar> {
                     icon: Icons.arrow_drop_down),
               ),
 
+              InkWell(
+                onTap: () {
+                  Get.toNamed(expensescreenPageRoute);
+                },
+                child: NavbarItem(
+                    flag: widget.navbool.reports,
+                    text: 'Expense',
+                    icon: Icons.arrow_drop_down),
+              ),
             ],
           )
           : Align(

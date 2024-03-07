@@ -70,9 +70,37 @@ const List<String> IntroducerTypeList = [
   'Existing Customer',
 ];
 
+const List<String> ExpensecategoryList = [
+  'Others',
+  'Salary (Officer)',
+  'Salary (Staff)',
+  'House Rent Allowance',
+  'Medical Allowance',
+  'Education Allowance',
+  'Conveyance Allowance',
+  'Bank Contribution To Pf',
+  'Rest And Recreation Leave Allowance',
+  'Festival Bonus',
+  'Lunch Subsidy',
+  'Special Benefit Allowance'
+      'Training Expense',
+  'Travelling Expenses (Audit And Tour)',
+  'Conveyance',
+  'Fuel',
+  'Entertainment',
+  'Business Development',
+  'Newspaper & Journal',
+  'Bank Charge',
+  'Electricity Cost',
+  'Printed Stationary',
+  'Internet Expense',
+  'Miscellaneous Expenses',
+  'Table Stationary',
+  'Mobile Bill',
+];
 
-const List<Map<String, String>> IntroducerList = [{'ID':'7210220058837101', 'Name':'Titas Ranjan Talukdar'}
-
+const List<Map<String, String>> IntroducerList = [
+  {'ID': '7210220058837101', 'Name': 'Titas Ranjan Talukdar'}
 ];
 const List<String> RelationList = [
   'Wife',
