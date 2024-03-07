@@ -870,6 +870,40 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                       onHover: (val) {
                         setState(() {
                           if (val) {
+                            itemColor17 = AppColor_hover1;
+                            textColor17= Colors.white;
+                          } else {
+                            itemColor17 = AppColor_Blue;
+                            textColor17 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                        Get.toNamed(cashwithdrawlistPageRoute);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 20, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor17,
+                        child: Row(
+                          children: [
+                            Text(
+                              "Cash Withdraw List",
+                              style: TextStyle(
+                                color: textColor17,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
                             itemColor16 = AppColor_hover1;
                             textColor16 = Colors.white;
                           } else {

@@ -34,6 +34,7 @@ import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
 import 'ScreensCBS/Processing/DayOpenClose.dart';
 import 'ScreensCBS/Transaction/BOTransaction.dart';
 import 'ScreensCBS/Transaction/CashDeposit.dart';
+import 'ScreensCBS/Transaction/CashWithdrawList.dart';
 import 'ScreensCBS/Transaction/ReverseRequest.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
@@ -451,6 +452,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navboolcbs,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: cashwithdrawlistPageRoute,
+            page: () => CashWithdrawList(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: reverserequesttransactionPageRoute,

@@ -137,6 +137,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
         "Approved By": '',
         "Approve": false,
         "Cheque No": chequeno.text,
+        'Account No': selectedaccount.id,
         'Cheque Series': chequeseries.text,
         'Withdraw Amount': double.parse(withdrawamount.text),
         'Amount In Words': amountinwords.text,
@@ -154,7 +155,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
           'Loan Pending Amount':
               FieldValue.increment(-double.parse(withdrawamount.text)),
         }).then((value) {
-       //   Get.offNamed(loandisbursementlistPageRoute);
+          Get.offNamed(loandisbursementlistPageRoute);
           Get.snackbar("Cash Withdraw Successful.",
               "Redirecting to Cash Withdraw List Page.",
               snackPosition: SnackPosition.BOTTOM,
