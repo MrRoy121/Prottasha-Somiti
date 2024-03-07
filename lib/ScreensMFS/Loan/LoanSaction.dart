@@ -307,16 +307,18 @@ class _LoanSanctionState extends State<LoanSanction> {
     }
 
     void _setuploanscheme(int ins) {
+      double principleAmount = double.parse(consanctionlimit.text.toString());
+      double val = principleAmount/10000;
       setState(() {
         _selectedscheme = LoanSchemes[ins];
         _selectedinstalment = InstallmentFrequencyList[0];
         coninstallmentno.text = _selectedscheme.installmentno.toString();
         conduratioon.text = _selectedscheme.duration.toString();
         coninstallmentamount.text =
-            _selectedscheme.installmentamount.toString();
-        conservicecharge.text = _selectedscheme.servicecharge.toString();
-        serviceamount = double.parse(conservicecharge.text) +
-            double.parse(coninstallmentamount.text);
+            (_selectedscheme.installmentamount*val).toString();
+        conservicecharge.text = (_selectedscheme.servicecharge*val).toString();
+        serviceamount = (double.parse(conservicecharge.text) +
+            double.parse(coninstallmentamount.text)*val);
       });
     }
 
