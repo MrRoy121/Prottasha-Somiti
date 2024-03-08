@@ -18,14 +18,16 @@ class LoanRepaymentReverseRequestList extends StatefulWidget {
   Navbool navbool;
   Appbool appbool;
 
-  LoanRepaymentReverseRequestList({required this.appbool, required this.navbool});
+  LoanRepaymentReverseRequestList(
+      {required this.appbool, required this.navbool});
 
   @override
   State<LoanRepaymentReverseRequestList> createState() =>
       _LoanRepaymentReverseRequestListState();
 }
 
-class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRequestList> {
+class _LoanRepaymentReverseRequestListState
+    extends State<LoanRepaymentReverseRequestList> {
   @override
   Widget build(BuildContext context) {
     Future<List<loanRepayment>> getCust() async {
@@ -41,7 +43,7 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
               somiteename: json['Somitee Name'],
               somiteeid: json['Somitee ID'],
               membername: json['Member Name'],
-              id:json['ID'],
+              id: json['ID'],
               approve: json['Approve'],
               memberid: json['Member ID'],
               disbursedamount: json["Disbursed Amount"],
@@ -297,68 +299,80 @@ class _LoanRepaymentReverseRequestListState extends State<LoanRepaymentReverseRe
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(
-                                          snapshot.data[index].status
-                                              ?SizedBox():
-                                          Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              FirebaseFirestore.instance
-                                                  .collection('LoanRepaymentReverse')
-                                                  .doc(snapshot.data[index].id)
-                                                  .update({
-                                                "Status": true,
-                                                "Approve": true,
-                                                'Approve Date': DateTime.now(),
-                                              }).then((value) {
-                                                FirebaseFirestore.instance
-                                                    .collection('LoanRepayment')
-                                                    .doc(snapshot.data[index].id).delete();
-                                                setState(() {});
-                                              });
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
-                                                child: const Icon(
-                                                  Icons.check,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              FirebaseFirestore.instance
-                                                  .collection('LoanRepaymentReverse')
-                                                  .doc(snapshot.data[index].id)
-                                                  .update({
-                                                "Status": true,
-                                                "Approve": false,
-                                                'Approve Date': DateTime.now(),
-                                              }).then((value) {
-                                                setState(() {});
-                                              });
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4.0),
-                                                decoration: BoxDecoration(
-                                                    color: AppColor_Blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100)),
-                                                child: const Icon(
-                                                  Icons.close,
-                                                  size: 16,
-                                                  color: AppColor_White,
-                                                )),
-                                          ),
-                                        ],
-                                      )),
+                                      DataCell(snapshot.data[index].status
+                                          ? SizedBox()
+                                          : Row(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'LoanRepaymentReverse')
+                                                        .doc(snapshot
+                                                            .data[index].id)
+                                                        .update({
+                                                      "Status": true,
+                                                      "Approve": true,
+                                                      'Approve Date':
+                                                          DateTime.now(),
+                                                    }).then((value) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'LoanRepayment')
+                                                          .doc(snapshot
+                                                              .data[index].id)
+                                                          .delete();
+                                                      setState(() {});
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(4.0),
+                                                      decoration: BoxDecoration(
+                                                          color: AppColor_Blue,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100)),
+                                                      child: const Icon(
+                                                        Icons.check,
+                                                        size: 16,
+                                                        color: AppColor_White,
+                                                      )),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'LoanRepaymentReverse')
+                                                        .doc(snapshot
+                                                            .data[index].id)
+                                                        .update({
+                                                      "Status": true,
+                                                      "Approve": false,
+                                                      'Approve Date':
+                                                          DateTime.now(),
+                                                    }).then((value) {
+                                                      setState(() {});
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(4.0),
+                                                      decoration: BoxDecoration(
+                                                          color: AppColor_Blue,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100)),
+                                                      child: const Icon(
+                                                        Icons.close,
+                                                        size: 16,
+                                                        color: AppColor_White,
+                                                      )),
+                                                ),
+                                              ],
+                                            )),
                                     ],
                                   );
                                 }),

@@ -34,8 +34,10 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
                   // Loan Disbursement Details
                   LoanDetailsWidget(
                     title: 'Reverse Repayment',
-                    onsubmit: (){},onfine: (){},showfine: false,
-                    onclear: (){},
+                    onsubmit: () {},
+                    onfine: () {},
+                    showfine: false,
+                    onclear: () {},
                   ),
 
                   SizedBox(
@@ -58,12 +60,10 @@ class _LoanReScheduleState extends State<LoanReSchedule> {
                 ],
               ),
             ),
-
             NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),
-
           ],
         ),
       ),
