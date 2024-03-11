@@ -67,6 +67,8 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
   Color textColor18 = Colors.black;
   Color itemColor19 = AppColor_Blue;
   Color textColor19 = Colors.black;
+  Color itemColor20 = AppColor_Blue;
+  Color textColor20 = Colors.black;
 
   _toglechnage(int index) {
     setState(() {
@@ -884,6 +886,40 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                         "Daily GL Summary",
                                         style: TextStyle(
                                           color: textColor4,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onHover: (val) {
+                                  setState(() {
+                                    if (val) {
+                                      itemColor20 = AppColor_hover1;
+                                      textColor20 = Colors.white;
+                                    } else {
+                                      itemColor20 = AppColor_Blue;
+                                      textColor20 = Colors.black;
+                                    }
+                                  });
+                                },
+                                onTap: () {
+                                  Get.toNamed(profitlossstatementPageRoute);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 350,
+                                  color: itemColor20,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Profit Loss Statement",
+                                        style: TextStyle(
+                                          color: textColor20,
                                           fontSize: 12,
                                         ),
                                       ),

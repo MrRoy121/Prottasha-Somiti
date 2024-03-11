@@ -59,6 +59,7 @@ import 'ScreensMFS/MemberManagement/MemberUpdate.dart';
 import 'ScreensMFS/MemberManagement/SamiteeList.dart';
 import 'ScreensMFS/MemberManagement/SamiteeRegistration.dart';
 import 'ScreensMFS/Reports/GeneralLedgerStatement.dart';
+import 'ScreensMFS/Reports/ProfitLossStatement.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequestList.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
@@ -379,6 +380,13 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: expensescreenPageRoute,
             page: () => ExpenseScreen(
+              appbool: appbool,
+              navbool: navbool,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: profitlossstatementPageRoute,
+            page: () => ProfitLossStatement(
               appbool: appbool,
               navbool: navbool,
             ),
