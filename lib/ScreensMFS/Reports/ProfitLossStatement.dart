@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
+import '../../Model/ProfitLossModel.dart';
 import '../../helpers/pdfs_helpers/pdf_profitlossstatement.dart';
 import '../Widget/Appbar.dart';
 import '../Widget/Appbool.dart';
@@ -19,7 +21,6 @@ class ProfitLossStatement extends StatefulWidget {
 }
 
 class _ProfitLossStatementState extends State<ProfitLossStatement> {
-
   DateTime _selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -37,156 +38,112 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
     }
   }
 
-
   double calculateSum(List<dynamic> array) {
     return array.fold(0, (sum, map) => sum + (map['value'] as double? ?? 0));
   }
 
-  Future<List<DailyTransactionModel>> getmemberdeposit() async {
-    List<DailyTransactionModel> allmemberss = [];
+  Future<List<ProfitLossModel>> getincome() async {
+    List<ProfitLossModel> profitloss = [];
     int s = 1;
-    try {
-      QuerySnapshot querySnapshot =
-      await FirebaseFirestore.instance.collection('Member').get();
-      for (var element in querySnapshot.docs) {
-        if (element["Deposits"] != null) {
-          var deposits = element["Deposits"] ?? [];
-          for (int i = 0; i < deposits.length; i++) {
-            DateTime ddd = DateTime.parse(deposits[i]["date"]);
-            if (_selectedDate.day == ddd.day &&
-                _selectedDate.month == ddd.month &&
-                _selectedDate.year == ddd.year) {
-              allmemberss.add(DailyTransactionModel(
-                  amount: deposits[i]["value"],
-                  transacno: s.toString(),
-                  drcr: false,
-                  acno: element.id,
-                  actitle: element["First Name"] + " " + element["Last Name"],
-                  naration: deposits[i]["remarks"],
-                  transactiondate: ddd));
-              s++;
-            }
+    double tillpreviousmont = 0.0, currentmont = 0.0;
+    await FirebaseFirestore.instance
+        .collection('LoanRepayment')
+        .orderBy('Approve Date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        if (json["Status"] && json['Approve']) {
+          DateTime ddd = json['Request Date'].toDate();
+          double serviceCharge = json['Service Charge'];
+          double payAmount = json['Pay Amount'];
+          double serviceChargePercentage = (serviceCharge / payAmount) * 100;
+          double remainingAmount =
+              payAmount - (payAmount * (serviceChargePercentage / 100));
+          if (_selectedDate.month == ddd.month &&
+              _selectedDate.year == ddd.year) {
+            currentmont += remainingAmount;
+          } else {
+            tillpreviousmont += remainingAmount;
           }
         }
       }
-    } catch (e) {
-      print("Error fetching data from Firestore: $e");
-    }
-    return allmemberss;
+    });
+    profitloss.add(ProfitLossModel(
+        glcode: "5490${s.toString().padLeft(3, '0')}",
+        desc: "Interest On MicroCredit",
+        sl: s,
+        tillprevious: tillpreviousmont,
+        current: currentmont,
+        total: tillpreviousmont + currentmont));
+    s++;
+    profitloss.add(ProfitLossModel(
+        glcode: "5490${s.toString().padLeft(3, '0')}",
+        desc: "Others Loan",
+        sl: s,
+        tillprevious: 0,
+        current: 0,
+        total: 0));
+    s++;
+    profitloss.add(ProfitLossModel(
+        glcode: "5490${s.toString().padLeft(3, '0')}",
+        desc: "Registration Fee",
+        sl: s,
+        tillprevious: 0,
+        current: 0,
+        total: 0));
+    s++;
+    profitloss.add(ProfitLossModel(
+        glcode: "5490${s.toString().padLeft(3, '0')}",
+        desc: "Document Fee",
+        sl: s,
+        tillprevious: 0,
+        current: 0,
+        total: 0));
+    s++;
+    return profitloss;
   }
-
-  Future<List<DailyTransactionModel>> getmemberwithdraw() async {
-    List<DailyTransactionModel> allmemberss = [];
+  Future<List<ProfitLossModel>> getExpense() async {
+    List<ProfitLossModel> profitloss = [];
     int s = 1;
-    try {
-      QuerySnapshot querySnapshot =
-      await FirebaseFirestore.instance.collection('Member').get();
-      for (var element in querySnapshot.docs) {
-        if (element["Withdraws"] != null) {
-          var deposits = element["Withdraws"] ?? [];
-          for (int i = 0; i < deposits.length; i++) {
-            DateTime ddd = DateTime.parse(deposits[i]["date"]);
-            if (_selectedDate.day == ddd.day &&
-                _selectedDate.month == ddd.month &&
-                _selectedDate.year == ddd.year) {
-              allmemberss.add(DailyTransactionModel(
-                  amount: deposits[i]["value"],
-                  transacno: s.toString(),
-                  drcr: true,
-                  acno: element.id,
-                  actitle: element["First Name"] + " " + element["Last Name"],
-                  naration: deposits[i]["remarks"],
-                  transactiondate: ddd));
-              s++;
-            }
+    double tillpreviousmont = 0.0, currentmont = 0.0;
+    await FirebaseFirestore.instance
+        .collection('LoanRepayment')
+        .orderBy('Approve Date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      for (var json in querySnapshot.docs) {
+        if (json["Status"] && json['Approve']) {
+          DateTime ddd = json['Request Date'].toDate();
+          double serviceCharge = json['Service Charge'];
+          double payAmount = json['Pay Amount'];
+          double serviceChargePercentage = (serviceCharge / payAmount) * 100;
+          double remainingAmount =
+              payAmount - (payAmount * (serviceChargePercentage / 100));
+          if (_selectedDate.month == ddd.month &&
+              _selectedDate.year == ddd.year) {
+            currentmont += remainingAmount;
+          } else {
+            tillpreviousmont += remainingAmount;
           }
         }
       }
-    } catch (e) {
-      print("Error fetching data from Firestore: $e");
-    }
-    return allmemberss;
-  }
-
-  Future<List<DailyTransactionModel>> getloandisbursement() async {
-    List<DailyTransactionModel> allmemberss = [];
-    int s = 1;
-    QuerySnapshot querySnapshot =
-    await FirebaseFirestore.instance.collection('LoanDisbursed').get();
-    for (var element in querySnapshot.docs) {
-      if (element['Status'] && element['Approve']) {
-        DateTime ddd = element["Disbursed Date"].toDate();
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
-          allmemberss.add(DailyTransactionModel(
-              amount: element["Disbursed Amount"],
-              transacno: s.toString(),
-              drcr: true,
-              acno: element['Member ID'],
-              actitle: element["Member Name"],
-              naration: element["Narration"],
-              transactiondate: ddd));
-          s++;
-        }
-      }
-    }
-    return allmemberss;
-  }
-
-  Future<List<DailyTransactionModel>> getloanrepayment() async {
-    List<DailyTransactionModel> allmemberss = [];
-    int s = 1;
-    QuerySnapshot querySnapshot =
-    await FirebaseFirestore.instance.collection('LoanRepayment').get();
-    for (var element in querySnapshot.docs) {
-      if (element['Status'] && element['Approve']) {
-        DateTime ddd = element["Request Date"].toDate();
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
-          allmemberss.add(DailyTransactionModel(
-              amount: element["Pay Amount"],
-              transacno: s.toString(),
-              drcr: false,
-              acno: element['Member ID'],
-              actitle: element["Member Name"],
-              naration: element["Narration"],
-              transactiondate: ddd));
-          s++;
-        }
-      }
-    }
-    return allmemberss;
+    });
+    profitloss.add(ProfitLossModel(
+        glcode: "5490${s.toString().padLeft(3, '0')}",
+        desc: "Interest On MicroCredit",
+        sl: s,
+        tillprevious: tillpreviousmont,
+        current: currentmont,
+        total: tillpreviousmont + currentmont));
+    s++;
+    return profitloss;
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     _save() async {
-      if (selectedsomiti == null) {
-        Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
-            "Some Required Fields are Empty",
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white,
-            backgroundColor: Colors.red,
-            margin: EdgeInsets.zero,
-            duration: const Duration(milliseconds: 2000),
-            boxShadows: [
-              BoxShadow(
-                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-            ],
-            borderRadius: 0);
-      } else {
-        PdfProfitLossStatement.generate(
-            cashwithdraw: await getmemberwithdraw(),
-            cashdeposit: await getmemberdeposit(),
-            loandisburse: await getloandisbursement(),
-            loanrepayment: await getloanrepayment(),
-            ledgertitle: selectedsomiti.name,
-            ledgeno: selectedsomiti.id);
-      }
+      PdfProfitLossStatement.generate(
+          getincome: await getincome(), date: _selectedDate);
     }
 
     return Scaffold(
@@ -197,7 +154,7 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100,left: 50),
+              margin: EdgeInsets.only(top: 100, left: 50),
               child: Column(
                 children: [
                   Container(
@@ -238,46 +195,52 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                                 ),
                               ),
                               Spacer(),
-                              Container(
-                                height: 40,
-                                width: 125,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 2.0, left: 12),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.remove_red_eye_outlined,
-                                        size: 16,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        "View Report",
-                                        style: TextStyle(color: Colors.white, fontSize: 14),
-                                      ),
-                                    ],
+                              InkWell(
+                                onTap: () {
+                                  _save();
+                                },
+                                child: Container(
+                                  height: 40,
+                                  width: 125,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 2.0, left: 12),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.remove_red_eye_outlined,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "View Report",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  color: Colors.green,
                                 ),
-                                color: Colors.green,
                               ),
                               SizedBox(
                                 width: 10,
                               ),
                               InkWell(
-                                onTap: (){
-
+                                onTap: () {
                                   _selectedDate = DateTime.now();
-                                  setState(() {
-
-                                  });
+                                  setState(() {});
                                 },
                                 child: Container(
                                   height: 40,
                                   width: 90,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 3.0, left: 15),
+                                    padding: const EdgeInsets.only(
+                                        top: 3.0, left: 15),
                                     child: Row(
                                       children: [
                                         Icon(
@@ -290,7 +253,9 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                                         ),
                                         Text(
                                           "Clear",
-                                          style: TextStyle(color: Colors.white, fontSize: 14),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -315,7 +280,9 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Transaction Date',
-                                          style: TextStyle(color: Colors.black, fontSize: 14),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14),
                                           children: <TextSpan>[
                                             TextSpan(
                                                 text: ' *',
@@ -326,7 +293,8 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                                             TextSpan(
                                                 text: ' :',
                                                 style: TextStyle(
-                                                    color: Colors.black, fontSize: 14)),
+                                                    color: Colors.black,
+                                                    fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -343,7 +311,8 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey),
                                                 ),
                                                 hintText: _selectedDate != null
                                                     ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
@@ -351,7 +320,8 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp,
+                                                suffixIcon: Icon(
+                                                    Icons.calendar_month_sharp,
                                                     color: Colors.grey),
                                               ),
                                             ),
