@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
+import '../../Constants/values.dart';
 import '../../Model/ProfitLossModel.dart';
 import '../../helpers/pdfs_helpers/pdf_profitlossstatement.dart';
 import '../Widget/Appbar.dart';
@@ -101,41 +102,40 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
         total: 0));
     s++;
     return profitloss;
-  }
-  Future<List<ProfitLossModel>> getExpense() async {
+  }Future<List<ProfitLossModel>> getExpense() async {
     List<ProfitLossModel> profitloss = [];
     int s = 1;
-    double tillpreviousmont = 0.0, currentmont = 0.0;
-    await FirebaseFirestore.instance
-        .collection('LoanRepayment')
-        .orderBy('Approve Date', descending: true)
-        .get()
-        .then((querySnapshot) {
-      for (var json in querySnapshot.docs) {
-        if (json["Status"] && json['Approve']) {
-          DateTime ddd = json['Request Date'].toDate();
-          double serviceCharge = json['Service Charge'];
-          double payAmount = json['Pay Amount'];
-          double serviceChargePercentage = (serviceCharge / payAmount) * 100;
-          double remainingAmount =
-              payAmount - (payAmount * (serviceChargePercentage / 100));
-          if (_selectedDate.month == ddd.month &&
-              _selectedDate.year == ddd.year) {
-            currentmont += remainingAmount;
-          } else {
-            tillpreviousmont += remainingAmount;
-          }
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await FirebaseFirestore.instance.collection('ExpenseItem').get();
+    for (var category in ExpensecategoryList) {
+      double tillpreviousmont = 0.0, currentmont = 0.0;
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses = querySnapshot.docs
+          .where((ele) =>
+      ele['Expense Category'] == category &&
+          _selectedDate.month == ele['Date'].toDate().month &&
+          _selectedDate.year == ele['Date'].toDate().year)
+          .toList();
+      for (var ele in expenses) {
+        double amount = ele['Amount'];
+        if (_selectedDate.month == ele['Date'].toDate().month &&
+            _selectedDate.year == ele['Date'].toDate().year) {
+          currentmont += amount;
+        } else {
+          tillpreviousmont += amount;
         }
       }
-    });
-    profitloss.add(ProfitLossModel(
+
+      profitloss.add(ProfitLossModel(
         glcode: "5490${s.toString().padLeft(3, '0')}",
-        desc: "Interest On MicroCredit",
+        desc: category,
         sl: s,
         tillprevious: tillpreviousmont,
         current: currentmont,
-        total: tillpreviousmont + currentmont));
-    s++;
+        total: tillpreviousmont + currentmont,
+      ));
+      s++;
+    }
+
     return profitloss;
   }
 
@@ -143,7 +143,7 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
   Widget build(BuildContext context) {
     _save() async {
       PdfProfitLossStatement.generate(
-          getincome: await getincome(), date: _selectedDate);
+          getincome: await getincome(),getexpense: await getExpense(), date: _selectedDate);
     }
 
     return Scaffold(
