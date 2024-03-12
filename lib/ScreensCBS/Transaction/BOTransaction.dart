@@ -16,7 +16,9 @@ import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
+import '../../Model/account.dart';
 import '../../ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
+import '../../helpers/auth_service.dart';
 import '../Widgets/BasicInfoWidget.dart';
 import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
@@ -32,198 +34,149 @@ class BOTransaction extends StatefulWidget {
   BOTransaction({required this.appbool, required this.navbool});
 
   @override
-  State<BOTransaction> createState() =>
-      _BOTransactionState();
+  State<BOTransaction> createState() => _BOTransactionState();
 }
 
 class _BOTransactionState extends State<BOTransaction> {
   var selectedtype = 'Transfer';
   var selectednature;
   var selectedentrytype;
+  var selectedbranch;
+  List<Accountss> memberss = [];
+  var selectedaccountdebit;
+  var selectedaccountcredit;
+  var amountdebit = TextEditingController();
+  var remarksdebit = TextEditingController();
+  var amountcredit = TextEditingController();
+  var remarkscredit = TextEditingController();
+  bool mmemsdr = false;
+  bool mmemscr = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetch();
+  }
 
+  Future<void> fetch() async {
+    int s = 0;
+    memberss.add(Accountss(
+        introducertype: '',
+        member: {'First Name': 'Titas Ranjan', 'Last Name': 'Talukdar'},
+        introducerno: '',
+        nomineename: '',
+        nomineepercentage: '',
+        accounttype: '',
+        nomineeimage: '',
+        relation: '',
+        introducername: '',
+        requestdate: DateTime.now(),
+        requestedby: '',
+        approvedby: '',
+        sector: '',
+        documenttype: '',
+        fathername: '',
+        documentno: '',
+        docmentfront: '',
+        documentback: '',
+        dateofbirth: DateTime.now(),
+        mothername: '',
+        id: '7210220058837101',
+        approvedate: DateTime.now(),
+        status: true,
+        approve: true,
+        sl: s));
+    s++;
+    await FirebaseFirestore.instance
+        .collection('Account')
+        .get()
+        .then((querySnapshot) {
+      for (var element in querySnapshot.docs) {
+        memberss.add(Accountss(
+            introducertype: element["Introducer Type"],
+            member: element["Member"],
+            introducerno: element["Introducer No"],
+            nomineename: element["Nominee Name"],
+            nomineepercentage: element["Nominee Percentage"],
+            accounttype: element["Account Type"],
+            nomineeimage: element["Nominee Image"],
+            relation: element["Relation"],
+            introducername: element["Introducer Name"],
+            requestdate: element["Request Date"].toDate(),
+            requestedby: element["Requested By"],
+            approvedby: element["Approve By"],
+            sector: element["Sector"],
+            documenttype: element["Document Type"],
+            fathername: element["Father Name"],
+            documentno: element["Document No"],
+            docmentfront: element["Document Front"],
+            documentback: element["Document Back"],
+            dateofbirth: element["Date Of Birth"].toDate(),
+            mothername: element["Mother Name"],
+            id: element.id,
+            approvedate: element["Approve Date"].toDate(),
+            status: element["Status"],
+            approve: element["Approve"],
+            sl: s));
+        s++;
+      }
+    });
+  }
 
   void _onclear() {
     setState(() {
       var ss;
-    //  selectedsomiti = ss;
-    //  sselectedsomiti = ss;
+      //  selectedsomiti = ss;
+      //  sselectedsomiti = ss;
     });
   }
 
   void _save() async {
-    // const _chars = '1234567890';
-    // Random _rnd = Random();
-    // String getRandomString(int length) =>
-    //     String.fromCharCodes(Iterable.generate(
-    //         length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    // String memberid = getRandomString(8);
-    // if (selectedsomiti == null ||
-    //     selectedGender == null ||
-    //     selectedmebertype == '' ||
-    //     selectedocupation == '' ||
-    //     _fathername.text.isEmpty ||
-    //     _firstname.text.isEmpty ||
-    //     _housedesc.text.isEmpty ||
-    //     _lastname.text.isEmpty ||
-    //     _preseentaddress.text.isEmpty ||
-    //     _mothername.text.isEmpty ||
-    //     _mobileno.text.isEmpty ||
-    //     _annualincome.text.isEmpty ||
-    //     _birthreginumber.text.isEmpty ||
-    //     _landdesc.text.isEmpty ||
-    //     _livingperiod.text.isEmpty ||
-    //     _mobileno.text.isEmpty ||
-    //     _nidnumber.text.isEmpty) {
-    //   Get.snackbar(
-    //       "Member Registration Failed.", "Some Required  Fields are Empty",
-    //       snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white,
-    //       backgroundColor: Colors.red,
-    //       margin: EdgeInsets.zero,
-    //       duration: const Duration(milliseconds: 2000),
-    //       boxShadows: [
-    //         BoxShadow(
-    //             color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-    //       ],
-    //       borderRadius: 0);
-    // } else {
-    //   FirebaseFirestore.instance
-    //       .collection('Somitee')
-    //       .doc(selectedsomiti.id)
-    //       .get()
-    //       .then((value) {
-    //     FirebaseFirestore.instance
-    //         .collection('Somitee')
-    //         .doc(selectedsomiti.id)
-    //         .update({'Active': value['Active'] + 1});
-    //   });
-    //   if (img) {
-    //     final photoRef =
-    //         FirebaseStorage.instance.ref("MembersImage/$memberid.jpeg");
-    //     UploadTask uploadTask = photoRef.putData(
-    //         pickedImage,
-    //         SettableMetadata(
-    //           contentType: "image/jpeg",
-    //         ));
-    //     String url = await (await uploadTask).ref.getDownloadURL();
-    //     FirebaseFirestore.instance.collection('Member').doc(memberid).set({
-    //       'Somitee Name': selectedsomiti.name,
-    //       'Somitee ID': selectedsomiti.id,
-    //       'Member Type': selectedmebertype,
-    //       'Occupation': selectedocupation,
-    //       'First Name': _firstname.text,
-    //       'Last Name': _lastname.text,
-    //       'Father Name': _fathername.text,
-    //       'Loan Pending Amount': 0,
-    //       'Own deposit Amount': 0,
-    //       'Deposits':[],
-    //       'Withdraws':[],
-    //       'Mother Name': _mothername.text,
-    //       'Gender': selectedGender,
-    //       'Religion': selectedreligion,
-    //       'National ID': _nidnumber.text,
-    //       'Birth Registration': _birthreginumber.text,
-    //       'Age': _age.text,
-    //       'Date Of Birth': _selectedDate,
-    //       'No of Dependent': _dependablemember.text,
-    //       'Education': _education.text,
-    //       'Marital Status': maritalstatus,
-    //       'Mobile No Type': mobiletype,
-    //       'Mobile No': _mobileno.text,
-    //       'Present Address': _preseentaddress.text,
-    //       'Permanent Address': _parmaaddress.text,
-    //       'Living Period': _livingperiod.text,
-    //       'No Female Earner': _nofemaleearner.text,
-    //       'No Male Earner': _nomaleearner.text,
-    //       'ID': memberid,
-    //       'Status': true,
-    //       'Dead': false,
-    //       'Head Family': selectedfamilyhead,
-    //       'Own HomeStead': selectedownhomestead,
-    //       'Relation With Head': _relationwithhead.text,
-    //       'Annual Income': _annualincome.text,
-    //       'Land Desc': _landdesc.text,
-    //       'House Desc': _housedesc.text,
-    //       'Remarks': _remarks.text,
-    //       'Image': true,
-    //       'ImageURL': url,
-    //     }).then((value) async {
-    //       Get.offNamed(memberlistPageRoute);
-    //       Get.snackbar(
-    //           "Member Added Successfully.", "Redirecting to Member List Page.",
-    //           snackPosition: SnackPosition.BOTTOM,
-    //           colorText: Colors.white,
-    //           backgroundColor: Colors.green,
-    //           margin: EdgeInsets.zero,
-    //           duration: const Duration(milliseconds: 2000),
-    //           boxShadows: [
-    //             const BoxShadow(
-    //                 color: Colors.grey,
-    //                 offset: Offset(-100, 0),
-    //                 blurRadius: 20),
-    //           ],
-    //           borderRadius: 0);
-    //     }).catchError((error) => print("Failed to add user: $error"));
-    //   } else {
-    //     FirebaseFirestore.instance.collection('Member').doc(memberid).set({
-    //       'Somitee Name': selectedsomiti.name,
-    //       'Somitee ID': selectedsomiti.id,
-    //       'Member Type': selectedmebertype,
-    //       'Occupation': selectedocupation,
-    //       'First Name': _firstname.text,
-    //       'Loan Pending Amount': 0,
-    //       'Own deposit Amount': 0,
-    //       'Last Name': _lastname.text,
-    //       'Father Name': _fathername.text,
-    //       'Mother Name': _mothername.text,
-    //       'Gender': selectedGender,
-    //       'Status': true,
-    //       'Deposits':[],
-    //       'Withdraws':[],
-    //       'Religion': selectedreligion,
-    //       'National ID': _nidnumber.text,
-    //       'Birth Registration': _birthreginumber.text,
-    //       'Age': _age.text,
-    //       'Date Of Birth': _selectedDate,
-    //       'No of Dependent': _dependablemember.text,
-    //       'Education': _education.text,
-    //       'Marital Status': maritalstatus,
-    //       'Mobile No Type': mobiletype,
-    //       'Mobile No': _mobileno.text,
-    //       'Present Address': _preseentaddress.text,
-    //       'Parmanent Address': _parmaaddress.text,
-    //       'Living Period': _livingperiod.text,
-    //       'Annual Income': _annualincome.text,
-    //       'No Female Earner': _nofemaleearner.text,
-    //       'No Male Earner': _nomaleearner.text,
-    //       'ID': memberid,
-    //       'Head Family': selectedfamilyhead,
-    //       'Own HomeStead': selectedownhomestead,
-    //       'Relation With Head': _relationwithhead.text,
-    //       'Land Desc': _landdesc.text,
-    //       'House Desc': _housedesc.text,
-    //       'Remarks': _remarks.text,
-    //       'Image': false,
-    //       'ImageURL': '',
-    //     }).then((value) async {
-    //       Get.offNamed(memberlistPageRoute);
-    //       Get.snackbar(
-    //           "Member Added Successfully.", "Redirecting to Member List Page.",
-    //           snackPosition: SnackPosition.BOTTOM,
-    //           colorText: Colors.white,
-    //           backgroundColor: Colors.green,
-    //           margin: EdgeInsets.zero,
-    //           duration: const Duration(milliseconds: 2000),
-    //           boxShadows: [
-    //             const BoxShadow(
-    //                 color: Colors.grey,
-    //                 offset: Offset(-100, 0),
-    //                 blurRadius: 20),
-    //           ],
-    //           borderRadius: 0);
-    //     }).catchError((error) => print("Failed to add user: $error"));
-    //   }
-    // }
+    if (selectedtype == null ||
+        selectedaccountcredit == null ||
+        selectedaccountdebit == '' ||
+        selectedbranch == null ||
+        selectednature == null ||
+        selectedentrytype == null ||
+        amountdebit.text.isEmpty ||
+        amountcredit.text.isEmpty) {
+      Get.snackbar(
+          "BO Transaction Request Failed.", "Some Required  Fields are Empty",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.zero,
+          duration: const Duration(milliseconds: 2000),
+          boxShadows: [
+            BoxShadow(
+                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+          ],
+          borderRadius: 0);
+    } else {
+      FirebaseFirestore.instance.collection('BO Transaction').add({
+        "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+        "Approved By":'',
+        'Request Date': DateTime.now(),
+        'Approve Date': DateTime.now(),
+
+        "Approve":false,
+        'Status':false,
+      }).then((value) async {
+        Get.offNamed(botransfertransactionlistPageRoute);
+        Get.snackbar(
+            "BO Transaction Request Added Successfully.", "Redirecting to BO Transaction List Page.",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.green,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      }).catchError((error) => print("Failed to add user: $error"));
+    }
   }
 
   @override
@@ -247,7 +200,6 @@ class _BOTransactionState extends State<BOTransaction> {
                     onduplecate: () {},
                     onclear: _onclear,
                   ),
-
                   Container(
                     margin: EdgeInsets.only(top: 30),
                     width: ScreenWidth / 1.097,
@@ -263,15 +215,14 @@ class _BOTransactionState extends State<BOTransaction> {
                         ),
                       ],
                     ),
-
                     child: Column(
                       children: [
                         Container(
                           width: ScreenWidth / 1.097,
                           color: navbarColor,
                           child: Padding(
-                            padding:
-                            EdgeInsets.only(left: ScreenWidth / 38.4, top: 10, bottom: 10),
+                            padding: EdgeInsets.only(
+                                left: ScreenWidth / 38.4, top: 10, bottom: 10),
                             child: Text(
                               "Cash Withdraw",
                               style: TextStyle(
@@ -294,7 +245,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Row(
                                       children: [
@@ -306,27 +257,34 @@ class _BOTransactionState extends State<BOTransaction> {
                                               groupValue: selectedtype,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  selectedtype = value.toString();
+                                                  selectedtype =
+                                                      value.toString();
                                                 });
                                               },
                                             ),
                                             Text(
                                               'Transfer',
-                                              style: TextStyle(fontSize: ScreenWidth / 109.71),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      ScreenWidth / 109.71),
                                             ),
-                                            SizedBox(width: ScreenWidth / 153.6),
+                                            SizedBox(
+                                                width: ScreenWidth / 153.6),
                                             Radio(
                                               value: 'Cash',
                                               groupValue: selectedtype,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  selectedtype = value.toString();
+                                                  selectedtype =
+                                                      value.toString();
                                                 });
                                               },
                                             ),
                                             Text(
                                               'Cash',
-                                              style: TextStyle(fontSize: ScreenWidth / 109.71),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      ScreenWidth / 109.71),
                                             ),
                                           ],
                                         ),
@@ -348,7 +306,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                                   text: ' *',
                                                   style: TextStyle(
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                       color: Colors.red,
                                                       fontSize: 14)),
                                               TextSpan(
@@ -376,8 +334,8 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 showSearchBox: true,
                                                 itemBuilder:
                                                     (BuildContext context,
-                                                    String item,
-                                                    bool isSelected) {
+                                                        String item,
+                                                        bool isSelected) {
                                                   return Container(
                                                     padding: EdgeInsets.all(15),
                                                     child: Text(
@@ -392,9 +350,9 @@ class _BOTransactionState extends State<BOTransaction> {
                                                   elevation: 100,
                                                 ),
                                                 searchFieldProps:
-                                                const TextFieldProps(
+                                                    const TextFieldProps(
                                                   style:
-                                                  TextStyle(fontSize: 12),
+                                                      TextStyle(fontSize: 12),
                                                   decoration: InputDecoration(
                                                     isDense: true,
                                                     hintText: "Search...",
@@ -402,20 +360,20 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
-                                              const DropDownDecoratorProps(
+                                                  const DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
-                                                InputDecoration(
+                                                    InputDecoration(
                                                   enabledBorder:
-                                                  UnderlineInputBorder(
+                                                      UnderlineInputBorder(
                                                     borderSide: BorderSide(
                                                         color:
-                                                        Colors.transparent),
+                                                            Colors.transparent),
                                                   ),
                                                   focusedBorder:
-                                                  UnderlineInputBorder(
+                                                      UnderlineInputBorder(
                                                     borderSide: BorderSide(
                                                         color:
-                                                        Colors.transparent),
+                                                            Colors.transparent),
                                                   ),
                                                 ),
                                               ),
@@ -449,7 +407,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SizedBox(
                                       height: 20,
@@ -467,7 +425,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                                   text: ' *',
                                                   style: TextStyle(
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                       color: Colors.red,
                                                       fontSize: 14)),
                                               TextSpan(
@@ -495,8 +453,8 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 showSearchBox: true,
                                                 itemBuilder:
                                                     (BuildContext context,
-                                                    String item,
-                                                    bool isSelected) {
+                                                        String item,
+                                                        bool isSelected) {
                                                   return Container(
                                                     padding: EdgeInsets.all(15),
                                                     child: Text(
@@ -511,9 +469,9 @@ class _BOTransactionState extends State<BOTransaction> {
                                                   elevation: 100,
                                                 ),
                                                 searchFieldProps:
-                                                const TextFieldProps(
+                                                    const TextFieldProps(
                                                   style:
-                                                  TextStyle(fontSize: 12),
+                                                      TextStyle(fontSize: 12),
                                                   decoration: InputDecoration(
                                                     isDense: true,
                                                     hintText: "Search...",
@@ -521,20 +479,20 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
-                                              const DropDownDecoratorProps(
+                                                  const DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
-                                                InputDecoration(
+                                                    InputDecoration(
                                                   enabledBorder:
-                                                  UnderlineInputBorder(
+                                                      UnderlineInputBorder(
                                                     borderSide: BorderSide(
                                                         color:
-                                                        Colors.transparent),
+                                                            Colors.transparent),
                                                   ),
                                                   focusedBorder:
-                                                  UnderlineInputBorder(
+                                                      UnderlineInputBorder(
                                                     borderSide: BorderSide(
                                                         color:
-                                                        Colors.transparent),
+                                                            Colors.transparent),
                                                   ),
                                                 ),
                                               ),
@@ -570,8 +528,839 @@ class _BOTransactionState extends State<BOTransaction> {
                       ],
                     ),
                   ),
-
-                  SizedBox(height: 50,),
+                  Container(
+                    margin: EdgeInsets.only(top: 30),
+                    width: ScreenWidth / 1.097,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: ScreenWidth / 1.097,
+                          color: navbarColor,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: ScreenWidth / 38.4, top: 10, bottom: 10),
+                            child: Text(
+                              "Debit AC Information",
+                              style: TextStyle(
+                                color: AppColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: ScreenWidth / 96,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 20.0, left: 80, right: 50),
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Branch Name',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 70,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<String>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        String item,
+                                                        bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                    const TextFieldProps(
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                                  const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Branch",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                selectedbranch = newValue;
+                                              },
+                                              items: [
+                                                "98765 - Sunamgonj Sadar."
+                                              ],
+                                              selectedItem: selectedbranch,
+                                            )),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Account Title: ",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 80,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            mmemsdr
+                                                ? selectedaccountdebit
+                                                        .member['First Name'] +
+                                                    ' ' +
+                                                    selectedaccountdebit
+                                                        .member['Last Name']
+                                                : "",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Amount :",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 110,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: TextField(
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            controller: amountdebit,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 250,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Select Account No',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<Accountss>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        Accountss item,
+                                                        bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item.id,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                    const TextFieldProps(
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                                  const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Account No",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item.id,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                setState(() {
+                                                  selectedaccountdebit =
+                                                      newValue;
+                                                  mmemsdr = true;
+                                                });
+                                              },
+                                              items: memberss,
+                                              selectedItem:
+                                                  selectedaccountdebit,
+                                            )),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Text(
+                                          "Operating Balance: ",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 60,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            "",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Remarks :",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 90,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: TextField(
+                                            controller: remarksdebit,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.grey[400],
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 30),
+                    width: ScreenWidth / 1.097,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: ScreenWidth / 1.097,
+                          color: navbarColor,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: ScreenWidth / 38.4, top: 10, bottom: 10),
+                            child: Text(
+                              "Credit AC Information",
+                              style: TextStyle(
+                                color: AppColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: ScreenWidth / 96,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 20.0, left: 80, right: 50),
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Branch Name',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 70,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<String>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        String item,
+                                                        bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                    const TextFieldProps(
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                                  const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Branch",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                selectedbranch = newValue;
+                                              },
+                                              items: [
+                                                "98765 - Sunamgonj Sadar."
+                                              ],
+                                              selectedItem: selectedbranch,
+                                            )),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Account Title: ",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 80,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            mmemscr
+                                                ? selectedaccountcredit
+                                                        .member['First Name'] +
+                                                    ' ' +
+                                                    selectedaccountcredit
+                                                        .member['Last Name']
+                                                : "",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Amount :",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 110,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: TextField(
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            controller: amountcredit,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 250,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Select Account No',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<Accountss>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        Accountss item,
+                                                        bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item.id,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                    const TextFieldProps(
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                                  const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Account No",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item.id,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                setState(() {
+                                                  selectedaccountcredit =
+                                                      newValue;
+                                                  mmemscr = true;
+                                                });
+                                              },
+                                              items: memberss,
+                                              selectedItem:
+                                                  selectedaccountcredit,
+                                            )),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Text(
+                                          "Operating Balance: ",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 60,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            "",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Remarks :",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 90,
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: TextField(
+                                            controller: remarkscredit,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.grey[400],
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 2,
+                                                      horizontal: 5),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
                 ],
               ),
             ),

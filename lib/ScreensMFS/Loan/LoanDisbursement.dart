@@ -149,6 +149,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
           "Approved By":'',
           "Approve":false,
+          'Status':false,
           'Death Risk Amount':deathriskamount,
           'SL':numberOfItems+1,
           'Disbursed Amount': double.parse(condisbursed.text),
@@ -156,7 +157,6 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           'Disbursed Date': DateTime.now(),
           'Approve Date':selectedsanction.approvedate,
           'Manager Name':conmanagername.text,
-          'Status':false,
           'Narration': connarration.text,
         }).then((value) async {
           FirebaseFirestore.instance
