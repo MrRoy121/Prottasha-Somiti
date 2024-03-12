@@ -1004,12 +1004,39 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                                 color: textColor18,
                               ),
                             ),
-                            SizedBox(
-                              width: 65,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 12,
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onHover: (val) {
+                        setState(() {
+                          if (val) {
+                            itemColor19 = AppColor_hover1;
+                            textColor19 = Colors.white;
+                          } else {
+                            itemColor19 = AppColor_Blue;
+                            textColor19 = Colors.black;
+                          }
+                        });
+                      },
+                      onTap: () {
+                        Get.toNamed(botransfertransactionlistPageRoute);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 20, right: 10, bottom: 10),
+                        height: 40,
+                        width: 200,
+                        color: itemColor19,
+                        child: Row(
+                          children: [
+                            Text(
+                              "BO Transaction List",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: textColor19,
+                              ),
                             ),
                           ],
                         ),

@@ -135,7 +135,7 @@ class _BasicInfoWidgetState extends State<BasicInfoWidget> {
 
               SizedBox(width: 10,),
               InkWell(onTap: (){
-                widget.onclear();},
+                widget.onsubmit();},
                 child: Container(
                   height: 40,
                   width: 90,

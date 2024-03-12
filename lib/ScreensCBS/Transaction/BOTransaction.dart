@@ -2,31 +2,21 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker_web/image_picker_web.dart';
-import 'package:prottashasomit/ScreensCBS/Widgets/OtherInfo2CBS.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
-import '../../../../Model/somitee.dart';
 import '../../../../route.dart';
 import '../../Model/account.dart';
-import '../../ScreensMFS/Loan/widgets/LoanDetailsWidget.dart';
 import '../../helpers/auth_service.dart';
 import '../Widgets/BasicInfoWidget.dart';
-import '../Widgets/CustomProgressBar.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
-import '../Widgets/OtherInfoCBS.dart';
-import '../Widgets/PersonalInfoFormCBS.dart';
 
 class BOTransaction extends StatefulWidget {
   NavboolCBS navbool;
@@ -45,9 +35,8 @@ class _BOTransactionState extends State<BOTransaction> {
   List<Accountss> memberss = [];
   var selectedaccountdebit;
   var selectedaccountcredit;
-  var amountdebit = TextEditingController();
+  var amount = TextEditingController();
   var remarksdebit = TextEditingController();
-  var amountcredit = TextEditingController();
   var remarkscredit = TextEditingController();
   bool mmemsdr = false;
   bool mmemscr = false;
@@ -138,8 +127,7 @@ class _BOTransactionState extends State<BOTransaction> {
         selectedbranch == null ||
         selectednature == null ||
         selectedentrytype == null ||
-        amountdebit.text.isEmpty ||
-        amountcredit.text.isEmpty) {
+        amount.text.isEmpty) {
       Get.snackbar(
           "BO Transaction Request Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
@@ -154,17 +142,32 @@ class _BOTransactionState extends State<BOTransaction> {
           borderRadius: 0);
     } else {
       FirebaseFirestore.instance.collection('BO Transaction').add({
-        "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
-        "Approved By":'',
+        "Requested By":
+            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+        "Approved By": '',
         'Request Date': DateTime.now(),
         'Approve Date': DateTime.now(),
-
-        "Approve":false,
-        'Status':false,
+        'Type': selectedtype,
+        'Credit Account ID': selectedaccountcredit.id,
+        'Debit Account ID': selectedaccountdebit.id,
+        'Credit Account': selectedaccountcredit.member['First Name'] +
+            ' ' +
+            selectedaccountcredit.member['Last Name'],
+        'Debit Account': selectedaccountdebit.member['First Name'] +
+            ' ' +
+            selectedaccountdebit.member['Last Name'],
+        'Branch': selectedbranch,
+        'Nature': selectednature,
+        'Entry Type': selectedentrytype,
+        'Amount': double.parse(amount.text),
+        'Credit Remarks': remarkscredit.text,
+        'Debit Remarks': remarksdebit.text,
+        "Approve": false,
+        'Status': false,
       }).then((value) async {
         Get.offNamed(botransfertransactionlistPageRoute);
-        Get.snackbar(
-            "BO Transaction Request Added Successfully.", "Redirecting to BO Transaction List Page.",
+        Get.snackbar("BO Transaction Request Added Successfully.",
+            "Redirecting to BO Transaction List Page.",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
             backgroundColor: Colors.green,
@@ -175,7 +178,7 @@ class _BOTransactionState extends State<BOTransaction> {
                   color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
             ],
             borderRadius: 0);
-      }).catchError((error) => print("Failed to add user: $error"));
+      });
     }
   }
 
@@ -389,7 +392,9 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 }
                                               },
                                               onChanged: (newValue) async {
-                                                selectednature = newValue;
+                                                setState(() {
+                                                  selectednature = newValue;
+                                                });
                                               },
                                               items: TransactionNatureList,
                                               selectedItem: selectednature,
@@ -509,6 +514,9 @@ class _BOTransactionState extends State<BOTransaction> {
                                               },
                                               onChanged: (newValue) async {
                                                 selectedentrytype = newValue;
+                                                setState(() {
+
+                                                });
                                               },
                                               items: TransactionentrytypeList,
                                               selectedItem: selectedentrytype,
@@ -672,6 +680,9 @@ class _BOTransactionState extends State<BOTransaction> {
                                               },
                                               onChanged: (newValue) async {
                                                 selectedbranch = newValue;
+                                                setState(() {
+
+                                                });
                                               },
                                               items: [
                                                 "98765 - Sunamgonj Sadar."
@@ -728,7 +739,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                           child: TextField(
                                             style:
                                                 const TextStyle(fontSize: 16),
-                                            controller: amountdebit,
+                                            controller: amount,
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter
@@ -1087,6 +1098,9 @@ class _BOTransactionState extends State<BOTransaction> {
                                               },
                                               onChanged: (newValue) async {
                                                 selectedbranch = newValue;
+                                                setState(() {
+
+                                                });
                                               },
                                               items: [
                                                 "98765 - Sunamgonj Sadar."
@@ -1143,7 +1157,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                           child: TextField(
                                             style:
                                                 const TextStyle(fontSize: 16),
-                                            controller: amountcredit,
+                                            controller: amount,
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter

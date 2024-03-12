@@ -33,6 +33,7 @@ import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
 import 'ScreensCBS/Processing/DayOpenClose.dart';
 import 'ScreensCBS/Transaction/BOTransaction.dart';
+import 'ScreensCBS/Transaction/BOTransactionList.dart';
 import 'ScreensCBS/Transaction/CashDeposit.dart';
 import 'ScreensCBS/Transaction/CashWithdrawList.dart';
 import 'ScreensCBS/Transaction/ReverseRequest.dart';
@@ -489,6 +490,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navboolcbs,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: botransfertransactionlistPageRoute,
+            page: () => BOTransactionList(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
             middlewares: [AuthMiddleware()]),
       ],
       theme: ThemeData(
