@@ -98,6 +98,15 @@ const List<String> ExpensecategoryList = [
   'Table Stationary',
   'Mobile Bill',
 ];
+const List<String> TransactionNatureList = [
+  'GL to GL',
+  'GL to Party Account',
+  'Party Account to GL',
+  'Party Account to Party Account',
+];
+const List<String> TransactionentrytypeList = [
+  'New Entry',
+];
 
 const List<Map<String, String>> IntroducerList = [
   {'ID': '7210220058837101', 'Name': 'Titas Ranjan Talukdar'}

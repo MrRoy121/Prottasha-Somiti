@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,115 +37,16 @@ class BOTransaction extends StatefulWidget {
 }
 
 class _BOTransactionState extends State<BOTransaction> {
-  List<Somitee> somitee = [];
-  List<String> ssomitee = [];
-  DateTime _selectedDate = DateTime.now();
-  var selectedsomiti;
-  var sselectedsomiti;
-  var selectedmebertype;
-  var selectedocupation;
-  var selectedcustomertype;
-  var selectedispsb;
-  var _firstname = TextEditingController();
-  var _lastname = TextEditingController();
-  var _fathername = TextEditingController();
-  var _mothername = TextEditingController();
-  var _nidnumber = TextEditingController();
-  var _birthreginumber = TextEditingController();
-  var _age = TextEditingController();
-  var _sectorcode = TextEditingController();
-  var _onbehalforrm = TextEditingController();
-  var _education = TextEditingController();
-  var selectedGender;
-  var selectedreligion;
-  var maritalstatus;
-  var mobiletype;
-  var _mobileno = TextEditingController();
-  var _preseentaddress = TextEditingController();
-  var _parmaaddress = TextEditingController();
-  var selectedfamilyhead = "";
-  var selectedownhomestead = "";
-  var selecteddictatorship;
-  var selectedRelatedParty;
-  var _media = TextEditingController();
-  var _livingperiod = TextEditingController();
-  var _annualincome = TextEditingController();
-  var _nomaleearner = TextEditingController();
-  var _nofemaleearner = TextEditingController();
-  var _relationwithhead = TextEditingController();
-  var _landdesc = TextEditingController();
-  var _housedesc = TextEditingController();
-  var _remarks = TextEditingController();
+  var selectedtype = 'Transfer';
+  var selectednature;
+  var selectedentrytype;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    fetch();
-  }
-
-  Future<void> fetch() async {
-    await FirebaseFirestore.instance
-        .collection('Somitee')
-        .get()
-        .then((querySnapshot) {
-      for (var element in querySnapshot.docs) {
-        somitee.add(Somitee(
-            address: element["Address"],
-            id: element.id,
-            lastupdated: element["Last Edited"].toDate(),
-            closed: element["Closed"],
-            name: element["Name"],
-            active: element["Active"],
-            formation: element["Formation Date"].toDate(),
-            phone: element["Phone"],
-            branch: element["Branch"],
-            sl: 0));
-        ssomitee.add(element["Name"]);
-      }
-    });
-  }
 
   void _onclear() {
     setState(() {
       var ss;
-      selectedsomiti = ss;
-      sselectedsomiti = ss;
-      selectedmebertype = ss;
-      selectedocupation = ss;
-      selectedcustomertype = ss;
-      selectedispsb = ss;
-      selecteddictatorship = ss;
-      selectedRelatedParty = ss;
-      _firstname = TextEditingController(text: "");
-      _lastname = TextEditingController(text: "");
-      _fathername = TextEditingController(text: "");
-      _mothername = TextEditingController(text: "");
-      _sectorcode = TextEditingController(text: "");
-      _onbehalforrm = TextEditingController(text: "");
-      _nidnumber = TextEditingController(text: "");
-      _birthreginumber = TextEditingController(text: "");
-      _age = TextEditingController(text: "");
-      _education = TextEditingController(text: "");
-      selectedGender = ss;
-      selectedreligion = ss;
-      _selectedDate = DateTime.now();
-      maritalstatus = ss;
-      mobiletype = ss;
-      _mobileno = TextEditingController(text: "");
-      _preseentaddress = TextEditingController(text: "");
-      _parmaaddress = TextEditingController(text: "");
-      selectedfamilyhead = ss;
-      selectedownhomestead = ss;
-      _livingperiod = TextEditingController(text: "");
-      _media = TextEditingController(text: "");
-      _annualincome = TextEditingController(text: "");
-      _nomaleearner = TextEditingController(text: "");
-      _nofemaleearner = TextEditingController(text: "");
-      _relationwithhead = TextEditingController(text: "");
-      _landdesc = TextEditingController(text: "");
-      _housedesc = TextEditingController(text: "");
-      _remarks = TextEditingController(text: "");
+    //  selectedsomiti = ss;
+    //  sselectedsomiti = ss;
     });
   }
 
@@ -328,107 +230,6 @@ class _BOTransactionState extends State<BOTransaction> {
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
 
-    double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
-    double ResponsiveHeight =
-        MediaQuery.of(context as BuildContext).size.height;
-
-    bool desktop = false;
-    bool tablet = false;
-    bool mobile = false;
-
-    void _setupmaritalstatus(int ins) {
-      setState(() {
-        maritalstatus = MaritalstatusList[ins];
-      });
-    }
-
-    void _setupgender(int ins) {
-      setState(() {
-        if (ins == 1) {
-          selectedGender = 'Male';
-        } else if (ins == 2) {
-          selectedGender = 'Female';
-        } else {
-          selectedGender = 'Others';
-        }
-      });
-    }
-
-    void _setupispsb(int ins) {
-      setState(() {
-        if (ins == 1) {
-          selectedispsb = 'Yes';
-        } else if (ins == 2) {
-          selectedispsb = 'No';
-        }
-      });
-    }
-
-    void _setupfamilyhead(int ins) {
-      setState(() {
-        if (ins == 1) {
-          selectedfamilyhead = 'Yes';
-        } else {
-          selectedfamilyhead = 'No';
-        }
-      });
-    }
-
-    void _setupownhomestead(int ins) {
-      setState(() {
-        if (ins == 1) {
-          selectedownhomestead = 'Yes';
-        } else {
-          selectedownhomestead = 'No';
-        }
-      });
-    }
-
-    void _setupreligion(int ins) {
-      setState(() {
-        selectedreligion = ReligionList[ins];
-      });
-    }
-
-    void _setupcustomertype(int ins) {
-      setState(() {
-        selectedcustomertype = CustomerTypeList[ins];
-      });
-    }
-
-    void _setupdictatorship(int ins) {
-      setState(() {
-        if (ins == 1) {
-          selecteddictatorship = 'Yes';
-        } else {
-          selecteddictatorship = 'No';
-        }
-      });
-    }
-
-    void _setupRelatedParty(int ins) {
-      setState(() {
-        if (ins == 1) {
-          selectedRelatedParty = 'Yes';
-        } else {
-          selectedRelatedParty = 'No';
-        }
-      });
-    }
-
-    if (ResponsiveWidth > 1400) {
-      desktop = true;
-      tablet = false;
-      mobile = false;
-    } else if (ResponsiveWidth > 540) {
-      tablet = true;
-      desktop = false;
-      mobile = false;
-    } else {
-      mobile = true;
-      desktop = false;
-      tablet = false;
-    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -447,61 +248,329 @@ class _BOTransactionState extends State<BOTransaction> {
                     onclear: _onclear,
                   ),
 
-                  // PERSONAL INFORMATION SCREEN
                   Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: PersonalInfoFormCBS(
-                        firstname: _firstname,
-                        selectedGender: selectedGender,
-                        setupcustomertype: _setupcustomertype,
-                        setupispsb: _setupispsb,
-                        religion: selectedreligion,
-                        selectedcustomertype: selectedcustomertype,
-                        selectedispsb: selectedispsb,
-                        selectedDate: _selectedDate,
-                        maritalstatus: maritalstatus,
-                        sectorcode: _sectorcode,
-                        lastname: _lastname,
-                        onbehalforrm: _onbehalforrm,
-                        setupmaritalstatus: _setupmaritalstatus,
-                        fathername: _fathername,
-                        setupreligion: _setupreligion,
-                        mothername: _mothername,
-                        setupgender: _setupgender,
-                        nidnumber: _nidnumber,
-                        birthreginumber: _birthreginumber,
-                        age: _age,
-                        education: _education),
+                    margin: EdgeInsets.only(top: 30),
+                    width: ScreenWidth / 1.097,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+
+                    child: Column(
+                      children: [
+                        Container(
+                          width: ScreenWidth / 1.097,
+                          color: navbarColor,
+                          child: Padding(
+                            padding:
+                            EdgeInsets.only(left: ScreenWidth / 38.4, top: 10, bottom: 10),
+                            child: Text(
+                              "Cash Withdraw",
+                              style: TextStyle(
+                                color: AppColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: ScreenWidth / 96,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 20.0, left: 80, right: 50),
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 200),
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: 'Transfer',
+                                              groupValue: selectedtype,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedtype = value.toString();
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              'Transfer',
+                                              style: TextStyle(fontSize: ScreenWidth / 109.71),
+                                            ),
+                                            SizedBox(width: ScreenWidth / 153.6),
+                                            Radio(
+                                              value: 'Cash',
+                                              groupValue: selectedtype,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedtype = value.toString();
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              'Cash',
+                                              style: TextStyle(fontSize: ScreenWidth / 109.71),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Transaction Nature',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                      FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<String>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                    String item,
+                                                    bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                const TextFieldProps(
+                                                  style:
+                                                  TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                              const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                InputDecoration(
+                                                  enabledBorder:
+                                                  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                        Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                        Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Transaction Nature",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                selectednature = newValue;
+                                              },
+                                              items: TransactionNatureList,
+                                              selectedItem: selectednature,
+                                            )),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 250,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: 'Transaction Entry Type',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: ' *',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                      FontWeight.bold,
+                                                      color: Colors.red,
+                                                      fontSize: 14)),
+                                              TextSpan(
+                                                  text: ' :',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        Container(
+                                            width: 300,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: AppColor_greyBorder,
+                                              border: Border.all(
+                                                  color: AppColor_Black),
+                                            ),
+                                            child: DropdownSearch<String>(
+                                              popupProps: PopupProps.menu(
+                                                showSearchBox: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                    String item,
+                                                    bool isSelected) {
+                                                  return Container(
+                                                    padding: EdgeInsets.all(15),
+                                                    child: Text(
+                                                      item,
+                                                    ),
+                                                  );
+                                                },
+                                                fit: FlexFit.loose,
+                                                showSelectedItems: false,
+                                                menuProps: const MenuProps(
+                                                  backgroundColor: Colors.white,
+                                                  elevation: 100,
+                                                ),
+                                                searchFieldProps:
+                                                const TextFieldProps(
+                                                  style:
+                                                  TextStyle(fontSize: 12),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText: "Search...",
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                              const DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                InputDecoration(
+                                                  enabledBorder:
+                                                  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                        Colors.transparent),
+                                                  ),
+                                                  focusedBorder:
+                                                  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                        Colors.transparent),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownBuilder: (context, item) {
+                                                if (item == null) {
+                                                  return const Text(
+                                                    "Enter Transaction Nature",
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    item,
+                                                  );
+                                                }
+                                              },
+                                              onChanged: (newValue) async {
+                                                selectedentrytype = newValue;
+                                              },
+                                              items: TransactionentrytypeList,
+                                              selectedItem: selectedentrytype,
+                                            )),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                      ],
+                    ),
                   ),
 
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 20,
-                    ),
-                    child: OtherInfoCBS(
-                        selectedfamilyhead: selectedfamilyhead,
-                        selectedownhomestead: selectedownhomestead,
-                        livingperiod: _livingperiod,
-                        media: _media,
-                        annualincome: _annualincome,
-                        setupownhomestead: _setupownhomestead,
-                        nomaleearner: _nomaleearner,
-                        setupfamilyhead: _setupfamilyhead,
-                        nofemaleearner: _nofemaleearner,
-                        relationwithhead: _relationwithhead,
-                        landdesc: _landdesc,
-                        housedesc: _housedesc,
-                        remarks: _remarks),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(
-                        top: 20,
-                      ),
-                      child: OtherInfo2CBS(
-                          selecteddictatorship: selecteddictatorship,
-                          selectedRelatedParty: selectedRelatedParty,
-                          setupdictatorship: _setupdictatorship,
-                          setupRelatedParty: _setupRelatedParty)),
                   SizedBox(height: 50,),
                 ],
               ),
