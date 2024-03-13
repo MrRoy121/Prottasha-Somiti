@@ -126,9 +126,7 @@ class _CashDepositState extends State<CashDeposit> {
     });
   }
 
-  void _save() async {
-
-  }
+  void _save() async {}
 
   Future<void> _selectImage() async {
     final fromPicker = await ImagePickerWeb.getImageAsBytes();
@@ -181,6 +179,7 @@ class _CashDepositState extends State<CashDeposit> {
         selectedcustomertype = CustomerTypeList[ins];
       });
     }
+
     if (ResponsiveWidth > 1400) {
       desktop = true;
       tablet = false;
@@ -234,13 +233,14 @@ class _CashDepositState extends State<CashDeposit> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: ScreenWidth/38.4),
+                                padding:
+                                    EdgeInsets.only(left: ScreenWidth / 38.4),
                                 child: Text(
                                   "Cash Deposit",
                                   style: TextStyle(
                                     color: AppColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: ScreenWidth/96,
+                                    fontSize: ScreenWidth / 96,
                                   ),
                                 ),
                               ),
@@ -250,45 +250,51 @@ class _CashDepositState extends State<CashDeposit> {
                                   _save();
                                 },
                                 child: Container(
-                                  height: ScreenWidth/38.4,
-                                  width: ScreenWidth/17.07,
+                                  height: ScreenWidth / 38.4,
+                                  width: ScreenWidth / 17.07,
                                   color: Colors.green,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: ScreenWidth/153.6, left: ScreenWidth/102.4),
+                                    padding: EdgeInsets.only(
+                                        top: ScreenWidth / 153.6,
+                                        left: ScreenWidth / 102.4),
                                     child: Text(
                                       "✓ Submit",
-                                      style:
-                                      TextStyle(color: Colors.white, fontSize: ScreenWidth/109.71),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: ScreenWidth / 109.71),
                                     ),
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: ScreenWidth/153.6,
+                                width: ScreenWidth / 153.6,
                               ),
                               InkWell(
                                 onTap: () {
                                   _onclear();
                                 },
                                 child: Container(
-                                  height: ScreenWidth/38.4,
-                                  width: ScreenWidth/17.07,
+                                  height: ScreenWidth / 38.4,
+                                  width: ScreenWidth / 17.07,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: ScreenWidth/512, left: ScreenWidth/102.4),
+                                    padding: EdgeInsets.only(
+                                        top: ScreenWidth / 512,
+                                        left: ScreenWidth / 102.4),
                                     child: Row(
                                       children: [
                                         Icon(
                                           Icons.clear_all_sharp,
                                           color: Colors.white,
-                                          size: ScreenWidth/85.33,
+                                          size: ScreenWidth / 85.33,
                                         ),
                                         SizedBox(
-                                          width: ScreenWidth/307.2,
+                                          width: ScreenWidth / 307.2,
                                         ),
                                         Text(
                                           "Clear",
                                           style: TextStyle(
-                                              color: Colors.white, fontSize: ScreenWidth/109.71),
+                                              color: Colors.white,
+                                              fontSize: ScreenWidth / 109.71),
                                         ),
                                       ],
                                     ),
@@ -297,39 +303,43 @@ class _CashDepositState extends State<CashDeposit> {
                                 ),
                               ),
                               SizedBox(
-                                width: ScreenWidth/153.6,
+                                width: ScreenWidth / 153.6,
                               ),
                               InkWell(
                                 onTap: () {
                                   Get.back();
                                 },
                                 child: Container(
-                                  height: ScreenWidth/38.4,
-                                  width: ScreenWidth/30.72,
+                                  height: ScreenWidth / 38.4,
+                                  width: ScreenWidth / 30.72,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: ScreenWidth/153.6, left: ScreenWidth/76.8),
+                                    padding: EdgeInsets.only(
+                                        top: ScreenWidth / 153.6,
+                                        left: ScreenWidth / 76.8),
                                     child: Text(
                                       "X",
-                                      style:
-                                      TextStyle(color: Colors.white, fontSize: ScreenWidth/109.71),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: ScreenWidth / 109.71),
                                     ),
                                   ),
                                   color: Colors.red,
                                 ),
-                              )
-                              ,
+                              ),
                               SizedBox(
-                                width: ScreenWidth/153.6,
+                                width: ScreenWidth / 153.6,
                               ),
                             ],
                           ),
                         ),
                         Expanded(child: SizedBox()),
-                        Container(alignment: Alignment.center,
-                          child:
-                          Row(
+                        Container(
+                          alignment: Alignment.center,
+                          child: Row(
                             children: [
-                              SizedBox(width: 250,),
+                              SizedBox(
+                                width: 250,
+                              ),
                               RichText(
                                 text: TextSpan(
                                   text: 'Customer Type',
@@ -362,8 +372,8 @@ class _CashDepositState extends State<CashDeposit> {
                                     filled: true,
                                     fillColor: AppColor_greyBorder,
                                     border: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: AppColor_greyBorder),
+                                      borderSide: BorderSide(
+                                          color: AppColor_greyBorder),
                                     ),
                                     hintText: "Select",
                                     hintStyle: TextStyle(
@@ -373,16 +383,16 @@ class _CashDepositState extends State<CashDeposit> {
                                   ),
                                   value: selectedcustomertype,
                                   onChanged: (newValue) {
-                                      _setupcustomertype(
-                                          CustomerTypeList.indexOf(newValue!));
+                                    _setupcustomertype(
+                                        CustomerTypeList.indexOf(newValue!));
                                   },
                                   items: CustomerTypeList.map((item) {
                                     return DropdownMenuItem(
                                       value: item,
                                       child: Text(
                                         item,
-                                        style:
-                                        TextStyle(fontSize: ScreenWidth / 109.71),
+                                        style: TextStyle(
+                                            fontSize: ScreenWidth / 109.71),
                                       ),
                                     );
                                   }).toList(),
@@ -395,7 +405,6 @@ class _CashDepositState extends State<CashDeposit> {
                       ],
                     ),
                   ),
-
                   Padding(
                     padding:
                         EdgeInsets.only(left: ScreenWidth / 21.94, top: 40),
@@ -431,7 +440,6 @@ class _CashDepositState extends State<CashDeposit> {
                             ],
                           ),
                   ),
-
                   SizedBox(
                     height: 50,
                   ),

@@ -87,8 +87,12 @@ class _AccountCashDepositState extends State<AccountCashDeposit> {
                   padding: const EdgeInsets.only(top: 20.0, left: 30),
                   child: Row(
                     children: [
-                      SizedBox(width: 100,),
-                      Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      SizedBox(
+                        width: 100,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
                             children: [

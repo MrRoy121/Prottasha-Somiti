@@ -247,8 +247,9 @@ class _BOTransactionListState extends State<BOTransactionList> {
                                         Center(
                                           child: Text(
                                               DateFormat.yMMMd()
-                                                  .format(snapshot
-                                                      .data[index]['Request Date'].toDate())
+                                                  .format(snapshot.data[index]
+                                                          ['Request Date']
+                                                      .toDate())
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -258,7 +259,8 @@ class _BOTransactionListState extends State<BOTransactionList> {
                                       DataCell(
                                         Text(
                                             snapshot.data[index]['Status']
-                                                ? snapshot.data[index]['Approve']
+                                                ? snapshot.data[index]
+                                                        ['Approve']
                                                     ? "Approved"
                                                     : "Rejected"
                                                 : "Requested",
