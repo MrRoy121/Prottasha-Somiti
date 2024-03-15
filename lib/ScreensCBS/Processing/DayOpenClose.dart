@@ -32,7 +32,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
   Future<void> fetch() async {
     var collectionReference =
     FirebaseFirestore.instance.collection('DayOpenClose');
-    var documentReference = collectionReference.doc('98765');
+    var documentReference = collectionReference.doc('5200');
     var snapshot = await documentReference.get();
     if (snapshot.exists && snapshot.data()?['OpenClose'] == true) {
       click = true;
@@ -118,7 +118,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                     }
                                       FirebaseFirestore.instance
                                         .collection('DayOpenClose')
-                                        .doc("98765")
+                                        .doc("5200")
                                         .set({
                                       'OpenClose': dd,
                                       'Date': DateFormat.yMMMd().format(selectedDate).toString(),
@@ -305,7 +305,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                                               });
                                             },
                                             items: const [
-                                              '98765 - Sunamgonj Sadar'
+                                              '5200 - Sunamgonj Sadar'
                                             ],
                                             selectedItem: selectedString,
                                           )),
@@ -529,7 +529,7 @@ class _DayOpenCloseState extends State<DayOpenClose> {
                               rows: [DataRow(
                                 cells: [
                                   DataCell(Text(
-                                      "98765 - Sunamgonj Sadar",
+                                      "5200 - Sunamgonj Sadar",
                                       style: const TextStyle(
                                         fontSize: 12,
                                       ))),

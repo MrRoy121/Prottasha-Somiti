@@ -38,7 +38,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
     String formattedDate = DateFormat.yMMMd().format(selectedDate).toString();
     var collectionReference =
         FirebaseFirestore.instance.collection('DayOpenClose');
-    var documentReference = collectionReference.doc('98765');
+    var documentReference = collectionReference.doc('5200');
     var snapshot = await documentReference.get();
     if (snapshot.exists && snapshot.data()?['OpenClose'] == true && snapshot.data()?['Date']==formattedDate ) {
       click = true;

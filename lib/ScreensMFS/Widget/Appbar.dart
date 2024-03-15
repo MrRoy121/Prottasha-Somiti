@@ -77,7 +77,7 @@ class _NavbarState extends State<Appbar> {
                                 flag: widget.navbool.dashboard,
                                 text: 'Dashboard',
                                 icon: Icons.bar_chart)),
-                        buildAction('Branch Code - 98765', null, () {
+                        buildAction('Branch Code - 5200', null, () {
                           // Branch Code function's Code
                         }),
                         InkWell(
@@ -403,7 +403,7 @@ class _NavbarState extends State<Appbar> {
                                           width: 200,
                                           color: AppColor,
                                           child: Text(
-                                            "Branch Code - 98765",
+                                            "Branch Code - 5200",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,

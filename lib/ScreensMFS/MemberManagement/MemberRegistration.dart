@@ -145,12 +145,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   }
 
   void _save() async {
-    const _chars = '1234567890';
-    Random _rnd = Random();
-    String getRandomString(int length) =>
-        String.fromCharCodes(Iterable.generate(
-            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    String memberid = getRandomString(8);
+
     if (selectedsomiti == null ||
         selectedGender == null ||
         selectedmebertype == '' ||
@@ -191,6 +186,11 @@ class _MemberRegistrationState extends State<MemberRegistration> {
             .doc(selectedsomiti.id)
             .update({'Active': value['Active'] + 1});
       });
+      QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('Member').get();
+      int somiteeCount = querySnapshot.docs.length;
+      String memberid = selectedsomiti.id+somiteeCount.toString().padLeft(3, '0');
+
       if (img) {
         final photoRef =
             FirebaseStorage.instance.ref("MembersImage/$memberid.jpeg");

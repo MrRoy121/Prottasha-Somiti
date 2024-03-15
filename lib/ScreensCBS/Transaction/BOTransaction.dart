@@ -685,7 +685,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 });
                                               },
                                               items: [
-                                                "98765 - Sunamgonj Sadar."
+                                                "5200 - Sunamgonj Sadar."
                                               ],
                                               selectedItem: selectedbranch,
                                             )),
@@ -1103,7 +1103,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                                 });
                                               },
                                               items: [
-                                                "98765 - Sunamgonj Sadar."
+                                                "5200 - Sunamgonj Sadar."
                                               ],
                                               selectedItem: selectedbranch,
                                             )),
