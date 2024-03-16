@@ -108,7 +108,7 @@ class _EditMembersState extends State<EditMembers> {
                 mobilenotype: element["Mobile No Type"],
                 mobilenno: element["Mobile No"],
                 presentadd: element["Present Address"],
-                parmaadd: element["Parmanent Address"],
+                parmaadd: element["Permanent Address"],
                 livingperiod: element["Living Period"],
                 nomaleearner: element["No Female Earner"],
                 nofemaleearner: element["No Male Earner"],
@@ -212,6 +212,7 @@ class _EditMembersState extends State<EditMembers> {
                                     if (snapshot.connectionState ==
                                         ConnectionState.done) {
                                       if (snapshot.hasError) {
+                                        print(snapshot.error);
                                         return const Center(
                                           child: Text(
                                               "No Member Data Available.."),

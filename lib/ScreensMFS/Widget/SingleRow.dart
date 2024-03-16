@@ -222,11 +222,11 @@ class _SingleRowState extends State<SingleRow> {
                                 setState(() {
                                   widget.ocupation = newValue!;
                                   widget.setupoccupationtype(
-                                      OcupationList.indexOf(
+                                      SectorList.indexOf(
                                           newValue.toString()));
                                 });
                               },
-                              items: OcupationList.map((item) {
+                              items: SectorList.map((item) {
                                 return DropdownMenuItem(
                                   value: item,
                                   child: Text(item, style: TextStyle(fontSize: ScreenWidth/109.71),),

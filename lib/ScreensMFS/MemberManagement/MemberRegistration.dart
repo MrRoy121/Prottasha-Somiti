@@ -188,7 +188,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       });
       QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('Member').get();
-      int somiteeCount = querySnapshot.docs.length;
+      int somiteeCount = querySnapshot.docs.length+1;
       String memberid = selectedsomiti.id+somiteeCount.toString().padLeft(3, '0');
 
       if (img) {
@@ -356,7 +356,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
 
     void _setupoccupationtype(int ins) {
       setState(() {
-        selectedocupation = OcupationList[ins];
+        selectedocupation = SectorList[ins];
       });
     }
 

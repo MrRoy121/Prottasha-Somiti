@@ -429,7 +429,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
 
     void _setupoccupationtype(int ins) {
       setState(() {
-        selectedocupation = OcupationList[ins];
+        selectedocupation = SectorList[ins];
       });
     }
 

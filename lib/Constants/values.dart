@@ -6,8 +6,7 @@ const List<String> UserTypeList = [
   'Branch Manager',
   'Field Officer',
 ];
-const List<String> MemberTypeList = ['General Member', 'Item 2', 'Item 3'];
-const List<String> OcupationList = ['Agriculture', 'Item 2', 'Item 3'];
+const List<String> MemberTypeList = ['General Member'];
 const List<String> MaritalstatusList = ['Single', 'Married', 'Divorced'];
 const List<String> ReligionList = [
   'Hinduism',
@@ -16,7 +15,7 @@ const List<String> ReligionList = [
   'Christianity',
   'Others'
 ];
-const List<String> MobileTypeList = ['Personal', 'Office', 'Other'];
+const List<String> MobileTypeList = ['Personal', 'Other'];
 const List<String> InstallmentFrequencyList = ['Daily', 'Weekly', 'Monthly'];
 const List<int> SanctionLimitList = [50000, 100000, 500000, 1000000];
 const List<String> LoanPeriodList = [
@@ -43,6 +42,7 @@ const List<String> SectorList = [
   '901003 - Dairy Farms',
   '901004 - Poultry Farms',
   '901009 - Farmers/Fishermen',
+  '901010 - Business',
   '902118 - Rice Mills',
   '902133 - Bricks Manufacturers & Sand Elevators',
   '902450 - Restaurant/Fast Food',

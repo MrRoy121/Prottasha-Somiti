@@ -158,18 +158,21 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
             ],
             borderRadius: 0);
       } else {
+        Random random = Random();
+        String code = (100000 + random.nextInt(900000)).toString();
         FirebaseFirestore.instance
             .collection('Customer')
             .doc(selectedmemberss.id)
             .set({
           'Member': selectedmemberss.toJson(),
+          'Member ID':selectedmemberss.id,
           'Member Bool': true,
           'Status':false,
           'Approve':false,
         }).then((value) async {
           Get.offNamed(customerlistPageRoute);
           Get.snackbar(
-              "Member Added Successfully.", "Redirecting to Member List Page.",
+              "Customer Added Successfully. Customer Code Is :$code", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
