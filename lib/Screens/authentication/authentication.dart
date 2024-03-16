@@ -32,7 +32,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("Assets/login_bg.png"), fit: BoxFit.cover)),
+                image: AssetImage("assets/login_bg.png"), fit: BoxFit.cover)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -55,7 +55,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 children: [
                   Container(
                     child: Image.asset(
-                      "Assets/logo.png",
+                      "assets/logo.png",
                       height: 170,
                     ),
                   ),

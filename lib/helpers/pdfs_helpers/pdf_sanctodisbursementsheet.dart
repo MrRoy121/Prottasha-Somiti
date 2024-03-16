@@ -19,11 +19,11 @@ class PdfSanctionDisbursementSheet {
 
     final Uint8List data = await yourBackgroundImageFunction();
     final fontData =
-        await rootBundle.load("Assets/fonts/opensans/OpenSans-Regular.ttf");
+        await rootBundle.load("assets/fonts/opensans/OpenSans-Regular.ttf");
     final ttf = Font.ttf(fontData.buffer.asByteData());
 
     final fontData2 =
-        await rootBundle.load("Assets/fonts/opensans/OpenSans-Bold.ttf");
+        await rootBundle.load("assets/fonts/opensans/OpenSans-Bold.ttf");
     final ttfbold = Font.ttf(fontData2.buffer.asByteData());
 
     String sts = "Requested";
@@ -1085,7 +1085,7 @@ class PdfSanctionDisbursementSheet {
   }
 
   static Future<Uint8List> yourBackgroundImageFunction() async {
-    ByteData byteData = await rootBundle.load("Assets/logo.jpg");
+    ByteData byteData = await rootBundle.load("assets/logo.jpg");
     return byteData.buffer.asUint8List();
   }
 

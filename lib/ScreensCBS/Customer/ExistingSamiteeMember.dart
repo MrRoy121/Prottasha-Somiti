@@ -57,7 +57,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
   }
 
   Future<void> _loadImage() async {
-    ByteData data = await rootBundle.load('Assets/person.jpg');
+    ByteData data = await rootBundle.load('assets/person.jpg');
     pickedImage = data.buffer.asUint8List();
   }
 
