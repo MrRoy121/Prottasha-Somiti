@@ -24,6 +24,7 @@ class CustomerList extends StatefulWidget {
 }
 
 class _CustomerListState extends State<CustomerList> {
+  List<String> ccode = [];
   @override
   Widget build(BuildContext context) {
     List<bool> status = [];
@@ -32,6 +33,7 @@ class _CustomerListState extends State<CustomerList> {
       List<Memberss> somitee = [];
       status = [];
       approve = [];
+      ccode = [];
       int s = 1;
       await FirebaseFirestore.instance
           .collection('Customer')
@@ -81,6 +83,7 @@ class _CustomerListState extends State<CustomerList> {
           status.add(element['Status']);
           approve.add(element['Approve']);
           s++;
+          ccode.add(element.id);
         }
       });
       return somitee;
@@ -176,7 +179,7 @@ class _CustomerListState extends State<CustomerList> {
                                         ),
                                         DataColumn(
                                           label: Text(
-                                            'Member Code',
+                                            'Customer Code',
                                             style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
@@ -185,7 +188,7 @@ class _CustomerListState extends State<CustomerList> {
                                           ),
                                         ),
                                         DataColumn(
-                                          label: Text('Member Name',
+                                          label: Text('Member Code',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
@@ -228,14 +231,6 @@ class _CustomerListState extends State<CustomerList> {
                                               )),
                                         ),
                                         DataColumn(
-                                          label: Text('Date Of Birth',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                        DataColumn(
                                           label: Text('Present Address',
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -270,12 +265,12 @@ class _CustomerListState extends State<CustomerList> {
                                                       fontSize: 12,
                                                     ))),
                                             DataCell(
-                                              Text(snapshot.data[index].id,
-                                                  style: TextStyle(
+                                              Text(ccode[index],
+                                                  style: const TextStyle(
                                                     fontSize: 12,
                                                   )),
                                             ),
-                                            DataCell(Text(
+                                            DataCell(Text(snapshot.data[index].id+" "+
                                                 snapshot.data[index].firstname +
                                                     " " +
                                                     snapshot
@@ -314,19 +309,6 @@ class _CustomerListState extends State<CustomerList> {
                                                   style: const TextStyle(
                                                     fontSize: 12,
                                                   )),
-                                            ),
-                                            DataCell(
-                                              Center(
-                                                child: Text(
-                                                    DateFormat.yMMMd()
-                                                        .format(snapshot
-                                                            .data[index]
-                                                            .birthdate)
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                    )),
-                                              ),
                                             ),
                                             DataCell(
                                               Text(

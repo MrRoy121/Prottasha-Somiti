@@ -162,7 +162,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
         String code = (100000 + random.nextInt(900000)).toString();
         FirebaseFirestore.instance
             .collection('Customer')
-            .doc(selectedmemberss.id)
+            .doc(code)
             .set({
           'Member': selectedmemberss.toJson(),
           'Member ID':selectedmemberss.id,

@@ -39,6 +39,8 @@ class _RegularACOpenState extends State<RegularACOpen> {
   int _selectedValue = 1;
   bool img = false, dfimg = false, dbimg = false;
 
+  List<String> ccode = [];
+  var selectedccode;
   List<Memberss> memberss = [];
   bool mmems = false;
   var selectedmemberss;
@@ -61,12 +63,10 @@ class _RegularACOpenState extends State<RegularACOpen> {
 
   void _save(int indx) async {
     if (indx == 106) {
-      const _chars = '1234567890';
-      Random _rnd = Random();
-      String getRandomString(int length) =>
-          String.fromCharCodes(Iterable.generate(
-              length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-      String memberid = getRandomString(10);
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('Account').get();
+      String memberid =
+          "520022" + selectedccode + (querySnapshot.docs.length + 1).toString();
 
       final photoRef =
           FirebaseStorage.instance.ref("NomineeImage/$memberid.jpeg");
@@ -144,6 +144,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
 
   Future<void> fetch() async {
     memberss = [];
+    ccode = [];
     await FirebaseFirestore.instance
         .collection('Customer')
         .get()
@@ -189,6 +190,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
             img: element['Member']["Image"],
             birthdate: element['Member']["Date Of Birth"].toDate(),
             sl: 0));
+        ccode.add(element.id);
       }
     });
   }
@@ -199,6 +201,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
 
     Future<void> _setupmemberss(int ins) async {
       selectedmemberss = memberss[ins];
+      selectedccode = ccode[ins];
       await FirebaseFirestore.instance
           .collection('Somitee')
           .doc(selectedmemberss.somiteeid)
@@ -231,6 +234,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
     void _setupdocumenttype(int ins) {
       selecteddocumenttype = DocumentList[ins];
     }
+
     void _setupintroducertype(int ins) {
       selectedintroducertype = IntroducerTypeList[ins];
     }
@@ -238,6 +242,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
     void _setupintroducer(int ins) {
       selectedaccountno = IntroducerList[ins];
     }
+
     Future<void> _selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
         context: context,
@@ -539,7 +544,9 @@ class _RegularACOpenState extends State<RegularACOpen> {
             index == 4
                 ? RegularDepositIntroducer(
                     save: _save,
-                    selectedaccountno: selectedaccountno,setupintroducer: _setupintroducer,setupintroducertype: _setupintroducertype,
+                    selectedaccountno: selectedaccountno,
+                    setupintroducer: _setupintroducer,
+                    setupintroducertype: _setupintroducertype,
                     selectedintroducertype: selectedintroducertype,
                   )
                 : SizedBox(),

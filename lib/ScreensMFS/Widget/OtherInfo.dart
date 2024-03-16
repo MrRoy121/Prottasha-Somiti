@@ -11,7 +11,7 @@ class OtherInfo extends StatefulWidget {
   var nofemaleearner;
   var relationwithhead;
   var landdesc;
-  var housedesc;
+  var reference;
   void Function(int) setupownhomestead;
   void Function(int) setupfamilyhead;
 
@@ -26,7 +26,7 @@ class OtherInfo extends StatefulWidget {
       required this.nofemaleearner,
       required this.relationwithhead,
       required this.landdesc,
-      required this.housedesc,
+      required this.reference,
       required this.remarks});
 
   var remarks;
@@ -240,7 +240,7 @@ class OtherInfoState extends State<OtherInfo> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: 'House Description :',
+                            text: 'Reference :',
                             style: TextStyle(
                                 color: Colors.black, fontSize: ScreenWidth/109.71),
                             children: <TextSpan>[
@@ -262,7 +262,7 @@ class OtherInfoState extends State<OtherInfo> {
                         ),
                         SizedBox(
                           width: ScreenWidth/5.12,
-                          child: TextField(controller: widget.housedesc,
+                          child: TextField(controller: widget.reference,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding:
@@ -635,7 +635,7 @@ class OtherInfoState extends State<OtherInfo> {
         //                           ),
         //                           SizedBox(
         //                             width: 200,
-        //                             child: TextField(controller: widget.housedesc,
+        //                             child: TextField(controller: widget.reference,
         //                               decoration: InputDecoration(
         //                                 border: OutlineInputBorder(),
         //                                 contentPadding:
@@ -1007,7 +1007,7 @@ class OtherInfoState extends State<OtherInfo> {
         //                           ),
         //                           SizedBox(
         //                             width: 200,
-        //                             child: TextField(controller: widget.housedesc,
+        //                             child: TextField(controller: widget.reference,
         //                               decoration: InputDecoration(
         //                                 border: OutlineInputBorder(),
         //                                 contentPadding:

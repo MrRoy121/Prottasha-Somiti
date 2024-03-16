@@ -168,7 +168,7 @@ class _SingleRowState extends State<SingleRow> {
                   ],
                 ),
                 SizedBox(
-                  width: ScreenWidth/6.144,
+                  width: 20,
                 ),
                 Column(
                   children: [
@@ -197,17 +197,16 @@ class _SingleRowState extends State<SingleRow> {
                             ),
                           ),
                           SizedBox(
-                            width: ScreenWidth/153.6,
+                            width: 10,
                           ),
                           SizedBox(
-                            width: ScreenWidth/5.12,
+                            width:500,
                             height: ScreenWidth/30.72,
-
                             child: DropdownButtonFormField<String>(
                               decoration:  InputDecoration(
-                                filled: true,
+                                filled: true,isDense: true,
                                 fillColor: AppColor_greyBorder,
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColor_greyBorder),
                                 ),

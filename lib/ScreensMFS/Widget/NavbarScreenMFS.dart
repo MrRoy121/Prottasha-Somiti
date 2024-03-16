@@ -286,7 +286,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   width: 200,
                                   color: itemColor3,
                                   child: Text(
-                                    "Edit Member",
+                                    "Edit Member Information",
                                     style: TextStyle(
                                       color: textColor3,
                                       fontSize: 12,

@@ -53,7 +53,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
   var _nidnumber = TextEditingController();
   var _birthreginumber = TextEditingController();
   var _age = TextEditingController();
-  var _dependablemember = TextEditingController();
+  var _spouse = TextEditingController();
   var _education = TextEditingController();
   bool somiteeselected = false;
   var selectedGender;
@@ -125,7 +125,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
       _nidnumber = TextEditingController(text: "");
       _birthreginumber = TextEditingController(text: "");
       _age = TextEditingController(text: "");
-      _dependablemember = TextEditingController(text: "");
+      _spouse = TextEditingController(text: "");
       _education = TextEditingController(text: "");
       selectedGender = ss;
       selectedreligion = ss;
@@ -203,7 +203,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
-          'No of Dependent': _dependablemember.text,
+          'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
           'Mobile No Type': mobiletype,
@@ -258,7 +258,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
           'Annual Income': _annualincome.text,
-          'No of Dependent': _dependablemember.text,
+          'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
           'Mobile No Type': mobiletype,
@@ -312,7 +312,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
           'Annual Income': _annualincome.text,
-          'No of Dependent': _dependablemember.text,
+          'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
           'Mobile No Type': mobiletype,
@@ -365,7 +365,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
     _nidnumber = TextEditingController(text: cst.nationalid);
     _birthreginumber = TextEditingController(text: cst.birthregi);
     _age = TextEditingController(text: cst.age);
-    _dependablemember = TextEditingController(text: cst.nodepenndent);
+    _spouse = TextEditingController(text: cst.nodepenndent);
     _education = TextEditingController(text: cst.education);
     selectedGender = cst.gender;
     selectedreligion = cst.religion;
@@ -450,7 +450,23 @@ class _MemberUpdateState extends State<MemberUpdate> {
         }
       });
     }
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2101),
+      );
 
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+          final today = DateTime.now();
+          final age = today.year - picked.year - ((today.month > picked.month || (today.month == picked.month && today.day >= picked.day)) ? 0 : 1);
+          _age.text = age.toString();
+        });
+      }
+    }
     void _setupfamilyhead(int ins) {
       setState(() {
         if (ins == 1) {
@@ -590,7 +606,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                 firstname: _firstname,
                 selectedGender: selectedGender,
                 religion: selectedreligion,
-                selectedDate: _selectedDate,
+                selectedDate: _selectedDate,selectDate: _selectDate,
                 maritalstatus: maritalstatus,
                 lastname: _lastname,
                 setupmaritalstatus: _setupmaritalstatus,
@@ -601,7 +617,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                 nidnumber: _nidnumber,
                 birthreginumber: _birthreginumber,
                 age: _age,
-                dependablemember: _dependablemember,
+                spouse: _spouse,
                 education: _education),
 
             SizedBox(
@@ -632,7 +648,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
                 nofemaleearner: _nofemaleearner,
                 relationwithhead: _relationwithhead,
                 landdesc: _landdesc,
-                housedesc: _housedesc,
+                reference: _housedesc,
                 remarks: _remarks),
 
             SizedBox(

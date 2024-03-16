@@ -11,7 +11,7 @@ class PersonalInfoForm extends StatefulWidget {
   var nidnumber;
   var birthreginumber;
   var age;
-  var dependablemember;
+  var spouse;
   var education;
 
   void Function(int) setupmaritalstatus;
@@ -20,11 +20,13 @@ class PersonalInfoForm extends StatefulWidget {
   var selectedGender;
   var religion;
   DateTime selectedDate;
+  void Function(BuildContext) selectDate;
   var maritalstatus;
 
   PersonalInfoForm(
       {required this.firstname,required this.selectedGender,required this.religion,
         required this.selectedDate,
+        required this.selectDate,
         required this.maritalstatus,
         required this.setupreligion,
       required this.lastname,
@@ -35,7 +37,7 @@ class PersonalInfoForm extends StatefulWidget {
       required this.nidnumber,
       required this.birthreginumber,
       required this.age,
-      required this.dependablemember,
+      required this.spouse,
       required this.education});
 
   @override
@@ -43,21 +45,6 @@ class PersonalInfoForm extends StatefulWidget {
 }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: widget.selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != widget.selectedDate) {
-      setState(() {
-        widget.selectedDate = picked;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -351,7 +338,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                           width: ScreenWidth/5.12,
                           height: ScreenWidth/30.72,
                           child: InkWell(
-                            onTap: () => _selectDate(context),
+                            onTap: () => widget.selectDate(context),
                             child: AbsorbPointer(
                               child: TextField(
                                 decoration: InputDecoration(
@@ -373,33 +360,6 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                       color: Colors.grey),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenWidth/38.4,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "No of Dependable Member: ",
-                          style: TextStyle(
-                            fontSize: ScreenWidth/109.71,
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenWidth/768,
-                        ),
-                        SizedBox(
-                          height: ScreenWidth/30.72,
-                          width: ScreenWidth/5.12,
-                          child: TextField(controller: widget.dependablemember,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding:
-                              EdgeInsets.symmetric(vertical: 2),
                             ),
                           ),
                         ),
@@ -460,6 +420,33 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                                 child: Text(item),
                               );
                             }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: ScreenWidth/38.4,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Spouse: ",
+                          style: TextStyle(
+                            fontSize: ScreenWidth/109.71,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 120,
+                        ),
+                        SizedBox(
+                          height: ScreenWidth/30.72,
+                          width: ScreenWidth/5.12,
+                          child: TextField(controller: widget.spouse,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              contentPadding:
+                              EdgeInsets.symmetric(vertical: 2),
+                            ),
                           ),
                         ),
                       ],
@@ -1019,7 +1006,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         //                           ),
         //                           SizedBox(
         //                             width: 250,
-        //                             child: TextField(controller: widget.dependablemember,
+        //                             child: TextField(controller: widget.spouse,
         //                               decoration: InputDecoration(
         //                                 border: OutlineInputBorder(),
         //                                 contentPadding:
@@ -1638,7 +1625,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         //                           ),
         //                           SizedBox(
         //                             width: 200,
-        //                             child: TextField(controller: widget.dependablemember,
+        //                             child: TextField(controller: widget.spouse,
         //                               decoration: InputDecoration(
         //                                 border: OutlineInputBorder(),
         //                                 contentPadding:

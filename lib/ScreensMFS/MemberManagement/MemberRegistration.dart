@@ -50,7 +50,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   var _nidnumber = TextEditingController();
   var _birthreginumber = TextEditingController();
   var _age = TextEditingController();
-  var _dependablemember = TextEditingController();
+  var _spouse = TextEditingController();
   var _education = TextEditingController();
   var selectedGender;
   var selectedreligion;
@@ -67,7 +67,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   var _nofemaleearner = TextEditingController();
   var _relationwithhead = TextEditingController();
   var _landdesc = TextEditingController();
-  var _housedesc = TextEditingController();
+  var _reference = TextEditingController();
   var _remarks = TextEditingController();
   late Uint8List pickedImage;
 
@@ -120,7 +120,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       _nidnumber = TextEditingController(text: "");
       _birthreginumber = TextEditingController(text: "");
       _age = TextEditingController(text: "");
-      _dependablemember = TextEditingController(text: "");
+      _spouse = TextEditingController(text: "");
       _education = TextEditingController(text: "");
       selectedGender = ss;
       selectedreligion = ss;
@@ -138,31 +138,28 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       _nofemaleearner = TextEditingController(text: "");
       _relationwithhead = TextEditingController(text: "");
       _landdesc = TextEditingController(text: "");
-      _housedesc = TextEditingController(text: "");
+      _reference = TextEditingController(text: "");
       _remarks = TextEditingController(text: "");
       img = false;
     });
   }
 
   void _save() async {
-
     if (selectedsomiti == null ||
         selectedGender == null ||
         selectedmebertype == '' ||
         selectedocupation == '' ||
         _fathername.text.isEmpty ||
         _firstname.text.isEmpty ||
-        _housedesc.text.isEmpty ||
+        _reference.text.isEmpty ||
         _lastname.text.isEmpty ||
         _preseentaddress.text.isEmpty ||
         _mothername.text.isEmpty ||
         _mobileno.text.isEmpty ||
         _annualincome.text.isEmpty ||
-        _birthreginumber.text.isEmpty ||
-        _landdesc.text.isEmpty ||
-        _livingperiod.text.isEmpty ||
         _mobileno.text.isEmpty ||
-        _nidnumber.text.isEmpty) {
+        _reference.text.isEmpty ||
+        (_birthreginumber.text.isEmpty && _nidnumber.text.isEmpty)) {
       Get.snackbar(
           "Member Registration Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
@@ -187,9 +184,10 @@ class _MemberRegistrationState extends State<MemberRegistration> {
             .update({'Active': value['Active'] + 1});
       });
       QuerySnapshot querySnapshot =
-      await FirebaseFirestore.instance.collection('Member').get();
-      int somiteeCount = querySnapshot.docs.length+1;
-      String memberid = selectedsomiti.id+somiteeCount.toString().padLeft(3, '0');
+          await FirebaseFirestore.instance.collection('Member').get();
+      int somiteeCount = querySnapshot.docs.length + 1;
+      String memberid =
+          selectedsomiti.id + somiteeCount.toString().padLeft(3, '0');
 
       if (img) {
         final photoRef =
@@ -210,8 +208,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Father Name': _fathername.text,
           'Loan Pending Amount': 0,
           'Own deposit Amount': 0,
-          'Deposits':[],
-          'Withdraws':[],
+          'Deposits': [],
+          'Withdraws': [],
           'Mother Name': _mothername.text,
           'Gender': selectedGender,
           'Religion': selectedreligion,
@@ -219,7 +217,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
-          'No of Dependent': _dependablemember.text,
+          'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
           'Mobile No Type': mobiletype,
@@ -237,7 +235,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Relation With Head': _relationwithhead.text,
           'Annual Income': _annualincome.text,
           'Land Desc': _landdesc.text,
-          'House Desc': _housedesc.text,
+          'Reference': _reference.text,
           'Remarks': _remarks.text,
           'Image': true,
           'ImageURL': url,
@@ -272,14 +270,14 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Mother Name': _mothername.text,
           'Gender': selectedGender,
           'Status': true,
-          'Deposits':[],
-          'Withdraws':[],
+          'Deposits': [],
+          'Withdraws': [],
           'Religion': selectedreligion,
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
-          'No of Dependent': _dependablemember.text,
+          'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
           'Mobile No Type': mobiletype,
@@ -295,7 +293,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Own HomeStead': selectedownhomestead,
           'Relation With Head': _relationwithhead.text,
           'Land Desc': _landdesc.text,
-          'House Desc': _housedesc.text,
+          'Reference': _reference.text,
           'Remarks': _remarks.text,
           'Image': false,
           'ImageURL': '',
@@ -410,6 +408,29 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       });
     }
 
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2101),
+      );
+
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+          final today = DateTime.now();
+          final age = today.year -
+              picked.year -
+              ((today.month > picked.month ||
+                      (today.month == picked.month && today.day >= picked.day))
+                  ? 0
+                  : 1);
+          _age.text = age.toString();
+        });
+      }
+    }
+
     if (ResponsiveWidth > 1400) {
       desktop = true;
       tablet = false;
@@ -468,6 +489,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   firstname: _firstname,
                   selectedGender: selectedGender,
                   religion: selectedreligion,
+                  selectDate: _selectDate,
                   selectedDate: _selectedDate,
                   maritalstatus: maritalstatus,
                   lastname: _lastname,
@@ -479,7 +501,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   nidnumber: _nidnumber,
                   birthreginumber: _birthreginumber,
                   age: _age,
-                  dependablemember: _dependablemember,
+                  spouse: _spouse,
                   education: _education),
             ),
 
@@ -508,7 +530,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   nofemaleearner: _nofemaleearner,
                   relationwithhead: _relationwithhead,
                   landdesc: _landdesc,
-                  housedesc: _housedesc,
+                  reference: _reference,
                   remarks: _remarks),
             ),
 
@@ -628,7 +650,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                             style:
                                                                 ElevatedButton
                                                                     .styleFrom(
-                                                              backgroundColor: Colors.white,
+                                                              backgroundColor:
+                                                                  Colors.white,
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 side: BorderSide(
@@ -847,8 +870,9 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                   ElevatedButton(
                                                                 style: ElevatedButton
                                                                     .styleFrom(
-                                                                  backgroundColor: Colors
-                                                                      .white,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     side: BorderSide(
@@ -1070,8 +1094,9 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                                   ElevatedButton(
                                                                 style: ElevatedButton
                                                                     .styleFrom(
-                                                                  backgroundColor: Colors
-                                                                      .white,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     side: BorderSide(
