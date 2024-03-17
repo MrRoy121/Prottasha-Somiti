@@ -42,14 +42,14 @@ class _NavbarState extends State<Appbar> {
               SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Prottasha Samitee Ltd.',
+                  'Prottyasha Sanchoy & Rindan Co-Operative Samitee Ltd.',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
               MediaQuery.of(context).size.width > 1100
                   ? Row(
                       children: [
-                        buildAction('10-Oct-2023', Icons.calendar_month_sharp,
+                        buildAction(DateFormat.yMMMMd().format(DateTime.now()), Icons.calendar_month_sharp,
                             () {
                           // Date function's code
                         }),

@@ -114,7 +114,11 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
         .get()
         .then((querySnapshot) {
       for (var json in querySnapshot.docs) {
+
+        print(json['Sanction']);
         allsanction.add(loanSanction.fromJson(json['Sanction']));
+
+
       }
     });
   }

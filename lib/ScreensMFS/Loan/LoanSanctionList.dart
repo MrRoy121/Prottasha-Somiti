@@ -250,7 +250,7 @@ class _LoanSanctionListState extends State<LoanSanctionList> {
                                             fontSize: 12,
                                           ))),
                                       DataCell(
-                                        Text(snapshot.data[index].id,
+                                        Text("S"+snapshot.data[index].id,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),

@@ -178,15 +178,10 @@ class _LoanSanctionState extends State<LoanSanction> {
 
   void _save() async {
     QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('LoanSanction').get();
-
-    int numberOfItems = querySnapshot.size;
-    const _chars = '1234567890';
-    Random _rnd = Random();
-    String getRandomString(int length) =>
-        String.fromCharCodes(Iterable.generate(
-            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    String sanctionloanrequestid = getRandomString(8);
+    await FirebaseFirestore.instance.collection('LoanSanction').get();
+    int numberOfItems = querySnapshot.docs.length;
+    String sanctionloanrequestid =
+        "5200${(querySnapshot.docs.length + 1).toString().padLeft(4, '0')}";
     if (selectedsomiti == null ||
         selectedmemberss == null ||
         selectedloanpurpose == null ||
@@ -309,18 +304,19 @@ class _LoanSanctionState extends State<LoanSanction> {
 
     void _setuploanscheme(int ins) {
       double principleAmount = double.parse(consanctionlimit.text.toString());
-      double val = principleAmount / 10000;
+      double val = principleAmount / 100;
+      double vals = principleAmount / 10000;
       setState(() {
         _selectedscheme = LoanSchemes[ins];
         _selectedinstalment = InstallmentFrequencyList[0];
         coninstallmentno.text = _selectedscheme.installmentno.toString();
         conduratioon.text = _selectedscheme.duration.toString();
         coninstallmentamount.text =
-            (_selectedscheme.installmentamount * val).toString();
+            (_selectedscheme.installmentamount * vals).toString();
         conservicecharge.text =
             (_selectedscheme.servicecharge * val).toString();
         serviceamount = (double.parse(conservicecharge.text) +
-            double.parse(coninstallmentamount.text) * val);
+            principleAmount);
       });
     }
 

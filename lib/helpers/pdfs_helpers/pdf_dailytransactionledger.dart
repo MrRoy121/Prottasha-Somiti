@@ -468,7 +468,7 @@ class PdfDailyTransactionLedger {
                                 color: PdfColor.fromHex("#1E2772"))),
                       ]))),
                 ]),
-                Text("Prottsha Samitee LTD.",
+                Text("Prottyasha Sanchoy & Rindan Co-Operative Samitee LTD.",
                     style: TextStyle(
                         font: ttfbold,
                         fontSize: 14,

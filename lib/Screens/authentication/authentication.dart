@@ -61,7 +61,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   ),
                   const Text(
                     textAlign: TextAlign.center,
-                    "Prottsha Samitee Ltd.",
+                    "Prottyasha Sanchoy & Rindan Co-Operative Samitee Ltd Ltd.",
                     style: TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 14,
