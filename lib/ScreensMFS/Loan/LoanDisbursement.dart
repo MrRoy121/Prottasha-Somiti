@@ -5,6 +5,7 @@ import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanInformation.dart';
 import 'package:prottashasomit/ScreensMFS/Loan/widgets/LoanOtherInfo.dart';
 import '../../../Model/loanSanction.dart';
 import '../../Constants/values.dart';
+import '../../Model/account.dart';
 import '../../Model/member.dart';
 import '../../Model/scheme.dart';
 import '../../helpers/auth_service.dart';
@@ -31,16 +32,18 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
   List<loanSanction> sanction = [];
   List<String> ssanction = [];
   bool bsanction = false;
+  List<Accountss> accounts = [];
+  var selectedaccount;
   var ssscheme;
   var memberss;
   var selectedsanction;
   var selectedsanctionid;
   var condisbursed = TextEditingController();
   var conpincode = TextEditingController();
-  var conmanagername = TextEditingController();
   var connarration = TextEditingController(text: "Loan Disbursement");
   String deathrisk = '';
   double deathriskamount = 0;
+  bool mmems = false;
   @override
   void initState() {
     super.initState();
@@ -62,7 +65,9 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
               loanpurpose: json["Loan Purpose"],
               approvedate: json["Approve Date"].toDate(),
               memberphone: json['Member Phone'],
-              scheme: json["Loan Scheme"],approvedby: json["Approved By"],requestedby: json["Requested By"],
+              scheme: json["Loan Scheme"],
+              approvedby: json["Approved By"],
+              requestedby: json["Requested By"],
               category: json['Loan Category'],
               sanctionlimit: json["Sanction Limit"],
               installmentfrequency: json["Installment Frequency"],
@@ -94,6 +99,41 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
         }
       }
     });
+    int s = 0;
+    await FirebaseFirestore.instance
+        .collection('Account')
+        .get()
+        .then((querySnapshot) {
+      for (var element in querySnapshot.docs) {
+        accounts.add(Accountss(
+            introducertype: element["Introducer Type"],
+            member: element["Member"],
+            introducerno: element["Introducer No"],
+            nomineename: element["Nominee Name"],
+            nomineepercentage: element["Nominee Percentage"],
+            accounttype: element["Account Type"],
+            nomineeimage: element["Nominee Image"],
+            relation: element["Relation"],
+            introducername: element["Introducer Name"],
+            requestdate: element["Request Date"].toDate(),
+            requestedby: element["Requested By"],
+            approvedby: element["Approve By"],
+            sector: element["Sector"],
+            documenttype: element["Document Type"],
+            fathername: element["Father Name"],
+            documentno: element["Document No"],
+            docmentfront: element["Document Front"],
+            documentback: element["Document Back"],
+            dateofbirth: element["Date Of Birth"].toDate(),
+            mothername: element["Mother Name"],
+            id: element.id,
+            approvedate: element["Approve Date"].toDate(),
+            status: element["Status"],
+            approve: element["Approve"],
+            sl: s));
+        s++;
+      }
+    });
   }
 
   void _onclear() {
@@ -106,24 +146,19 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
       ssscheme = ss;
       memberss = ss;
       condisbursed.text = "";
-      conmanagername.text = "";
       connarration.text = "Loan Disbursement";
       conpincode.text = "";
     });
   }
 
-
   void _save() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('LoanDisbursed')
-        .get();
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('LoanDisbursed').get();
 
     int numberOfItems = querySnapshot.size;
-    if (selectedsanction == null ||
+    if (selectedsanction == null ||selectedaccount == null ||
         condisbursed.text == "" ||
-        conmanagername.text == "" ||
-        connarration.text == "" ||
-        conpincode.text == "") {
+        connarration.text == "") {
       Get.snackbar(
           "Load Disbursement Request Failed.", "Some Required Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
@@ -137,50 +172,52 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
           ],
           borderRadius: 0);
     } else {
+      FirebaseFirestore.instance
+          .collection('LoanDisbursed')
+          .doc(selectedsanction.id)
+          .set({
+        'Sanction': selectedsanction.toJson(),
+        'Somitee Name': selectedsanction.somiteename,
+        'Somitee ID': selectedsanction.somiteeid,
+        'Member Name': selectedsanction.membername,
+        'Member ID': selectedsanction.memberid,
+        "Requested By":
+            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+        "Approved By": '',
+        "Approve": false,
+        'Status': false,
+        'Death Risk Amount': deathriskamount,
+        'SL': numberOfItems + 1,
+        'Disbursed Amount': double.parse(condisbursed.text),
+        'Pin Code': conpincode.text,
+        'Disbursed Date': DateTime.now(),
+        'Approve Date': selectedsanction.approvedate,
+        'Narration': connarration.text,
+      }).then((value) async {
         FirebaseFirestore.instance
-            .collection('LoanDisbursed')
+            .collection('LoanSanction')
             .doc(selectedsanction.id)
-            .set({
-          'Sanction' :selectedsanction.toJson(),
-          'Somitee Name': selectedsanction.somiteename,
-          'Somitee ID': selectedsanction.somiteeid,
-          'Member Name':selectedsanction.membername,
-          'Member ID': selectedsanction.memberid,
-          "Requested By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
-          "Approved By":'',
-          "Approve":false,
-          'Status':false,
-          'Death Risk Amount':deathriskamount,
-          'SL':numberOfItems+1,
-          'Disbursed Amount': double.parse(condisbursed.text),
-          'Pin Code' : conpincode.text,
-          'Disbursed Date': DateTime.now(),
-          'Approve Date':selectedsanction.approvedate,
-          'Manager Name':conmanagername.text,
-          'Narration': connarration.text,
-        }).then((value) async {
-          FirebaseFirestore.instance
-              .collection('LoanSanction')
-              .doc(selectedsanction.id).delete().then((value) {
-            Get.offNamed(loandisbursementlistPageRoute);
-            Get.snackbar("Loan Sanction Added Successfully.",
-                "Redirecting to Loan Sanction List Page.",
-                snackPosition: SnackPosition.BOTTOM,
-                colorText: Colors.white,
-                backgroundColor: Colors.green,
-                margin: EdgeInsets.zero,
-                duration: const Duration(milliseconds: 2000),
-                boxShadows: [
-                  const BoxShadow(
-                      color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
-                ],
-                borderRadius: 0);
-          });
+            .delete()
+            .then((value) {
+          Get.offNamed(loandisbursementlistPageRoute);
+          Get.snackbar("Loan Sanction Added Successfully.",
+              "Redirecting to Loan Sanction List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(-100, 0),
+                    blurRadius: 20),
+              ],
+              borderRadius: 0);
         });
-
+      });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -246,18 +283,19 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
       condisbursed.text = selectedsanction.sanctionlimit.toString();
       ssscheme = LoanSchemes.firstWhere(
           (element) => element.name == selectedsanction.scheme);
-     await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('Member')
           .doc(selectedsanction.memberid)
           .get()
           .then((element) {
-        memberss =Memberss(
+        memberss = Memberss(
             somiteename: element["Somitee Name"],
             somiteeid: element["Somitee ID"],
             membertype: element["Member Type"],
             occupation: element["Occupation"],
             firstname: element["First Name"],
-            lastname: element["Last Name"],dead: element['Dead'],
+            lastname: element["Last Name"],
+            dead: element['Dead'],
             fathername: element["Father Name"],
             mothername: element["Mother Name"],
             loanpendingamount: element["Loan Pending Amount"],
@@ -307,7 +345,9 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                 children: [
                   LoanDetailsWidget(
                     title: 'Loan Disbursement Details',
-                    onsubmit: _save,onfine: (){},showfine: false,
+                    onsubmit: _save,
+                    onfine: () {},
+                    showfine: false,
                     onclear: _onclear,
                   ),
 
@@ -337,7 +377,6 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                   LoanOtherInfo(
                       bsanction: bsanction,
                       condisburse: condisbursed,
-                      conmanagername: conmanagername,
                       scheme: ssscheme,
                       deathrisk: deathrisk,
                       selectedsanction: selectedsanction),
@@ -352,23 +391,37 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                     child: desktop
                         ? Row(
                             children: [
-                              LinkACinfo(memberss: memberss,selectedsanction: selectedsanction,bsanction: bsanction,scheme: ssscheme),
+                              LinkACinfo(
+                                  memberss: memberss,
+                                  accounts: accounts,
+                                  selectedaccount: selectedaccount,
+                                  selectedsanction: selectedsanction,
+                                  bsanction: bsanction,
+                                  scheme: ssscheme),
                               Spacer(),
-                              memberss == null?ImageMember(imgurl: ''):
-                              ImageMember(imgurl: memberss.imageurl),
+                              memberss == null
+                                  ? ImageMember(imgurl: '')
+                                  : ImageMember(imgurl: memberss.imageurl),
                             ],
                           )
                         : Column(
                             children: [
-                              LinkACinfo(memberss: memberss,selectedsanction: selectedsanction,bsanction: bsanction,scheme: ssscheme),
+                              LinkACinfo(
+                                  memberss: memberss,
+                                  accounts: accounts,
+                                  selectedaccount: selectedaccount,
+                                  selectedsanction: selectedsanction,
+                                  bsanction: bsanction,
+                                  scheme: ssscheme),
 
                               // Spacer(),
                               SizedBox(
                                 height: 50,
                               ),
 
-                              memberss == null?ImageMember(imgurl: ''):
-                              ImageMember(imgurl: memberss.imageurl),
+                              memberss == null
+                                  ? ImageMember(imgurl: '')
+                                  : ImageMember(imgurl: memberss.imageurl),
                             ],
                           ),
                   ),

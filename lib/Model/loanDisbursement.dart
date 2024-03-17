@@ -7,7 +7,6 @@ class loanDisbursement {
       membername,
       memberid,requestedby, approvedby,
       id,
-      manegername,
       pincode,
       narration;
   bool status, approve;
@@ -21,8 +20,7 @@ class loanDisbursement {
     required this.somiteeid,
     required this.membername,required this.deathriskamount,
     required this.memberid,
-    required this.approvedate,
-    required this.manegername,required this.requestedby, required this.approvedby,
+    required this.approvedate,required this.requestedby, required this.approvedby,
     required this.pincode,
     required this.status,
     required this.approve,
@@ -60,7 +58,7 @@ class loanDisbursement {
         lst: loanSanction.fromJson(Map<String, dynamic>.from(json['Sanction'])),
         membername: json['Member Name'],disbursedate: json["Disbursed Date"].toDate(),
         memberid: json['Member ID'],disburseamount: json["Disbursed Amount"],narration: json["Narration"],
-        approvedate: json["Approve Date"].toDate(), manegername: json["Manager Name"],pincode: json["Pin Code"],
+        approvedate: json["Approve Date"].toDate(),pincode: json["Pin Code"],
         status: json["Status"],
         id: json['ID'],
         sl: json['sl']);

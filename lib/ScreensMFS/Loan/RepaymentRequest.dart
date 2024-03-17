@@ -166,7 +166,6 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
               disburseamount: json["Disbursed Amount"],
               narration: json["Narration"],
               approvedate: json["Approve Date"].toDate(),
-              manegername: json["Manager Name"],
               pincode: json["Pin Code"],
               status: json["Status"],
               id: json.id,

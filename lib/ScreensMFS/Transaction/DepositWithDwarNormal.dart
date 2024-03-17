@@ -9,6 +9,7 @@ import 'package:prottashasomit/ScreensMFS/Transaction/widget/Image.dart';
 import 'package:prottashasomit/ScreensMFS/Transaction/widget/LinkACinfo.dart';
 import 'package:prottashasomit/ScreensMFS/Transaction/widget/MemberDepositWithdearRequest.dart';
 import '../../Constants/values.dart';
+import '../../Model/account.dart';
 import '../../Model/loanSanction.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
@@ -36,10 +37,13 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
   var selectedtype = 0;
   var selectedsomiti;
   var sselectedsomiti;
+  List<Accountss> accounts = [];
+  var selectedaccount;
   bool memberselection = false;
   var selectedmemberss;
   var sselectedmemberss;
   bool bsanction = false;
+  bool mmems = false;
   var selectedsanction;
   var ssscheme;
   var conwithdrawamount = TextEditingController();
@@ -71,9 +75,42 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
         ssomitee.add(element["Name"]);
       }
     });
+    int s = 0;
+    await FirebaseFirestore.instance
+        .collection('Account')
+        .get()
+        .then((querySnapshot) {
+      for (var element in querySnapshot.docs) {
+        accounts.add(Accountss(
+            introducertype: element["Introducer Type"],
+            member: element["Member"],
+            introducerno: element["Introducer No"],
+            nomineename: element["Nominee Name"],
+            nomineepercentage: element["Nominee Percentage"],
+            accounttype: element["Account Type"],
+            nomineeimage: element["Nominee Image"],
+            relation: element["Relation"],
+            introducername: element["Introducer Name"],
+            requestdate: element["Request Date"].toDate(),
+            requestedby: element["Requested By"],
+            approvedby: element["Approve By"],
+            sector: element["Sector"],
+            documenttype: element["Document Type"],
+            fathername: element["Father Name"],
+            documentno: element["Document No"],
+            docmentfront: element["Document Front"],
+            documentback: element["Document Back"],
+            dateofbirth: element["Date Of Birth"].toDate(),
+            mothername: element["Mother Name"],
+            id: element.id,
+            approvedate: element["Approve Date"].toDate(),
+            status: element["Status"],
+            approve: element["Approve"],
+            sl: s));
+        s++;
+      }
+    });
   }
-
-  void _onclear() {}
 
   @override
   Widget build(BuildContext context) {
@@ -367,6 +404,8 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                                   children: [
                                     LinkACinfo(
                                         memberss: selectedmemberss,
+                                        accounts: accounts,
+                                        selectedaccount: selectedaccount,
                                         selectedsanction: selectedsanction,
                                         bsanction: bsanction,
                                         scheme: ssscheme),
@@ -381,6 +420,8 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                                   children: [
                                     LinkACinfo(
                                         memberss: selectedmemberss,
+                                        accounts: accounts,
+                                        selectedaccount: selectedaccount,
                                         selectedsanction: selectedsanction,
                                         bsanction: bsanction,
                                         scheme: ssscheme),

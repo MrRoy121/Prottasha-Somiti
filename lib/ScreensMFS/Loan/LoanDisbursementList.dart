@@ -46,7 +46,6 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
             disburseamount: json["Disbursed Amount"],
             narration: json["Narration"],
             approvedate: json["Approve Date"].toDate(),
-            manegername: json["Manager Name"],
             pincode: json["Pin Code"],
             status: json["Status"],
             approve: json["Approve"],
@@ -174,14 +173,6 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                         )),
                                   ),
                                   DataColumn(
-                                    label: Text('Manager Name',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
                                     label: Text(
                                       'Sanction Limit',
                                       style: TextStyle(
@@ -256,12 +247,6 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                               style: TextStyle(
                                                 fontSize: 12,
                                               ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].manegername,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
                                       DataCell(
                                         Text(
                                             snapshot.data[index].disburseamount

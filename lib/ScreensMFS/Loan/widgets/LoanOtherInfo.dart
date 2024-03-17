@@ -9,14 +9,13 @@ class LoanOtherInfo extends StatefulWidget {
   var selectedsanction;
 
   var condisburse;
-  var conmanagername;
   String deathrisk;
   bool bsanction;
   var scheme;
 
   LoanOtherInfo(
       {required this.bsanction,required this.condisburse,required this.deathrisk,
-      required this.scheme,required this.conmanagername,
+      required this.scheme,
       required this.selectedsanction});
 
   @override
@@ -171,48 +170,11 @@ class _LoanOtherInfoState extends State<LoanOtherInfo> {
                             ],
                           ),
                           SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Manager Name :",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 25,
-                              ),
-                              SizedBox(
-                                width: 300,
-                                child: TextFormField(
-                                  controller: widget.conmanagername,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide:
-                                      BorderSide(color: Colors.black),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide:
-                                      BorderSide(color: Colors.black),
-                                    ),
-                                    hintText: "Manager Name",
-                                    fillColor: Colors.grey.shade200,
-                                    filled: true,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
                             height: 20,
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "No of Installment :",
                                 style: TextStyle(
                                   fontSize: 14,

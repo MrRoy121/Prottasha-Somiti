@@ -601,7 +601,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Row(
