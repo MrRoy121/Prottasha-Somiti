@@ -164,6 +164,16 @@ class _AccountListState extends State<AccountList> {
                                         ),
                                         DataColumn(
                                           label: Text(
+                                            'Account Number',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Text(
                                             'Customer Code',
                                             style: TextStyle(
                                               fontSize: 12,
@@ -233,6 +243,14 @@ class _AccountListState extends State<AccountList> {
                                                     style: const TextStyle(
                                                       fontSize: 12,
                                                     ))),
+                                            DataCell(
+                                              Text(
+                                                  snapshot.data[index]
+                                                      .id,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
                                             DataCell(
                                               Text(snapshot.data[index].member['ID']+ " - "+snapshot.data[index].member['First Name'] +' '+snapshot.data[index].member['Last Name'],
                                                   style: TextStyle(

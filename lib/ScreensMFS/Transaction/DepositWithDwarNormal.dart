@@ -308,6 +308,11 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
         selectedtype = val;
       });
     }
+    Future<void> _setupaccount(int ins) async {
+      setState(() {
+        selectedaccount = accounts[ins];
+      });
+    }
 
     var ScreenWidth = MediaQuery.of(context).size.width;
 
@@ -405,7 +410,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                                     LinkACinfo(
                                         memberss: selectedmemberss,
                                         accounts: accounts,
-                                        selectedaccount: selectedaccount,
+                                        selectedaccount: selectedaccount,setupaccount: _setupaccount,
                                         selectedsanction: selectedsanction,
                                         bsanction: bsanction,
                                         scheme: ssscheme),
@@ -420,7 +425,7 @@ class _DepositWithDwarNormalState extends State<DepositWithDwarNormal> {
                                   children: [
                                     LinkACinfo(
                                         memberss: selectedmemberss,
-                                        accounts: accounts,
+                                        accounts: accounts,setupaccount: _setupaccount,
                                         selectedaccount: selectedaccount,
                                         selectedsanction: selectedsanction,
                                         bsanction: bsanction,

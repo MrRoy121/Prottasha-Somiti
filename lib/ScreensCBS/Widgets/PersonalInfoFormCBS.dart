@@ -573,7 +573,7 @@ class _PersonalInfoFormCBSState extends State<PersonalInfoFormCBS> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: 'Is PSB Employee',
+                            text: 'Is Prottysha Employee or Management',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: ScreenWidth / 109.71),

@@ -520,15 +520,6 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
                         housedesc: _housedesc,
                         remarks: _remarks),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(
-                        top: 20,
-                      ),
-                      child: OtherInfo2CBS(
-                          selecteddictatorship: selecteddictatorship,
-                          selectedRelatedParty: selectedRelatedParty,
-                          setupdictatorship: _setupdictatorship,
-                          setupRelatedParty: _setupRelatedParty)),
                   SizedBox(height: 50,),
                 ],
               ),

@@ -49,6 +49,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
   var amountinwords = TextEditingController();
   var remarks = TextEditingController(text: "Cash Withdraw");
   var selectedcustomertype;
+  String memberid = '';
 
   bool mmems = false;
   @override
@@ -122,50 +123,76 @@ class _CashWithdrawState extends State<CashWithdraw> {
           ],
           borderRadius: 0);
     } else {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Cash Withdraw').get();
-      FirebaseFirestore.instance.collection('Cash Withdraw').add({
-        'Member Name': selectedaccount.member['First Name'] +
-            ' ' +
-            selectedaccount.member['Last Name'],
-        'Member ID': selectedaccount.member['ID'],
-        "Requested By":
-            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
-        "Approved By": '',
-        "SL":querySnapshot.docs.length+1,
-        "Approve": false,
-        'Account No': selectedaccount.id,
-        'Withdraw Amount': double.parse(withdrawamount.text),
-        'Amount In Words': amountinwords.text,
-        'Disbursed Amount': disburse,
-        'Requested Date': DateTime.now(),
-        'Approve Date': DateTime.now(),
-        'Status': false,
-        'Remarks': remarks.text,
-      }).then((value) async {
-        await FirebaseFirestore.instance
-            .collection('Member')
-            .doc(selectedaccount.member['ID'])
-            .update({
-          'Loan Pending Amount':
-              FieldValue.increment(-double.parse(withdrawamount.text)),
-        }).then((value) {
-          Get.offNamed(cashwithdrawlistPageRoute);
-          Get.snackbar("Cash Withdraw Successful.",
-              "Redirecting to Cash Withdraw List Page.",
-              snackPosition: SnackPosition.BOTTOM,
-              colorText: Colors.white,
-              backgroundColor: Colors.green,
-              margin: EdgeInsets.zero,
-              duration: const Duration(milliseconds: 2000),
-              boxShadows: [
-                const BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(-100, 0),
-                    blurRadius: 20),
-              ],
-              borderRadius: 0);
+      DocumentSnapshot ds =  await  FirebaseFirestore.instance
+          .collection(
+          'BalanceAccount')
+          .doc('0').get();
+      if(ds['Balance']<double.parse(withdrawamount.text)){
+        Get.snackbar(
+            "Balance Withdraw Request Failed.", "Insufficient Balance in Cash!",
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.zero,
+            duration: const Duration(milliseconds: 2000),
+            boxShadows: [
+              const BoxShadow(
+                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            ],
+            borderRadius: 0);
+      }else{
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Cash Withdraw').get();
+        FirebaseFirestore.instance.collection('Cash Withdraw').add({
+          'Member Name': selectedaccount.member['First Name'] +
+              ' ' +
+              selectedaccount.member['Last Name'],
+          'Member ID':memberid,
+          "Requested By":
+          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+          "Approved By": '',
+          "SL":querySnapshot.docs.length+1,
+          "Approve": false,
+          'Account No': selectedaccount.id,
+          'Withdraw Amount': double.parse(withdrawamount.text),
+          'Amount In Words': amountinwords.text,
+          'Disbursed Amount': disburse,
+          'Requested Date': DateTime.now(),
+          'Approve Date': DateTime.now(),
+          'Status': false,
+          'Remarks': remarks.text,
+        }).then((value) async {
+          await  FirebaseFirestore.instance
+              .collection(
+              'BalanceAccount')
+              .doc('0')
+              .update({
+            'Balance': FieldValue.increment(-double.parse(withdrawamount.text)),
+          });
+          await FirebaseFirestore.instance
+              .collection('Member')
+              .doc(memberid)
+              .update({
+            'Loan Pending Amount':
+            FieldValue.increment(-double.parse(withdrawamount.text)),
+          }).then((value) {
+            Get.offNamed(cashwithdrawlistPageRoute);
+            Get.snackbar("Cash Withdraw Successful.",
+                "Redirecting to Cash Withdraw List Page.",
+                snackPosition: SnackPosition.BOTTOM,
+                colorText: Colors.white,
+                backgroundColor: Colors.green,
+                margin: EdgeInsets.zero,
+                duration: const Duration(milliseconds: 2000),
+                boxShadows: [
+                  const BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(-100, 0),
+                      blurRadius: 20),
+                ],
+                borderRadius: 0);
+          });
         });
-      });
+      }
     }
   }
 
@@ -424,15 +451,19 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                               onChanged: (newValue) async {
                                                 selectedaccount = newValue;
                                                 mmems = true;
+                                                DocumentSnapshot customerSnapshot = await FirebaseFirestore.instance
+                                                    .collection('Customer')
+                                                    .doc(selectedaccount
+                                                    .member['ID'])
+                                                    .get();
+
                                                 await FirebaseFirestore.instance
                                                     .collection('Member')
-                                                    .doc(selectedaccount
-                                                        .member['ID'])
+                                                    .doc(customerSnapshot['Member ID'])
                                                     .get()
                                                     .then((firstDocument) {
                                                   setState(() {
-                                                    print(selectedaccount
-                                                        .member['ID']);
+                                                    memberid =                 customerSnapshot['Member ID'];
                                                     disburse = firstDocument[
                                                         "Loan Pending Amount"];
                                                   });

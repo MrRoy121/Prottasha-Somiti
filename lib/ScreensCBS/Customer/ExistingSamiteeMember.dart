@@ -139,12 +139,13 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
           ],
           borderRadius: 0);
     } else {
-      DocumentReference documentReference = FirebaseFirestore.instance
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Customer')
-          .doc(selectedmemberss.id);
-      DocumentSnapshot documentSnapshot = await documentReference.get();
+          .where('Member ID', isEqualTo: selectedmemberss.id)
+          .limit(1)
+          .get();
 
-      if (documentSnapshot.exists) {
+      if (querySnapshot.docs.isNotEmpty) {
         Get.snackbar(
             "Customer Registration Failed.", "Customer Already Exists",
             snackPosition: SnackPosition.BOTTOM,
@@ -159,7 +160,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
             borderRadius: 0);
       } else {
         Random random = Random();
-        String code = (100000 + random.nextInt(900000)).toString();
+        String code = (10000000 + random.nextInt(90000000)).toString();
         FirebaseFirestore.instance
             .collection('Customer')
             .doc(code)

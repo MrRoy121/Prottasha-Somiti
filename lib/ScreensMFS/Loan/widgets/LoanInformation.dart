@@ -11,7 +11,6 @@ class LoanInformation extends StatefulWidget {
   void Function(int) setupsanction;
   var scheme;
   var selectedsanction;
-  var selectedsanctionid;
   var conpincode;
   var condisbursed;
   var connarration;
@@ -28,8 +27,7 @@ class LoanInformation extends StatefulWidget {
       required this.connarration,
       required this.setupsanction,
       required this.scheme,
-      required this.selectedsanction,
-      required this.selectedsanctionid});
+      required this.selectedsanction});
 
   @override
   State<LoanInformation> createState() => _LoanInformationState();
@@ -198,17 +196,13 @@ class _LoanInformationState extends State<LoanInformation> {
                                     },
                                     onChanged: (newValue) {
                                       setState(() {
-                                        widget.selectedsanction = newValue;
-                                        widget.selectedsanctionid =
-                                            widget.sanction[widget.ssanction
-                                                .indexOf(newValue!.id)];
                                         widget.setupsanction(widget.ssanction
-                                            .indexOf(newValue.id));
+                                            .indexOf(newValue!.id));
                                         sanctionselected = true;
                                       });
                                     },
                                     items: widget.sanction,
-                                    selectedItem: widget.selectedsanctionid,
+                                    selectedItem: widget.selectedsanction,
                                   )),
                             ],
                           ),
@@ -230,7 +224,7 @@ class _LoanInformationState extends State<LoanInformation> {
                                 width: 300,
                                 child: Text(
                                   widget.bsanction
-                                      ? "${widget.selectedsanction.somiteeid}${widget.selectedsanction.memberid}${widget.scheme.sl}${widget.selectedsanction.sl}"
+                                      ? "${widget.selectedsanction.memberid}${widget.selectedsanction.sl}"
                                       : "",
                                 ),
                               ),

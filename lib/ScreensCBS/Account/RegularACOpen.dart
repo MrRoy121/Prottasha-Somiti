@@ -66,7 +66,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
       QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('Account').get();
       String memberid =
-          "520022" + selectedccode + (querySnapshot.docs.length + 150).toString().padLeft(6, '0');
+          "520022" + selectedccode + (querySnapshot.docs.length + 1).toString().padLeft(2, '0');
 
       final photoRef =
           FirebaseStorage.instance.ref("NomineeImage/$memberid.jpeg");

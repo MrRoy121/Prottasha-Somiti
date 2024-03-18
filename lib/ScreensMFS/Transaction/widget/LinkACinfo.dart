@@ -9,6 +9,7 @@ class LinkACinfo extends StatefulWidget {
   List<Accountss> accounts = [];
   var selectedaccount;
   var scheme;
+  void Function(int) setupaccount;
   var selectedsanction;
   bool mmems = false;
   bool bsanction;
@@ -16,6 +17,7 @@ class LinkACinfo extends StatefulWidget {
   LinkACinfo({
     required this.memberss,
     required this.scheme,
+    required this.setupaccount,
     required this.selectedaccount,
     required this.accounts,
     required this.bsanction,
@@ -26,6 +28,7 @@ class LinkACinfo extends StatefulWidget {
 }
 
 class _LinkACinfoState extends State<LinkACinfo> {
+  String Sss = '';
   @override
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
@@ -186,6 +189,13 @@ class _LinkACinfoState extends State<LinkACinfo> {
                                       setState(() {
                                         widget.selectedaccount = newValue;
                                         widget.mmems = true;
+                                        Sss = widget.selectedaccount
+                                                .member['First Name'] +
+                                            ' ' +
+                                            widget.selectedaccount
+                                                .member['Last Name'];
+                                        widget.setupaccount(
+                                            widget.accounts.indexOf(newValue!));
                                       });
                                     },
                                     items: widget.accounts,
@@ -210,13 +220,7 @@ class _LinkACinfoState extends State<LinkACinfo> {
                               SizedBox(
                                 width: 250,
                                 child: Text(
-                                 widget. mmems
-                                      ? widget.  selectedaccount
-                                      .member['First Name'] +
-                                      ' ' +
-                                     widget. selectedaccount
-                                          .member['Last Name']
-                                      : "",
+                                   Sss ,
                                 ),
                               ),
                             ],

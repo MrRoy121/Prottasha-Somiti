@@ -265,6 +265,13 @@ class _DepositCollectionRequestListState
                                                   }
                                                 ]),
                                               }).then((value) async {
+                                                await  FirebaseFirestore.instance
+                                                    .collection(
+                                                    'BalanceAccount')
+                                                    .doc('0')
+                                                    .update({
+                                                  'Balance': FieldValue.increment((snapshot.data[index].value)),
+                                                });
                                                 FirebaseFirestore.instance
                                                     .collection(
                                                         'DepositRequest')
@@ -274,8 +281,7 @@ class _DepositCollectionRequestListState
                                                     .then((value) {
                                                   setState(() {});
                                                 });
-                                              }).catchError((error) => print(
-                                                      "Failed to add user: $error"));
+                                              });
                                             },
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),

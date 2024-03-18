@@ -37,7 +37,6 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
   var ssscheme;
   var memberss;
   var selectedsanction;
-  var selectedsanctionid;
   var condisbursed = TextEditingController();
   var conpincode = TextEditingController();
   var connarration = TextEditingController(text: "Loan Disbursement");
@@ -156,7 +155,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
         await FirebaseFirestore.instance.collection('LoanDisbursed').get();
 
     int numberOfItems = querySnapshot.size;
-    if (selectedsanction == null ||selectedaccount == null ||
+    if (selectedsanction == null ||
+        selectedaccount == null ||
         condisbursed.text == "" ||
         connarration.text == "") {
       Get.snackbar(
@@ -224,31 +224,31 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
     void updatedeath() {
       if (double.parse(condisbursed.text.toString()) >= 10000 &&
           double.parse(condisbursed.text.toString()) <= 500000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.060;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.0060;
         deathrisk = "0.60%";
       } else if (double.parse(condisbursed.text.toString()) >= 500001 &&
           double.parse(condisbursed.text.toString()) <= 1000000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.065;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.0065;
         deathrisk = "0.65%";
       } else if (double.parse(condisbursed.text.toString()) >= 1000001 &&
           double.parse(condisbursed.text.toString()) <= 2000000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.070;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.0070;
         deathrisk = "0.70%";
       } else if (double.parse(condisbursed.text.toString()) >= 2000001 &&
           double.parse(condisbursed.text.toString()) <= 3000000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.075;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.0075;
         deathrisk = "0.75%";
       } else if (double.parse(condisbursed.text.toString()) >= 3000001 &&
           double.parse(condisbursed.text.toString()) <= 5000000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.080;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.0080;
         deathrisk = "0.80%";
       } else if (double.parse(condisbursed.text.toString()) >= 5000001 &&
           double.parse(condisbursed.text.toString()) <= 10000000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.090;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.0090;
         deathrisk = "0.90%";
       } else if (double.parse(condisbursed.text.toString()) >= 10000001 &&
           double.parse(condisbursed.text.toString()) <= 30000000) {
-        deathriskamount = double.parse(condisbursed.text.toString()) * 0.10;
+        deathriskamount = double.parse(condisbursed.text.toString()) * 0.010;
         deathrisk = "1.00%";
       }
       setState(() {});
@@ -332,6 +332,12 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
       updatedeath();
     }
 
+    Future<void> _setupaccount(int ins) async {
+     setState(() {
+       selectedaccount = accounts[ins];
+       mmems = true;
+     });
+    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -364,7 +370,6 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                       selectedsanction: selectedsanction,
                       condisbursed: condisbursed,
                       conpincode: conpincode,
-                      selectedsanctionid: selectedsanctionid,
                       connarration: connarration,
                       setupsanction: _setupsanction,
                       ssanction: ssanction),
@@ -393,7 +398,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                             children: [
                               LinkACinfo(
                                   memberss: memberss,
-                                  accounts: accounts,
+                                  accounts: accounts,setupaccount: _setupaccount,
                                   selectedaccount: selectedaccount,
                                   selectedsanction: selectedsanction,
                                   bsanction: bsanction,
@@ -408,7 +413,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                             children: [
                               LinkACinfo(
                                   memberss: memberss,
-                                  accounts: accounts,
+                                  accounts: accounts,setupaccount: _setupaccount,
                                   selectedaccount: selectedaccount,
                                   selectedsanction: selectedsanction,
                                   bsanction: bsanction,
