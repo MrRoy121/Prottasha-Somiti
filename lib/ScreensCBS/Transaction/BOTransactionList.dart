@@ -292,7 +292,7 @@ class _BOTransactionListState extends State<BOTransactionList> {
                                                         .collection(
                                                             'BO Transaction')
                                                         .doc(snapshot
-                                                            .data[index].id)
+                                                            .data[index]['id'])
                                                         .update({
                                                       "Status": true,
                                                       "Approved By":
@@ -300,8 +300,25 @@ class _BOTransactionListState extends State<BOTransactionList> {
                                                       "Approve": true,
                                                       'Approve Date':
                                                           DateTime.now(),
+                                                    }).then((value) async {
+                                                    await  FirebaseFirestore.instance
+                                                          .collection(
+                                                              'BalanceAccount')
+                                                          .doc(snapshot
+                                                          .data[index]['Debit Account ID'])
+                                                          .update({
+                                                        'Balance': FieldValue.increment(-(snapshot.data[index]['Amount'])),
+                                                      });
+                                                    await  FirebaseFirestore.instance
+                                                        .collection(
+                                                        'BalanceAccount')
+                                                        .doc(snapshot
+                                                        .data[index]['Credit Account ID'])
+                                                        .update({
+                                                      'Balance': FieldValue.increment((snapshot.data[index]['Amount'])),
                                                     }).then((value) {
                                                       setState(() {});
+                                                    });
                                                     });
                                                   },
                                                   child: Container(
@@ -325,7 +342,7 @@ class _BOTransactionListState extends State<BOTransactionList> {
                                                         .collection(
                                                             'BO Transaction')
                                                         .doc(snapshot
-                                                            .data[index].id)
+                                                            .data[index]['id'])
                                                         .update({
                                                       "Status": true,
                                                       "Approved By":

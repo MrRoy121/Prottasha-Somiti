@@ -102,6 +102,14 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.reports,
                           text: 'Expense',
                           icon: Icons.arrow_drop_down),
+                    ),InkWell(
+                      onTap: () {
+                        Get.toNamed(accountscreenPageRoute);
+                      },
+                      child: NavbarItem(
+                          flag: widget.navbool.reports,
+                          text: 'Account',
+                          icon: Icons.arrow_drop_down),
                     ),
                   ],
                 )
@@ -194,6 +202,14 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                       child: NavbarItem(
                                           flag: widget.navbool.reports,
                                           text: 'Expense',
+                                          icon: Icons.arrow_drop_down),
+                                    ),InkWell(
+                                      onTap: () {
+                                        Get.toNamed(accountscreenPageRoute);
+                                      },
+                                      child: NavbarItem(
+                                          flag: widget.navbool.reports,
+                                          text: 'Account',
                                           icon: Icons.arrow_drop_down),
                                     ),
                                   ],

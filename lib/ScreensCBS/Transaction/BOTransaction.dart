@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import '../../../../Constants/Constants.dart';
 import '../../../../Constants/values.dart';
 import '../../../../route.dart';
-import '../../Model/account.dart';
+import '../../Model/balanceaccount.dart';
 import '../../helpers/auth_service.dart';
 import '../Widgets/BasicInfoWidget.dart';
 import '../Widgets/NavBoolCBS.dart';
@@ -32,7 +32,7 @@ class _BOTransactionState extends State<BOTransaction> {
   var selectednature;
   var selectedentrytype;
   var selectedbranch;
-  List<Accountss> memberss = [];
+  List<BalanceAccount> memberss = [];
   var selectedaccountdebit;
   var selectedaccountcredit;
   var amount = TextEditingController();
@@ -48,75 +48,19 @@ class _BOTransactionState extends State<BOTransaction> {
   }
 
   Future<void> fetch() async {
-    int s = 0;
-    memberss.add(Accountss(
-        introducertype: '',
-        member: {'First Name': 'Titas Ranjan', 'Last Name': 'Talukdar'},
-        introducerno: '',
-        nomineename: '',
-        nomineepercentage: '',
-        accounttype: '',
-        nomineeimage: '',
-        relation: '',
-        introducername: '',
-        requestdate: DateTime.now(),
-        requestedby: '',
-        approvedby: '',
-        sector: '',
-        documenttype: '',
-        fathername: '',
-        documentno: '',
-        docmentfront: '',
-        documentback: '',
-        dateofbirth: DateTime.now(),
-        mothername: '',
-        id: '7210220058837101',
-        approvedate: DateTime.now(),
-        status: true,
-        approve: true,
-        sl: s));
-    s++;
+
     await FirebaseFirestore.instance
-        .collection('Account')
+        .collection('BalanceAccount')
         .get()
-        .then((querySnapshot) {
-      for (var element in querySnapshot.docs) {
-        memberss.add(Accountss(
-            introducertype: element["Introducer Type"],
-            member: element["Member"],
-            introducerno: element["Introducer No"],
-            nomineename: element["Nominee Name"],
-            nomineepercentage: element["Nominee Percentage"],
-            accounttype: element["Account Type"],
-            nomineeimage: element["Nominee Image"],
-            relation: element["Relation"],
-            introducername: element["Introducer Name"],
-            requestdate: element["Request Date"].toDate(),
-            requestedby: element["Requested By"],
-            approvedby: element["Approve By"],
-            sector: element["Sector"],
-            documenttype: element["Document Type"],
-            fathername: element["Father Name"],
-            documentno: element["Document No"],
-            docmentfront: element["Document Front"],
-            documentback: element["Document Back"],
-            dateofbirth: element["Date Of Birth"].toDate(),
-            mothername: element["Mother Name"],
-            id: element.id,
-            approvedate: element["Approve Date"].toDate(),
-            status: element["Status"],
-            approve: element["Approve"],
-            sl: s));
-        s++;
+        .then((que) {
+      for (var ele in que.docs) {
+        memberss.add(BalanceAccount(accountnum: ele['Account No'], accounttile: ele['Account Title'], balance: ele['Balance']));
       }
     });
   }
 
   void _onclear() {
     setState(() {
-      var ss;
-      //  selectedsomiti = ss;
-      //  sselectedsomiti = ss;
     });
   }
 
@@ -141,36 +85,12 @@ class _BOTransactionState extends State<BOTransaction> {
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance.collection('BO Transaction').add({
-        "Requested By":
-            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
-        "Approved By": '',
-        'Request Date': DateTime.now(),
-        'Approve Date': DateTime.now(),
-        'Type': selectedtype,
-        'Credit Account ID': selectedaccountcredit.id,
-        'Debit Account ID': selectedaccountdebit.id,
-        'Credit Account': selectedaccountcredit.member['First Name'] +
-            ' ' +
-            selectedaccountcredit.member['Last Name'],
-        'Debit Account': selectedaccountdebit.member['First Name'] +
-            ' ' +
-            selectedaccountdebit.member['Last Name'],
-        'Branch': selectedbranch,
-        'Nature': selectednature,
-        'Entry Type': selectedentrytype,
-        'Amount': double.parse(amount.text),
-        'Credit Remarks': remarkscredit.text,
-        'Debit Remarks': remarksdebit.text,
-        "Approve": false,
-        'Status': false,
-      }).then((value) async {
-        Get.offNamed(botransfertransactionlistPageRoute);
-        Get.snackbar("BO Transaction Request Added Successfully.",
-            "Redirecting to BO Transaction List Page.",
+      if(selectedaccountdebit.balance<double.parse(amount.text)){
+        Get.snackbar(
+            "BO Transaction Request Failed.", "Insufficient Balance in Debit Account!",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.red,
             margin: EdgeInsets.zero,
             duration: const Duration(milliseconds: 2000),
             boxShadows: [
@@ -178,7 +98,42 @@ class _BOTransactionState extends State<BOTransaction> {
                   color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
             ],
             borderRadius: 0);
-      });
+      }else{
+        FirebaseFirestore.instance.collection('BO Transaction').add({
+          "Requested By":
+          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+          "Approved By": '',
+          'Request Date': DateTime.now(),
+          'Approve Date': DateTime.now(),
+          'Type': selectedtype,
+          'Credit Account ID': selectedaccountcredit.accountnum=='N/A'?'0':selectedaccountcredit.accountnum,
+          'Debit Account ID': selectedaccountdebit.accountnum=='N/A'?'0':selectedaccountdebit.accountnum,
+          'Credit Account': selectedaccountcredit.accounttile,
+          'Debit Account': selectedaccountdebit.accounttile,
+          'Branch': selectedbranch,
+          'Nature': selectednature,
+          'Entry Type': selectedentrytype,
+          'Amount': double.parse(amount.text),
+          'Credit Remarks': remarkscredit.text,
+          'Debit Remarks': remarksdebit.text,
+          "Approve": false,
+          'Status': false,
+        }).then((value) async {
+          Get.offNamed(botransfertransactionlistPageRoute);
+          Get.snackbar("BO Transaction Request Added Successfully.",
+              "Redirecting to BO Transaction List Page.",
+              snackPosition: SnackPosition.BOTTOM,
+              colorText: Colors.white,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.zero,
+              duration: const Duration(milliseconds: 2000),
+              boxShadows: [
+                const BoxShadow(
+                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+              ],
+              borderRadius: 0);
+        });
+      }
     }
   }
 
@@ -709,11 +664,8 @@ class _BOTransactionState extends State<BOTransaction> {
                                           width: 300,
                                           child: Text(
                                             mmemsdr
-                                                ? selectedaccountdebit
-                                                        .member['First Name'] +
-                                                    ' ' +
-                                                    selectedaccountdebit
-                                                        .member['Last Name']
+                                                ? selectedaccountdebit.
+                                            accounttile
                                                 : "",
                                           ),
                                         ),
@@ -808,17 +760,17 @@ class _BOTransactionState extends State<BOTransaction> {
                                               border: Border.all(
                                                   color: AppColor_Black),
                                             ),
-                                            child: DropdownSearch<Accountss>(
+                                            child: DropdownSearch<BalanceAccount>(
                                               popupProps: PopupProps.menu(
                                                 showSearchBox: true,
                                                 itemBuilder:
                                                     (BuildContext context,
-                                                        Accountss item,
+                                                        BalanceAccount item,
                                                         bool isSelected) {
                                                   return Container(
                                                     padding: EdgeInsets.all(15),
                                                     child: Text(
-                                                      item.id,
+                                                      item.accountnum+'-'+ item.accounttile,
                                                     ),
                                                   );
                                                 },
@@ -863,15 +815,15 @@ class _BOTransactionState extends State<BOTransaction> {
                                                   );
                                                 } else {
                                                   return Text(
-                                                    item.id,
+                                                    item.accountnum+'-'+ item.accounttile,
                                                   );
                                                 }
                                               },
                                               onChanged: (newValue) async {
+                                                selectedaccountdebit =
+                                                    newValue;
+                                                mmemsdr = true;
                                                 setState(() {
-                                                  selectedaccountdebit =
-                                                      newValue;
-                                                  mmemsdr = true;
                                                 });
                                               },
                                               items: memberss,
@@ -883,10 +835,10 @@ class _BOTransactionState extends State<BOTransaction> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    const Row(
+                                    Row(
                                       children: [
-                                        Text(
-                                          "Operating Balance: ",
+                                        const Text(
+                                          "Balance: ",
                                           style: TextStyle(
                                             fontSize: 14,
                                           ),
@@ -897,7 +849,10 @@ class _BOTransactionState extends State<BOTransaction> {
                                         SizedBox(
                                           width: 300,
                                           child: Text(
-                                            "",
+                                            mmemsdr
+                                                ? selectedaccountdebit.
+                                            balance.toString()
+                                                : "",
                                           ),
                                         ),
                                       ],
@@ -1128,10 +1083,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                           child: Text(
                                             mmemscr
                                                 ? selectedaccountcredit
-                                                        .member['First Name'] +
-                                                    ' ' +
-                                                    selectedaccountcredit
-                                                        .member['Last Name']
+                                                        .accounttile
                                                 : "",
                                           ),
                                         ),
@@ -1226,17 +1178,17 @@ class _BOTransactionState extends State<BOTransaction> {
                                               border: Border.all(
                                                   color: AppColor_Black),
                                             ),
-                                            child: DropdownSearch<Accountss>(
+                                            child: DropdownSearch<BalanceAccount>(
                                               popupProps: PopupProps.menu(
                                                 showSearchBox: true,
                                                 itemBuilder:
                                                     (BuildContext context,
-                                                        Accountss item,
+                                                        BalanceAccount item,
                                                         bool isSelected) {
                                                   return Container(
                                                     padding: EdgeInsets.all(15),
                                                     child: Text(
-                                                      item.id,
+                                                      item.accountnum+'-'+ item.accounttile,
                                                     ),
                                                   );
                                                 },
@@ -1281,7 +1233,7 @@ class _BOTransactionState extends State<BOTransaction> {
                                                   );
                                                 } else {
                                                   return Text(
-                                                    item.id,
+                                                    item.accountnum+'-'+ item.accounttile,
                                                   );
                                                 }
                                               },
@@ -1301,10 +1253,10 @@ class _BOTransactionState extends State<BOTransaction> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    const Row(
+                                    Row(
                                       children: [
-                                        Text(
-                                          "Operating Balance: ",
+                                        const Text(
+                                          "Balance: ",
                                           style: TextStyle(
                                             fontSize: 14,
                                           ),
@@ -1315,7 +1267,10 @@ class _BOTransactionState extends State<BOTransaction> {
                                         SizedBox(
                                           width: 300,
                                           child: Text(
-                                            "",
+                                            mmemscr
+                                                ? selectedaccountcredit.
+                                            balance.toString()
+                                                : "",
                                           ),
                                         ),
                                       ],
