@@ -14,6 +14,7 @@ import '../../Model/loanDisbursement.dart';
 import '../../helpers/auth_service.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
 import '../../helpers/auth_service.dart';
+import '../../helpers/pdfs_helpers/pdf_cashwithdrawslip.dart';
 import '../Widgets/NavBoolCBS.dart';
 import '../Widgets/NavbarScreenCBS.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
@@ -33,7 +34,6 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
   Widget build(BuildContext context) {
     Future<List<CashWithdrawModel>> getCust() async {
       List<CashWithdrawModel> somitee = [];
-      int s = 0;
       await FirebaseFirestore.instance
           .collection('Cash Withdraw')
           .get()
@@ -42,9 +42,6 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
           somitee.add(CashWithdrawModel(
             amountinword: json['Amount In Words'],
             accountno: json['Account No'],
-            chequedate: json['Cheque Date'].toDate(),
-            chequeno: json['Cheque No'],
-            chequeseries: json['Cheque Series'],
             withdrawamount: json["Withdraw Amount"],
             disburse: json['Disbursed Amount'],
             membername: json['Member Name'],
@@ -57,9 +54,8 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
             status: json["Status"],
             approve: json["Approve"],
             id: json.id,
-            sl: s,
+            sl:json["SL"],
           ));
-          s++;
         }
       });
       return somitee;
@@ -163,30 +159,6 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
                                     ),
                                   ),
                                   DataColumn(
-                                    label: Text('Cheque No',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Cheque Series',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Cheque Date',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                  DataColumn(
                                     label: Text(
                                       'Disbursed Amount',
                                       style: TextStyle(
@@ -226,12 +198,22 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
                                       ),
                                     ),
                                   ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Action',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                                 rows: List.generate(snapshot.data.length,
                                     (index) {
                                   return DataRow(
                                     cells: [
-                                      DataCell(Text((index + 1).toString(),
+                                      DataCell(Text(snapshot.data[index].sl.toString(),
                                           style: const TextStyle(
                                             fontSize: 12,
                                           ))),
@@ -243,31 +225,17 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
                                       ),
                                       DataCell(
                                         Text(
-                                            snapshot.data[index].memberid+'-'+snapshot.data[index].membername,
+                                            snapshot.data[index].memberid +
+                                                '-' +
+                                                snapshot.data[index].membername,
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
                                       ),
                                       DataCell(
-                                          Text(snapshot.data[index].chequeno,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                              ))),
-                                      DataCell(
-                                          Text(snapshot.data[index].chequeseries,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                              ))),
-                                      DataCell(
-                                          Text(DateFormat.yMMMd()
-                                              .format(snapshot
-                                              .data[index].chequedate)
-                                              .toString(),
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                              ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].disburse.toString(),
+                                        Text(
+                                            snapshot.data[index].disburse
+                                                .toString(),
                                             style: TextStyle(
                                               fontSize: 12,
                                             )),
@@ -300,6 +268,23 @@ class _CashWithdrawListState extends State<CashWithdrawList> {
                                               fontSize: 12,
                                             )),
                                       ),
+                                      DataCell(InkWell(
+                                        onTap: () {
+                                          PdfCashwithdrawSlip.generate(
+                                              snapshot.data[index]);
+                                        },
+                                        child: Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                                color: AppColor_Blue,
+                                                borderRadius:
+                                                    BorderRadius.circular(100)),
+                                            child: const Icon(
+                                              Icons.local_print_shop_outlined,
+                                              size: 16,
+                                              color: AppColor_White,
+                                            )),
+                                      ))
                                     ],
                                   );
                                 }),

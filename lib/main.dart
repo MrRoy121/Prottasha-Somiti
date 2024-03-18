@@ -31,6 +31,7 @@ import 'ScreensCBS/Customer/CustomerList.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
 import 'ScreensCBS/Customer/IndividualCustomerRegistration.dart';
 import 'ScreensCBS/Customer/NewCustomerRegistration.dart';
+import 'ScreensCBS/Expense/Expenses.dart';
 import 'ScreensCBS/Processing/DayOpenClose.dart';
 import 'ScreensCBS/Transaction/BOTransaction.dart';
 import 'ScreensCBS/Transaction/BOTransactionList.dart';
@@ -38,7 +39,6 @@ import 'ScreensCBS/Transaction/CashDeposit.dart';
 import 'ScreensCBS/Transaction/CashWithdrawList.dart';
 import 'ScreensCBS/Transaction/ReverseRequest.dart';
 import 'ScreensCBS/Widgets/NavBoolCBS.dart';
-import 'ScreensMFS/Expense/Expenses.dart';
 import 'ScreensMFS/Loan/ApproveLoanSanctionRejectList.dart';
 import 'ScreensMFS/Loan/LoanDisbursement.dart';
 import 'ScreensMFS/Loan/LoanDisbursementList.dart';
@@ -382,7 +382,7 @@ class MyApp extends StatelessWidget {
             name: expensescreenPageRoute,
             page: () => ExpenseScreen(
               appbool: appbool,
-              navbool: navbool,
+              navbool: navboolcbs,
             ),
             middlewares: [AuthMiddleware()]),
         GetPage(

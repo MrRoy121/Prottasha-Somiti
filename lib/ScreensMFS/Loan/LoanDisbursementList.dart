@@ -38,9 +38,12 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
         for (var json in querySnapshot.docs) {
           somitee.add(loanDisbursement(
             somiteename: json['Somitee Name'],
-            somiteeid: json['Somitee ID'],deathriskamount: json["Death Risk Amount"],
+            somiteeid: json['Somitee ID'],
+            deathriskamount: json["Death Risk Amount"],
             lst: loanSanction.fromJson(json['Sanction']),
-            membername: json['Member Name'],approvedby: json["Approved By"],requestedby: json["Requested By"],
+            membername: json['Member Name'],
+            approvedby: json["Approved By"],
+            requestedby: json["Requested By"],
             disbursedate: json["Disbursed Date"].toDate(),
             memberid: json['Member ID'],
             disburseamount: json["Disbursed Amount"],
@@ -298,11 +301,20 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                               children: [
                                                 InkWell(
                                                   onTap: () async {
-                                                    await FirebaseFirestore.instance
+                                                    await FirebaseFirestore
+                                                        .instance
                                                         .collection('Member')
-                                                        .doc(snapshot.data[index].memberid)
+                                                        .doc(snapshot
+                                                            .data[index]
+                                                            .memberid)
                                                         .update({
-                                                      'Loan Pending Amount': FieldValue.increment(snapshot.data[index].disburseamount),
+                                                      'Loan Pending Amount': FieldValue
+                                                          .increment((snapshot
+                                                                  .data[index]
+                                                                  .disburseamount -
+                                                              snapshot
+                                                                  .data[index]
+                                                                  .deathriskamount)),
                                                     });
                                                     FirebaseFirestore.instance
                                                         .collection(
@@ -311,7 +323,8 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                                             .data[index].id)
                                                         .update({
                                                       "Status": true,
-                                                      "Approved By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+                                                      "Approved By":
+                                                          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
                                                       "Approve": true,
                                                       'Approve Date':
                                                           DateTime.now(),
@@ -343,7 +356,8 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                                             .data[index].id)
                                                         .update({
                                                       "Status": true,
-                                                      "Approved By": "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+                                                      "Approved By":
+                                                          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
                                                       "Approve": false,
                                                       'Approve Date':
                                                           DateTime.now(),

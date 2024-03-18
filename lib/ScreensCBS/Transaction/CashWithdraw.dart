@@ -43,12 +43,9 @@ class _CashWithdrawState extends State<CashWithdraw> {
   List<Accountss> memberss = [];
   var selectedaccount;
   var sselectedmemberss;
-  DateTime selectedDate = DateTime.now();
   var selectedsamitee;
   double disburse = 0;
-  var chequeseries = TextEditingController();
   var withdrawamount = TextEditingController();
-  var chequeno = TextEditingController();
   var amountinwords = TextEditingController();
   var remarks = TextEditingController(text: "Cash Withdraw");
   var selectedcustomertype;
@@ -110,8 +107,6 @@ class _CashWithdrawState extends State<CashWithdraw> {
 
   void _save() async {
     if (selectedaccount == null ||
-        chequeno.text == "" ||
-        chequeseries.text == "" ||
         withdrawamount.text == "" ||
         amountinwords.text == "") {
       Get.snackbar(
@@ -127,6 +122,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
           ],
           borderRadius: 0);
     } else {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Cash Withdraw').get();
       FirebaseFirestore.instance.collection('Cash Withdraw').add({
         'Member Name': selectedaccount.member['First Name'] +
             ' ' +
@@ -135,15 +131,13 @@ class _CashWithdrawState extends State<CashWithdraw> {
         "Requested By":
             "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
         "Approved By": '',
+        "SL":querySnapshot.docs.length+1,
         "Approve": false,
-        "Cheque No": chequeno.text,
         'Account No': selectedaccount.id,
-        'Cheque Series': chequeseries.text,
         'Withdraw Amount': double.parse(withdrawamount.text),
         'Amount In Words': amountinwords.text,
         'Disbursed Amount': disburse,
         'Requested Date': DateTime.now(),
-        'Cheque Date': selectedDate,
         'Approve Date': DateTime.now(),
         'Status': false,
         'Remarks': remarks.text,
@@ -155,7 +149,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
           'Loan Pending Amount':
               FieldValue.increment(-double.parse(withdrawamount.text)),
         }).then((value) {
-          Get.offNamed(loandisbursementlistPageRoute);
+          Get.offNamed(cashwithdrawlistPageRoute);
           Get.snackbar("Cash Withdraw Successful.",
               "Redirecting to Cash Withdraw List Page.",
               snackPosition: SnackPosition.BOTTOM,
@@ -179,25 +173,6 @@ class _CashWithdrawState extends State<CashWithdraw> {
   Widget build(BuildContext context) {
     var ScreenWidth = MediaQuery.of(context).size.width;
     var ScreenHeight = MediaQuery.of(context).size.height;
-
-    double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
-    double ResponsiveHeight =
-        MediaQuery.of(context as BuildContext).size.height;
-
-    Future<void> _selectDate(BuildContext context) async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate ?? DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2101),
-      );
-
-      if (picked != null && picked != selectedDate) {
-        setState(() {
-          selectedDate = picked;
-        });
-      }
-    }
 
     return Scaffold(
       appBar: Appbar(
@@ -520,87 +495,6 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "Cheque Series :",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 70,
-                                        ),
-                                        SizedBox(
-                                          width: 300,
-                                          child: TextField(
-                                            controller: chequeseries,
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                            decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      vertical: 2,
-                                                      horizontal: 5),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "Cheque Date :",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 80,
-                                        ),
-                                        SizedBox(
-                                          width: 300,
-                                          child: InkWell(
-                                            onTap: () => _selectDate(context),
-                                            child: AbsorbPointer(
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  hintText: selectedDate != null
-                                                      ? "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}"
-                                                      : "Select a date",
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize:
-                                                        ScreenWidth / 109.71,
-                                                  ),
-                                                  suffixIcon: Icon(
-                                                      Icons
-                                                          .calendar_month_sharp,
-                                                      size:
-                                                          ScreenWidth / 109.71,
-                                                      color: Colors.grey),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     const SizedBox(
                                       height: 20,
                                     ),
@@ -730,47 +624,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                     ),
                                     Row(
                                       children: [
-                                        Text(
-                                          "Cheque No :",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 300,
-                                          child: TextField(
-                                            controller: chequeno,
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
-                                            decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      vertical: 2,
-                                                      horizontal: 5),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 25,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
+                                        const Text(
                                           "Remarks :",
                                           style: TextStyle(
                                             fontSize: 14,

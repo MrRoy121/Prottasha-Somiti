@@ -94,6 +94,15 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           text: 'Reports',
                           icon: Icons.arrow_drop_down),
                     ),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(expensescreenPageRoute);
+                      },
+                      child: NavbarItem(
+                          flag: widget.navbool.reports,
+                          text: 'Expense',
+                          icon: Icons.arrow_drop_down),
+                    ),
                   ],
                 )
               : Align(
@@ -177,6 +186,14 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                       child: NavbarItem(
                                           flag: widget.navbool.reports,
                                           text: 'Reports',
+                                          icon: Icons.arrow_drop_down),
+                                    ),InkWell(
+                                      onTap: () {
+                                        Get.toNamed(expensescreenPageRoute);
+                                      },
+                                      child: NavbarItem(
+                                          flag: widget.navbool.reports,
+                                          text: 'Expense',
                                           icon: Icons.arrow_drop_down),
                                     ),
                                   ],

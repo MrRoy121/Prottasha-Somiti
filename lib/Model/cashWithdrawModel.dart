@@ -5,19 +5,14 @@ class CashWithdrawModel {
       approvedby,
       id,
       accountno,
-      chequeno,
-      chequeseries,
       amountinword,
       remarks;
   bool status, approve;
   double withdrawamount, disburse;
-  DateTime requestdate, approvedate, chequedate;
+  DateTime requestdate, approvedate;
   int sl;
 
   CashWithdrawModel({
-    required this.chequeseries,
-    required this.chequeno,
-    required this.chequedate,
     required this.membername,
     required this.remarks,
     required this.memberid,

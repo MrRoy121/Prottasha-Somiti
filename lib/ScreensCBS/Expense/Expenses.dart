@@ -11,11 +11,11 @@ import '../../../../Constants/Constants.dart';
 import '../../Constants/values.dart';
 import '../../ScreensMFS/Widget/Appbar.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
 
 class ExpenseScreen extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   ExpenseScreen({required this.appbool, required this.navbool});
@@ -586,7 +586,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 ],
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

@@ -80,15 +80,7 @@ class _NavbarState extends State<Navbar> {
                     icon: Icons.arrow_drop_down),
               ),
 
-              InkWell(
-                onTap: () {
-                  Get.toNamed(expensescreenPageRoute);
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.reports,
-                    text: 'Expense',
-                    icon: Icons.arrow_drop_down),
-              ),
+
             ],
           )
           : Align(
