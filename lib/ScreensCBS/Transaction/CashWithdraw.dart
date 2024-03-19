@@ -123,11 +123,11 @@ class _CashWithdrawState extends State<CashWithdraw> {
           ],
           borderRadius: 0);
     } else {
-      DocumentSnapshot ds =  await  FirebaseFirestore.instance
-          .collection(
-          'BalanceAccount')
-          .doc('0').get();
-      if(ds['Balance']<double.parse(withdrawamount.text)){
+      DocumentSnapshot ds = await FirebaseFirestore.instance
+          .collection('BalanceAccount')
+          .doc('0')
+          .get();
+      if (ds['Balance'] < double.parse(withdrawamount.text)) {
         Get.snackbar(
             "Balance Withdraw Request Failed.", "Insufficient Balance in Cash!",
             snackPosition: SnackPosition.BOTTOM,
@@ -140,17 +140,18 @@ class _CashWithdrawState extends State<CashWithdraw> {
                   color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
             ],
             borderRadius: 0);
-      }else{
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Cash Withdraw').get();
+      } else {
+        QuerySnapshot querySnapshot =
+            await FirebaseFirestore.instance.collection('Cash Withdraw').get();
         FirebaseFirestore.instance.collection('Cash Withdraw').add({
           'Member Name': selectedaccount.member['First Name'] +
               ' ' +
               selectedaccount.member['Last Name'],
-          'Member ID':memberid,
+          'Member ID': memberid,
           "Requested By":
-          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+              "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
           "Approved By": '',
-          "SL":querySnapshot.docs.length+1,
+          "SL": querySnapshot.docs.length + 1,
           "Approve": false,
           'Account No': selectedaccount.id,
           'Withdraw Amount': double.parse(withdrawamount.text),
@@ -161,9 +162,8 @@ class _CashWithdrawState extends State<CashWithdraw> {
           'Status': false,
           'Remarks': remarks.text,
         }).then((value) async {
-          await  FirebaseFirestore.instance
-              .collection(
-              'BalanceAccount')
+          await FirebaseFirestore.instance
+              .collection('BalanceAccount')
               .doc('0')
               .update({
             'Balance': FieldValue.increment(-double.parse(withdrawamount.text)),
@@ -173,7 +173,7 @@ class _CashWithdrawState extends State<CashWithdraw> {
               .doc(memberid)
               .update({
             'Loan Pending Amount':
-            FieldValue.increment(-double.parse(withdrawamount.text)),
+                FieldValue.increment(-double.parse(withdrawamount.text)),
           }).then((value) {
             Get.offNamed(cashwithdrawlistPageRoute);
             Get.snackbar("Cash Withdraw Successful.",
@@ -451,19 +451,24 @@ class _CashWithdrawState extends State<CashWithdraw> {
                                               onChanged: (newValue) async {
                                                 selectedaccount = newValue;
                                                 mmems = true;
-                                                DocumentSnapshot customerSnapshot = await FirebaseFirestore.instance
-                                                    .collection('Customer')
-                                                    .doc(selectedaccount
-                                                    .member['ID'])
-                                                    .get();
+                                                DocumentSnapshot
+                                                    customerSnapshot =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('Customer')
+                                                        .doc(selectedaccount
+                                                            .member['ID'])
+                                                        .get();
 
                                                 await FirebaseFirestore.instance
                                                     .collection('Member')
-                                                    .doc(customerSnapshot['Member ID'])
+                                                    .doc(customerSnapshot[
+                                                        'Member ID'])
                                                     .get()
                                                     .then((firstDocument) {
                                                   setState(() {
-                                                    memberid =                 customerSnapshot['Member ID'];
+                                                    memberid = customerSnapshot[
+                                                        'Member ID'];
                                                     disburse = firstDocument[
                                                         "Loan Pending Amount"];
                                                   });
