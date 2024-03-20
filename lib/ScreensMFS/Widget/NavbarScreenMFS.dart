@@ -793,7 +793,8 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.toNamed(trialbalancePageRoute);},
                                 onHover: (val) {
                                   setState(() {
                                     if (val) {
@@ -815,7 +816,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                     width: 350,
                                     color: itemColor2,
                                     child: Text(
-                                      "Ledger Balance",
+                                      "Trail Balance",
                                       style: TextStyle(
                                         color: textColor2,
                                         fontSize: 12,

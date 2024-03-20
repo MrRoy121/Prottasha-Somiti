@@ -62,6 +62,7 @@ import 'ScreensMFS/MemberManagement/SamiteeList.dart';
 import 'ScreensMFS/MemberManagement/SamiteeRegistration.dart';
 import 'ScreensMFS/Reports/GeneralLedgerStatement.dart';
 import 'ScreensMFS/Reports/ProfitLossStatement.dart';
+import 'ScreensMFS/Reports/TrialBalance.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequestList.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
@@ -378,6 +379,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navbool,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: trialbalancePageRoute,
+            page: () => TrailBalance(
+              appbool: appbool,
+              navbool: navbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: accountscreenPageRoute,

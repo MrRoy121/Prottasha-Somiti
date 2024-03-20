@@ -23,6 +23,7 @@ const repaymentreverseListPageRoute = "/repaymentreverselistPageRoute";
 const repaymentrequestlistPageRoute = "/repaymentrequestlistPageRoute";
 
 const memberledgerPageRoute = "/memberledger";
+const trialbalancePageRoute = "/trialbalancePageRoute";
 const dailytransactionPageRoute = "/dailytransaction";
 const dailyglsummaryPageRoute = "/dailyglsummary";
 const profitlossstatementPageRoute = "/profitlossstatementPageRoute";
