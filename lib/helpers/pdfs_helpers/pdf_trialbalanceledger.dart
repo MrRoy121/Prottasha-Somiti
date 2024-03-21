@@ -15,6 +15,7 @@ class PdfTrailbalanceLedger {
     required List<DailyTransactionModel> cashinhand,
     required List<DailyTransactionModel> cashcurrentdeposit,
     required List<DailyTransactionModel> savingsdeposit,
+    required List<DailyTransactionModel> expenses,
     required List<DailyTransactionModel> loanandadvances,
     required DateTime startdate
   }) async {
@@ -30,6 +31,8 @@ class PdfTrailbalanceLedger {
     final ttfbold = Font.ttf(fontData2.buffer.asByteData());
     double totalcashinhand =
         cashinhand.fold(0.0, (sum, transaction) => sum + transaction.amount);
+    double totalexpenses =
+    expenses.fold(0.0, (sum, transaction) => sum + transaction.amount);
     double totalcashcurrentdeposit =
         cashcurrentdeposit.fold(0.0, (sum, transaction) => sum + transaction.amount);
 
@@ -251,6 +254,80 @@ class PdfTrailbalanceLedger {
                   flex: 6),
               Expanded(
                   child: Text('0.00',
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
+                  flex: 1)
+            ])),
+
+        Container(
+          margin: EdgeInsets.only(
+              left: PdfPageFormat.a4.marginLeft,
+              right: PdfPageFormat.a4.marginRight),
+          width: PdfPageFormat.a4.width,
+          child: Text("Head Code : 350 Employees Salaries & Expenses",
+              style: TextStyle(
+                  font: ttfbold, fontSize: 10, color: PdfColors.black)),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+              top: 8,
+              left: PdfPageFormat.a4.marginLeft,
+              right: PdfPageFormat.a4.marginRight),
+          child: buildInvoice(expenses, ttf, ttfbold),
+        ),
+        Container(
+            margin: EdgeInsets.only(
+                top: 5,
+                left: PdfPageFormat.a4.marginLeft,
+                right: PdfPageFormat.a4.marginRight + 2),
+            child: Row(children: [
+              Expanded(
+                  child: Text("Total Credit : ",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          font: ttf, fontSize: 9, color: PdfColors.black)),
+                  flex: 6),
+              Expanded(
+                  child: Text('0.00',
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          font: ttf, fontSize: 9, color: PdfColors.black)),
+                  flex: 1)
+            ])),
+        Container(
+            margin: EdgeInsets.only(
+                top: 5,
+                left: PdfPageFormat.a4.marginLeft,
+                right: PdfPageFormat.a4.marginRight + 2),
+            child: Row(children: [
+              Expanded(
+                  child: Text("Total Debit : ",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          font: ttf, fontSize: 9, color: PdfColors.black)),
+                  flex: 6),
+              Expanded(
+                  child: Text(totalexpenses.toString(),
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          font: ttf, fontSize: 9, color: PdfColors.black)),
+                  flex: 1)
+            ])),
+        Container(
+            margin: EdgeInsets.only(
+                top: 5,
+                left: PdfPageFormat.a4.marginLeft,
+                right: PdfPageFormat.a4.marginRight + 2),
+            child: Row(children: [
+              Expanded(
+                  child: Text("Sub Total : ",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
+                  flex: 6),
+              Expanded(
+                  child: Text(totalexpenses.toString(),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),

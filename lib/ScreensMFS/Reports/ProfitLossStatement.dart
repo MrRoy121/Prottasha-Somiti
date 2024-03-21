@@ -102,7 +102,9 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
         total: 0));
     s++;
     return profitloss;
-  }Future<List<ProfitLossModel>> getExpense() async {
+  }
+
+  Future<List<ProfitLossModel>> getExpense() async {
     List<ProfitLossModel> profitloss = [];
     int s = 1;
     QuerySnapshot<Map<String, dynamic>> querySnapshot =

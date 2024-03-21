@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
+import '../../Constants/values.dart';
 import '../../Model/dailyTransactionModel.dart';
 import '../../helpers/pdfs_helpers/pdf_trialbalanceledger.dart';
 import '../Widget/Appbar.dart';
@@ -107,12 +108,47 @@ class _TrailBalanceState extends State<TrailBalance> {
     return allmemberss;
   }
 
+
+  Future<List<DailyTransactionModel>> getExpense() async {
+    List<DailyTransactionModel> profitloss = [];
+    int s = 1;
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await FirebaseFirestore.instance.collection('ExpenseItem').get();
+    for (var category in ExpensecategoryList) {
+      double currentmont = 0.0;
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses = querySnapshot.docs
+          .where((ele) =>
+      ele['Expense Category'] == category)
+          .toList();
+      for (var ele in expenses) {
+        double amount = ele['Amount'];
+        if (_selectedDate.month == ele['Date'].toDate().month &&
+            _selectedDate.year == ele['Date'].toDate().year) {
+          currentmont += amount;
+        }
+      }
+      profitloss.add(DailyTransactionModel(
+          amount: currentmont,
+          transacno:"52007${s.toString().padLeft(2, '0')}",
+          drcr: false,
+          acno:'1',
+          actitle: '',
+          naration: category,
+          transactiondate: DateTime.now()
+      ));
+      s++;
+    }
+    return profitloss;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
 
     _save() async {
       PdfTrailbalanceLedger.generate(
-          cashcurrentdeposit: await getcashcurrentdeposti(),
+          cashcurrentdeposit: await getcashcurrentdeposti(),expenses: await getExpense(),
             cashinhand: await getcashinhand(),savingsdeposit: await getsavingsdeposit(),loanandadvances: await getloanandadvances(),
       startdate: _selectedDate);
     }
