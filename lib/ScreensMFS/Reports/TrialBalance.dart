@@ -23,8 +23,6 @@ class TrailBalance extends StatefulWidget {
 class _TrailBalanceState extends State<TrailBalance> {
   DateTime _selectedDate = DateTime.now();
 
-
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -40,46 +38,46 @@ class _TrailBalanceState extends State<TrailBalance> {
     }
   }
 
-
-
   Future<List<DailyTransactionModel>> getcashinhand() async {
     List<DailyTransactionModel> allmemberss = [];
-      await FirebaseFirestore.instance
-          .collection('BalanceAccount').doc('0')
-          .get()
-          .then((element) {
-        allmemberss.add(DailyTransactionModel(
-            amount: element['Balance'],
-            transacno:'52001001',
-            drcr: true,
-            acno:'1',
-            actitle: '',
-            naration: element['Account Title'],
-            transactiondate: DateTime.now()));
-      });
+    await FirebaseFirestore.instance
+        .collection('BalanceAccount')
+        .doc('0')
+        .get()
+        .then((element) {
+      allmemberss.add(DailyTransactionModel(
+          amount: element['Balance'],
+          transacno: '52001001',
+          drcr: true,
+          acno: '1',
+          actitle: '',
+          naration: element['Account Title'],
+          transactiondate: DateTime.now()));
+    });
     return allmemberss;
   }
 
   Future<List<DailyTransactionModel>> getcashcurrentdeposti() async {
     List<DailyTransactionModel> allmemberss = [];
     double totaldepo = 0;
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Member')
-          .where('Deposits')
-          .get();
-      for (var document in querySnapshot.docs) {
-        List<dynamic> deposits = document["Deposits"];
-        for (var deposit in deposits) {
-          totaldepo += deposit["value"] ?? 0.0;
-        }
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Member')
+        .where('Deposits')
+        .get();
+    for (var document in querySnapshot.docs) {
+      List<dynamic> deposits = document["Deposits"];
+      for (var deposit in deposits) {
+        totaldepo += deposit["value"] ?? 0.0;
       }
-      allmemberss.add(DailyTransactionModel(
-          amount: totaldepo,
-          transacno:'52001002',
-          drcr: true,
-          acno:'1',
-          actitle: '',
-          naration: "Cash Deposit",
-          transactiondate: DateTime.now()));
+    }
+    allmemberss.add(DailyTransactionModel(
+        amount: totaldepo,
+        transacno: '52001002',
+        drcr: true,
+        acno: '1',
+        actitle: '',
+        naration: "Cash Deposit",
+        transactiondate: DateTime.now()));
     return allmemberss;
   }
 
@@ -87,38 +85,38 @@ class _TrailBalanceState extends State<TrailBalance> {
     List<DailyTransactionModel> allmemberss = [];
     allmemberss.add(DailyTransactionModel(
         amount: 0,
-        transacno:'52002002',
+        transacno: '52002002',
         drcr: true,
-        acno:'1',
+        acno: '1',
         actitle: '',
         naration: "Savings Deposit",
         transactiondate: DateTime.now()));
     return allmemberss;
   }
+
   Future<List<DailyTransactionModel>> getloanandadvances() async {
     List<DailyTransactionModel> allmemberss = [];
     allmemberss.add(DailyTransactionModel(
         amount: 0,
-        transacno:'52002003',
+        transacno: '52002003',
         drcr: true,
-        acno:'1',
+        acno: '1',
         actitle: '',
         naration: "Suspense(Service Charge)",
         transactiondate: DateTime.now()));
     return allmemberss;
   }
 
-
   Future<List<DailyTransactionModel>> getExpense() async {
     List<DailyTransactionModel> profitloss = [];
     int s = 1;
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-    await FirebaseFirestore.instance.collection('ExpenseItem').get();
+        await FirebaseFirestore.instance.collection('ExpenseItem').get();
     for (var category in ExpensecategoryList) {
       double currentmont = 0.0;
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses = querySnapshot.docs
-          .where((ele) =>
-      ele['Expense Category'] == category)
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses = querySnapshot
+          .docs
+          .where((ele) => ele['Expense Category'] == category)
           .toList();
       for (var ele in expenses) {
         double amount = ele['Amount'];
@@ -129,28 +127,27 @@ class _TrailBalanceState extends State<TrailBalance> {
       }
       profitloss.add(DailyTransactionModel(
           amount: currentmont,
-          transacno:"52007${s.toString().padLeft(2, '0')}",
+          transacno: "52007${s.toString().padLeft(2, '0')}",
           drcr: false,
-          acno:'1',
+          acno: '1',
           actitle: '',
           naration: category,
-          transactiondate: DateTime.now()
-      ));
+          transactiondate: DateTime.now()));
       s++;
     }
     return profitloss;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     _save() async {
       PdfTrailbalanceLedger.generate(
-          cashcurrentdeposit: await getcashcurrentdeposti(),expenses: await getExpense(),
-            cashinhand: await getcashinhand(),savingsdeposit: await getsavingsdeposit(),loanandadvances: await getloanandadvances(),
-      startdate: _selectedDate);
+          cashcurrentdeposit: await getcashcurrentdeposti(),
+          expenses: await getExpense(),
+          cashinhand: await getcashinhand(),
+          savingsdeposit: await getsavingsdeposit(),
+          loanandadvances: await getloanandadvances(),
+          startdate: _selectedDate);
     }
 
     return Scaffold(
@@ -161,7 +158,7 @@ class _TrailBalanceState extends State<TrailBalance> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100,left: 50),
+              margin: EdgeInsets.only(top: 100, left: 50),
               child: Column(
                 children: [
                   Container(
@@ -203,14 +200,15 @@ class _TrailBalanceState extends State<TrailBalance> {
                               ),
                               Spacer(),
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   _save();
                                 },
                                 child: Container(
                                   height: 40,
                                   width: 125,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 2.0, left: 12),
+                                    padding: const EdgeInsets.only(
+                                        top: 2.0, left: 12),
                                     child: Row(
                                       children: [
                                         Icon(
@@ -223,7 +221,9 @@ class _TrailBalanceState extends State<TrailBalance> {
                                         ),
                                         Text(
                                           "View Report",
-                                          style: TextStyle(color: Colors.white, fontSize: 14),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -238,7 +238,8 @@ class _TrailBalanceState extends State<TrailBalance> {
                                 height: 40,
                                 width: 90,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 3.0, left: 15),
+                                  padding:
+                                      const EdgeInsets.only(top: 3.0, left: 15),
                                   child: Row(
                                     children: [
                                       Icon(
@@ -251,7 +252,8 @@ class _TrailBalanceState extends State<TrailBalance> {
                                       ),
                                       Text(
                                         "Clear",
-                                        style: TextStyle(color: Colors.white, fontSize: 14),
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14),
                                       ),
                                     ],
                                   ),
@@ -275,7 +277,9 @@ class _TrailBalanceState extends State<TrailBalance> {
                                       RichText(
                                         text: TextSpan(
                                           text: 'Transaction Date',
-                                          style: TextStyle(color: Colors.black, fontSize: 14),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14),
                                           children: <TextSpan>[
                                             TextSpan(
                                                 text: ' *',
@@ -286,7 +290,8 @@ class _TrailBalanceState extends State<TrailBalance> {
                                             TextSpan(
                                                 text: ' :',
                                                 style: TextStyle(
-                                                    color: Colors.black, fontSize: 14)),
+                                                    color: Colors.black,
+                                                    fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -303,7 +308,8 @@ class _TrailBalanceState extends State<TrailBalance> {
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey),
                                                 ),
                                                 hintText: _selectedDate != null
                                                     ? "${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"
@@ -311,7 +317,8 @@ class _TrailBalanceState extends State<TrailBalance> {
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp,
+                                                suffixIcon: Icon(
+                                                    Icons.calendar_month_sharp,
                                                     color: Colors.grey),
                                               ),
                                             ),

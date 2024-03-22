@@ -11,14 +11,13 @@ import '../auth_service.dart';
 import '../pdf_api.dart';
 
 class PdfTrailbalanceLedger {
-  static Future<File> generate({
-    required List<DailyTransactionModel> cashinhand,
-    required List<DailyTransactionModel> cashcurrentdeposit,
-    required List<DailyTransactionModel> savingsdeposit,
-    required List<DailyTransactionModel> expenses,
-    required List<DailyTransactionModel> loanandadvances,
-    required DateTime startdate
-  }) async {
+  static Future<File> generate(
+      {required List<DailyTransactionModel> cashinhand,
+      required List<DailyTransactionModel> cashcurrentdeposit,
+      required List<DailyTransactionModel> savingsdeposit,
+      required List<DailyTransactionModel> expenses,
+      required List<DailyTransactionModel> loanandadvances,
+      required DateTime startdate}) async {
     final pdf = Document();
 
     final Uint8List data = await yourBackgroundImageFunction();
@@ -32,9 +31,9 @@ class PdfTrailbalanceLedger {
     double totalcashinhand =
         cashinhand.fold(0.0, (sum, transaction) => sum + transaction.amount);
     double totalexpenses =
-    expenses.fold(0.0, (sum, transaction) => sum + transaction.amount);
-    double totalcashcurrentdeposit =
-        cashcurrentdeposit.fold(0.0, (sum, transaction) => sum + transaction.amount);
+        expenses.fold(0.0, (sum, transaction) => sum + transaction.amount);
+    double totalcashcurrentdeposit = cashcurrentdeposit.fold(
+        0.0, (sum, transaction) => sum + transaction.amount);
 
     pdf.addPage(MultiPage(
       pageFormat: PdfPageFormat.a4,
@@ -259,7 +258,6 @@ class PdfTrailbalanceLedger {
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),
                   flex: 1)
             ])),
-
         Container(
           margin: EdgeInsets.only(
               left: PdfPageFormat.a4.marginLeft,
@@ -333,7 +331,6 @@ class PdfTrailbalanceLedger {
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),
                   flex: 1)
             ])),
-
         Container(
             margin: EdgeInsets.only(
                 top: 10,
@@ -347,7 +344,9 @@ class PdfTrailbalanceLedger {
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),
                   flex: 6),
               Expanded(
-                  child: Text(((totalcashcurrentdeposit)-(totalcashinhand)).toStringAsFixed(2),
+                  child: Text(
+                      ((totalcashcurrentdeposit) - (totalcashinhand))
+                          .toStringAsFixed(2),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),
@@ -357,7 +356,8 @@ class PdfTrailbalanceLedger {
       header: (context) => buildHeader(
         ttf,
         data,
-        ttfbold,startdate,
+        ttfbold,
+        startdate,
       ),
       footer: (context) => buildFooter(ttf, ttfbold),
     ));
@@ -389,8 +389,8 @@ class PdfTrailbalanceLedger {
         item.acno,
         item.transacno,
         item.naration,
-        item.drcr ?item.amount.toStringAsFixed(2):'0',
-        item.drcr ?'0':item.amount.toStringAsFixed(2),
+        item.drcr ? item.amount.toStringAsFixed(2) : '0',
+        item.drcr ? '0' : item.amount.toStringAsFixed(2),
       ];
     }).toList();
     return TableHelper.fromTextArray(
@@ -431,7 +431,8 @@ class PdfTrailbalanceLedger {
                 fontSize: 12,
                 color: PdfColor.fromHex("#1E2772"))),
       ]));
-  static Widget buildHeader(final ttf, Uint8List data, final ttfbold, DateTime startdate) =>
+  static Widget buildHeader(
+          final ttf, Uint8List data, final ttfbold, DateTime startdate) =>
       Container(
           alignment: Alignment.center,
           child: Column(
@@ -477,7 +478,8 @@ class PdfTrailbalanceLedger {
                         fontSize: 10,
                         color: PdfColor.fromHex("#1E2772"))),
                 SizedBox(height: 5),
-                Text("Trail Balance as on ${DateFormat('dd MMMM, yyyy').format(startdate)}",
+                Text(
+                    "Trail Balance as on ${DateFormat('dd MMMM, yyyy').format(startdate)}",
                     style: TextStyle(
                         font: ttfbold,
                         fontSize: 10,
