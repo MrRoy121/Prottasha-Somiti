@@ -25,6 +25,7 @@ const repaymentrequestlistPageRoute = "/repaymentrequestlistPageRoute";
 const memberledgerPageRoute = "/memberledger";
 const trialbalancePageRoute = "/trialbalancePageRoute";
 const dailytransactionPageRoute = "/dailytransaction";
+const dailyaffairstatementPageRoute = "/dailyaffairstatementPageRoute";
 const dailyglsummaryPageRoute = "/dailyglsummary";
 const profitlossstatementPageRoute = "/profitlossstatementPageRoute";
 const samiteewisememberdepositPageRoute = "/samiteewisememberdeposit";

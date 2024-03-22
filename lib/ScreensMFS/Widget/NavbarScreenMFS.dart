@@ -869,31 +869,64 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   });
                                 },
                                 onTap: () {
-                                  // Get.to(DailyGLSummary(
+                                  // Get.to(DailyTransactionList(
                                   //   appbool: widget.appbool,
                                   //   navbool: widget.navbool,
                                   // ));
-                                  Get.toNamed(dailyglsummaryPageRoute);
+                                  Get.toNamed(dailyaffairstatementPageRoute);
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor4,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Daily GL Summary",
-                                        style: TextStyle(
-                                          color: textColor4,
-                                          fontSize: 12,
-                                        ),
+                                    padding: EdgeInsets.only(
+                                        top: 10, left: 20, bottom: 10),
+                                    height: 40,
+                                    width: 350,
+                                    color: itemColor4,
+                                    child: Text(
+                                      "Daily Affair Statement",
+                                      style: TextStyle(
+                                        color: textColor4,
+                                        fontSize: 12,
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    )),
                               ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor4 = AppColor_hover1;
+                              //         textColor4 = Colors.white;
+                              //       } else {
+                              //         itemColor4 = AppColor_Blue;
+                              //         textColor4 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     // Get.to(DailyGLSummary(
+                              //     //   appbool: widget.appbool,
+                              //     //   navbool: widget.navbool,
+                              //     // ));
+                              //     Get.toNamed(dailyglsummaryPageRoute);
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor4,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Daily GL Summary",
+                              //           style: TextStyle(
+                              //             color: textColor4,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onHover: (val) {
                                   setState(() {

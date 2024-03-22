@@ -251,27 +251,27 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 50),
+              child: TransactionList(
+                ssomitee: ssomitee,
+                setupsomiti: _setupsomiti,
+                selectDate: _selectDate,
+                selectedDate: _selectedDate,
+                selectedtransactiontype: selectedtransactiontype,
+                selectedsomiteeid: selectedsomiti,
+                selectedsomitee: sselectedsomiti,
+                setuptransactionType: _setuptransactionType,
+                onsubmit: _save,
+                onclear: _onclear,
+                somitee: somitee,
+              ),
+            ),
             NavbarScreenMFS(
               appbool: widget.appbool,
               navbool: widget.navbool,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            TransactionList(
-              ssomitee: ssomitee,
-              setupsomiti: _setupsomiti,
-              selectDate: _selectDate,
-              selectedDate: _selectedDate,
-              selectedtransactiontype: selectedtransactiontype,
-              selectedsomiteeid: selectedsomiti,
-              selectedsomitee: sselectedsomiti,
-              setuptransactionType: _setuptransactionType,
-              onsubmit: _save,
-              onclear: _onclear,
-              somitee: somitee,
             ),
           ],
         ),
