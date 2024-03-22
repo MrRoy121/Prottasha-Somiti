@@ -14,9 +14,8 @@ class PdfDailyAffairStatementLedger {
   static Future<File> generate({
     required List<DailyTransactionModel> cashdeposit,
     required List<DailyTransactionModel> cashwithdraw,
-    required List<DailyTransactionModel> loandisburse,
-    required List<DailyTransactionModel> loanrepayment,
-    required String ledgeno,
+    required List<DailyTransactionModel> expense,
+    required DateTime date,
     required ledgertitle,
   }) async {
     final pdf = Document();
@@ -35,10 +34,7 @@ class PdfDailyAffairStatementLedger {
         cashwithdraw.fold(0.0, (sum, transaction) => sum + transaction.amount);
 
     double totaldisbursement =
-    loanrepayment.fold(0.0, (sum, transaction) => sum + transaction.amount);
-
-    double totalrepayment =
-    cashwithdraw.fold(0.0, (sum, transaction) => sum + transaction.amount);
+        expense.fold(0.0, (sum, transaction) => sum + transaction.amount);
 
     pdf.addPage(MultiPage(
       pageFormat: PdfPageFormat.a4,
@@ -48,293 +44,145 @@ class PdfDailyAffairStatementLedger {
           margin: EdgeInsets.only(
               left: PdfPageFormat.a4.marginLeft,
               right: PdfPageFormat.a4.marginRight),
-          width: PdfPageFormat.a4.width,
-          child: Text("Transaction Type : Cash Deposit",
-              style: TextStyle(
-                  font: ttfbold, fontSize: 10, color: PdfColors.black)),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Container(
+                  width: PdfPageFormat.a4.width,
+                  child: Text("Head Name : 10200000 Deposit",
+                      style: TextStyle(
+                          font: ttfbold, fontSize: 8, color: PdfColors.black)),
+                ),
+                Container(
+                  child: buildInvoice(cashdeposit, ttf, ttfbold, false),
+                ),
+                Container(
+                    child: Row(children: [
+                  Expanded(
+                      child: Text("Sub Total : ",
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              font: ttfbold,
+                              fontSize: 6,
+                              color: PdfColors.black)),
+                      flex: 6),
+                  Expanded(
+                      child: Text(totalcashdeposit.toStringAsFixed(2),
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              font: ttfbold,
+                              fontSize: 6,
+                              color: PdfColors.black)),
+                      flex: 1)
+                ])),
+              ]),
+            ),
+            SizedBox(width: 5),
+            Expanded(
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Container(
+                width: PdfPageFormat.a4.width,
+                child: Text("30100000 Cash & Cash Equivalent",
+                    style: TextStyle(
+                        font: ttfbold, fontSize: 8, color: PdfColors.black)),
+              ),
+              Container(
+                child: buildInvoice(
+                    cashwithdraw.sublist(0, 1), ttf, ttfbold, true),
+              ),
+              Container(
+                  child: Row(children: [
+                Expanded(
+                    child: Text("Sub Total : ",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 6),
+                Expanded(
+                    child: Text(cashwithdraw[0].amount.toStringAsFixed(2),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 1)
+              ])),
+                  Container(
+                    width: PdfPageFormat.a4.width,
+                    child: Text("30250000 Cash at Bank",
+                        style: TextStyle(
+                            font: ttfbold, fontSize: 8, color: PdfColors.black)),
+                  ),
+                  Container(
+                    child: buildInvoice(
+                        cashwithdraw.sublist(1), ttf, ttfbold, true),
+                  ),
+                  Container(
+                      child: Row(children: [
+                        Expanded(
+                            child: Text("Sub Total : ",
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    font: ttfbold,
+                                    fontSize: 6,
+                                    color: PdfColors.black)),
+                            flex: 6),
+                        Expanded(
+                            child: Text(cashwithdraw[0].amount.toStringAsFixed(2),
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    font: ttfbold,
+                                    fontSize: 6,
+                                    color: PdfColors.black)),
+                            flex: 1)
+                      ])),
+            ])),
+          ]),
         ),
-        Container(
-          margin: EdgeInsets.only(
-              top: 8,
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          child: buildInvoice(cashdeposit, ttf, ttfbold),
-        ),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Credit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totalcashdeposit.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Debit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text("0.00",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Sub Total : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totalcashdeposit.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-          margin: EdgeInsets.only(
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          width: PdfPageFormat.a4.width,
-          child: Text("Transaction Type : Cash Withdraw",
-              style: TextStyle(
-                  font: ttfbold, fontSize: 10, color: PdfColors.black)),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-              top: 8,
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          child: buildInvoice(cashwithdraw, ttf, ttfbold),
-        ),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Credit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text('0.00',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Debit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totalcashwithdraw.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Sub Total : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totalcashwithdraw.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
         Container(
           margin: EdgeInsets.only(
               left: PdfPageFormat.a4.marginLeft,
               right: PdfPageFormat.a4.marginRight),
-          width: PdfPageFormat.a4.width,
-          child: Text("Transaction Type : Loan Disbursement",
-              style: TextStyle(
-                  font: ttfbold, fontSize: 10, color: PdfColors.black)),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(
+              child: SizedBox(),
+            ),
+            SizedBox(width: 5),
+            Expanded(
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Container(
+                width: PdfPageFormat.a4.width,
+                child: Text("Head Name : 90100000 Expense",
+                    style: TextStyle(
+                        font: ttfbold, fontSize: 8, color: PdfColors.black)),
+              ),
+              Container(
+                child: buildInvoice(expense, ttf, ttfbold, true),
+              ),
+              Container(
+                  child: Row(children: [
+                Expanded(
+                    child: Text("Sub Total : ",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 6),
+                Expanded(
+                    child: Text(totaldisbursement.toStringAsFixed(2),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 1)
+              ])),
+            ])),
+          ]),
         ),
-        Container(
-          margin: EdgeInsets.only(
-              top: 8,
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          child: buildInvoice(loandisburse, ttf, ttfbold),
-        ),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Credit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text('0.00',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Debit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totaldisbursement.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Sub Total : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totaldisbursement.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),Container(
-          margin: EdgeInsets.only(
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          width: PdfPageFormat.a4.width,
-          child: Text("Transaction Type : Loan Repayment",
-              style: TextStyle(
-                  font: ttfbold, fontSize: 10, color: PdfColors.black)),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-              top: 8,
-              left: PdfPageFormat.a4.marginLeft,
-              right: PdfPageFormat.a4.marginRight),
-          child: buildInvoice(cashwithdraw, ttf, ttfbold),
-        ),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Credit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totalrepayment.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Total Debit : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text('0.00',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttf, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
-        Container(
-            margin: EdgeInsets.only(
-                top: 5,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
-              Expanded(
-                  child: Text("Sub Total : ",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 6),
-              Expanded(
-                  child: Text(totalrepayment.toStringAsFixed(2),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
-                  flex: 1)
-            ])),
         Container(
             margin: EdgeInsets.only(
                 top: 10,
@@ -345,13 +193,16 @@ class PdfDailyAffairStatementLedger {
                   child: Text("Grand Total : ",
                       textAlign: TextAlign.end,
                       style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
+                          font: ttfbold, fontSize: 6, color: PdfColors.black)),
                   flex: 6),
               Expanded(
-                  child: Text(((totalcashwithdraw+totaldisbursement)-(totalrepayment+totalcashdeposit)).toStringAsFixed(2),
+                  child: Text(
+                      ((totalcashwithdraw + totaldisbursement) -
+                              (totalcashdeposit))
+                          .toStringAsFixed(2),
                       textAlign: TextAlign.end,
                       style: TextStyle(
-                          font: ttfbold, fontSize: 9, color: PdfColors.black)),
+                          font: ttfbold, fontSize: 6, color: PdfColors.black)),
                   flex: 1)
             ])),
       ],
@@ -359,6 +210,7 @@ class PdfDailyAffairStatementLedger {
         ttf,
         data,
         ttfbold,
+        date,
       ),
       footer: (context) => buildFooter(ttf, ttfbold),
     ));
@@ -373,28 +225,17 @@ class PdfDailyAffairStatementLedger {
   }
 
   static Widget buildInvoice(
-    List<DailyTransactionModel> invoice,
-    final ttf,
-    final ttfbold,
-  ) {
+      List<DailyTransactionModel> invoice, final ttf, final ttfbold, bool dr) {
     final headers = [
-      'Trans No',
-      'Date',
-      'DR/CR',
-      'Narration',
-      'AC No',
-      'AC Title',
+      'GL Head',
+      dr ? 'Assets (Dr)' : 'Liabilities (Cr)',
       'Amount',
     ];
 
     final data = invoice.map((item) {
       return [
         item.transacno,
-        DateFormat.yMd().format(item.transactiondate),
-        item.drcr ? 'Debit' : 'Credit',
         item.naration,
-        item.acno,
-        item.actitle,
         item.amount.toStringAsFixed(2),
       ];
     }).toList();
@@ -403,21 +244,16 @@ class PdfDailyAffairStatementLedger {
       headers: headers,
       data: data,
       headerStyle: TextStyle(
-          font: ttfbold, color: PdfColor.fromHex("#1C1F22"), fontSize: 10),
+          font: ttfbold, color: PdfColor.fromHex("#1C1F22"), fontSize: 6),
       headerDecoration: BoxDecoration(color: PdfColors.white),
-      cellHeight: 20,
+      cellHeight: 15,
       border: TableBorder.all(color: PdfColor.fromHex("#1C1F22"), width: .5),
       cellStyle:
-          TextStyle(font: ttf, color: PdfColor.fromHex("#1C1F22"), fontSize: 9),
+          TextStyle(font: ttf, color: PdfColor.fromHex("#1C1F22"), fontSize: 6),
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
-        2: Alignment.centerLeft,
-        3: Alignment.centerLeft,
-        4: Alignment.centerLeft,
-        5: Alignment.centerLeft,
-        6: Alignment.centerRight,
-        7: Alignment.centerRight,
+        2: Alignment.centerRight,
       },
     );
   }
@@ -433,7 +269,8 @@ class PdfDailyAffairStatementLedger {
                 fontSize: 12,
                 color: PdfColor.fromHex("#1E2772"))),
       ]));
-  static Widget buildHeader(final ttf, Uint8List data, final ttfbold) =>
+  static Widget buildHeader(
+          final ttf, Uint8List data, final ttfbold, DateTime startdate) =>
       Container(
           alignment: Alignment.center,
           child: Column(
@@ -476,19 +313,20 @@ class PdfDailyAffairStatementLedger {
                 Text("Sunamgonj Sadar",
                     style: TextStyle(
                         font: ttfbold,
-                        fontSize: 10,
+                        fontSize: 8,
                         color: PdfColor.fromHex("#1E2772"))),
                 SizedBox(height: 5),
-                Text("Daily Transaction List",
+                Text(
+                    "Statement Of Affairs As On ${DateFormat('dd MMMM, yyyy').format(startdate)}",
                     style: TextStyle(
                         font: ttfbold,
-                        fontSize: 10,
+                        fontSize: 8,
                         color: PdfColor.fromHex("#1C1F22"))),
                 // Text(
                 //     "Statement For Period:  ${DateFormat('dd MMMM, yyyy').format(startdate)} to  ${DateFormat('dd MMMM, yyyy').format(enddate)}",
                 //     style: TextStyle(
                 //         font: ttf,
-                //         fontSize: 10,
+                //         fontSize: 8,
                 //         color: PdfColor.fromHex("#1E2772"))),
                 SizedBox(height: 30),
               ]));

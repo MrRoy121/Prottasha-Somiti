@@ -34,120 +34,106 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
 
   Future<List<DailyTransactionModel>> getmemberdeposit() async {
     List<DailyTransactionModel> allmemberss = [];
-    int s = 1;
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Member').get();
-      for (var element in querySnapshot.docs) {
-        if (element["Deposits"] != null) {
-          var deposits = element["Deposits"] ?? [];
-          for (int i = 0; i < deposits.length; i++) {
-            DateTime ddd = DateTime.parse(deposits[i]["date"]);
-            if (_selectedDate.day == ddd.day &&
-                _selectedDate.month == ddd.month &&
-                _selectedDate.year == ddd.year) {
-              allmemberss.add(DailyTransactionModel(
-                  amount: deposits[i]["value"],
-                  transacno: s.toString(),
-                  drcr: false,
-                  acno: element.id,
-                  actitle: element["First Name"] + " " + element["Last Name"],
-                  naration: deposits[i]["remarks"],
-                  transactiondate: ddd));
-              s++;
-            }
-          }
+    double totaldepo = 0;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Member')
+        .where('Deposits')
+        .get();
+    for (var document in querySnapshot.docs) {
+      List<dynamic> deposits = document["Deposits"];
+      for (int i = 0; i < deposits.length; i++) {
+        DateTime ddd = DateTime.parse(deposits[i]["date"]);
+        if (_selectedDate.day == ddd.day &&
+            _selectedDate.month == ddd.month &&
+            _selectedDate.year == ddd.year) {
+        totaldepo += deposits[i]["value"] ?? 0.0;
         }
       }
-    } catch (e) {
-      print("Error fetching data from Firestore: $e");
     }
+    allmemberss.add(DailyTransactionModel(
+        amount: totaldepo,
+        transacno: '52001002',
+        drcr: true,
+        acno: '1',
+        actitle: '',
+        naration: "Short Notice Deposit (Samittee)",
+        transactiondate: DateTime.now()));
+    allmemberss.add(DailyTransactionModel(
+        amount: 0,
+        transacno: '52001003',
+        drcr: true,
+        acno: '1',
+        actitle: '',
+        naration: "Short Notice Deposit (Cbs)",
+        transactiondate: DateTime.now()));
+    allmemberss.add(DailyTransactionModel(
+        amount: 0,
+        transacno: '52001001',
+        drcr: true,
+        acno: '1',
+        actitle: '',
+        naration: "Savings Deposit",
+        transactiondate: DateTime.now()));
     return allmemberss;
   }
 
   Future<List<DailyTransactionModel>> getmemberwithdraw() async {
     List<DailyTransactionModel> allmemberss = [];
-    int s = 1;
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Member').get();
-      for (var element in querySnapshot.docs) {
-        if (element["Withdraws"] != null) {
-          var deposits = element["Withdraws"] ?? [];
-          for (int i = 0; i < deposits.length; i++) {
-            DateTime ddd = DateTime.parse(deposits[i]["date"]);
-            if (_selectedDate.day == ddd.day &&
-                _selectedDate.month == ddd.month &&
-                _selectedDate.year == ddd.year) {
-              allmemberss.add(DailyTransactionModel(
-                  amount: deposits[i]["value"],
-                  transacno: s.toString(),
-                  drcr: true,
-                  acno: element.id,
-                  actitle: element["First Name"] + " " + element["Last Name"],
-                  naration: deposits[i]["remarks"],
-                  transactiondate: ddd));
-              s++;
-            }
-          }
-        }
+    int i = 0;
+    await FirebaseFirestore.instance
+        .collection('BalanceAccount')
+        .get()
+        .then((que) {
+      for (var ele in que.docs) {
+        i++;
+        allmemberss.add(DailyTransactionModel(
+            amount: ele['Balance'],
+            transacno: '30250${i.toString().padLeft(3,'0')}',
+            drcr: true,
+            acno: ele.id,
+            actitle: '',
+            naration: ele['Account Title'],
+            transactiondate: DateTime.now()));
       }
-    } catch (e) {
-      print("Error fetching data from Firestore: $e");
+    });
+    int index = allmemberss.indexWhere((element) => element.acno == '0');
+    if (index != -1) {
+    var doc000 = allmemberss.removeAt(index);
+    allmemberss.insert(0, doc000);
     }
     return allmemberss;
   }
 
-  Future<List<DailyTransactionModel>> getloandisbursement() async {
-    List<DailyTransactionModel> allmemberss = [];
-    int s = 1;
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('LoanDisbursed').get();
-    for (var element in querySnapshot.docs) {
-      if (element['Status'] && element['Approve']) {
-        DateTime ddd = element["Disbursed Date"].toDate();
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
-          allmemberss.add(DailyTransactionModel(
-              amount: element["Disbursed Amount"],
-              transacno: s.toString(),
-              drcr: true,
-              acno: element['Member ID'],
-              actitle: element["Member Name"],
-              naration: element["Narration"],
-              transactiondate: ddd));
-          s++;
-        }
-      }
-    }
-    return allmemberss;
-  }
 
-  Future<List<DailyTransactionModel>> getloanrepayment() async {
-    List<DailyTransactionModel> allmemberss = [];
+  Future<List<DailyTransactionModel>> getExpense() async {
+    List<DailyTransactionModel> profitloss = [];
     int s = 1;
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('LoanRepayment').get();
-    for (var element in querySnapshot.docs) {
-      if (element['Status'] && element['Approve']) {
-        DateTime ddd = element["Request Date"].toDate();
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
-          allmemberss.add(DailyTransactionModel(
-              amount: element["Pay Amount"],
-              transacno: s.toString(),
-              drcr: false,
-              acno: element['Member ID'],
-              actitle: element["Member Name"],
-              naration: element["Narration"],
-              transactiondate: ddd));
-          s++;
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await FirebaseFirestore.instance.collection('ExpenseItem').get();
+    for (var category in ExpensecategoryList) {
+      double currentmont = 0.0;
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses = querySnapshot
+          .docs
+          .where((ele) => ele['Expense Category'] == category)
+          .toList();
+      for (var ele in expenses) {
+        double amount = ele['Amount'];
+        if (_selectedDate.month == ele['Date'].toDate().month &&
+            _selectedDate.year == ele['Date'].toDate().year) {
+          currentmont += amount;
         }
       }
+      profitloss.add(DailyTransactionModel(
+          amount: currentmont,
+          transacno: "90100${s.toString().padLeft(3, '0')}",
+          drcr: false,
+          acno: '1',
+          actitle: '',
+          naration: category,
+          transactiondate: DateTime.now()));
+      s++;
     }
-    return allmemberss;
+    return profitloss;
   }
 
   @override
@@ -157,10 +143,9 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
         PdfDailyAffairStatementLedger.generate(
             cashwithdraw: await getmemberwithdraw(),
             cashdeposit: await getmemberdeposit(),
-            loandisburse: await getloandisbursement(),
-            loanrepayment: await getloanrepayment(),
+            expense: await getExpense(),
             ledgertitle: 'ss',
-            ledgeno: 'sdsa');
+            date: _selectedDate);
     }
 
 
