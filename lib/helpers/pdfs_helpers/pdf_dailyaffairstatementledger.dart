@@ -109,35 +109,35 @@ class PdfDailyAffairStatementLedger {
                             color: PdfColors.black)),
                     flex: 1)
               ])),
-                  Container(
-                    width: PdfPageFormat.a4.width,
-                    child: Text("30250000 Cash at Bank",
+              Container(
+                width: PdfPageFormat.a4.width,
+                child: Text("30250000 Cash at Bank",
+                    style: TextStyle(
+                        font: ttfbold, fontSize: 8, color: PdfColors.black)),
+              ),
+              Container(
+                child:
+                    buildInvoice(cashwithdraw.sublist(1), ttf, ttfbold, true),
+              ),
+              Container(
+                  child: Row(children: [
+                Expanded(
+                    child: Text("Sub Total : ",
+                        textAlign: TextAlign.end,
                         style: TextStyle(
-                            font: ttfbold, fontSize: 8, color: PdfColors.black)),
-                  ),
-                  Container(
-                    child: buildInvoice(
-                        cashwithdraw.sublist(1), ttf, ttfbold, true),
-                  ),
-                  Container(
-                      child: Row(children: [
-                        Expanded(
-                            child: Text("Sub Total : ",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    font: ttfbold,
-                                    fontSize: 6,
-                                    color: PdfColors.black)),
-                            flex: 6),
-                        Expanded(
-                            child: Text(cashwithdraw[0].amount.toStringAsFixed(2),
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    font: ttfbold,
-                                    fontSize: 6,
-                                    color: PdfColors.black)),
-                            flex: 1)
-                      ])),
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 6),
+                Expanded(
+                    child: Text(cashwithdraw[0].amount.toStringAsFixed(2),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 1)
+              ])),
             ])),
           ]),
         ),
@@ -184,11 +184,33 @@ class PdfDailyAffairStatementLedger {
           ]),
         ),
         Container(
-            margin: EdgeInsets.only(
-                top: 10,
-                left: PdfPageFormat.a4.marginLeft,
-                right: PdfPageFormat.a4.marginRight + 2),
-            child: Row(children: [
+          margin: EdgeInsets.only(
+              left: PdfPageFormat.a4.marginLeft,
+              right: PdfPageFormat.a4.marginRight),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(
+              child: Row(children: [
+                Expanded(
+                    child: Text("Grand Total : ",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 6),
+                Expanded(
+                    child: Text(totalcashdeposit.toStringAsFixed(2),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            font: ttfbold,
+                            fontSize: 6,
+                            color: PdfColors.black)),
+                    flex: 1)
+              ]),
+            ),
+            SizedBox(width: 5),
+            Expanded(
+                child: Row(children: [
               Expanded(
                   child: Text("Grand Total : ",
                       textAlign: TextAlign.end,
@@ -197,14 +219,15 @@ class PdfDailyAffairStatementLedger {
                   flex: 6),
               Expanded(
                   child: Text(
-                      ((totalcashwithdraw + totaldisbursement) -
-                              (totalcashdeposit))
+                      (totalcashwithdraw + totaldisbursement)
                           .toStringAsFixed(2),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                           font: ttfbold, fontSize: 6, color: PdfColors.black)),
                   flex: 1)
             ])),
+          ]),
+        ),
       ],
       header: (context) => buildHeader(
         ttf,

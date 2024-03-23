@@ -58,10 +58,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    _clear(){
-      accountno.text ='';
+    _clear() {
+      accountno.text = '';
       accounttitle.text = '';
       amount.text = '';
       setState(() {});
@@ -116,8 +114,9 @@ class _AccountScreenState extends State<AccountScreen> {
                                 Spacer(),
                                 InkWell(
                                   onTap: () async {
-                                    if ( accountno.text.isEmpty||accounttitle.text.isEmpty||amount.text.isEmpty
-                                       ) {
+                                    if (accountno.text.isEmpty ||
+                                        accounttitle.text.isEmpty ||
+                                        amount.text.isEmpty) {
                                       Get.snackbar("Account Adding Failed.",
                                           "Some Required Fields are Empty",
                                           snackPosition: SnackPosition.BOTTOM,
@@ -134,52 +133,58 @@ class _AccountScreenState extends State<AccountScreen> {
                                           ],
                                           borderRadius: 0);
                                     } else {
-                                     DocumentSnapshot querySnapshot = await FirebaseFirestore.instance.collection('BalanceAccount').doc(accountno.text).get();
-                                     if(!querySnapshot.exists){
-                                       FirebaseFirestore.instance
-                                           .collection('BalanceAccount').doc(accountno.text)
-                                           .set({
-                                         'Account Title': accounttitle.text,
-                                         'Balance': double.parse(
-                                             amount.text.toString()),
-                                         'Account No': accountno.text,
-                                       }).then((value) async {
-                                         fetch();
-                                         _clear();
-                                         Get.snackbar(
-                                             "Open Close Updated Successfully.",
-                                             "Refreshing the Page.",
-                                             snackPosition: SnackPosition.BOTTOM,
-                                             colorText: Colors.white,
-                                             backgroundColor: Colors.green,
-                                             margin: EdgeInsets.zero,
-                                             duration: const Duration(
-                                                 milliseconds: 2000),
-                                             boxShadows: [
-                                               const BoxShadow(
-                                                   color: Colors.grey,
-                                                   offset: Offset(-100, 0),
-                                                   blurRadius: 20),
-                                             ],
-                                             borderRadius: 0);
-                                       });
-                                     }else{
-                                       Get.snackbar("Account Adding Failed.",
-                                           "Account Number already exists",
-                                           snackPosition: SnackPosition.BOTTOM,
-                                           colorText: Colors.white,
-                                           backgroundColor: Colors.red,
-                                           margin: EdgeInsets.zero,
-                                           duration: const Duration(
-                                               milliseconds: 2000),
-                                           boxShadows: [
-                                             BoxShadow(
-                                                 color: Colors.grey,
-                                                 offset: Offset(-100, 0),
-                                                 blurRadius: 20),
-                                           ],
-                                           borderRadius: 0);
-                                     }
+                                      DocumentSnapshot querySnapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection('BalanceAccount')
+                                              .doc(accountno.text)
+                                              .get();
+                                      if (!querySnapshot.exists) {
+                                        FirebaseFirestore.instance
+                                            .collection('BalanceAccount')
+                                            .doc(accountno.text)
+                                            .set({
+                                          'Account Title': accounttitle.text,
+                                          'Balance': double.parse(
+                                              amount.text.toString()),
+                                          'Account No': accountno.text,
+                                        }).then((value) async {
+                                          fetch();
+                                          _clear();
+                                          Get.snackbar(
+                                              "Open Close Updated Successfully.",
+                                              "Refreshing the Page.",
+                                              snackPosition:
+                                                  SnackPosition.BOTTOM,
+                                              colorText: Colors.white,
+                                              backgroundColor: Colors.green,
+                                              margin: EdgeInsets.zero,
+                                              duration: const Duration(
+                                                  milliseconds: 2000),
+                                              boxShadows: [
+                                                const BoxShadow(
+                                                    color: Colors.grey,
+                                                    offset: Offset(-100, 0),
+                                                    blurRadius: 20),
+                                              ],
+                                              borderRadius: 0);
+                                        });
+                                      } else {
+                                        Get.snackbar("Account Adding Failed.",
+                                            "Account Number already exists",
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            colorText: Colors.white,
+                                            backgroundColor: Colors.red,
+                                            margin: EdgeInsets.zero,
+                                            duration: const Duration(
+                                                milliseconds: 2000),
+                                            boxShadows: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  offset: Offset(-100, 0),
+                                                  blurRadius: 20),
+                                            ],
+                                            borderRadius: 0);
+                                      }
                                     }
                                   },
                                   child: Container(
@@ -201,7 +206,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                   width: 10,
                                 ),
                                 InkWell(
-                                  onTap: () {_clear();
+                                  onTap: () {
+                                    _clear();
                                   },
                                   child: Container(
                                     height: 40,
@@ -279,8 +285,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
                                             contentPadding:
-                                            EdgeInsets.symmetric(horizontal: 5,
-                                                vertical: 5),
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 5, vertical: 5),
                                           ),
                                         ),
                                       ),
@@ -328,8 +334,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
                                             contentPadding:
-                                                EdgeInsets.symmetric(horizontal: 5,
-                                                    vertical: 5),
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 5, vertical: 5),
                                           ),
                                         ),
                                       ),
@@ -377,8 +383,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
                                             contentPadding:
-                                            EdgeInsets.symmetric(horizontal: 5,
-                                                vertical: 5),
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 5, vertical: 5),
                                           ),
                                         ),
                                       ),
@@ -483,7 +489,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                               ],
                               rows: [
-                                for(var ele in _account)
+                                for (var ele in _account)
                                   DataRow(
                                     cells: [
                                       DataCell(Text(ele["sl"].toString(),
@@ -500,11 +506,12 @@ class _AccountScreenState extends State<AccountScreen> {
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(
-                                          Text(ele["Balance"].toStringAsFixed(1),textAlign: TextAlign.end,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                              ))),
+                                      DataCell(Text(
+                                          ele["Balance"].toStringAsFixed(1),
+                                          textAlign: TextAlign.end,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ))),
                                     ],
                                   )
                               ],
