@@ -66,7 +66,7 @@ class _EditMembersState extends State<EditMembers> {
       sselectedsomiti = ss;
     });
   }
-
+bool firs = false;
   @override
   Widget build(BuildContext context) {
     void _setupsomiti(int ins) {
@@ -85,42 +85,42 @@ class _EditMembersState extends State<EditMembers> {
         for (var element in querySnapshot.docs) {
           if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
             somitee.add(Memberss(
-                somiteename: element["Somitee Name"],
-                somiteeid: element["Somitee ID"],
-                membertype: element["Member Type"],
-                occupation: element["Occupation"],
-                firstname: element["First Name"],
-                lastname: element["Last Name"],dead: element['Dead'],
-                fathername: element["Father Name"],
-                mothername: element["Mother Name"],
-                loanpendingamount: element["Loan Pending Amount"],
-                owndepositamount: element["Own deposit Amount"],
-                gender: element["Gender"],
-                religion: element["Religion"],
-                sts: element["Status"],
-                nationalid: element["National ID"],
-                birthregi: element["Birth Registration"],
-                annualincome: element["Annual Income"],
-                age: element["Age"],
-                nodepenndent: element["No of Dependent"],
-                education: element["Education"],
-                maritalstatus: element["Marital Status"],
-                mobilenotype: element["Mobile No Type"],
-                mobilenno: element["Mobile No"],
-                presentadd: element["Present Address"],
-                parmaadd: element["Permanent Address"],
-                livingperiod: element["Living Period"],
-                nomaleearner: element["No Female Earner"],
-                nofemaleearner: element["No Male Earner"],
+                somiteename: element["Somitee Name"]?? '',
+                somiteeid: element["Somitee ID"]?? '',
+                membertype: element["Member Type"]?? '',
+                occupation: element["Occupation"]?? '',
+                firstname: element["First Name"]?? '',
+                lastname: element["Last Name"]?? '',dead: element['Dead']?? '',
+                fathername: element["Father Name"]?? '',
+                mothername: element["Mother Name"]?? '',
+                loanpendingamount: element["Loan Pending Amount"]?? '',
+                owndepositamount: element["Own deposit Amount"]?? '',
+                gender: element["Gender"]?? '',
+                religion: element["Religion"]?? '',
+                sts: element["Status"]?? '',
+                nationalid: element["National ID"]?? '',
+                birthregi: element["Birth Registration"]?? '',
+                annualincome: element["Annual Income"]?? '',
+                age: element["Age"]?? '',
+                nodepenndent: "0",
+                education: element["Education"]?? '',
+                maritalstatus: element["Marital Status"]?? '',
+                mobilenotype: element["Mobile No Type"]?? '',
+                mobilenno: element["Mobile No"]?? '',
+                presentadd: element["Present Address"]?? '',
+                parmaadd: element["Permanent Address"]?? '',
+                livingperiod: element["Living Period"]?? '',
+                nomaleearner: element["No Female Earner"]?? '',
+                nofemaleearner: element["No Male Earner"]?? '',
                 id: element.id,
-                headfamily: element["Head Family"],
-                ownhomestead: element["Own HomeStead"],
-                relationwithhead: element["Relation With Head"],
-                landdesc: element["Land Desc"],
-                housedesc: element["House Desc"],
-                remarks: element["Remarks"],
-                imageurl: element["ImageURL"],
-                img: element["Image"],
+                headfamily: element["Head Family"]?? '',
+                ownhomestead: element["Own HomeStead"]?? '',
+                relationwithhead: element["Relation With Head"]?? '',
+                landdesc: element["Land Desc"]?? '',
+                housedesc: '',
+                remarks: element["Remarks"]?? '',
+                imageurl: element["ImageURL"]?? '',
+                img: element["Image"]?? '',
                 birthdate: element["Date Of Birth"].toDate(),
                 sl: s));
             s++;
@@ -129,7 +129,23 @@ class _EditMembersState extends State<EditMembers> {
       });
       return somitee;
     }
+    void updatePermanentAddress() async {
+      CollectionReference membersCollection = FirebaseFirestore.instance.collection('Member');
+      QuerySnapshot querySnapshot = await membersCollection.get();
+      querySnapshot.docs.forEach((DocumentSnapshot doc) async {
+        if (doc['Parmanent Address'] != null) {
+          print("Done");
+          dynamic addressValue = doc['Parmanent Address'];
+          await doc.reference.update({'Parmanent Address': FieldValue.delete()});
+          await doc.reference.update({'Permanent Address': addressValue});
+        }
+      });
+    }
 
+    if(!firs){
+    //  updatePermanentAddress();
+      firs = true;
+    }
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
