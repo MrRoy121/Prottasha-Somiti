@@ -65,9 +65,6 @@ class _NavbarCBSState extends State<NavbarCBS> {
                     ),
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          widget.toglechnage(3);
-                        });
                       },
                       child: NavbarItem(
                           flag: widget.navbool.loanadvance,
@@ -166,9 +163,6 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        setState(() {
-                                          widget.toglechnage(3);
-                                        });
                                       },
                                       child: NavbarItem(
                                           flag: widget.navbool.loanadvance,

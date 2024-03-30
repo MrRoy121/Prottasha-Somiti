@@ -156,17 +156,13 @@ class _MemberUpdateState extends State<MemberUpdate> {
         selectedocupation == '' ||
         _fathername.text.isEmpty ||
         _firstname.text.isEmpty ||
-        _housedesc.text.isEmpty ||
         _lastname.text.isEmpty ||
         _preseentaddress.text.isEmpty ||
         _mothername.text.isEmpty ||
         _mobileno.text.isEmpty ||
         _annualincome.text.isEmpty ||
-        _birthreginumber.text.isEmpty ||
-        _landdesc.text.isEmpty ||
-        _livingperiod.text.isEmpty ||
         _mobileno.text.isEmpty ||
-        _nidnumber.text.isEmpty) {
+        (_birthreginumber.text.isEmpty && _nidnumber.text.isEmpty)) {
       Get.snackbar("Member Updating Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white,
@@ -264,7 +260,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'Mobile No Type': mobiletype,
           'Mobile No': _mobileno.text,
           'Present Address': _preseentaddress.text,
-          'Parmanent Address': _parmaaddress.text,
+          'Permanent Address': _parmaaddress.text,
           'Living Period': _livingperiod.text,
           'No Female Earner': _nofemaleearner.text,
           'No Male Earner': _nomaleearner.text,
@@ -318,7 +314,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'Mobile No Type': mobiletype,
           'Mobile No': _mobileno.text,
           'Present Address': _preseentaddress.text,
-          'Parmanent Address': _parmaaddress.text,
+          'Permanent Address': _parmaaddress.text,
           'Living Period': _livingperiod.text,
           'No Female Earner': _nofemaleearner.text,
           'No Male Earner': _nomaleearner.text,
@@ -480,40 +476,40 @@ class _MemberUpdateState extends State<MemberUpdate> {
     var arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     Memberss mst = Memberss(
-        somiteename: arguments['Members']["Somitee Name"],
-        somiteeid: arguments['Members']["Somitee ID"],
-        membertype: arguments['Members']["Member Type"],dead: arguments['Members']['Dead'],
-        occupation: arguments['Members']["Occupation"],
-        firstname: arguments['Members']["First Name"],loanpendingamount: arguments['Members']["Loan Pending Amount"],owndepositamount: arguments['Members']["Own deposit Amount"],
-        lastname: arguments['Members']["Last Name"],
-        fathername: arguments['Members']["Father Name"],
-        mothername: arguments['Members']["Mother Name"],
-        gender: arguments['Members']["Gender"],sts: arguments['Members']["Status"],
-        religion: arguments['Members']["Religion"],
-        nationalid: arguments['Members']["National ID"],
-        birthregi: arguments['Members']["Birth Registration"],
-        annualincome: arguments['Members']["Annual Income"],
-        age: arguments['Members']["Age"],
-        nodepenndent: arguments['Members']["No of Dependent"],
-        education: arguments['Members']["Education"],
-        maritalstatus: arguments['Members']["Marital Status"],
-        mobilenotype: arguments['Members']["Mobile No Type"],
-        mobilenno: arguments['Members']["Mobile No"],
-        presentadd: arguments['Members']["Present Address"],
-        parmaadd: arguments['Members']["Parmanent Address"],
-        livingperiod: arguments['Members']["Living Period"],
-        nomaleearner: arguments['Members']["No Female Earner"],
-        nofemaleearner: arguments['Members']["No Male Earner"],
-        id: arguments['Members']["ID"],
-        headfamily: arguments['Members']["Head Family"],
-        ownhomestead: arguments['Members']["Own HomeStead"],
-        relationwithhead: arguments['Members']["Relation With Head"],
-        landdesc: arguments['Members']["Land Desc"],
-        housedesc: arguments['Members']["House Desc"],
-        remarks: arguments['Members']["Remarks"],
-        imageurl: arguments['Members']["ImageURL"],
-        img: arguments['Members']["Image"],
-        birthdate: arguments['Members']["Date Of Birth"],
+        somiteename: arguments['Members']["Somitee Name"]?? '',
+        somiteeid: arguments['Members']["Somitee ID"]?? '',
+        membertype: arguments['Members']["Member Type"]?? '',dead: arguments['Members']['Dead']?? '',
+        occupation: arguments['Members']["Occupation"]?? '',
+        firstname: arguments['Members']["First Name"]?? '',loanpendingamount: arguments['Members']["Loan Pending Amount"]?? '',owndepositamount: arguments['Members']["Own deposit Amount"]?? '',
+        lastname: arguments['Members']["Last Name"]?? '',
+        fathername: arguments['Members']["Father Name"]?? '',
+        mothername: arguments['Members']["Mother Name"]?? '',
+        gender: arguments['Members']["Gender"]?? '',sts: arguments['Members']["Status"]?? '',
+        religion: arguments['Members']["Religion"]?? '',
+        nationalid: arguments['Members']["National ID"]?? '',
+        birthregi: arguments['Members']["Birth Registration"]?? '',
+        annualincome: arguments['Members']["Annual Income"]?? '',
+        age: arguments['Members']["Age"]?? '',
+        nodepenndent: arguments['Members']["No of Dependent"]?? '',
+        education: arguments['Members']["Education"]?? '',
+        maritalstatus: arguments['Members']["Marital Status"]?? '',
+        mobilenotype: arguments['Members']["Mobile No Type"]?? '',
+        mobilenno: arguments['Members']["Mobile No"]?? '',
+        presentadd: arguments['Members']["Present Address"]?? '',
+        parmaadd: arguments['Members']["Permanent Address"]?? '',
+        livingperiod: arguments['Members']["Living Period"]?? '',
+        nomaleearner: arguments['Members']["No Female Earner"]?? '',
+        nofemaleearner: arguments['Members']["No Male Earner"]?? '',
+        id: arguments['Members']["ID"]?? '',
+        headfamily: arguments['Members']["Head Family"]?? '',
+        ownhomestead: arguments['Members']["Own HomeStead"]?? '',
+        relationwithhead: arguments['Members']["Relation With Head"]?? '',
+        landdesc: arguments['Members']["Land Desc"]?? '',
+        housedesc: arguments['Members']["House Desc"]?? '',
+        remarks: arguments['Members']["Remarks"]?? '',
+        imageurl: arguments['Members']["ImageURL"]?? '',
+        img: arguments['Members']["Image"]?? '',
+        birthdate: arguments['Members']["Date Of Birth"]?? '',
         sl: arguments['Members']["sl"]);
     _addinit(mst);
     void _setupownhomestead(int ins) {
