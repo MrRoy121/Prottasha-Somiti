@@ -64,8 +64,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           icon: Icons.arrow_drop_down),
                     ),
                     InkWell(
-                      onTap: () {
-                      },
+                      onTap: () {},
                       child: NavbarItem(
                           flag: widget.navbool.loanadvance,
                           text: 'Loan & Advances',
@@ -99,7 +98,8 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.reports,
                           text: 'Expense',
                           icon: Icons.arrow_drop_down),
-                    ),InkWell(
+                    ),
+                    InkWell(
                       onTap: () {
                         Get.toNamed(accountscreenPageRoute);
                       },
@@ -162,23 +162,24 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                           icon: Icons.arrow_drop_down),
                                     ),
                                     InkWell(
-                                      onTap: () {
-                                      },
+                                      onTap: () {},
                                       child: NavbarItem(
                                           flag: widget.navbool.loanadvance,
                                           text: 'Loan & Advances',
                                           icon: Icons.arrow_drop_down),
                                     ),
-                                    AuthService.to.user!.type ==
-                                        "Super Admin"?InkWell(
-                                      onTap: () {
-                                        Get.toNamed(dailyopenclosePageRoute);
-                                      },
-                                      child: NavbarItem(
-                                          flag: widget.navbool.processing,
-                                          text: 'Processing',
-                                          icon: Icons.arrow_drop_down),
-                                    ):SizedBox(),
+                                    AuthService.to.user!.type == "Super Admin"
+                                        ? InkWell(
+                                            onTap: () {
+                                              Get.toNamed(
+                                                  dailyopenclosePageRoute);
+                                            },
+                                            child: NavbarItem(
+                                                flag: widget.navbool.processing,
+                                                text: 'Processing',
+                                                icon: Icons.arrow_drop_down),
+                                          )
+                                        : SizedBox(),
                                     InkWell(
                                       onTap: () {
                                         setState(() {
@@ -189,7 +190,8 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                           flag: widget.navbool.reports,
                                           text: 'Reports',
                                           icon: Icons.arrow_drop_down),
-                                    ),InkWell(
+                                    ),
+                                    InkWell(
                                       onTap: () {
                                         Get.toNamed(expensescreenPageRoute);
                                       },
@@ -197,7 +199,8 @@ class _NavbarCBSState extends State<NavbarCBS> {
                                           flag: widget.navbool.reports,
                                           text: 'Expense',
                                           icon: Icons.arrow_drop_down),
-                                    ),InkWell(
+                                    ),
+                                    InkWell(
                                       onTap: () {
                                         Get.toNamed(accountscreenPageRoute);
                                       },
