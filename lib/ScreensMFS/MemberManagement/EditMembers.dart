@@ -66,7 +66,8 @@ class _EditMembersState extends State<EditMembers> {
       sselectedsomiti = ss;
     });
   }
-bool firs = false;
+
+  bool firs = false;
   @override
   Widget build(BuildContext context) {
     void _setupsomiti(int ins) {
@@ -85,42 +86,43 @@ bool firs = false;
         for (var element in querySnapshot.docs) {
           if (selectedsomiti.id == element["Somitee ID"] && element["Status"]) {
             somitee.add(Memberss(
-                somiteename: element["Somitee Name"]?? '',
-                somiteeid: element["Somitee ID"]?? '',
-                membertype: element["Member Type"]?? '',
-                occupation: element["Occupation"]?? '',
-                firstname: element["First Name"]?? '',
-                lastname: element["Last Name"]?? '',dead: element['Dead']?? '',
-                fathername: element["Father Name"]?? '',
-                mothername: element["Mother Name"]?? '',
-                loanpendingamount: element["Loan Pending Amount"]?? '',
-                owndepositamount: element["Own deposit Amount"]?? '',
-                gender: element["Gender"]?? '',
-                religion: element["Religion"]?? '',
-                sts: element["Status"]?? '',
-                nationalid: element["National ID"]?? '',
-                birthregi: element["Birth Registration"]?? '',
-                annualincome: element["Annual Income"]?? '',
-                age: element["Age"]?? '',
+                somiteename: element["Somitee Name"] ?? '',
+                somiteeid: element["Somitee ID"] ?? '',
+                membertype: element["Member Type"] ?? '',
+                occupation: element["Occupation"] ?? '',
+                firstname: element["First Name"] ?? '',
+                lastname: element["Last Name"] ?? '',
+                dead: element['Dead'] ?? '',
+                fathername: element["Father Name"] ?? '',
+                mothername: element["Mother Name"] ?? '',
+                loanpendingamount: element["Loan Pending Amount"] ?? '',
+                owndepositamount: element["Own deposit Amount"] ?? '',
+                gender: element["Gender"] ?? '',
+                religion: element["Religion"] ?? '',
+                sts: element["Status"] ?? '',
+                nationalid: element["National ID"] ?? '',
+                birthregi: element["Birth Registration"] ?? '',
+                annualincome: element["Annual Income"] ?? '',
+                age: element["Age"] ?? '',
                 nodepenndent: "0",
-                education: element["Education"]?? '',
-                maritalstatus: element["Marital Status"]?? '',
-                mobilenotype: element["Mobile No Type"]?? '',
-                mobilenno: element["Mobile No"]?? '',
-                presentadd: element["Present Address"]?? '',
-                parmaadd: element["Permanent Address"]?? '',
-                livingperiod: element["Living Period"]?? '',
-                nomaleearner: element["No Female Earner"]?? '',
-                nofemaleearner: element["No Male Earner"]?? '',
+                education: element["Education"] ?? '',
+                maritalstatus: element["Marital Status"] ?? '',
+                mobilenotype: element["Mobile No Type"] ?? '',
+                mobilenno: element["Mobile No"] ?? '',
+                presentadd: element["Present Address"] ?? '',
+                parmaadd: element["Permanent Address"] ?? '',
+                livingperiod: element["Living Period"] ?? '',
+                nomaleearner: element["No Female Earner"] ?? '',
+                nofemaleearner: element["No Male Earner"] ?? '',
                 id: element.id,
-                headfamily: element["Head Family"]?? '',
-                ownhomestead: element["Own HomeStead"]?? '',
-                relationwithhead: element["Relation With Head"]?? '',
-                landdesc: element["Land Desc"]?? '',
+                headfamily: element["Head Family"] ?? '',
+                ownhomestead: element["Own HomeStead"] ?? '',
+                relationwithhead: element["Relation With Head"] ?? '',
+                landdesc: element["Land Desc"] ?? '',
                 housedesc: '',
-                remarks: element["Remarks"]?? '',
-                imageurl: element["ImageURL"]?? '',
-                img: element["Image"]?? '',
+                remarks: element["Remarks"] ?? '',
+                imageurl: element["ImageURL"] ?? '',
+                img: element["Image"] ?? '',
                 birthdate: element["Date Of Birth"].toDate(),
                 sl: s));
             s++;
@@ -129,21 +131,24 @@ bool firs = false;
       });
       return somitee;
     }
+
     void updatePermanentAddress() async {
-      CollectionReference membersCollection = FirebaseFirestore.instance.collection('Member');
+      CollectionReference membersCollection =
+          FirebaseFirestore.instance.collection('Member');
       QuerySnapshot querySnapshot = await membersCollection.get();
       querySnapshot.docs.forEach((DocumentSnapshot doc) async {
         if (doc['Parmanent Address'] != null) {
           print("Done");
           dynamic addressValue = doc['Parmanent Address'];
-          await doc.reference.update({'Parmanent Address': FieldValue.delete()});
+          await doc.reference
+              .update({'Parmanent Address': FieldValue.delete()});
           await doc.reference.update({'Permanent Address': addressValue});
         }
       });
     }
 
-    if(!firs){
-    //  updatePermanentAddress();
+    if (!firs) {
+      //  updatePermanentAddress();
       firs = true;
     }
     return Scaffold(
@@ -468,76 +473,88 @@ bool firs = false;
                                                                       Colors
                                                                           .transparent,
                                                                   child:
-                                                                        Container(width: 350,
-                                                                      padding:
-                                                                          EdgeInsets.all(
-                                                                              30),
-                                                                      decoration: BoxDecoration(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)),
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Center(
-                                                                            child:
-                                                                                Text("Confirm ${sss.firstname + " " + sss.lastname}\n as Dead Member ",textAlign: TextAlign.center,
-                                                                          style: TextStyle(color: Colors.black, fontSize: 18),),
+                                                                      Container(
+                                                                    width: 350,
+                                                                    padding:
+                                                                        EdgeInsets.all(
+                                                                            30),
+                                                                    decoration: BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(20)),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Center(
+                                                                          child:
+                                                                              Text(
+                                                                            "Confirm ${sss.firstname + " " + sss.lastname}\n as Dead Member ",
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                TextStyle(color: Colors.black, fontSize: 18),
                                                                           ),
-                                                                          SizedBox(height: 20,),
-                                                                          Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                            children: [
-                                                                              InkWell(
-                                                                                onTap: () {
-                                                                                  Get.back();
-                                                                                },
-                                                                                child: Center(
-                                                                                  child: Container(
-                                                                                    height: 40,
-                                                                                    width: 80,
-                                                                                    alignment: Alignment.center,
-                                                                                    decoration: const BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                                                    child: const Text(
-                                                                                      "No",
-                                                                                      style: TextStyle(color: Colors.white),
-                                                                                    ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              20,
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceEvenly,
+                                                                          children: [
+                                                                            InkWell(
+                                                                              onTap: () {
+                                                                                Get.back();
+                                                                              },
+                                                                              child: Center(
+                                                                                child: Container(
+                                                                                  height: 40,
+                                                                                  width: 80,
+                                                                                  alignment: Alignment.center,
+                                                                                  decoration: const BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                                  child: const Text(
+                                                                                    "No",
+                                                                                    style: TextStyle(color: Colors.white),
                                                                                   ),
                                                                                 ),
                                                                               ),
-
-                                                                              InkWell(
-                                                                                onTap: () async {
-                                                                                 await FirebaseFirestore.instance
-                                                                                     .collection('Member').doc(sss.id).update({'Dead':true}).then((value) {
-                                                                                   Get.toNamed(
-                                                                                     deadmemberPageRoute,
-                                                                                   );
-                                                                                 });
-                                                                                },
-                                                                                child: Center(
-                                                                                  child: Container(
-                                                                                    height: 40,
-                                                                                    width:80,
-                                                                                    alignment: Alignment.center,
-                                                                                    decoration: const BoxDecoration(color: Colors.red, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                                                    child: Text(
-                                                                                      "Yes",
-                                                                                      style: TextStyle(color: Colors.white),
-                                                                                    ),
+                                                                            ),
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                await FirebaseFirestore.instance.collection('Member').doc(sss.id).update({
+                                                                                  'Dead': true
+                                                                                }).then((value) {
+                                                                                  Get.toNamed(
+                                                                                    deadmemberPageRoute,
+                                                                                  );
+                                                                                });
+                                                                              },
+                                                                              child: Center(
+                                                                                child: Container(
+                                                                                  height: 40,
+                                                                                  width: 80,
+                                                                                  alignment: Alignment.center,
+                                                                                  decoration: const BoxDecoration(color: Colors.red, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                                  child: Text(
+                                                                                    "Yes",
+                                                                                    style: TextStyle(color: Colors.white),
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            ],
-                                                                          )
-                                                                        ],
-                                                                      ),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                      ],
                                                                     ),
+                                                                  ),
                                                                 ));
                                                           },
                                                           child: Container(
