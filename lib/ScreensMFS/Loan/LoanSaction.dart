@@ -178,7 +178,7 @@ class _LoanSanctionState extends State<LoanSanction> {
 
   void _save() async {
     QuerySnapshot querySnapshot =
-    await FirebaseFirestore.instance.collection('LoanSanction').get();
+        await FirebaseFirestore.instance.collection('LoanSanction').get();
     int numberOfItems = querySnapshot.docs.length;
     String sanctionloanrequestid =
         "5200${(querySnapshot.docs.length + 1).toString().padLeft(4, '0')}";
@@ -315,8 +315,7 @@ class _LoanSanctionState extends State<LoanSanction> {
             (_selectedscheme.installmentamount * vals).toString();
         conservicecharge.text =
             (_selectedscheme.servicecharge * val).toString();
-        serviceamount = (double.parse(conservicecharge.text) +
-            principleAmount);
+        serviceamount = (double.parse(conservicecharge.text) + principleAmount);
       });
     }
 

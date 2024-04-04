@@ -333,11 +333,12 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
     }
 
     Future<void> _setupaccount(int ins) async {
-     setState(() {
-       selectedaccount = accounts[ins];
-       mmems = true;
-     });
+      setState(() {
+        selectedaccount = accounts[ins];
+        mmems = true;
+      });
     }
+
     return Scaffold(
       appBar: Appbar(
         navbool: widget.appbool,
@@ -398,7 +399,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                             children: [
                               LinkACinfo(
                                   memberss: memberss,
-                                  accounts: accounts,setupaccount: _setupaccount,
+                                  accounts: accounts,
+                                  setupaccount: _setupaccount,
                                   selectedaccount: selectedaccount,
                                   selectedsanction: selectedsanction,
                                   bsanction: bsanction,
@@ -413,7 +415,8 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
                             children: [
                               LinkACinfo(
                                   memberss: memberss,
-                                  accounts: accounts,setupaccount: _setupaccount,
+                                  accounts: accounts,
+                                  setupaccount: _setupaccount,
                                   selectedaccount: selectedaccount,
                                   selectedsanction: selectedsanction,
                                   bsanction: bsanction,
