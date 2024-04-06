@@ -823,72 +823,72 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                       ),
                                     )),
                               ),
-                              InkWell(
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor3 = AppColor_hover1;
-                                      textColor3 = Colors.white;
-                                    } else {
-                                      itemColor3 = AppColor_Blue;
-                                      textColor3 = Colors.black;
-                                    }
-                                  });
-                                },
-                                onTap: () {
-                                  // Get.to(DailyTransactionList(
-                                  //   appbool: widget.appbool,
-                                  //   navbool: widget.navbool,
-                                  // ));
-                                  Get.toNamed(dailytransactionPageRoute);
-                                },
-                                child: Container(
-                                    padding: EdgeInsets.only(
-                                        top: 10, left: 20, bottom: 10),
-                                    height: 40,
-                                    width: 350,
-                                    color: itemColor3,
-                                    child: Text(
-                                      "Daily Transaction List",
-                                      style: TextStyle(
-                                        color: textColor3,
-                                        fontSize: 12,
-                                      ),
-                                    )),
-                              ),
-                              InkWell(
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor4 = AppColor_hover1;
-                                      textColor4 = Colors.white;
-                                    } else {
-                                      itemColor4 = AppColor_Blue;
-                                      textColor4 = Colors.black;
-                                    }
-                                  });
-                                },
-                                onTap: () {
-                                  // Get.to(DailyTransactionList(
-                                  //   appbool: widget.appbool,
-                                  //   navbool: widget.navbool,
-                                  // ));
-                                  Get.toNamed(dailyaffairstatementPageRoute);
-                                },
-                                child: Container(
-                                    padding: EdgeInsets.only(
-                                        top: 10, left: 20, bottom: 10),
-                                    height: 40,
-                                    width: 350,
-                                    color: itemColor4,
-                                    child: Text(
-                                      "Daily Affair Statement",
-                                      style: TextStyle(
-                                        color: textColor4,
-                                        fontSize: 12,
-                                      ),
-                                    )),
-                              ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor3 = AppColor_hover1;
+                              //         textColor3 = Colors.white;
+                              //       } else {
+                              //         itemColor3 = AppColor_Blue;
+                              //         textColor3 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     // Get.to(DailyTransactionList(
+                              //     //   appbool: widget.appbool,
+                              //     //   navbool: widget.navbool,
+                              //     // ));
+                              //     Get.toNamed(dailytransactionPageRoute);
+                              //   },
+                              //   child: Container(
+                              //       padding: EdgeInsets.only(
+                              //           top: 10, left: 20, bottom: 10),
+                              //       height: 40,
+                              //       width: 350,
+                              //       color: itemColor3,
+                              //       child: Text(
+                              //         "Daily Transaction List",
+                              //         style: TextStyle(
+                              //           color: textColor3,
+                              //           fontSize: 12,
+                              //         ),
+                              //       )),
+                              // ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor4 = AppColor_hover1;
+                              //         textColor4 = Colors.white;
+                              //       } else {
+                              //         itemColor4 = AppColor_Blue;
+                              //         textColor4 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     // Get.to(DailyTransactionList(
+                              //     //   appbool: widget.appbool,
+                              //     //   navbool: widget.navbool,
+                              //     // ));
+                              //     Get.toNamed(dailyaffairstatementPageRoute);
+                              //   },
+                              //   child: Container(
+                              //       padding: EdgeInsets.only(
+                              //           top: 10, left: 20, bottom: 10),
+                              //       height: 40,
+                              //       width: 350,
+                              //       color: itemColor4,
+                              //       child: Text(
+                              //         "Daily Affair Statement",
+                              //         style: TextStyle(
+                              //           color: textColor4,
+                              //           fontSize: 12,
+                              //         ),
+                              //       )),
+                              // ),
                               // InkWell(
                               //   onHover: (val) {
                               //     setState(() {
@@ -927,40 +927,40 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                               //     ),
                               //   ),
                               // ),
-                              InkWell(
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor20 = AppColor_hover1;
-                                      textColor20 = Colors.white;
-                                    } else {
-                                      itemColor20 = AppColor_Blue;
-                                      textColor20 = Colors.black;
-                                    }
-                                  });
-                                },
-                                onTap: () {
-                                  Get.toNamed(profitlossstatementPageRoute);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor20,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Profit Loss Statement",
-                                        style: TextStyle(
-                                          color: textColor20,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor20 = AppColor_hover1;
+                              //         textColor20 = Colors.white;
+                              //       } else {
+                              //         itemColor20 = AppColor_Blue;
+                              //         textColor20 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     Get.toNamed(profitlossstatementPageRoute);
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor20,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Profit Loss Statement",
+                              //           style: TextStyle(
+                              //             color: textColor20,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onTap: () {},
                                 onHover: (val) {
@@ -1025,70 +1025,70 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {},
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor7 = AppColor_hover1;
-                                      textColor7 = Colors.white;
-                                    } else {
-                                      itemColor7 = AppColor_Blue;
-                                      textColor7 = Colors.black;
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor7,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Member Deposit Withdrawal",
-                                        style: TextStyle(
-                                          color: textColor7,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor8 = AppColor_hover1;
-                                      textColor8 = Colors.white;
-                                    } else {
-                                      itemColor8 = AppColor_Blue;
-                                      textColor8 = Colors.black;
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor8,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Total Ledger & Balance",
-                                        style: TextStyle(
-                                          color: textColor8,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onTap: () {},
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor7 = AppColor_hover1;
+                              //         textColor7 = Colors.white;
+                              //       } else {
+                              //         itemColor7 = AppColor_Blue;
+                              //         textColor7 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor7,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Member Deposit Withdrawal",
+                              //           style: TextStyle(
+                              //             color: textColor7,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              // InkWell(
+                              //   onTap: () {},
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor8 = AppColor_hover1;
+                              //         textColor8 = Colors.white;
+                              //       } else {
+                              //         itemColor8 = AppColor_Blue;
+                              //         textColor8 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor8,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Total Ledger & Balance",
+                              //           style: TextStyle(
+                              //             color: textColor8,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
@@ -1128,77 +1128,77 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor10 = AppColor_hover1;
-                                      textColor10 = Colors.white;
-                                    } else {
-                                      itemColor10 = AppColor_Blue;
-                                      textColor10 = Colors.black;
-                                    }
-                                  });
-                                },
-                                onTap: () {
-                                  // Get.to(SanctionDetailInformation(
-                                  //   appbool: widget.appbool,
-                                  //   navbool: widget.navbool,
-                                  // ));
-                                  Get.toNamed(
-                                      sanctiondetailsinformationPageRoute);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor10,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Sanction Detail Information",
-                                        style: TextStyle(
-                                          color: textColor10,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor11 = AppColor_hover1;
-                                      textColor11 = Colors.white;
-                                    } else {
-                                      itemColor11 = AppColor_Blue;
-                                      textColor11 = Colors.black;
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor11,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Loan Detail Information",
-                                        style: TextStyle(
-                                          color: textColor11,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor10 = AppColor_hover1;
+                              //         textColor10 = Colors.white;
+                              //       } else {
+                              //         itemColor10 = AppColor_Blue;
+                              //         textColor10 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     // Get.to(SanctionDetailInformation(
+                              //     //   appbool: widget.appbool,
+                              //     //   navbool: widget.navbool,
+                              //     // ));
+                              //     Get.toNamed(
+                              //         sanctiondetailsinformationPageRoute);
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor10,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Sanction Detail Information",
+                              //           style: TextStyle(
+                              //             color: textColor10,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              // InkWell(
+                              //   onTap: () {},
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor11 = AppColor_hover1;
+                              //         textColor11 = Colors.white;
+                              //       } else {
+                              //         itemColor11 = AppColor_Blue;
+                              //         textColor11 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor11,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Loan Detail Information",
+                              //           style: TextStyle(
+                              //             color: textColor11,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onHover: (val) {
                                   setState(() {
@@ -1307,112 +1307,112 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor15 = AppColor_hover1;
-                                      textColor15 = Colors.white;
-                                    } else {
-                                      itemColor15 = AppColor_Blue;
-                                      textColor15 = Colors.black;
-                                    }
-                                  });
-                                },
-                                onTap: () {
-                                  // Get.to(MemberWiseDisburse(
-                                  //   appbool: widget.appbool,
-                                  //   navbool: widget.navbool,
-                                  // ));
-                                  Get.toNamed(memberwishdisbursePageRoute);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor15,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Member Wise Disburse, Over Due & Outstanding",
-                                        style: TextStyle(
-                                          color: textColor15,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor16 = AppColor_hover1;
-                                      textColor16 = Colors.white;
-                                    } else {
-                                      itemColor16 = AppColor_Blue;
-                                      textColor16 = Colors.black;
-                                    }
-                                  });
-                                },
-                                onTap: () {
-                                  // Get.to(SlipReprint(
-                                  //   appbool: widget.appbool,
-                                  //   navbool: widget.navbool,
-                                  // ));
-                                  Get.toNamed(slipreprintPageRoute);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor16,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Slip Reprint",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: textColor16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                onHover: (val) {
-                                  setState(() {
-                                    if (val) {
-                                      itemColor17 = AppColor_hover1;
-                                      textColor17 = Colors.white;
-                                    } else {
-                                      itemColor17 = AppColor_Blue;
-                                      textColor17 = Colors.black;
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20, bottom: 10),
-                                  height: 40,
-                                  width: 350,
-                                  color: itemColor17,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Member Service Charge Waiver",
-                                        style: TextStyle(
-                                            fontSize: 12, color: textColor17),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor15 = AppColor_hover1;
+                              //         textColor15 = Colors.white;
+                              //       } else {
+                              //         itemColor15 = AppColor_Blue;
+                              //         textColor15 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     // Get.to(MemberWiseDisburse(
+                              //     //   appbool: widget.appbool,
+                              //     //   navbool: widget.navbool,
+                              //     // ));
+                              //     Get.toNamed(memberwishdisbursePageRoute);
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor15,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Member Wise Disburse, Over Due & Outstanding",
+                              //           style: TextStyle(
+                              //             color: textColor15,
+                              //             fontSize: 12,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              // InkWell(
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor16 = AppColor_hover1;
+                              //         textColor16 = Colors.white;
+                              //       } else {
+                              //         itemColor16 = AppColor_Blue;
+                              //         textColor16 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   onTap: () {
+                              //     // Get.to(SlipReprint(
+                              //     //   appbool: widget.appbool,
+                              //     //   navbool: widget.navbool,
+                              //     // ));
+                              //     Get.toNamed(slipreprintPageRoute);
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor16,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Slip Reprint",
+                              //           style: TextStyle(
+                              //             fontSize: 12,
+                              //             color: textColor16,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              // InkWell(
+                              //   onTap: () {},
+                              //   onHover: (val) {
+                              //     setState(() {
+                              //       if (val) {
+                              //         itemColor17 = AppColor_hover1;
+                              //         textColor17 = Colors.white;
+                              //       } else {
+                              //         itemColor17 = AppColor_Blue;
+                              //         textColor17 = Colors.black;
+                              //       }
+                              //     });
+                              //   },
+                              //   child: Container(
+                              //     padding: EdgeInsets.only(
+                              //         top: 10, left: 20, right: 20, bottom: 10),
+                              //     height: 40,
+                              //     width: 350,
+                              //     color: itemColor17,
+                              //     child: Row(
+                              //       children: [
+                              //         Text(
+                              //           "Member Service Charge Waiver",
+                              //           style: TextStyle(
+                              //               fontSize: 12, color: textColor17),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onTap: () {},
                                 onHover: (val) {
@@ -1467,7 +1467,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        "Loan Reschedule Info",
+                                        "Closed Member List",
                                         style: TextStyle(
                                           color: textColor19,
                                           fontSize: 12,

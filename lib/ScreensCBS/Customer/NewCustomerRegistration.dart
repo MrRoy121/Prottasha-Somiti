@@ -175,7 +175,6 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
     //     _preseentaddress.text.isEmpty ||
     //     _mothername.text.isEmpty ||
     //     _mobileno.text.isEmpty ||
-    //     _annualincome.text.isEmpty ||
     //     _birthreginumber.text.isEmpty ||
     //     _landdesc.text.isEmpty ||
     //     _livingperiod.text.isEmpty ||

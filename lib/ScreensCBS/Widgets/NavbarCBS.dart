@@ -70,7 +70,8 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           text: 'Loan & Advances',
                           icon: Icons.arrow_drop_down),
                     ),
-                    InkWell(
+
+                    AuthService.to.type != "Field Officer"? InkWell(
                       onTap: () {
                         Get.toNamed(dailyopenclosePageRoute);
                       },
@@ -78,8 +79,9 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.processing,
                           text: 'Processing',
                           icon: Icons.arrow_drop_down),
-                    ),
-                    InkWell(
+                    ):SizedBox(),
+
+                    AuthService.to.type != "Field Officer"? InkWell(
                       onTap: () {
                         setState(() {
                           widget.toglechnage(4);
@@ -89,8 +91,9 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.reports,
                           text: 'Reports',
                           icon: Icons.arrow_drop_down),
-                    ),
-                    InkWell(
+                    ):SizedBox(),
+
+                    AuthService.to.type != "Field Officer"?  InkWell(
                       onTap: () {
                         Get.toNamed(expensescreenPageRoute);
                       },
@@ -98,8 +101,9 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.reports,
                           text: 'Expense',
                           icon: Icons.arrow_drop_down),
-                    ),
-                    InkWell(
+                    ):SizedBox(),
+
+                    AuthService.to.type != "Field Officer"?   InkWell(
                       onTap: () {
                         Get.toNamed(accountscreenPageRoute);
                       },
@@ -107,7 +111,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.reports,
                           text: 'Account',
                           icon: Icons.arrow_drop_down),
-                    ),
+                    ):SizedBox(),
                   ],
                 )
               : Align(

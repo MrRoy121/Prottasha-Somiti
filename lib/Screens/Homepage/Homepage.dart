@@ -32,7 +32,6 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
   }
 
   Future<void> fetch() async {
-
     DateTime selectedDate = DateTime.now();
     String formattedDate = DateFormat.yMMMd().format(selectedDate).toString();
     var collectionReference =
@@ -44,6 +43,9 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
     }
     if(AuthService.to.user!.type ==
         "Super Admin"){
+      click = true;
+    }else if(AuthService.to.user!.type ==
+        "Branch Manager"){
       click = true;
     }
     setState(() {});
@@ -194,6 +196,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                               children: [
                                 InkWell(
                                   onTap: () async {
+                                    await fetch();
                                     if (click) {
                                       Get.toNamed(
                                         dashboardPageRoute,
@@ -263,6 +266,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                 ),
                                 InkWell(
                                   onTap: () async {
+                                    await fetch();
                                     if (click) {
                                       Get.toNamed(
                                         dashboardPageRoute,

@@ -156,7 +156,6 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         _preseentaddress.text.isEmpty ||
         _mothername.text.isEmpty ||
         _mobileno.text.isEmpty ||
-        _annualincome.text.isEmpty ||
         _mobileno.text.isEmpty ||
         _reference.text.isEmpty ||
         (_birthreginumber.text.isEmpty && _nidnumber.text.isEmpty)) {

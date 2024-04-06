@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:prottashasomit/helpers/auth_service.dart';
 import 'package:prottashasomit/route.dart';
 import '../../../Constants/Constants.dart';
 import 'NavBoolMFS.dart';
@@ -67,6 +68,7 @@ class _NavbarState extends State<Navbar> {
                     icon: Icons.arrow_drop_down),
               ),
 
+              AuthService.to.type != "Field Officer"?
               InkWell(
                 onTap: () {
                   setState(() {
@@ -78,7 +80,7 @@ class _NavbarState extends State<Navbar> {
                     flag: widget.navbool.reports,
                     text: 'Reports',
                     icon: Icons.arrow_drop_down),
-              ),
+              ):SizedBox(),
 
 
             ],
@@ -137,7 +139,7 @@ class _NavbarState extends State<Navbar> {
                                     icon: Icons.arrow_drop_down),
                               ),
 
-                              InkWell(
+                              AuthService.to.type != "Field Officer"? InkWell(
                                 onTap: () {
                                   setState(() {
                                     widget.toglechnage(3);
@@ -148,7 +150,7 @@ class _NavbarState extends State<Navbar> {
                                     flag: widget.navbool.reports,
                                     text: 'Reports',
                                     icon: Icons.arrow_drop_down),
-                              ),
+                              ):SizedBox(),
 
                               InkWell(
                                 onTap: () {
