@@ -462,7 +462,8 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
                     margin: EdgeInsets.only(top: 125),
                     child: CustomProgressBar(
                       totalCheckpoints: 9,
-                      currentCheckpoint: 1,customeregi: true,
+                      currentCheckpoint: 1,
+                      customeregi: true,
                     ),
                   ),
 
@@ -519,7 +520,9 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
                         housedesc: _housedesc,
                         remarks: _remarks),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(
+                    height: 50,
+                  ),
                 ],
               ),
             ),
