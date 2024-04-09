@@ -87,7 +87,9 @@ class _PersonalExistinginfoState extends State<PersonalExistinginfo> {
                   padding: const EdgeInsets.only(top: 20.0, left: 30),
                   child: Row(
                     children: [
-                      Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
                             children: [
@@ -241,7 +243,9 @@ class _PersonalExistinginfoState extends State<PersonalExistinginfo> {
                       SizedBox(
                         width: 20,
                       ),
-                      Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
                             children: [
@@ -348,13 +352,15 @@ class _PersonalExistinginfoState extends State<PersonalExistinginfo> {
                                   fontSize: 14,
                                 ),
                               ),
-
-                              SizedBox(width: 12,),
-
+                              SizedBox(
+                                width: 12,
+                              ),
                               SizedBox(
                                 width: 200,
-                                child: Text(widget.selectedmember?widget.memberss.nodepenndent:''
-                                  ,
+                                child: Text(
+                                  widget.selectedmember
+                                      ? widget.memberss.nodepenndent
+                                      : '',
                                 ),
                               ),
                             ],
@@ -370,13 +376,15 @@ class _PersonalExistinginfoState extends State<PersonalExistinginfo> {
                                   fontSize: 14,
                                 ),
                               ),
-
-                              SizedBox(width: 12,),
-
+                              SizedBox(
+                                width: 12,
+                              ),
                               SizedBox(
                                 width: 200,
-                                child: Text(widget.selectedmember?widget.memberss.maritalstatus:''
-                                  ,
+                                child: Text(
+                                  widget.selectedmember
+                                      ? widget.memberss.maritalstatus
+                                      : '',
                                 ),
                               ),
                             ],
