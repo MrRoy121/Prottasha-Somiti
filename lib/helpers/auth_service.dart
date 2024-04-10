@@ -10,7 +10,6 @@ class AuthService extends GetxController {
   static AuthService get to => Get.find();
 
   RxBool isAuthenticated = false.obs;
-  String type = '';
   User? _user;
   RxBool isfirsttime = true.obs;
 
@@ -27,48 +26,14 @@ class AuthService extends GetxController {
 
   void updateAuthenticationStatus(User usr, bool reme) {
     isAuthenticated.value = true;
-    type = usr.type;
     if (reme) {
       saveAuthenticationStatus(usr);
     }
     _user = usr;
   }
 
-  bool isSuperAdmin() {
-    if (type == "Super Admin") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool isAdmin() {
-    if (type == "Admin") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool isBranchManeger() {
-    if (type == "Branch Manager") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool isFieldOfficer() {
-    if (type == "Field Officer") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<void> Logout() async {
     isAuthenticated.value = false;
-    type = '';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('isAuthenticated');
     await prefs.remove('dataee');
@@ -89,7 +54,6 @@ class AuthService extends GetxController {
     }
 
     isAuthenticated.value = savedStatus;
-    type = admintype;
   }
 
   Future<void> saveAuthenticationStatus(User usr) async {

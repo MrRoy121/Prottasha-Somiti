@@ -71,7 +71,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           icon: Icons.arrow_drop_down),
                     ),
 
-                    AuthService.to.type != "Field Officer"? InkWell(
+                    AuthService.to.user?.type != "Field Officer"? InkWell(
                       onTap: () {
                         Get.toNamed(dailyopenclosePageRoute);
                       },
@@ -81,7 +81,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           icon: Icons.arrow_drop_down),
                     ):SizedBox(),
 
-                    AuthService.to.type != "Field Officer"? InkWell(
+                    AuthService.to.user?.type != "Field Officer"? InkWell(
                       onTap: () {
                         setState(() {
                           widget.toglechnage(4);
@@ -93,7 +93,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           icon: Icons.arrow_drop_down),
                     ):SizedBox(),
 
-                    AuthService.to.type != "Field Officer"?  InkWell(
+                    AuthService.to.user?.type != "Field Officer"?  InkWell(
                       onTap: () {
                         Get.toNamed(expensescreenPageRoute);
                       },
@@ -103,7 +103,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           icon: Icons.arrow_drop_down),
                     ):SizedBox(),
 
-                    AuthService.to.type != "Field Officer"?   InkWell(
+                    AuthService.to.user?.type != "Field Officer"?   InkWell(
                       onTap: () {
                         Get.toNamed(accountscreenPageRoute);
                       },

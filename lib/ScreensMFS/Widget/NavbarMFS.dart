@@ -68,7 +68,7 @@ class _NavbarState extends State<Navbar> {
                     icon: Icons.arrow_drop_down),
               ),
 
-              AuthService.to.type != "Field Officer"?
+              AuthService.to.user?.type != "Field Officer"?
               InkWell(
                 onTap: () {
                   setState(() {
@@ -139,7 +139,7 @@ class _NavbarState extends State<Navbar> {
                                     icon: Icons.arrow_drop_down),
                               ),
 
-                              AuthService.to.type != "Field Officer"? InkWell(
+                              AuthService.to.user?.type != "Field Officer"? InkWell(
                                 onTap: () {
                                   setState(() {
                                     widget.toglechnage(3);
