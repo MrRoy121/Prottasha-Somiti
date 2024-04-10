@@ -297,7 +297,7 @@ class _NewCustomerRegistrationState extends State<NewCustomerRegistration> {
     //       'Mobile No Type': mobiletype,
     //       'Mobile No': _mobileno.text,
     //       'Present Address': _preseentaddress.text,
-    //       'Parmanent Address': _parmaaddress.text,
+    //       'Permanent Address': _parmaaddress.text,
     //       'Living Period': _livingperiod.text,
     //       'Annual Income': _annualincome.text,
     //       'No Female Earner': _nofemaleearner.text,

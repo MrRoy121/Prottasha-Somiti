@@ -205,7 +205,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'Mobile No Type': mobiletype,
           'Mobile No': _mobileno.text,
           'Present Address': _preseentaddress.text,
-          'Parmanent Address': _parmaaddress.text,
+          'Permanent Address': _parmaaddress.text,
           'Living Period': _livingperiod.text,
           'No Female Earner': _nofemaleearner.text,
           'No Male Earner': _nomaleearner.text,
@@ -361,7 +361,6 @@ class _MemberUpdateState extends State<MemberUpdate> {
     _nidnumber = TextEditingController(text: cst.nationalid);
     _birthreginumber = TextEditingController(text: cst.birthregi);
     _age = TextEditingController(text: cst.age);
-    _spouse = TextEditingController(text: cst.nodepenndent);
     _education = TextEditingController(text: cst.education);
     selectedGender = cst.gender;
     selectedreligion = cst.religion;
@@ -379,7 +378,6 @@ class _MemberUpdateState extends State<MemberUpdate> {
     _nofemaleearner = TextEditingController(text: cst.nofemaleearner);
     _relationwithhead = TextEditingController(text: cst.relationwithhead);
     _landdesc = TextEditingController(text: cst.landdesc);
-    _housedesc = TextEditingController(text: cst.housedesc);
     _remarks = TextEditingController(text: cst.remarks);
     if (cst.img) {
       imgurl = cst.imageurl;
@@ -490,7 +488,6 @@ class _MemberUpdateState extends State<MemberUpdate> {
         birthregi: arguments['Members']["Birth Registration"]?? '',
         annualincome: arguments['Members']["Annual Income"]?? '',
         age: arguments['Members']["Age"]?? '',
-        nodepenndent: arguments['Members']["No of Dependent"]?? '',
         education: arguments['Members']["Education"]?? '',
         maritalstatus: arguments['Members']["Marital Status"]?? '',
         mobilenotype: arguments['Members']["Mobile No Type"]?? '',
@@ -505,7 +502,6 @@ class _MemberUpdateState extends State<MemberUpdate> {
         ownhomestead: arguments['Members']["Own HomeStead"]?? '',
         relationwithhead: arguments['Members']["Relation With Head"]?? '',
         landdesc: arguments['Members']["Land Desc"]?? '',
-        housedesc: arguments['Members']["House Desc"]?? '',
         remarks: arguments['Members']["Remarks"]?? '',
         imageurl: arguments['Members']["ImageURL"]?? '',
         img: arguments['Members']["Image"]?? '',

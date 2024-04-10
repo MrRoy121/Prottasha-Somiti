@@ -25,7 +25,6 @@ class LoanSamitteSelection extends StatefulWidget {
   List<Memberss> memberss = [];
   List<Memberss> allmemberss = [];
   var selectedmemberss;
-  var selectedmemberssid;
   DateTime selectedDate;
   void Function() onsubmit;
   void Function() onclear;
@@ -65,7 +64,6 @@ class LoanSamitteSelection extends StatefulWidget {
       required this.memberss,
       required this.ssomitee,
       required this.selectedmemberss,
-      required this.selectedmemberssid,
       required this.selectedsomitee,
       required this.selectedsomiteeid,
       required this.onsubmit});
@@ -793,11 +791,8 @@ class _LoanSamitteSelectionState extends State<LoanSamitteSelection> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         widget.selectedmemberss = newValue;
-                                        widget.selectedmemberssid = widget
-                                                .somitee[
-                                            widget.memberss.indexOf(newValue!)];
                                         widget.setupmemberss(
-                                            widget.memberss.indexOf(newValue));
+                                            widget.memberss.indexOf(newValue!));
                                         widget.memberssselected = true;
                                       });
                                     },

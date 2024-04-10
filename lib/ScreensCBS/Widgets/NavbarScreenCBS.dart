@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../Constants/Constants.dart';
 import '../../ScreensMFS/Widget/Appbool.dart';
+import '../../helpers/auth_service.dart';
 import '../../route.dart';
 import 'NavBoolCBS.dart';
 import 'NavbarCBS.dart';
@@ -688,7 +689,7 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                               ),
                             ),
                           ),
-                          InkWell(
+                          AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                             onTap: () {
                               Get.toNamed(accountlistPageRoute);
                             },
@@ -866,7 +867,7 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                               ),
                             ),
                           ),
-                          InkWell(
+                          AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                             onHover: (val) {
                               setState(() {
                                 if (val) {
@@ -1007,7 +1008,7 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                               ),
                             ),
                           ),
-                          InkWell(
+                          AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                             onHover: (val) {
                               setState(() {
                                 if (val) {

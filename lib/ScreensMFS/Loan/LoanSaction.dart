@@ -33,7 +33,6 @@ class _LoanSanctionState extends State<LoanSanction> {
   List<Memberss> allmemberss = [];
   List<Memberss> memberss = [];
   var selectedmemberss;
-  var sselectedmemberss;
   bool memberselection = false;
   var selectedsomiti;
   var selectedloanpurpose;
@@ -106,8 +105,8 @@ class _LoanSanctionState extends State<LoanSanction> {
               lastname: element["Last Name"],
               fathername: element["Father Name"],
               mothername: element["Mother Name"],
-              gender: element["Gender"],
-              religion: element["Religion"],
+              gender: element["Gender"] ?? '',
+              religion: element["Religion"] ?? '',
               nationalid: element["National ID"],
               loanpendingamount: element["Loan Pending Amount"],
               owndepositamount: element["Own deposit Amount"],
@@ -115,13 +114,12 @@ class _LoanSanctionState extends State<LoanSanction> {
               annualincome: element["Annual Income"],
               sts: element["Status"],
               age: element["Age"],
-              nodepenndent: element["No of Dependent"],
               education: element["Education"],
-              maritalstatus: element["Marital Status"],
-              mobilenotype: element["Mobile No Type"],
+              maritalstatus: element["Marital Status"] ?? '',
+              mobilenotype: element["Mobile No Type"] ?? '',
               mobilenno: element["Mobile No"],
               presentadd: element["Present Address"],
-              parmaadd: element["Parmanent Address"],
+              parmaadd: element["Permanent Address"],
               livingperiod: element["Living Period"],
               nomaleearner: element["No Female Earner"],
               nofemaleearner: element["No Male Earner"],
@@ -130,7 +128,6 @@ class _LoanSanctionState extends State<LoanSanction> {
               ownhomestead: element["Own HomeStead"],
               relationwithhead: element["Relation With Head"],
               landdesc: element["Land Desc"],
-              housedesc: element["House Desc"],
               remarks: element["Remarks"],
               imageurl: element["ImageURL"],
               img: element["Image"],
@@ -379,7 +376,6 @@ class _LoanSanctionState extends State<LoanSanction> {
                       selectedinstalment: _selectedinstalment,
                       setupmemberss: _setupmemberss,
                       memberssselected: memberselection,
-                      selectedmemberssid: sselectedmemberss,
                       somitee: somitee,
                       selectedmemberss: selectedmemberss,
                       onsubmit: _save,

@@ -147,6 +147,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   void _save() async {
     if (selectedsomiti == null ||
         selectedGender == null ||
+        selectedreligion == null ||
         selectedmebertype == '' ||
         selectedocupation == '' ||
         _fathername.text.isEmpty ||

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:prottashasomit/helpers/auth_service.dart';
 import '../../../Constants/Constants.dart';
 import '../../route.dart';
 import '../Loan/LoanReSchedule.dart';
@@ -69,33 +70,16 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
   Color textColor19 = Colors.black;
   Color itemColor20 = AppColor_Blue;
   Color textColor20 = Colors.black;
-
-  _toglechnage(int index) {
+  void _toglechnage(int index) {
     setState(() {
       if (!arr[index]) {
         for (int i = 0; i < arr.length; i++) {
           arr[i] = false;
         }
+        resetLists(arr, withdrawArr, trasctionArr, closedArr, loanSectionArr, loandisburseArr, loanRePayArr);
         arr[index] = true;
-        for (int i = 0; i < withdrawArr.length; i++) {
-          withdrawArr[i] = false;
-        }
-        for (int i = 0; i < trasctionArr.length; i++) {
-          trasctionArr[i] = false;
-        }
-        for (int i = 0; i < closedArr.length; i++) {
-          closedArr[i] = false;
-        }
-        for (int i = 0; i < loanSectionArr.length; i++) {
-          loanSectionArr[i] = false;
-        }
-        for (int i = 0; i < loanRePayArr.length; i++) {
-          loanRePayArr[i] = false;
-        }
       } else {
-        for (int i = 0; i < arr.length; i++) {
-          arr[i] = false;
-        }
+        resetLists(arr, withdrawArr, trasctionArr, closedArr, loanSectionArr, loandisburseArr, loanRePayArr);
       }
     });
   }
@@ -142,6 +126,15 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
     });
   }
 
+  void resetLists(List<bool> list1, List<bool> list2, List<bool> list3, List<bool> list4, List<bool> list5, List<bool> list6, List<bool> list7) {
+    list1.fillRange(0, list1.length, false);
+    list2.fillRange(0, list2.length, false);
+    list3.fillRange(0, list3.length, false);
+    list4.fillRange(0, list4.length, false);
+    list5.fillRange(0, list5.length, false);
+    list6.fillRange(0, list6.length, false);
+    list7.fillRange(0, list7.length, false);
+  }
   _loanTogle_saction(int index) {
     setState(() {
       for (int i = 0; i < loanSectionArr.length; i++) {
@@ -1733,7 +1726,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-                            InkWell(
+                           AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                               onTap: () {
                                 Get.toNamed(loanrequestlistPageRoute);
                               },
@@ -1767,7 +1760,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-                            InkWell(
+                            AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                               onHover: (val) {
                                 setState(() {
                                   if (val) {
@@ -1842,7 +1835,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-                            InkWell(
+                            AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                               onTap: () {
                                 Get.toNamed(loandisbursementlistPageRoute);
                               },
@@ -1922,7 +1915,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-                            InkWell(
+                            AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                               onTap: () {
                                 Get.toNamed(repaymentrequestlistPageRoute);
                               },
@@ -1985,7 +1978,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                     ),
                                   )),
                             ),
-                            InkWell(
+                            AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
                               onHover: (val) {
                                 setState(() {
                                   if (val) {
