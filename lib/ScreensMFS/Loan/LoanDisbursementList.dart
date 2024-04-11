@@ -218,173 +218,259 @@ class _loanDisbursementListState extends State<LoanDisbursementList> {
                                 ],
                                 rows: List.generate(snapshot.data.length,
                                     (index) {
-                                  return DataRow(
-                                    cells: [
-                                      DataCell(Text((index + 1).toString(),
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                          ))),
-                                      DataCell(
-                                        Text(snapshot.data[index].id,
-                                            style: TextStyle(
+                                  if ((AuthService.to.user?.type ==
+                                          "Super Admin") ||
+                                      (AuthService.to.user?.type ==
+                                          "Branch Manager")) {
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(Text((index + 1).toString(),
+                                            style: const TextStyle(
                                               fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                            snapshot.data[index].somiteename +
-                                                " " +
-                                                snapshot.data[index].somiteeid,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Text(snapshot.data[index].memberid,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                          Text(snapshot.data[index].membername,
+                                            ))),
+                                        DataCell(
+                                          Text(snapshot.data[index].id,
                                               style: TextStyle(
                                                 fontSize: 12,
-                                              ))),
-                                      DataCell(
-                                        Text(
-                                            snapshot.data[index].disburseamount
-                                                .toString(),
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                              snapshot.data[index].somiteename +
+                                                  " " +
+                                                  snapshot
+                                                      .data[index].somiteeid,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(
+                                          Text(snapshot.data[index].memberid,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(Text(
+                                            snapshot.data[index].membername,
                                             style: TextStyle(
                                               fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(
-                                        Center(
-                                          child: Text(
-                                              DateFormat.yMMMd()
-                                                  .format(snapshot
-                                                      .data[index].disbursedate)
+                                            ))),
+                                        DataCell(
+                                          Text(
+                                              snapshot
+                                                  .data[index].disburseamount
                                                   .toString(),
                                               style: TextStyle(
                                                 fontSize: 12,
                                               )),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                            snapshot.data[index].status
-                                                ? snapshot.data[index].approve
-                                                    ? "Approved"
-                                                    : "Rejected"
-                                                : "Requested",
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ),
-                                      DataCell(snapshot.data[index].status
-                                          ? InkWell(
-                                              onTap: () {},
-                                              child: Container(
-                                                  padding: EdgeInsets.all(4.0),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColor_Blue,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100)),
-                                                  child: const Icon(
-                                                    Icons.edit,
-                                                    size: 16,
-                                                    color: AppColor_White,
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                                DateFormat.yMMMd()
+                                                    .format(snapshot.data[index]
+                                                        .disbursedate)
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                              snapshot.data[index].status
+                                                  ? snapshot.data[index].approve
+                                                      ? "Approved"
+                                                      : "Rejected"
+                                                  : "Requested",
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                        DataCell(snapshot.data[index].status
+                                            ? InkWell(
+                                                onTap: () {},
+                                                child: Container(
+                                                    padding:
+                                                        EdgeInsets.all(4.0),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColor_Blue,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100)),
+                                                    child: const Icon(
+                                                      Icons.edit,
+                                                      size: 16,
+                                                      color: AppColor_White,
+                                                    )),
+                                              )
+                                            : Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('Member')
+                                                          .doc(snapshot
+                                                              .data[index]
+                                                              .memberid)
+                                                          .update({
+                                                        'Loan Pending Amount': FieldValue
+                                                            .increment((snapshot
+                                                                    .data[index]
+                                                                    .disburseamount -
+                                                                snapshot
+                                                                    .data[index]
+                                                                    .deathriskamount)),
+                                                      });
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'LoanDisbursed')
+                                                          .doc(snapshot
+                                                              .data[index].id)
+                                                          .update({
+                                                        "Status": true,
+                                                        "Approved By":
+                                                            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+                                                        "Approve": true,
+                                                        'Approve Date':
+                                                            DateTime.now(),
+                                                      }).then((value) {
+                                                        setState(() {});
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                        padding:
+                                                            EdgeInsets.all(4.0),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                AppColor_Blue,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        100)),
+                                                        child: const Icon(
+                                                          Icons.check,
+                                                          size: 16,
+                                                          color: AppColor_White,
+                                                        )),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'LoanDisbursed')
+                                                          .doc(snapshot
+                                                              .data[index].id)
+                                                          .update({
+                                                        "Status": true,
+                                                        "Approved By":
+                                                            "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
+                                                        "Approve": false,
+                                                        'Approve Date':
+                                                            DateTime.now(),
+                                                      }).then((value) {
+                                                        setState(() {});
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                        padding:
+                                                            EdgeInsets.all(4.0),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                AppColor_Blue,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        100)),
+                                                        child: const Icon(
+                                                          Icons.close,
+                                                          size: 16,
+                                                          color: AppColor_White,
+                                                        )),
+                                                  ),
+                                                ],
+                                              )),
+                                      ],
+                                    );
+                                  } else {
+                                    if (snapshot.data[index].sts) {
+                                      return DataRow(
+                                        cells: [
+                                          DataCell(Text((index + 1).toString(),
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ))),
+                                          DataCell(
+                                            Text(snapshot.data[index].id,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ),
+                                          DataCell(
+                                            Text(
+                                                snapshot.data[index]
+                                                        .somiteename +
+                                                    " " +
+                                                    snapshot
+                                                        .data[index].somiteeid,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ),
+                                          DataCell(
+                                            Text(snapshot.data[index].memberid,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ),
+                                          DataCell(Text(
+                                              snapshot.data[index].membername,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ))),
+                                          DataCell(
+                                            Text(
+                                                snapshot
+                                                    .data[index].disburseamount
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ),
+                                          DataCell(
+                                            Center(
+                                              child: Text(
+                                                  DateFormat.yMMMd()
+                                                      .format(snapshot
+                                                          .data[index]
+                                                          .disbursedate)
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 12,
                                                   )),
-                                            )
-                                          : Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () async {
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('Member')
-                                                        .doc(snapshot
-                                                            .data[index]
-                                                            .memberid)
-                                                        .update({
-                                                      'Loan Pending Amount': FieldValue
-                                                          .increment((snapshot
-                                                                  .data[index]
-                                                                  .disburseamount -
-                                                              snapshot
-                                                                  .data[index]
-                                                                  .deathriskamount)),
-                                                    });
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'LoanDisbursed')
-                                                        .doc(snapshot
-                                                            .data[index].id)
-                                                        .update({
-                                                      "Status": true,
-                                                      "Approved By":
-                                                          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
-                                                      "Approve": true,
-                                                      'Approve Date':
-                                                          DateTime.now(),
-                                                    }).then((value) {
-                                                      setState(() {});
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4.0),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColor_Blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100)),
-                                                      child: const Icon(
-                                                        Icons.check,
-                                                        size: 16,
-                                                        color: AppColor_White,
-                                                      )),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'LoanDisbursed')
-                                                        .doc(snapshot
-                                                            .data[index].id)
-                                                        .update({
-                                                      "Status": true,
-                                                      "Approved By":
-                                                          "${AuthService.to.user!.id}-(*)-${AuthService.to.user!.name}",
-                                                      "Approve": false,
-                                                      'Approve Date':
-                                                          DateTime.now(),
-                                                    }).then((value) {
-                                                      setState(() {});
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4.0),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColor_Blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100)),
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        size: 16,
-                                                        color: AppColor_White,
-                                                      )),
-                                                ),
-                                              ],
-                                            )),
-                                    ],
-                                  );
-                                }),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            Text(
+                                                snapshot.data[index].status
+                                                    ? snapshot
+                                                            .data[index].approve
+                                                        ? "Approved"
+                                                        : "Rejected"
+                                                    : "Requested",
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ),
+                                          DataCell(SizedBox()),
+                                        ],
+                                      );
+                                    } else {
+                                      return null;
+                                    }
+                                  }
+                                }).whereType<DataRow>().toList(),
                               ),
                             );
                           }

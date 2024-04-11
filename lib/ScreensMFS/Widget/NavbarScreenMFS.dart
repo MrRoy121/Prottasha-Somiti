@@ -1760,7 +1760,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-                            AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
+                            InkWell(
                               onHover: (val) {
                                 setState(() {
                                   if (val) {
@@ -1835,7 +1835,7 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
-                            AuthService.to.user?.type == "Field Officer"?SizedBox():InkWell(
+                            InkWell(
                               onTap: () {
                                 Get.toNamed(loandisbursementlistPageRoute);
                               },

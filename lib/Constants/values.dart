@@ -6,6 +6,14 @@ const List<String> UserTypeList = [
   'Branch Manager',
   'Field Officer',
 ];
+
+
+const List<String> ProductClassList = [
+  'SME Loan',
+  'Term Loan',
+  'Short Term Loan',
+  'Staff Loan',
+];
 const List<String> MemberTypeList = ['General Member'];
 const List<String> MaritalstatusList = ['Single', 'Married', 'Divorced'];
 const List<String> ReligionList = [

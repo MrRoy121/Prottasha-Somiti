@@ -64,7 +64,11 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           icon: Icons.arrow_drop_down),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          widget.toglechnage(3);
+                        });
+                      },
                       child: NavbarItem(
                           flag: widget.navbool.loanadvance,
                           text: 'Loan & Advances',

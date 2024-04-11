@@ -72,3 +72,8 @@ const myprofilePageRoute = "/myprofilePageRoute";
 
 
 const dailyopenclosePageRoute = "/dailyopenclosePageRoute";
+
+
+
+
+const creditlimitPageRoute = "/creditlimitPageRoute";
