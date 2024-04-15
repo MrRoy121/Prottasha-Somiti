@@ -244,15 +244,7 @@ class _AccountListState extends State<AccountList> {
                                                       fontSize: 12,
                                                     ))),
                                             DataCell(
-                                              Text(
-                                                  snapshot.data[index]
-                                                      .id,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  )),
-                                            ),
-                                            DataCell(
-                                              Text(snapshot.data[index].member['ID']+ " - "+snapshot.data[index].member['First Name'] +' '+snapshot.data[index].member['Last Name'],
+                                              Text(snapshot.data[index].id,
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
@@ -260,27 +252,44 @@ class _AccountListState extends State<AccountList> {
                                             DataCell(
                                               Text(
                                                   snapshot.data[index]
-                                                          .accounttype,
+                                                          .member['ID'] +
+                                                      " - " +
+                                                      snapshot.data[index]
+                                                              .member[
+                                                          'First Name'] +
+                                                      ' ' +
+                                                      snapshot.data[index]
+                                                          .member['Last Name'],
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
                                             ),
                                             DataCell(
                                               Text(
-                                                  snapshot.data[index].nomineename,
+                                                  snapshot
+                                                      .data[index].accounttype,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  )),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                  snapshot
+                                                      .data[index].nomineename,
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
                                             ),
                                             DataCell(Text(
-                                                snapshot.data[index].nomineepercentage,
+                                                snapshot.data[index]
+                                                    .nomineepercentage,
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                 ))),
                                             DataCell(
                                               Text(
-                                                  snapshot
-                                                      .data[index].introducername,
+                                                  snapshot.data[index]
+                                                      .introducername,
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                   )),
