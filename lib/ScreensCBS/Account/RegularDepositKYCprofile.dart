@@ -10,28 +10,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker_web/image_picker_web.dart';
-import 'package:intl/intl.dart';
-import 'package:prottashasomit/ScreensCBS/Widgets/ContactInfo.dart';
 import '../../../../Constants/Constants.dart';
-import '../../../../Constants/values.dart';
-import '../../../../Model/somitee.dart';
-import '../../../../route.dart';
-import '../../Model/member.dart';
-import '../../ScreensMFS/Transaction/widget/Image.dart';
-import '../../ScreensMFS/Widget/Appbool.dart';
-import '../../ScreensMFS/Widget/OtherInfo.dart';
-import '../../ScreensMFS/Widget/PersonalInfoForm.dart';
-import '../../ScreensMFS/Widget/SingleRow.dart';
-import '../Widgets/CustomProgressBar.dart';
-import '../Widgets/NavBoolCBS.dart';
-import '../Widgets/NavbarScreenCBS.dart';
-import '../../ScreensMFS/Widget/Appbar.dart';
-import '../../ScreensMFS/Widget/Appbool.dart';
-import '../Widgets/OtherInformation.dart';
-import '../Widgets/PersonalExistinginfo.dart';
-import '../Widgets/customerSelection.dart';
-import '../Widgets/memberSelection.dart';
 
 class RegularDepositKycProfile extends StatefulWidget {
   Function(int) save;
@@ -149,7 +128,7 @@ class _RegularDepositKycProfileState extends State<RegularDepositKycProfile> {
                       ),
                       InkWell(
                         onTap: () {
-                             widget.save(7);
+                          widget.save(7);
                         },
                         child: Container(
                           height: ScreenWidth / 38.4,
