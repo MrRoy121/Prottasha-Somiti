@@ -78,7 +78,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
               lastname: element["Last Name"],
               fathername: element["Father Name"],
               mothername: element["Mother Name"],
-              gender: element["Gender"],
+              gender: element["Gender"] ?? '',
               religion: element["Religion"],
               nationalid: element["National ID"],
               loanpendingamount: element["Loan Pending Amount"],

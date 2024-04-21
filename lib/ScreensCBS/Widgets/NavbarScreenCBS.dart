@@ -1055,6 +1055,36 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
+                            (AuthService.to.user?.type == "Branch Maneger" || AuthService.to.user?.type == "Super Admin")? InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor12 = AppColor_hover1;
+                                    textColor12 = Colors.white;
+                                  } else {
+                                    itemColor12 = AppColor_Blue;
+                                    textColor12 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(lienPageRoute);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20, bottom: 10),
+                                height: 40,
+                                width: 200,
+                                color: itemColor12,
+                                child: Text(
+                                  "Add Lien",
+                                  style: TextStyle(
+                                    color: textColor12,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ):SizedBox(),
                             InkWell(
                               onHover: (val) {
                                 setState(() {

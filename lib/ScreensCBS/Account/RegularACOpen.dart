@@ -44,7 +44,6 @@ class _RegularACOpenState extends State<RegularACOpen> {
   List<Memberss> memberss = [];
   bool mmems = false;
   var selectedmemberss;
-  var sselectedmemberss;
   var selectedsamitee;
   var selectedintroducertype;
   var selectedaccountno;

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/ScreensCBS/Loan&Advances/CreditLimit.dart';
+import 'package:prottashasomit/ScreensCBS/Loan&Advances/Lien.dart';
 import 'package:prottashasomit/ScreensCBS/Transaction/CashWithdraw.dart';
 import 'package:prottashasomit/ScreensMFS/Reports/DailyGLSummary.dart';
 import 'package:prottashasomit/ScreensMFS/Reports/DailyTransactionList.dart';
@@ -406,6 +407,13 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: expensescreenPageRoute,
             page: () => ExpenseScreen(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: lienPageRoute,
+            page: () => LienScreen(
               appbool: appbool,
               navbool: navboolcbs,
             ),
