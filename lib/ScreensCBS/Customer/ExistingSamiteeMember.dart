@@ -124,8 +124,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
 
   void _save() async {
     if (selectedmemberss == null) {
-      Get.snackbar(
-          "Customer Registration Failed.", "Select A member to Add",
+      Get.snackbar("Customer Registration Failed.", "Select A member to Add",
           snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white,
           backgroundColor: Colors.red,
@@ -144,8 +143,7 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        Get.snackbar(
-            "Customer Registration Failed.", "Customer Already Exists",
+        Get.snackbar("Customer Registration Failed.", "Customer Already Exists",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
             backgroundColor: Colors.red,
@@ -159,19 +157,16 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
       } else {
         Random random = Random();
         String code = (10000000 + random.nextInt(90000000)).toString();
-        FirebaseFirestore.instance
-            .collection('Customer')
-            .doc(code)
-            .set({
+        FirebaseFirestore.instance.collection('Customer').doc(code).set({
           'Member': selectedmemberss.toJson(),
-          'Member ID':selectedmemberss.id,
+          'Member ID': selectedmemberss.id,
           'Member Bool': true,
-          'Status':false,
-          'Approve':false,
+          'Status': false,
+          'Approve': false,
         }).then((value) async {
           Get.offNamed(customerlistPageRoute);
-          Get.snackbar(
-              "Customer Added Successfully. Customer Code Is :$code", "Redirecting to Member List Page.",
+          Get.snackbar("Customer Added Successfully. Customer Code Is :$code",
+              "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
@@ -179,7 +174,9 @@ class _ExistingSamiteeMemberState extends State<ExistingSamiteeMember> {
               duration: const Duration(milliseconds: 2000),
               boxShadows: [
                 const BoxShadow(
-                    color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+                    color: Colors.grey,
+                    offset: Offset(-100, 0),
+                    blurRadius: 20),
               ],
               borderRadius: 0);
         }).catchError((error) => print("Failed to add user: $error"));

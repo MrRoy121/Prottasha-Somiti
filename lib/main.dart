@@ -510,10 +510,23 @@ class MyApp extends StatelessWidget {
               navbool: navboolcbs,
             ),
             middlewares: [AuthMiddleware()]),
-
         GetPage(
             name: cashwithdrawlistPageRoute,
             page: () => CashWithdrawList(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: botransfertransactionPageRoute,
+            page: () => BOTransaction(
+              appbool: appbool,
+              navbool: navboolcbs,
+            ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: botransfertransactionlistPageRoute,
+            page: () => BOTransactionList(
               appbool: appbool,
               navbool: navboolcbs,
             ),
@@ -524,20 +537,6 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navboolcbs,
                 ),
-            middlewares: [AuthMiddleware()]),
-        GetPage(
-            name: botransfertransactionPageRoute,
-            page: () => BOTransaction(
-                  appbool: appbool,
-                  navbool: navboolcbs,
-                ),
-            middlewares: [AuthMiddleware()]),
-        GetPage(
-            name: botransfertransactionlistPageRoute,
-            page: () => BOTransactionList(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
             middlewares: [AuthMiddleware()]),
       ],
       theme: ThemeData(
