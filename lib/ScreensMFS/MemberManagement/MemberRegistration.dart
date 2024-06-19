@@ -50,6 +50,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   var _nidnumber = TextEditingController();
   var _birthreginumber = TextEditingController();
   var _age = TextEditingController();
+  var _fee = TextEditingController();
   var _spouse = TextEditingController();
   var _education = TextEditingController();
   var selectedGender;
@@ -85,10 +86,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   }
 
   Future<void> fetch() async {
-    await FirebaseFirestore.instance
-        .collection('Somitee')
-        .get()
-        .then((querySnapshot) {
+    await FirebaseFirestore.instance.collection('Somitee').get().then((querySnapshot) {
       for (var element in querySnapshot.docs) {
         somitee.add(Somitee(
             address: element["Address"],
@@ -120,6 +118,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       _nidnumber = TextEditingController(text: "");
       _birthreginumber = TextEditingController(text: "");
       _age = TextEditingController(text: "");
+      _fee = TextEditingController(text: "");
       _spouse = TextEditingController(text: "");
       _education = TextEditingController(text: "");
       selectedGender = ss;
@@ -160,38 +159,26 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         _mobileno.text.isEmpty ||
         _reference.text.isEmpty ||
         (_birthreginumber.text.isEmpty && _nidnumber.text.isEmpty)) {
-      Get.snackbar(
-          "Member Registration Failed.", "Some Required  Fields are Empty",
+      Get.snackbar("Member Registration Failed.", "Some Required  Fields are Empty",
           snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white,
           backgroundColor: Colors.red,
           margin: EdgeInsets.zero,
           duration: const Duration(milliseconds: 2000),
           boxShadows: [
-            BoxShadow(
-                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+            BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
           ],
           borderRadius: 0);
     } else {
-      FirebaseFirestore.instance
-          .collection('Somitee')
-          .doc(selectedsomiti.id)
-          .get()
-          .then((value) {
-        FirebaseFirestore.instance
-            .collection('Somitee')
-            .doc(selectedsomiti.id)
-            .update({'Active': value['Active'] + 1});
+      FirebaseFirestore.instance.collection('Somitee').doc(selectedsomiti.id).get().then((value) {
+        FirebaseFirestore.instance.collection('Somitee').doc(selectedsomiti.id).update({'Active': value['Active'] + 1});
       });
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Member').get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Member').get();
       int somiteeCount = querySnapshot.docs.length + 1;
-      String memberid =
-          selectedsomiti.id + somiteeCount.toString().padLeft(3, '0');
+      String memberid = selectedsomiti.id + somiteeCount.toString().padLeft(3, '0');
 
       if (img) {
-        final photoRef =
-            FirebaseStorage.instance.ref("MembersImage/$memberid.jpeg");
+        final photoRef = FirebaseStorage.instance.ref("MembersImage/$memberid.jpeg");
         UploadTask uploadTask = photoRef.putData(
             pickedImage,
             SettableMetadata(
@@ -217,6 +204,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
+          'Fee': _fee.text,
           'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
@@ -241,18 +229,14 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'ImageURL': url,
         }).then((value) async {
           Get.offNamed(memberlistPageRoute);
-          Get.snackbar(
-              "Member Added Successfully.", "Redirecting to Member List Page.",
+          Get.snackbar("Member Added Successfully.", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
               margin: EdgeInsets.zero,
               duration: const Duration(milliseconds: 2000),
               boxShadows: [
-                const BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(-100, 0),
-                    blurRadius: 20),
+                const BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
               ],
               borderRadius: 0);
         }).catchError((error) => print("Failed to add user: $error"));
@@ -277,6 +261,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
+          'Fee': _fee.text,
           'Date Of Birth': _selectedDate,
           'Spouse': _spouse.text,
           'Education': _education.text,
@@ -300,18 +285,14 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'ImageURL': '',
         }).then((value) async {
           Get.offNamed(memberlistPageRoute);
-          Get.snackbar(
-              "Member Added Successfully.", "Redirecting to Member List Page.",
+          Get.snackbar("Member Added Successfully.", "Redirecting to Member List Page.",
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white,
               backgroundColor: Colors.green,
               margin: EdgeInsets.zero,
               duration: const Duration(milliseconds: 2000),
               boxShadows: [
-                const BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(-100, 0),
-                    blurRadius: 20),
+                const BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
               ],
               borderRadius: 0);
         }).catchError((error) => print("Failed to add user: $error"));
@@ -334,8 +315,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
     var ScreenWidth = MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
-    double ResponsiveHeight =
-        MediaQuery.of(context as BuildContext).size.height;
+    double ResponsiveHeight = MediaQuery.of(context as BuildContext).size.height;
 
     bool desktop = false;
     bool tablet = false;
@@ -421,12 +401,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         setState(() {
           _selectedDate = picked;
           final today = DateTime.now();
-          final age = today.year -
-              picked.year -
-              ((today.month > picked.month ||
-                      (today.month == picked.month && today.day >= picked.day))
-                  ? 0
-                  : 1);
+          final age = today.year - picked.year - ((today.month > picked.month || (today.month == picked.month && today.day >= picked.day)) ? 0 : 1);
           _age.text = age.toString();
         });
       }
@@ -501,6 +476,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                   setupgender: _setupgender,
                   nidnumber: _nidnumber,
                   birthreginumber: _birthreginumber,
+                  fee: _fee,
                   age: _age,
                   spouse: _spouse,
                   education: _education),
@@ -579,8 +555,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                           Row(
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 50, left: 250),
+                                padding: const EdgeInsets.only(top: 50, left: 250),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -624,8 +599,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                   color: Colors.grey,
                                                   width: 0.5,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
+                                                borderRadius: BorderRadius.circular(5.0),
                                               ),
                                               child: Column(
                                                 children: [
@@ -648,24 +622,14 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                           height: 30,
                                                           width: 96,
                                                           child: ElevatedButton(
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                side: BorderSide(
-                                                                    color: Colors
-                                                                        .blue),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5.0),
+                                                            style: ElevatedButton.styleFrom(
+                                                              backgroundColor: Colors.white,
+                                                              shape: RoundedRectangleBorder(
+                                                                side: BorderSide(color: Colors.blue),
+                                                                borderRadius: BorderRadius.circular(5.0),
                                                               ),
                                                             ),
-                                                            onPressed:
-                                                                _selectImage,
+                                                            onPressed: _selectImage,
                                                             child: Text(
                                                               "Select",
                                                               style: TextStyle(
@@ -733,8 +697,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                           color: Colors.grey,
                                           width: 0.5,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
+                                        borderRadius: BorderRadius.circular(5.0),
                                       ),
                                       child: img
                                           ? Image.memory(
@@ -742,9 +705,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                               fit: BoxFit.cover,
                                             )
                                           : Center(
-                                              child: Icon(
-                                                  Icons.person_2_outlined,
-                                                  size: 58),
+                                              child: Icon(Icons.person_2_outlined, size: 58),
                                             ),
                                     )
                                   ],
@@ -780,8 +741,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 40.0),
+                                      padding: const EdgeInsets.only(left: 40.0),
                                       child: Text(
                                         "Member’s Image",
                                         style: TextStyle(
@@ -797,8 +757,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                               Column(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 50, left: ScreenWidth / 6.144),
+                                    padding: EdgeInsets.only(top: 50, left: ScreenWidth / 6.144),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
@@ -842,15 +801,12 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                       color: Colors.grey,
                                                       width: 0.5,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
+                                                    borderRadius: BorderRadius.circular(5.0),
                                                   ),
                                                   child: Column(
                                                     children: [
                                                       Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
+                                                        padding: EdgeInsets.only(
                                                           top: 20,
                                                           left: 10,
                                                           right: 10,
@@ -867,31 +823,19 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                             SizedBox(
                                                               height: 30,
                                                               width: 96,
-                                                              child:
-                                                                  ElevatedButton(
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    side: BorderSide(
-                                                                        color: Colors
-                                                                            .blue),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0),
+                                                              child: ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: Colors.white,
+                                                                  shape: RoundedRectangleBorder(
+                                                                    side: BorderSide(color: Colors.blue),
+                                                                    borderRadius: BorderRadius.circular(5.0),
                                                                   ),
                                                                 ),
-                                                                onPressed:
-                                                                    _selectImage,
+                                                                onPressed: _selectImage,
                                                                 child: Text(
                                                                   "Select",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
+                                                                  style: TextStyle(
+                                                                    fontSize: 14,
                                                                   ),
                                                                 ),
                                                               ),
@@ -913,8 +857,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 50, left: ScreenWidth / 11.82),
+                                    padding: EdgeInsets.only(top: 50, left: ScreenWidth / 11.82),
                                     child: Container(
                                       // margin: EdgeInsets.only(top: 50, right: 250),
                                       height: 200,
@@ -957,8 +900,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                 color: Colors.grey,
                                                 width: 0.5,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
+                                              borderRadius: BorderRadius.circular(5.0),
                                             ),
                                             child: img
                                                 ? Image.memory(
@@ -966,9 +908,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                     fit: BoxFit.cover,
                                                   )
                                                 : Center(
-                                                    child: Icon(
-                                                        Icons.person_2_outlined,
-                                                        size: 58),
+                                                    child: Icon(Icons.person_2_outlined, size: 58),
                                                   ),
                                           )
                                         ],
@@ -1004,8 +944,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 40.0),
+                                      padding: const EdgeInsets.only(left: 40.0),
                                       child: Text(
                                         "Member’s Image",
                                         style: TextStyle(
@@ -1021,8 +960,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                               Column(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 50, left: ScreenWidth / 6.144),
+                                    padding: EdgeInsets.only(top: 50, left: ScreenWidth / 6.144),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
@@ -1066,15 +1004,12 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                       color: Colors.grey,
                                                       width: 0.5,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
+                                                    borderRadius: BorderRadius.circular(5.0),
                                                   ),
                                                   child: Column(
                                                     children: [
                                                       Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
+                                                        padding: EdgeInsets.only(
                                                           top: 20,
                                                           left: 10,
                                                           right: 10,
@@ -1091,31 +1026,19 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                             SizedBox(
                                                               height: 30,
                                                               width: 96,
-                                                              child:
-                                                                  ElevatedButton(
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    side: BorderSide(
-                                                                        color: Colors
-                                                                            .blue),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0),
+                                                              child: ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: Colors.white,
+                                                                  shape: RoundedRectangleBorder(
+                                                                    side: BorderSide(color: Colors.blue),
+                                                                    borderRadius: BorderRadius.circular(5.0),
                                                                   ),
                                                                 ),
-                                                                onPressed:
-                                                                    _selectImage,
+                                                                onPressed: _selectImage,
                                                                 child: Text(
                                                                   "Select",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
+                                                                  style: TextStyle(
+                                                                    fontSize: 14,
                                                                   ),
                                                                 ),
                                                               ),
@@ -1137,8 +1060,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 50, left: ScreenWidth / 11.82),
+                                    padding: EdgeInsets.only(top: 50, left: ScreenWidth / 11.82),
                                     child: Container(
                                       // margin: EdgeInsets.only(top: 50, right: 250),
                                       height: 200,
@@ -1181,8 +1103,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                 color: Colors.grey,
                                                 width: 0.5,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
+                                              borderRadius: BorderRadius.circular(5.0),
                                             ),
                                             child: img
                                                 ? Image.memory(
@@ -1190,9 +1111,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                                                     fit: BoxFit.cover,
                                                   )
                                                 : Center(
-                                                    child: Icon(
-                                                        Icons.person_2_outlined,
-                                                        size: 58),
+                                                    child: Icon(Icons.person_2_outlined, size: 58),
                                                   ),
                                           )
                                         ],
