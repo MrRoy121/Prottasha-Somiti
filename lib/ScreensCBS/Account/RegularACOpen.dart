@@ -157,6 +157,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
             occupation: element['Member']["Occupation"],
             firstname: element['Member']["First Name"],
             lastname: element['Member']["Last Name"],
+            fee: element["Fee"],
             dead: element['Member']['Dead'],
             fathername: element['Member']["Father Name"],
             mothername: element['Member']["Mother Name"],

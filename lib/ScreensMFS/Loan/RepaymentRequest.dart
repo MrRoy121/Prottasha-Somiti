@@ -92,6 +92,7 @@ class _RepaymentRequestState extends State<RepaymentRequest> {
               somiteename: element["Somitee Name"],
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],dead: element['Dead'],
+              fee: element["Fee"],
               occupation: element["Occupation"],
               firstname: element["First Name"],
               lastname: element["Last Name"],

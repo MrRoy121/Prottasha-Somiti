@@ -476,6 +476,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
     Memberss mst = Memberss(
         somiteename: arguments['Members']["Somitee Name"]?? '',
         somiteeid: arguments['Members']["Somitee ID"]?? '',
+        fee:arguments['Members']["Fee"]?? '',
         membertype: arguments['Members']["Member Type"]?? '',dead: arguments['Members']['Dead']?? '',
         occupation: arguments['Members']["Occupation"]?? '',
         firstname: arguments['Members']["First Name"]?? '',loanpendingamount: arguments['Members']["Loan Pending Amount"]?? '',owndepositamount: arguments['Members']["Own deposit Amount"]?? '',

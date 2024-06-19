@@ -742,6 +742,35 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                 ),
                               ),
                             ),
+                            InkWell(
+                              onHover: (val) {
+                                setState(() {
+                                  if (val) {
+                                    itemColor7 = AppColor_hover1;
+                                    textColor7 = Colors.white;
+                                  } else {
+                                    itemColor7 = AppColor_Blue;
+                                    textColor7 = Colors.black;
+                                  }
+                                });
+                              },
+                              onTap: () {
+                                Get.toNamed(membersfeeandothersPageRoute);
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, bottom: 10),
+                                  height: 40,
+                                  width: 200,
+                                  color: itemColor7,
+                                  child: Text(
+                                    "Members Others Fee Information",
+                                    style: TextStyle(
+                                      color: textColor7,
+                                      fontSize: 12,
+                                    ),
+                                  )),
+                            ),
                           ],
                         ),
                       )

@@ -100,6 +100,7 @@ class _LoanSanctionState extends State<LoanSanction> {
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],
               occupation: element["Occupation"],
+              fee: element["Fee"],
               firstname: element["First Name"],
               dead: element['Dead'],
               lastname: element["Last Name"],

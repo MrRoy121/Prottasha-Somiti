@@ -67,7 +67,7 @@ class _LienScreenState extends State<LienScreen> {
             somiteeid: element['Member']["Somitee ID"],
             membertype: element['Member']["Member Type"],
             occupation: element['Member']["Occupation"],
-            firstname: element['Member']["First Name"],
+            firstname: element['Member']["First Name"], fee: element['Member']["Fee"],
             lastname: element['Member']["Last Name"],
             dead: element['Member']['Dead'],
             fathername: element['Member']["Father Name"],

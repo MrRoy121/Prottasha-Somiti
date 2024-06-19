@@ -9,6 +9,7 @@ const memberclosingPageRoute = "/memberclosing";
 const deadmemberPageRoute = "/deadmemberlist";
 const closingmemberrequestPageRoute = "/closingmemberrequest";
 const memberEditPageRoute = "/memberedit";
+const membersfeeandothersPageRoute = "/membersfeeandothers";
 
 const sanctionloanrequestPageRoute = "/sanctionloanrequestPageRoute";
 const sanctionloanapprovePageRoute = "/sanctionloanapprovePageRoute";

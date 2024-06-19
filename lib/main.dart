@@ -51,6 +51,7 @@ import 'ScreensMFS/Loan/LoanSaction.dart';
 import 'ScreensMFS/Loan/LoanSactionApprove.dart';
 import 'ScreensMFS/Loan/LoanSactionEdit.dart';
 import 'ScreensMFS/Loan/LoanSanctionList.dart';
+import 'ScreensMFS/Loan/MemberSecurityAndOtherFee.dart';
 import 'ScreensMFS/Loan/RepaymentRequest.dart';
 import 'ScreensMFS/Loan/ReverseRepayment.dart';
 import 'ScreensMFS/MemberManagement/CloseMember.dart';
@@ -275,6 +276,13 @@ class MyApp extends StatelessWidget {
                   appbool: appbool,
                   navbool: navbool,
                 ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
+            name: membersfeeandothersPageRoute,
+            page: () => MemberSecurityAndOtherFee(
+              appbool: appbool,
+              navbool: navbool,
+            ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloanrequestPageRoute,

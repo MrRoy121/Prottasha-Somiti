@@ -76,6 +76,7 @@ class _CloseMemberState extends State<CloseMember> {
               sts: element["Status"],
               fathername: element["Father Name"],
               mothername: element["Mother Name"],
+              fee: element["Fee"],
               gender: element["Gender"],
               religion: element["Religion"],
               nationalid: element["National ID"],

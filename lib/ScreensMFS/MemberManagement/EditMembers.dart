@@ -92,6 +92,7 @@ class _EditMembersState extends State<EditMembers> {
                 occupation: element["Occupation"] ?? '',
                 firstname: element["First Name"] ?? '',
                 lastname: element["Last Name"] ?? '',
+                fee: element["Fee"] ??'',
                 dead: element['Dead'] ?? '',
                 fathername: element["Father Name"] ?? '',
                 mothername: element["Mother Name"] ?? '',

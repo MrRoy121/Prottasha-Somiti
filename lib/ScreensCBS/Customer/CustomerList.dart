@@ -45,6 +45,7 @@ class _CustomerListState extends State<CustomerList> {
               somiteeid: element['Member']["Somitee ID"],
               membertype: element['Member']["Member Type"],
               occupation: element['Member']["Occupation"],
+              fee: element['Member']["Fee"],
               firstname: element['Member']["First Name"],
               lastname: element['Member']["Last Name"],
               dead: element['Member']['Dead'],

@@ -296,6 +296,7 @@ class _LoanDisbursementState extends State<LoanDisbursement> {
             firstname: element["First Name"],
             lastname: element["Last Name"],
             dead: element['Dead'],
+            fee: element["Fee"],
             fathername: element["Father Name"],
             mothername: element["Mother Name"],
             loanpendingamount: element["Loan Pending Amount"],

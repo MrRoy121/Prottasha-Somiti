@@ -65,7 +65,7 @@ class _ReverseRequestState extends State<ReverseRequest> {
               somiteename: element["Somitee Name"],
               somiteeid: element["Somitee ID"],
               membertype: element["Member Type"],
-              occupation: element["Occupation"],
+              occupation: element["Occupation"], fee: element["Fee"],
               firstname: element["First Name"],
               dead: element['Dead'],
               lastname: element["Last Name"],

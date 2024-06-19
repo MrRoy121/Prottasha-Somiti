@@ -106,6 +106,7 @@ class _LoanSanctionEditState extends State<LoanSanctionEdit> {
               firstname: element["First Name"],
               lastname: element["Last Name"],
               fathername: element["Father Name"],
+              fee: element["Fee"],
               sts: element["Status"],
               mothername: element["Mother Name"],
               loanpendingamount: element["Loan Pending Amount"],

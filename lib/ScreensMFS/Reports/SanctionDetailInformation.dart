@@ -159,7 +159,7 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
         meme = Memberss(
             somiteename: element["Somitee Name"],
             somiteeid: element["Somitee ID"],
-            membertype: element["Member Type"],
+            membertype: element["Member Type"],fee: element["Fee"],
             occupation: element["Occupation"],
             firstname: element["First Name"],
             lastname: element["Last Name"],

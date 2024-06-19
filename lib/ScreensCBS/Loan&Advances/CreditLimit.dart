@@ -81,7 +81,7 @@ class _CreditLimitDefineState extends State<CreditLimitDefine> {
             occupation: element['Member']["Occupation"],
             firstname: element['Member']["First Name"],
             lastname: element['Member']["Last Name"],
-            dead: element['Member']['Dead'],
+            dead: element['Member']['Dead'], fee: element['Member']["Fee"],
             fathername: element['Member']["Father Name"],
             mothername: element['Member']["Mother Name"],
             loanpendingamount: element['Member']["Loan Pending Amount"],
