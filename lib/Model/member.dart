@@ -193,7 +193,7 @@ class Memberss {
     'First Name': firstname,
     'Last Name': lastname,
     'Father Name': fathername,
-    'Mother Name': mothername,
+    'Mother Name': mothername,'Fee':fee,
     'Gender': gender,
     'Religion': religion,
     'National ID': nationalid,

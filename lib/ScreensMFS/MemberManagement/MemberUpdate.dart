@@ -172,11 +172,28 @@ class _MemberUpdateState extends State<MemberUpdate> {
           margin: EdgeInsets.zero,
           duration: const Duration(milliseconds: 2000),
           boxShadows: [
-            BoxShadow(
+            const BoxShadow(
                 color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
           ],
           borderRadius: 0);
     } else {
+
+
+      if(mst.fee.isNotEmpty){
+        final balanceAccountRef = FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
+        await balanceAccountRef.update({
+          'Balance': FieldValue.increment(double.parse(_fee.text) - double.parse(mst.fee)),
+        });
+      }else{
+        if(_fee.text.isNotEmpty){
+          final balanceAccountRef = FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
+          await balanceAccountRef.update({
+            'Balance': FieldValue.increment(double.parse(_fee.text)),
+          });
+        }
+      }
+
+
       if (img) {
         final photoRef =
         FirebaseStorage.instance.ref("MembersImage/$mst.id.jpeg");
@@ -200,7 +217,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
-          'Fee': _fee.text,
+          'Fee': _fee.text.isEmpty? "0": _fee.text,
           'Date Of Birth': _selectedDate,
           'Spouse': _spouse.text,
           'Education': _education.text,
@@ -255,7 +272,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
-          'Fee': _fee.text,
+          'Fee': _fee.text.isEmpty? "0": _fee.text,
           'Date Of Birth': _selectedDate,
           'Annual Income': _annualincome.text,
           'Spouse': _spouse.text,
@@ -310,7 +327,7 @@ class _MemberUpdateState extends State<MemberUpdate> {
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
-          'Fee': _fee.text,
+          'Fee':_fee.text.isEmpty? "0": _fee.text,
           'Date Of Birth': _selectedDate,
           'Annual Income': _annualincome.text,
           'Spouse': _spouse.text,

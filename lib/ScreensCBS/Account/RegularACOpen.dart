@@ -149,6 +149,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
         .collection('Customer')
         .get()
         .then((querySnapshot) {
+          try{
       for (var element in querySnapshot.docs) {
         memberss.add(Memberss(
             somiteename: element['Member']["Somitee Name"],
@@ -157,7 +158,7 @@ class _RegularACOpenState extends State<RegularACOpen> {
             occupation: element['Member']["Occupation"],
             firstname: element['Member']["First Name"],
             lastname: element['Member']["Last Name"],
-            fee: element["Fee"],
+            fee: element['Member']["Fee"],
             dead: element['Member']['Dead'],
             fathername: element['Member']["Father Name"],
             mothername: element['Member']["Mother Name"],
@@ -190,7 +191,10 @@ class _RegularACOpenState extends State<RegularACOpen> {
             birthdate: element['Member']["Date Of Birth"].toDate(),
             sl: 0));
         ccode.add(element.id);
-      }
+      }}
+              catch(E){
+            print(E);
+              }
     });
   }
 

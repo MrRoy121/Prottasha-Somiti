@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../Constants/values.dart';
@@ -680,6 +681,10 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                             height: ScreenWidth/30.72,
                             width: ScreenWidth/5.12,
                             child: TextField(controller: widget.fee,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 contentPadding:

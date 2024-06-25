@@ -303,7 +303,12 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                           Row(
                                         children: [
                                           InkWell(
-                                            onTap: () {
+                                            onTap: () async {
+                                              try{
+                                              final balanceAccountRef = FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
+                                              await balanceAccountRef.update({
+                                                'Balance': FieldValue.increment(snapshot.data[index].payamount),
+                                              });
                                               FirebaseFirestore.instance
                                                   .collection('LoanRepayment')
                                                   .doc(snapshot.data[index].id)
@@ -313,7 +318,10 @@ class _LoanRepaymentRequestListState extends State<LoanRepaymentRequestList> {
                                                 'Approve Date': DateTime.now(),
                                               }).then((value) {
                                                 setState(() {});
-                                              });
+                                              });}
+                                                  catch(r){
+                                                print(r);
+                                                  }
                                             },
                                             child: Container(
                                                 padding: EdgeInsets.all(4.0),

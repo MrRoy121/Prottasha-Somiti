@@ -22,8 +22,7 @@ class MemberSecurityAndOtherFee extends StatefulWidget {
   MemberSecurityAndOtherFee({required this.appbool, required this.navbool});
 
   @override
-  State<MemberSecurityAndOtherFee> createState() =>
-      _MemberSecurityAndOtherFeeState();
+  State<MemberSecurityAndOtherFee> createState() => _MemberSecurityAndOtherFeeState();
 }
 
 class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
@@ -52,56 +51,14 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
   Future<void> fetch() async {
     clr();
     _expenses = [];
-    await FirebaseFirestore.instance
-        .collection('LoanSanction')
-        .get()
-        .then((querySnapshot) {
+    await FirebaseFirestore.instance.collection('LoanDisbursed').get().then((querySnapshot) {
       for (var json in querySnapshot.docs) {
-        if (json["Status"] == "Approved") {
-          sanction.add(loanSanction(
-              somiteename: json['Somitee Name'],
-              somiteeid: json['Somitee ID'],
-              membername: json['Member Name'],
-              memberid: json['Member ID'],
-              loanpurpose: json["Loan Purpose"],
-              approvedate: json["Approve Date"].toDate(),
-              memberphone: json['Member Phone'],
-              scheme: json["Loan Scheme"],
-              approvedby: json["Approved By"],
-              requestedby: json["Requested By"],
-              category: json['Loan Category'],
-              sanctionlimit: json["Sanction Limit"],
-              installmentfrequency: json["Installment Frequency"],
-              sanctiondate: json["Sanction Date"].toDate(),
-              servicecharge: json["Service Charge"],
-              installmentno: json["Installment No"],
-              installmentamount: json["Installment Amount"],
-              remarks: json["Remarks"],
-              serviceamount: json["Service Amount"],
-              grantorfname: json["Grantor F Name"],
-              grantorffname: json["Grantor F FatherName"],
-              grantorfrelation: json["Grantor F Relation"],
-              grantorfmobile: json["Grantor F Mobile"],
-              grantorfocupasion: json["Grantor F Occupation"],
-              grantorsname: json["Grantor S Name"],
-              grantorsfname: json["Grantor S FatherName"],
-              grantorsrelation: json["Grantor S Relation"],
-              grantorsmobile: json["Grantor S Mobile"],
-              grantorsocupasion: json["Grantor S Occupation"],
-              grantorpname: json["Grantor P Name"],
-              grantorpfname: json["Grantor P FatherName"],
-              grantorprelation: json["Grantor P Relation"],
-              grantorpmobile: json["Grantor P Mobile"],
-              grantorpocupasion: json["Grantor P Occupation"],
-              status: json["Status"],
-              id: json['ID'],
-              sl: json['SL']));
-          ssanction.add(json['ID']);
-        }
+        sanction.add(loanSanction.fromJson(json['Sanction']));
+        ssanction.add(json['Sanction']['ID']);
       }
     });
     await FirebaseFirestore.instance.collection('Others Fee').get().then((que) {
-      que.docs.forEach((docSnapshot) {
+      for (var docSnapshot in que.docs) {
         var data = docSnapshot.data();
         var userId = docSnapshot.id;
         Map<String, dynamic> allExpenses = {
@@ -109,9 +66,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
           'User Name': docSnapshot['Member Name'],
         };
         data.forEach((key, value) {
-          if (value is Map &&
-              value.containsKey('amount') &&
-              value.containsKey('date')) {
+          if (value is Map && value.containsKey('amount') && value.containsKey('date')) {
             if (!allExpenses.containsKey(key)) {
               allExpenses[key] = [];
             }
@@ -123,7 +78,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
         });
         _expenses.add(allExpenses);
         setState(() {});
-      });
+      }
     });
   }
 
@@ -173,11 +128,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
       selectedsanction = sanction[ins];
       bsanction = true;
 
-      await FirebaseFirestore.instance
-          .collection('Member')
-          .doc(selectedsanction.memberid)
-          .get()
-          .then((element) {
+      await FirebaseFirestore.instance.collection('Member').doc(selectedsanction.memberid).get().then((element) {
         memberss = Memberss(
             somiteename: element["Somitee Name"],
             somiteeid: element["Somitee ID"],
@@ -219,6 +170,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
             sl: 0);
       });
     }
+
     Future<void> _processingfeeselectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
         context: context,
@@ -283,25 +235,16 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
       i++;
       List<DataCell> cells = [
         DataCell(Text(i.toString(), style: const TextStyle(fontSize: 12))),
-        DataCell(
-            Text(userData["User Name"], style: const TextStyle(fontSize: 12))),
+        DataCell(Text(userData["User Name"], style: const TextStyle(fontSize: 12))),
       ];
 
-      List<String> categories = [
-        'Revenue Stamp',
-        'Processing Fee',
-        'Share Savings',
-        'Lien Money',
-        'Loan Pass Book',
-        'Loan Pass File'
-      ];
+      List<String> categories = ['Revenue Stamp', 'Processing Fee', 'Share Savings', 'Lien Money', 'Loan Pass Book', 'Loan Pass File'];
       categories.forEach((category) {
         if (userData.containsKey(category)) {
           var expense = userData[category];
           print(userData[category]);
           String amountText = expense[0]['amount'].toString() ?? 'N/A';
-          cells.add(DataCell(Text(amountText,
-              textAlign: TextAlign.end, style: TextStyle(fontSize: 12))));
+          cells.add(DataCell(Text(amountText, textAlign: TextAlign.end, style: TextStyle(fontSize: 12))));
         } else {
           cells.add(DataCell(Text('N/A', style: TextStyle(fontSize: 12))));
         }
@@ -360,150 +303,153 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                   onTap: () async {
                                     if (selectedsanction != null &&
                                         (revenustampamounttxt.text.isNotEmpty ||
-                                            processingfeeamounttxt
-                                                .text.isNotEmpty ||
-                                            sharesavingsamounttxt
-                                                .text.isNotEmpty ||
-                                            memberfeeamounttxt
-                                                .text.isNotEmpty ||
-                                            loanpassbookamounttxt
-                                                .text.isNotEmpty ||
-                                            loanpassfileamounttxt
-                                                .text.isNotEmpty)) {
+                                            processingfeeamounttxt.text.isNotEmpty ||
+                                            sharesavingsamounttxt.text.isNotEmpty ||
+                                            memberfeeamounttxt.text.isNotEmpty ||
+                                            loanpassbookamounttxt.text.isNotEmpty ||
+                                            loanpassfileamounttxt.text.isNotEmpty)) {
+                                      double totalAmount = 0.0;
+                                      if (revenustampamounttxt.text.isNotEmpty) {
+                                        totalAmount += double.parse(revenustampamounttxt.text.trim());
+                                      }
+                                      if (processingfeeamounttxt.text.isNotEmpty) {
+                                        totalAmount += double.parse(processingfeeamounttxt.text.trim());
+                                      }
+                                      if (sharesavingsamounttxt.text.isNotEmpty) {
+                                        totalAmount += double.parse(sharesavingsamounttxt.text.trim());
+                                      }
+                                      if (memberfeeamounttxt.text.isNotEmpty) {
+                                        totalAmount += double.parse(memberfeeamounttxt.text.trim());
+                                      }
+                                      if (loanpassbookamounttxt.text.isNotEmpty) {
+                                        totalAmount += double.parse(loanpassbookamounttxt.text.trim());
+                                      }
+                                      if (loanpassfileamounttxt.text.isNotEmpty) {
+                                        totalAmount += double.parse(loanpassfileamounttxt.text.trim());
+                                      }
+
                                       Map<String, dynamic> data = {
-                                        'Member Name':
-                                        memberss.firstname +
-                                                ' ' +
-                                            memberss.lastname,
+                                        'Member Name': memberss.firstname + ' ' + memberss.lastname,
                                         'Member ID': memberss.id,
-                                        if (revenustampamounttxt
-                                            .text.isNotEmpty)
+                                        if (revenustampamounttxt.text.isNotEmpty)
                                           'Revenue Stamp': {
-                                            'amount': revenustampamounttxt.text
-                                                .trim(),
+                                            'amount': revenustampamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
-                                        if (processingfeeamounttxt
-                                            .text.isNotEmpty)
+                                        if (processingfeeamounttxt.text.isNotEmpty)
                                           'Processing Fee': {
-                                            'amount': processingfeeamounttxt
-                                                .text
-                                                .trim(),
+                                            'amount': processingfeeamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
-                                        if (sharesavingsamounttxt
-                                            .text.isNotEmpty)
+                                        if (sharesavingsamounttxt.text.isNotEmpty)
                                           'Share Savings': {
-                                            'amount': sharesavingsamounttxt.text
-                                                .trim(),
+                                            'amount': sharesavingsamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                         if (memberfeeamounttxt.text.isNotEmpty)
                                           'Lien Money': {
-                                            'amount':
-                                                memberfeeamounttxt.text.trim(),
+                                            'amount': memberfeeamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
-                                        if (loanpassbookamounttxt
-                                            .text.isNotEmpty)
+                                        if (loanpassbookamounttxt.text.isNotEmpty)
                                           'Loan Pass Book': {
-                                            'amount': loanpassbookamounttxt.text
-                                                .trim(),
+                                            'amount': loanpassbookamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
-                                        if (loanpassfileamounttxt
-                                            .text.isNotEmpty)
+                                        if (loanpassfileamounttxt.text.isNotEmpty)
                                           'Loan Pass File': {
-                                            'amount': loanpassfileamounttxt.text
-                                                .trim(),
+                                            'amount': loanpassfileamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                       };
-                                      DocumentSnapshot docSnapshot =
-                                          await FirebaseFirestore.instance
-                                              .collection('Others Fee')
-                                              .doc(selectedsanction.id)
-                                              .get();
+
+                                      final othersFeeRef = FirebaseFirestore.instance.collection('Others Fee').doc(selectedsanction.id);
+                                      final balanceAccountRef = FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
+
+                                      DocumentSnapshot docSnapshot = await othersFeeRef.get();
+
                                       if (docSnapshot.exists) {
-                                        await FirebaseFirestore.instance
-                                            .collection('Others Fee')
-                                            .doc(selectedsanction.id)
-                                            .update(data)
-                                            .then((value) {
-                                          fetch();
-                                          Get.snackbar(
-                                              "Others Fee Added Successfully.",
-                                              "Refreshing the page",
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                              colorText: Colors.white,
-                                              backgroundColor: Colors.green,
-                                              margin: EdgeInsets.zero,
-                                              duration: const Duration(
-                                                  milliseconds: 2000),
-                                              boxShadows: [
-                                                const BoxShadow(
-                                                    color: Colors.grey,
-                                                    offset: Offset(-100, 0),
-                                                    blurRadius: 20),
-                                              ],
-                                              borderRadius: 0);
+                                        Map<String, dynamic> oldData = docSnapshot.data() as Map<String, dynamic>;
+                                        double oldTotalAmount = 0.0;
+
+                                        if (oldData.containsKey('Revenue Stamp')) {
+                                          oldTotalAmount += double.parse(oldData['Revenue Stamp']['amount']);
+                                        }
+                                        if (oldData.containsKey('Processing Fee')) {
+                                          oldTotalAmount += double.parse(oldData['Processing Fee']['amount']);
+                                        }
+                                        if (oldData.containsKey('Share Savings')) {
+                                          oldTotalAmount += double.parse(oldData['Share Savings']['amount']);
+                                        }
+                                        if (oldData.containsKey('Lien Money')) {
+                                          oldTotalAmount += double.parse(oldData['Lien Money']['amount']);
+                                        }
+                                        if (oldData.containsKey('Loan Pass Book')) {
+                                          oldTotalAmount += double.parse(oldData['Loan Pass Book']['amount']);
+                                        }
+                                        if (oldData.containsKey('Loan Pass File')) {
+                                          oldTotalAmount += double.parse(oldData['Loan Pass File']['amount']);
+                                        }
+
+                                        await balanceAccountRef.update({
+                                          'Balance': FieldValue.increment(totalAmount - oldTotalAmount),
                                         });
+                                        await othersFeeRef.update(data);
                                       } else {
-                                        await FirebaseFirestore.instance
-                                            .collection('Others Fee')
-                                            .doc(selectedsanction.id)
-                                            .set(data)
-                                            .then((value) {
-                                          fetch();
-                                          Get.snackbar(
-                                              "Others Fee Added Successfully.",
-                                              "Refreshing the page",
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                              colorText: Colors.white,
-                                              backgroundColor: Colors.green,
-                                              margin: EdgeInsets.zero,
-                                              duration: const Duration(
-                                                  milliseconds: 2000),
-                                              boxShadows: [
-                                                const BoxShadow(
-                                                    color: Colors.grey,
-                                                    offset: Offset(-100, 0),
-                                                    blurRadius: 20),
-                                              ],
-                                              borderRadius: 0);
+                                        await balanceAccountRef.update({
+                                          'Balance': FieldValue.increment(totalAmount),
                                         });
+                                        await othersFeeRef.set(data);
                                       }
+
+                                      fetch();
+
+                                      Get.snackbar(
+                                        "Others Fee Added Successfully.",
+                                        "Refreshing the page",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        colorText: Colors.white,
+                                        backgroundColor: Colors.green,
+                                        margin: EdgeInsets.zero,
+                                        duration: const Duration(milliseconds: 2000),
+                                        boxShadows: [
+                                          const BoxShadow(
+                                            color: Colors.grey,
+                                            offset: Offset(-100, 0),
+                                            blurRadius: 20,
+                                          ),
+                                        ],
+                                        borderRadius: 0,
+                                      );
                                     } else {
-                                      Get.snackbar("Others Fee Adding Failed.",
-                                          "Some Required Fields are Empty",
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          colorText: Colors.white,
-                                          backgroundColor: Colors.red,
-                                          margin: EdgeInsets.zero,
-                                          duration: const Duration(
-                                              milliseconds: 2000),
-                                          boxShadows: [
-                                            BoxShadow(
-                                                color: Colors.grey,
-                                                offset: Offset(-100, 0),
-                                                blurRadius: 20),
-                                          ],
-                                          borderRadius: 0);
+                                      Get.snackbar(
+                                        "Others Fee Adding Failed.",
+                                        "Some Required Fields are Empty",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        colorText: Colors.white,
+                                        backgroundColor: Colors.red,
+                                        margin: EdgeInsets.zero,
+                                        duration: const Duration(milliseconds: 2000),
+                                        boxShadows: [
+                                          const BoxShadow(
+                                            color: Colors.grey,
+                                            offset: Offset(-100, 0),
+                                            blurRadius: 20,
+                                          ),
+                                        ],
+                                        borderRadius: 0,
+                                      );
                                     }
                                   },
                                   child: Container(
                                     height: 40,
                                     width: 90,
                                     color: Colors.green,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, left: 15),
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(top: 10.0, left: 15),
                                       child: Text(
                                         "✓ Submit",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 14),
+                                        style: TextStyle(color: Colors.white, fontSize: 14),
                                       ),
                                     ),
                                   ),
@@ -519,8 +465,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     height: 40,
                                     width: 90,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 3.0, left: 15),
+                                      padding: const EdgeInsets.only(top: 3.0, left: 15),
                                       child: Row(
                                         children: [
                                           Icon(
@@ -533,9 +478,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           ),
                                           Text(
                                             "Clear",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
+                                            style: TextStyle(color: Colors.white, fontSize: 14),
                                           ),
                                         ],
                                       ),
@@ -563,28 +506,16 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Select Member',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
                                       SizedBox(
                                         width: 40,
                                       ),
-
                                       Container(
                                           width: 300,
                                           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -593,14 +524,12 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                             border: Border.all(color: AppColor_Black),
                                           ),
                                           child: DropdownSearch<loanSanction>(
-                                            filterFn:
-                                                (loanSanction item, String query) {
+                                            filterFn: (loanSanction item, String query) {
                                               return item.filterFn(query);
                                             },
                                             popupProps: PopupProps.menu(
                                               showSearchBox: true,
-                                              itemBuilder: (BuildContext context,
-                                                  loanSanction item, bool isSelected) {
+                                              itemBuilder: (BuildContext context, loanSanction item, bool isSelected) {
                                                 return Container(
                                                   padding: EdgeInsets.all(15),
                                                   child: Text(
@@ -622,16 +551,13 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                                 ),
                                               ),
                                             ),
-                                            dropdownDecoratorProps:
-                                            const DropDownDecoratorProps(
+                                            dropdownDecoratorProps: const DropDownDecoratorProps(
                                               dropdownSearchDecoration: InputDecoration(
                                                 enabledBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.transparent),
+                                                  borderSide: BorderSide(color: Colors.transparent),
                                                 ),
                                                 focusedBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.transparent),
+                                                  borderSide: BorderSide(color: Colors.transparent),
                                                 ),
                                               ),
                                             ),
@@ -648,12 +574,11 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                             },
                                             onChanged: (newValue) {
                                               setState(() {
-                                                _setupsanction(ssanction
-                                                    .indexOf(newValue!.id));
+                                                _setupsanction(ssanction.indexOf(newValue!.id));
                                                 bsanction = true;
                                               });
                                             },
-                                            items:sanction,
+                                            items: sanction,
                                             selectedItem: selectedsanction,
                                           )),
                                     ],
@@ -671,21 +596,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Revenue Stamp Amount',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -697,16 +611,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         child: TextField(
                                           controller: revenustampamounttxt,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: 5,
-                                                    horizontal: 10),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                           ),
                                         ),
                                       ),
@@ -716,21 +624,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Date',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -740,29 +637,23 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       SizedBox(
                                         width: 150,
                                         child: InkWell(
-                                          onTap: () =>
-                                              _revenustampselectDate(context),
+                                          onTap: () => _revenustampselectDate(context),
                                           child: AbsorbPointer(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey),
+                                                  borderSide: BorderSide(color: Colors.grey),
                                                 ),
-                                                hintText: revenustampselectedDate !=
-                                                        null
+                                                hintText: revenustampselectedDate != null
                                                     ? "${revenustampselectedDate!.day}-${revenustampselectedDate!.month}-${revenustampselectedDate!.year}"
                                                     : "Select a date",
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(
-                                                    Icons.calendar_month_sharp,
-                                                    size: 14,
-                                                    color: Colors.grey),
+                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -783,21 +674,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Processing Fee Amount',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -809,16 +689,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         child: TextField(
                                           controller: processingfeeamounttxt,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: 5,
-                                                    horizontal: 10),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                           ),
                                         ),
                                       ),
@@ -828,21 +702,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Date',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -852,30 +715,23 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       SizedBox(
                                         width: 150,
                                         child: InkWell(
-                                          onTap: () =>
-                                              _processingfeeselectDate(context),
+                                          onTap: () => _processingfeeselectDate(context),
                                           child: AbsorbPointer(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey),
+                                                  borderSide: BorderSide(color: Colors.grey),
                                                 ),
-                                                hintText:
-                                                    processingfeeselectedDate !=
-                                                            null
-                                                        ? "${processingfeeselectedDate!.day}-${processingfeeselectedDate!.month}-${processingfeeselectedDate!.year}"
-                                                        : "Select a date",
+                                                hintText: processingfeeselectedDate != null
+                                                    ? "${processingfeeselectedDate!.day}-${processingfeeselectedDate!.month}-${processingfeeselectedDate!.year}"
+                                                    : "Select a date",
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(
-                                                    Icons.calendar_month_sharp,
-                                                    size: 14,
-                                                    color: Colors.grey),
+                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -896,21 +752,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Share Savings Amount',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -922,16 +767,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         child: TextField(
                                           controller: sharesavingsamounttxt,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: 5,
-                                                    horizontal: 10),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                           ),
                                         ),
                                       ),
@@ -941,21 +780,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Date',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -965,30 +793,23 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       SizedBox(
                                         width: 150,
                                         child: InkWell(
-                                          onTap: () =>
-                                              _sharesavingsselectDate(context),
+                                          onTap: () => _sharesavingsselectDate(context),
                                           child: AbsorbPointer(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey),
+                                                  borderSide: BorderSide(color: Colors.grey),
                                                 ),
-                                                hintText:
-                                                    sharesavingsselectedDate !=
-                                                            null
-                                                        ? "${sharesavingsselectedDate!.day}-${sharesavingsselectedDate!.month}-${sharesavingsselectedDate!.year}"
-                                                        : "Select a date",
+                                                hintText: sharesavingsselectedDate != null
+                                                    ? "${sharesavingsselectedDate!.day}-${sharesavingsselectedDate!.month}-${sharesavingsselectedDate!.year}"
+                                                    : "Select a date",
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(
-                                                    Icons.calendar_month_sharp,
-                                                    size: 14,
-                                                    color: Colors.grey),
+                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -1009,21 +830,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Lien Money Amount',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -1035,16 +845,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         child: TextField(
                                           controller: memberfeeamounttxt,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: 5,
-                                                    horizontal: 10),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                           ),
                                         ),
                                       ),
@@ -1054,21 +858,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Date',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -1078,29 +871,23 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       SizedBox(
                                         width: 150,
                                         child: InkWell(
-                                          onTap: () =>
-                                              _memberfeesselectDate(context),
+                                          onTap: () => _memberfeesselectDate(context),
                                           child: AbsorbPointer(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey),
+                                                  borderSide: BorderSide(color: Colors.grey),
                                                 ),
-                                                hintText: memberfeesselectedDate !=
-                                                        null
+                                                hintText: memberfeesselectedDate != null
                                                     ? "${memberfeesselectedDate!.day}-${memberfeesselectedDate!.month}-${memberfeesselectedDate!.year}"
                                                     : "Select a date",
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(
-                                                    Icons.calendar_month_sharp,
-                                                    size: 14,
-                                                    color: Colors.grey),
+                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -1121,21 +908,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Loan Pass File Amount',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -1147,16 +923,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         child: TextField(
                                           controller: loanpassfileamounttxt,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: 5,
-                                                    horizontal: 10),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                           ),
                                         ),
                                       ),
@@ -1166,21 +936,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Date',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -1190,30 +949,23 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                       SizedBox(
                                         width: 150,
                                         child: InkWell(
-                                          onTap: () =>
-                                              _loanpassfileselectDate(context),
+                                          onTap: () => _loanpassfileselectDate(context),
                                           child: AbsorbPointer(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey),
+                                                  borderSide: BorderSide(color: Colors.grey),
                                                 ),
-                                                hintText:
-                                                    loanpassfileselectedDate !=
-                                                            null
-                                                        ? "${loanpassfileselectedDate!.day}-${loanpassfileselectedDate!.month}-${loanpassfileselectedDate!.year}"
-                                                        : "Select a date",
+                                                hintText: loanpassfileselectedDate != null
+                                                    ? "${loanpassfileselectedDate!.day}-${loanpassfileselectedDate!.month}-${loanpassfileselectedDate!.year}"
+                                                    : "Select a date",
                                                 hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(
-                                                    Icons.calendar_month_sharp,
-                                                    size: 14,
-                                                    color: Colors.grey),
+                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -1280,11 +1032,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                 removeTop: true,
                                 child: DataTable(
                                   showCheckboxColumn: false,
-                                  border: TableBorder.all(
-                                      color: Colors.black26, width: 1),
-                                  headingRowColor:
-                                      MaterialStateProperty.all<Color>(
-                                          AppColor_Blue),
+                                  border: TableBorder.all(color: Colors.black26, width: 1),
+                                  headingRowColor: MaterialStateProperty.all<Color>(AppColor_Blue),
                                   columns: const [
                                     DataColumn(
                                       label: Text(
@@ -1368,8 +1117,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                   ],
                                   rows: [
-                                    for (var ele in _expenses)
-                                      buildDataRow(ele),
+                                    for (var ele in _expenses) buildDataRow(ele),
                                   ],
                                 ),
                               )),

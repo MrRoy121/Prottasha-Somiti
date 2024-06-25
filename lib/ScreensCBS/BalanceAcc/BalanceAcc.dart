@@ -32,10 +32,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Future<void> fetch() async {
     _account = [];
     int i = 0;
-    await FirebaseFirestore.instance
-        .collection('BalanceAccount')
-        .get()
-        .then((que) {
+    await FirebaseFirestore.instance.collection('BalanceAccount').get().then((que) {
       for (var ele in que.docs) {
         i++;
         _account.add({
@@ -114,74 +111,47 @@ class _AccountScreenState extends State<AccountScreen> {
                                 Spacer(),
                                 InkWell(
                                   onTap: () async {
-                                    if (accountno.text.isEmpty ||
-                                        accounttitle.text.isEmpty ||
-                                        amount.text.isEmpty) {
-                                      Get.snackbar("Account Adding Failed.",
-                                          "Some Required Fields are Empty",
+                                    if (accountno.text.isEmpty || accounttitle.text.isEmpty || amount.text.isEmpty) {
+                                      Get.snackbar("Account Adding Failed.", "Some Required Fields are Empty",
                                           snackPosition: SnackPosition.BOTTOM,
                                           colorText: Colors.white,
                                           backgroundColor: Colors.red,
                                           margin: EdgeInsets.zero,
-                                          duration: const Duration(
-                                              milliseconds: 2000),
+                                          duration: const Duration(milliseconds: 2000),
                                           boxShadows: [
-                                            BoxShadow(
-                                                color: Colors.grey,
-                                                offset: Offset(-100, 0),
-                                                blurRadius: 20),
+                                            BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
                                           ],
                                           borderRadius: 0);
                                     } else {
-                                      DocumentSnapshot querySnapshot =
-                                          await FirebaseFirestore.instance
-                                              .collection('BalanceAccount')
-                                              .doc(accountno.text)
-                                              .get();
+                                      DocumentSnapshot querySnapshot = await FirebaseFirestore.instance.collection('BalanceAccount').doc(accountno.text).get();
                                       if (!querySnapshot.exists) {
-                                        FirebaseFirestore.instance
-                                            .collection('BalanceAccount')
-                                            .doc(accountno.text)
-                                            .set({
+                                        FirebaseFirestore.instance.collection('BalanceAccount').doc(accountno.text).set({
                                           'Account Title': accounttitle.text,
-                                          'Balance': double.parse(
-                                              amount.text.toString()),
+                                          'Balance': double.parse(amount.text.toString()),
                                           'Account No': accountno.text,
                                         }).then((value) async {
                                           fetch();
                                           _clear();
-                                          Get.snackbar(
-                                              "Open Close Updated Successfully.",
-                                              "Refreshing the Page.",
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
+                                          Get.snackbar("Open Close Updated Successfully.", "Refreshing the Page.",
+                                              snackPosition: SnackPosition.BOTTOM,
                                               colorText: Colors.white,
                                               backgroundColor: Colors.green,
                                               margin: EdgeInsets.zero,
-                                              duration: const Duration(
-                                                  milliseconds: 2000),
+                                              duration: const Duration(milliseconds: 2000),
                                               boxShadows: [
-                                                const BoxShadow(
-                                                    color: Colors.grey,
-                                                    offset: Offset(-100, 0),
-                                                    blurRadius: 20),
+                                                const BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
                                               ],
                                               borderRadius: 0);
                                         });
                                       } else {
-                                        Get.snackbar("Account Adding Failed.",
-                                            "Account Number already exists",
+                                        Get.snackbar("Account Adding Failed.", "Account Number already exists",
                                             snackPosition: SnackPosition.BOTTOM,
                                             colorText: Colors.white,
                                             backgroundColor: Colors.red,
                                             margin: EdgeInsets.zero,
-                                            duration: const Duration(
-                                                milliseconds: 2000),
+                                            duration: const Duration(milliseconds: 2000),
                                             boxShadows: [
-                                              BoxShadow(
-                                                  color: Colors.grey,
-                                                  offset: Offset(-100, 0),
-                                                  blurRadius: 20),
+                                              BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
                                             ],
                                             borderRadius: 0);
                                       }
@@ -192,12 +162,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                     width: 90,
                                     color: Colors.green,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, left: 15),
+                                      padding: const EdgeInsets.only(top: 10.0, left: 15),
                                       child: Text(
                                         "✓ Submit",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 14),
+                                        style: TextStyle(color: Colors.white, fontSize: 14),
                                       ),
                                     ),
                                   ),
@@ -214,8 +182,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     width: 90,
                                     color: AppColor_yellow,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 3.0, left: 15),
+                                      padding: const EdgeInsets.only(top: 3.0, left: 15),
                                       child: Row(
                                         children: [
                                           Icon(
@@ -228,9 +195,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                           ),
                                           Text(
                                             "Clear",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
+                                            style: TextStyle(color: Colors.white, fontSize: 14),
                                           ),
                                         ],
                                       ),
@@ -257,21 +222,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Account Title',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -284,9 +238,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                           controller: accounttitle,
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 5, vertical: 5),
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                                           ),
                                         ),
                                       ),
@@ -301,21 +253,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Account No',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -327,15 +268,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                         child: TextField(
                                           controller: accountno,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 5, vertical: 5),
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                                           ),
                                         ),
                                       ),
@@ -350,21 +286,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                       RichText(
                                         text: const TextSpan(
                                           text: 'Balance',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                          style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(
-                                                text: ' *',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                    fontSize: 14)),
-                                            TextSpan(
-                                                text: ' :',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14)),
+                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
                                       ),
@@ -376,15 +301,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                         child: TextField(
                                           controller: amount,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           decoration: const InputDecoration(
                                             border: OutlineInputBorder(),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 5, vertical: 5),
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                                           ),
                                         ),
                                       ),
@@ -402,7 +322,6 @@ class _AccountScreenState extends State<AccountScreen> {
                   Expanded(
                     flex: 8,
                     child: Container(
-                      height: 250,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -436,7 +355,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 25,
                           ),
                           MediaQuery.removePadding(
@@ -444,10 +363,8 @@ class _AccountScreenState extends State<AccountScreen> {
                             removeTop: true,
                             child: DataTable(
                               showCheckboxColumn: false,
-                              border: TableBorder.all(
-                                  color: Colors.black26, width: 1),
-                              headingRowColor: MaterialStateProperty.all<Color>(
-                                  AppColor_Blue),
+                              border: TableBorder.all(color: Colors.black26, width: 1),
+                              headingRowColor: MaterialStateProperty.all<Color>(AppColor_Blue),
                               columns: const [
                                 DataColumn(
                                   label: Text(
@@ -506,8 +423,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                               fontSize: 12,
                                             )),
                                       ),
-                                      DataCell(Text(
-                                          ele["Balance"].toStringAsFixed(1),
+                                      DataCell(Text(ele["Balance"].toStringAsFixed(1),
                                           textAlign: TextAlign.end,
                                           style: const TextStyle(
                                             fontSize: 12,
@@ -516,7 +432,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                   )
                               ],
                             ),
-                          )
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
                         ],
                       ),
                     ),

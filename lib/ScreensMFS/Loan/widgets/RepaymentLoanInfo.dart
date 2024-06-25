@@ -344,17 +344,6 @@ class _RepaymentLoanINfoState extends State<RepaymentLoanINfo> {
                             fontSize: 14,
                           ),
                         ),
-
-                        SizedBox(width: 25,),
-
-                        SizedBox(
-                          width: 300,
-                          child: Text(
-                            widget.memberselection?widget.disbursed.manegername:'',
-                          ),
-                        ),
-
-
                       ],
                     ),
 

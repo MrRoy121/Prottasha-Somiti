@@ -1,13 +1,7 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import '../../../../Constants/Constants.dart';
@@ -118,7 +112,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       _nidnumber = TextEditingController(text: "");
       _birthreginumber = TextEditingController(text: "");
       _age = TextEditingController(text: "");
-      _fee = TextEditingController(text: "");
+      _fee = TextEditingController(text: "0");
       _spouse = TextEditingController(text: "");
       _education = TextEditingController(text: "");
       selectedGender = ss;
@@ -177,6 +171,12 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       int somiteeCount = querySnapshot.docs.length + 1;
       String memberid = selectedsomiti.id + somiteeCount.toString().padLeft(3, '0');
 
+      if(_fee.text.isNotEmpty){
+        final balanceAccountRef = FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
+        await balanceAccountRef.update({
+          'Balance': FieldValue.increment(double.parse(_fee.text)),
+        });
+      }
       if (img) {
         final photoRef = FirebaseStorage.instance.ref("MembersImage/$memberid.jpeg");
         UploadTask uploadTask = photoRef.putData(
@@ -204,7 +204,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
           'Date Of Birth': _selectedDate,
-          'Fee': _fee.text,
+          'Fee': _fee.text.isEmpty ? "0" : _fee.text,
           'Spouse': _spouse.text,
           'Education': _education.text,
           'Marital Status': maritalstatus,
@@ -261,7 +261,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
           'National ID': _nidnumber.text,
           'Birth Registration': _birthreginumber.text,
           'Age': _age.text,
-          'Fee': _fee.text,
+          'Fee': _fee.text.isEmpty ? "0" : _fee.text,
           'Date Of Birth': _selectedDate,
           'Spouse': _spouse.text,
           'Education': _education.text,

@@ -341,42 +341,18 @@ class _PersonalExistinginfoState extends State<PersonalExistinginfo> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
                             children: [
-                              Text(
-                                "No of Dependable Members :",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              SizedBox(
-                                width: 200,
-                                child: Text(
-                                  widget.selectedmember
-                                      ? widget.memberss.nodepenndent
-                                      : '',
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Text(
+                              const Text(
                                 "Marital Status :",
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 12,
                               ),
                               SizedBox(
