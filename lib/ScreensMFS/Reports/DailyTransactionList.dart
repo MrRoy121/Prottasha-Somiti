@@ -173,6 +173,7 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
     for (var element in querySnapshot.docs) {
       if (element['Status'] && element['Approve']) {
         DateTime ddd = element["Request Date"].toDate();
+        print(ddd.toString());
         if (_selectedDate.day == ddd.day &&
             _selectedDate.month == ddd.month &&
             _selectedDate.year == ddd.year) {
@@ -188,6 +189,7 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
         }
       }
     }
+    print("INar${allmemberss.length}");
     return allmemberss;
   }
 
@@ -220,7 +222,7 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
             cashdeposit: await getmemberdeposit(),
             loandisburse: await getloandisbursement(),
             loanrepayment: await getloanrepayment(),
-            ledgertitle: selectedsomiti.name,
+            ledgertitle: selectedsomiti.name,startdate: _selectedDate,
             ledgeno: selectedsomiti.id);
       }
     }

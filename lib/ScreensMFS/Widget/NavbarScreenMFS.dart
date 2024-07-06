@@ -845,144 +845,144 @@ class _NavbarScreenMFSState extends State<NavbarScreenMFS> {
                                       ),
                                     )),
                               ),
-                              // InkWell(
-                              //   onHover: (val) {
-                              //     setState(() {
-                              //       if (val) {
-                              //         itemColor3 = AppColor_hover1;
-                              //         textColor3 = Colors.white;
-                              //       } else {
-                              //         itemColor3 = AppColor_Blue;
-                              //         textColor3 = Colors.black;
-                              //       }
-                              //     });
-                              //   },
-                              //   onTap: () {
-                              //     // Get.to(DailyTransactionList(
-                              //     //   appbool: widget.appbool,
-                              //     //   navbool: widget.navbool,
-                              //     // ));
-                              //     Get.toNamed(dailytransactionPageRoute);
-                              //   },
-                              //   child: Container(
-                              //       padding: EdgeInsets.only(
-                              //           top: 10, left: 20, bottom: 10),
-                              //       height: 40,
-                              //       width: 350,
-                              //       color: itemColor3,
-                              //       child: Text(
-                              //         "Daily Transaction List",
-                              //         style: TextStyle(
-                              //           color: textColor3,
-                              //           fontSize: 12,
-                              //         ),
-                              //       )),
-                              // ),
-                              // InkWell(
-                              //   onHover: (val) {
-                              //     setState(() {
-                              //       if (val) {
-                              //         itemColor4 = AppColor_hover1;
-                              //         textColor4 = Colors.white;
-                              //       } else {
-                              //         itemColor4 = AppColor_Blue;
-                              //         textColor4 = Colors.black;
-                              //       }
-                              //     });
-                              //   },
-                              //   onTap: () {
-                              //     // Get.to(DailyTransactionList(
-                              //     //   appbool: widget.appbool,
-                              //     //   navbool: widget.navbool,
-                              //     // ));
-                              //     Get.toNamed(dailyaffairstatementPageRoute);
-                              //   },
-                              //   child: Container(
-                              //       padding: EdgeInsets.only(
-                              //           top: 10, left: 20, bottom: 10),
-                              //       height: 40,
-                              //       width: 350,
-                              //       color: itemColor4,
-                              //       child: Text(
-                              //         "Daily Affair Statement",
-                              //         style: TextStyle(
-                              //           color: textColor4,
-                              //           fontSize: 12,
-                              //         ),
-                              //       )),
-                              // ),
-                              // InkWell(
-                              //   onHover: (val) {
-                              //     setState(() {
-                              //       if (val) {
-                              //         itemColor4 = AppColor_hover1;
-                              //         textColor4 = Colors.white;
-                              //       } else {
-                              //         itemColor4 = AppColor_Blue;
-                              //         textColor4 = Colors.black;
-                              //       }
-                              //     });
-                              //   },
-                              //   onTap: () {
-                              //     // Get.to(DailyGLSummary(
-                              //     //   appbool: widget.appbool,
-                              //     //   navbool: widget.navbool,
-                              //     // ));
-                              //     Get.toNamed(dailyglsummaryPageRoute);
-                              //   },
-                              //   child: Container(
-                              //     padding: EdgeInsets.only(
-                              //         top: 10, left: 20, right: 20, bottom: 10),
-                              //     height: 40,
-                              //     width: 350,
-                              //     color: itemColor4,
-                              //     child: Row(
-                              //       children: [
-                              //         Text(
-                              //           "Daily GL Summary",
-                              //           style: TextStyle(
-                              //             color: textColor4,
-                              //             fontSize: 12,
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
-                              // InkWell(
-                              //   onHover: (val) {
-                              //     setState(() {
-                              //       if (val) {
-                              //         itemColor20 = AppColor_hover1;
-                              //         textColor20 = Colors.white;
-                              //       } else {
-                              //         itemColor20 = AppColor_Blue;
-                              //         textColor20 = Colors.black;
-                              //       }
-                              //     });
-                              //   },
-                              //   onTap: () {
-                              //     Get.toNamed(profitlossstatementPageRoute);
-                              //   },
-                              //   child: Container(
-                              //     padding: EdgeInsets.only(
-                              //         top: 10, left: 20, right: 20, bottom: 10),
-                              //     height: 40,
-                              //     width: 350,
-                              //     color: itemColor20,
-                              //     child: Row(
-                              //       children: [
-                              //         Text(
-                              //           "Profit Loss Statement",
-                              //           style: TextStyle(
-                              //             color: textColor20,
-                              //             fontSize: 12,
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
+                              InkWell(
+                                onHover: (val) {
+                                  setState(() {
+                                    if (val) {
+                                      itemColor3 = AppColor_hover1;
+                                      textColor3 = Colors.white;
+                                    } else {
+                                      itemColor3 = AppColor_Blue;
+                                      textColor3 = Colors.black;
+                                    }
+                                  });
+                                },
+                                onTap: () {
+                                  // Get.to(DailyTransactionList(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(dailytransactionPageRoute);
+                                },
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: 10, left: 20, bottom: 10),
+                                    height: 40,
+                                    width: 350,
+                                    color: itemColor3,
+                                    child: Text(
+                                      "Daily Transaction List",
+                                      style: TextStyle(
+                                        color: textColor3,
+                                        fontSize: 12,
+                                      ),
+                                    )),
+                              ),
+                              InkWell(
+                                onHover: (val) {
+                                  setState(() {
+                                    if (val) {
+                                      itemColor4 = AppColor_hover1;
+                                      textColor4 = Colors.white;
+                                    } else {
+                                      itemColor4 = AppColor_Blue;
+                                      textColor4 = Colors.black;
+                                    }
+                                  });
+                                },
+                                onTap: () {
+                                  // Get.to(DailyTransactionList(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(dailyaffairstatementPageRoute);
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 20, bottom: 10),
+                                    height: 40,
+                                    width: 350,
+                                    color: itemColor4,
+                                    child: Text(
+                                      "Daily Affair Statement",
+                                      style: TextStyle(
+                                        color: textColor4,
+                                        fontSize: 12,
+                                      ),
+                                    )),
+                              ),
+                              InkWell(
+                                onHover: (val) {
+                                  setState(() {
+                                    if (val) {
+                                      itemColor7 = AppColor_hover1;
+                                      textColor7 = Colors.white;
+                                    } else {
+                                      itemColor7 = AppColor_Blue;
+                                      textColor7 = Colors.black;
+                                    }
+                                  });
+                                },
+                                onTap: () {
+                                  // Get.to(DailyGLSummary(
+                                  //   appbool: widget.appbool,
+                                  //   navbool: widget.navbool,
+                                  // ));
+                                  Get.toNamed(dailyglsummaryPageRoute);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 350,
+                                  color: itemColor7,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Daily GL Summary",
+                                        style: TextStyle(
+                                          color: textColor7,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onHover: (val) {
+                                  setState(() {
+                                    if (val) {
+                                      itemColor20 = AppColor_hover1;
+                                      textColor20 = Colors.white;
+                                    } else {
+                                      itemColor20 = AppColor_Blue;
+                                      textColor20 = Colors.black;
+                                    }
+                                  });
+                                },
+                                onTap: () {
+                                  Get.toNamed(profitlossstatementPageRoute);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20, bottom: 10),
+                                  height: 40,
+                                  width: 350,
+                                  color: itemColor20,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Profit Loss Statement",
+                                        style: TextStyle(
+                                          color: textColor20,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                               InkWell(
                                 onTap: () {},
                                 onHover: (val) {

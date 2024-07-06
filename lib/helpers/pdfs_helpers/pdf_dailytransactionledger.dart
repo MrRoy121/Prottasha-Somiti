@@ -17,6 +17,7 @@ class PdfDailyTransactionLedger {
     required List<DailyTransactionModel> loandisburse,
     required List<DailyTransactionModel> loanrepayment,
     required String ledgeno,
+    required DateTime startdate,
     required ledgertitle,
   }) async {
     final pdf = Document();
@@ -34,11 +35,10 @@ class PdfDailyTransactionLedger {
     double totalcashwithdraw =
         cashwithdraw.fold(0.0, (sum, transaction) => sum + transaction.amount);
 
-    double totaldisbursement =
-    loanrepayment.fold(0.0, (sum, transaction) => sum + transaction.amount);
+    double totaldisbursement =loandisburse.fold(0.0, (sum, transaction) => sum + transaction.amount);
 
     double totalrepayment =
-    cashwithdraw.fold(0.0, (sum, transaction) => sum + transaction.amount);
+    loanrepayment.fold(0.0, (sum, transaction) => sum + transaction.amount);
 
     pdf.addPage(MultiPage(
       pageFormat: PdfPageFormat.a4,
@@ -276,7 +276,7 @@ class PdfDailyTransactionLedger {
               top: 8,
               left: PdfPageFormat.a4.marginLeft,
               right: PdfPageFormat.a4.marginRight),
-          child: buildInvoice(cashwithdraw, ttf, ttfbold),
+          child: buildInvoice(loanrepayment, ttf, ttfbold),
         ),
         Container(
             margin: EdgeInsets.only(
@@ -348,7 +348,7 @@ class PdfDailyTransactionLedger {
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),
                   flex: 6),
               Expanded(
-                  child: Text(((totalcashwithdraw+totaldisbursement)-(totalrepayment+totalcashdeposit)).toStringAsFixed(2),
+                  child: Text(((totalrepayment+totalcashdeposit)-(totalcashwithdraw+totaldisbursement)).toStringAsFixed(2),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                           font: ttfbold, fontSize: 9, color: PdfColors.black)),
@@ -358,7 +358,7 @@ class PdfDailyTransactionLedger {
       header: (context) => buildHeader(
         ttf,
         data,
-        ttfbold,
+        ttfbold,startdate
       ),
       footer: (context) => buildFooter(ttf, ttfbold),
     ));
@@ -433,7 +433,7 @@ class PdfDailyTransactionLedger {
                 fontSize: 12,
                 color: PdfColor.fromHex("#1E2772"))),
       ]));
-  static Widget buildHeader(final ttf, Uint8List data, final ttfbold) =>
+  static Widget buildHeader(final ttf, Uint8List data, final ttfbold, DateTime startdate) =>
       Container(
           alignment: Alignment.center,
           child: Column(
@@ -484,12 +484,12 @@ class PdfDailyTransactionLedger {
                         font: ttfbold,
                         fontSize: 10,
                         color: PdfColor.fromHex("#1C1F22"))),
-                // Text(
-                //     "Statement For Period:  ${DateFormat('dd MMMM, yyyy').format(startdate)} to  ${DateFormat('dd MMMM, yyyy').format(enddate)}",
-                //     style: TextStyle(
-                //         font: ttf,
-                //         fontSize: 10,
-                //         color: PdfColor.fromHex("#1E2772"))),
+                Text(
+                    "Transaction List of:  ${DateFormat('dd MMMM, yyyy').format(startdate)}",
+                    style: TextStyle(
+                        font: ttf,
+                        fontSize: 10,
+                        color: PdfColor.fromHex("#1E2772"))),
                 SizedBox(height: 30),
               ]));
 }
