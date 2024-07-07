@@ -39,10 +39,7 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
   }
 
   Future<void> fetch() async {
-    await FirebaseFirestore.instance
-        .collection('Somitee')
-        .get()
-        .then((querySnapshot) {
+    await FirebaseFirestore.instance.collection('Somitee').get().then((querySnapshot) {
       for (var element in querySnapshot.docs) {
         somitee.add(Somitee(
             address: element["Address"],
@@ -77,16 +74,13 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
     List<DailyTransactionModel> allmemberss = [];
     int s = 1;
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Member').get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Member').get();
       for (var element in querySnapshot.docs) {
         if (element["Deposits"] != null) {
           var deposits = element["Deposits"] ?? [];
           for (int i = 0; i < deposits.length; i++) {
             DateTime ddd = DateTime.parse(deposits[i]["date"]);
-            if (_selectedDate.day == ddd.day &&
-                _selectedDate.month == ddd.month &&
-                _selectedDate.year == ddd.year) {
+            if (_selectedDate.day == ddd.day && _selectedDate.month == ddd.month && _selectedDate.year == ddd.year) {
               allmemberss.add(DailyTransactionModel(
                   amount: deposits[i]["value"],
                   transacno: s.toString(),
@@ -106,20 +100,98 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
     return allmemberss;
   }
 
+  Future<List<DailyTransactionModel>> getExpense() async {
+    List<DailyTransactionModel> profitloss = [];
+    int s = 1;
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection('ExpenseItem').get();
+
+    for (var category in ExpensecategoryList) {
+      double currentmont = 0.0;
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses =
+          querySnapshot.docs.where((ele) => ele['Expense Category'] == category).toList();
+
+      for (var ele in expenses) {
+        double amount = ele['Amount'];
+        if (_selectedDate.month == ele['Date'].toDate().month && _selectedDate.year == ele['Date'].toDate().year) {
+          currentmont += amount;
+        }
+      }
+
+      // Only add to the list if the currentmont is not zero
+      if (currentmont != 0) {
+        profitloss.add(DailyTransactionModel(
+            amount: currentmont,
+            transacno: s.toString(),
+            drcr: false,
+            acno: '1',
+            actitle: '',
+            naration: category,
+            transactiondate: _selectedDate));
+        s++;
+      }
+    }
+
+    return profitloss;
+  }
+
+  Future<List<DailyTransactionModel>> getIncome() async {
+    List<DailyTransactionModel> profitloss = [];
+    int s = 1;
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('Others Fee').get();
+
+    for (var member in querySnapshot.docs) {
+      String memberName = member['Member Name'];
+
+      for (var category in feeTypes) {
+        if (member.data().containsKey(category)) {
+          var feeDetails = member[category];
+
+          if (feeDetails is Map<String, dynamic>) {
+            double currentMonthIncome = 0.0;
+            if (feeDetails['amount'] != null && feeDetails['date'] != null) {
+              try {
+                DateTime feeDate = feeDetails['date'].toDate();
+                double amount = double.parse(feeDetails['amount']);
+                if (_selectedDate.month == feeDate.month &&
+                    _selectedDate.day == feeDate.day &&
+                    _selectedDate.year == feeDate.year) {
+                  currentMonthIncome += amount;
+                }
+              } catch (e) {
+                print('Error processing fee data: $e');
+              }
+            }
+            if (currentMonthIncome != 0) {
+              profitloss.add(DailyTransactionModel(
+                amount: currentMonthIncome,
+                transacno: s.toString(),
+                drcr: true,
+                acno: '1',
+                actitle: memberName,
+                naration: category,
+                transactiondate: _selectedDate,
+              ));
+              s++;
+            }
+          }
+        }
+      }
+    }
+    return profitloss;
+  }
+
   Future<List<DailyTransactionModel>> getmemberwithdraw() async {
     List<DailyTransactionModel> allmemberss = [];
     int s = 1;
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Member').get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Member').get();
       for (var element in querySnapshot.docs) {
         if (element["Withdraws"] != null) {
           var deposits = element["Withdraws"] ?? [];
           for (int i = 0; i < deposits.length; i++) {
             DateTime ddd = DateTime.parse(deposits[i]["date"]);
-            if (_selectedDate.day == ddd.day &&
-                _selectedDate.month == ddd.month &&
-                _selectedDate.year == ddd.year) {
+            if (_selectedDate.day == ddd.day && _selectedDate.month == ddd.month && _selectedDate.year == ddd.year) {
               allmemberss.add(DailyTransactionModel(
                   amount: deposits[i]["value"],
                   transacno: s.toString(),
@@ -142,14 +214,11 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
   Future<List<DailyTransactionModel>> getloandisbursement() async {
     List<DailyTransactionModel> allmemberss = [];
     int s = 1;
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('LoanDisbursed').get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('LoanDisbursed').get();
     for (var element in querySnapshot.docs) {
       if (element['Status'] && element['Approve']) {
         DateTime ddd = element["Disbursed Date"].toDate();
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
+        if (_selectedDate.day == ddd.day && _selectedDate.month == ddd.month && _selectedDate.year == ddd.year) {
           allmemberss.add(DailyTransactionModel(
               amount: element["Disbursed Amount"],
               transacno: s.toString(),
@@ -168,15 +237,11 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
   Future<List<DailyTransactionModel>> getloanrepayment() async {
     List<DailyTransactionModel> allmemberss = [];
     int s = 1;
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('LoanRepayment').get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('LoanRepayment').get();
     for (var element in querySnapshot.docs) {
       if (element['Status'] && element['Approve']) {
         DateTime ddd = element["Request Date"].toDate();
-        print(ddd.toString());
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
+        if (_selectedDate.day == ddd.day && _selectedDate.month == ddd.month && _selectedDate.year == ddd.year) {
           allmemberss.add(DailyTransactionModel(
               amount: element["Pay Amount"],
               transacno: s.toString(),
@@ -189,7 +254,6 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
         }
       }
     }
-    print("INar${allmemberss.length}");
     return allmemberss;
   }
 
@@ -204,16 +268,14 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
 
     _save() async {
       if (selectedsomiti == null) {
-        Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.",
-            "Some Required Fields are Empty",
+        Get.snackbar("Samitee Wise Member Ledger Report Generation Failed.", "Some Required Fields are Empty",
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
             backgroundColor: Colors.red,
             margin: EdgeInsets.zero,
             duration: const Duration(milliseconds: 2000),
             boxShadows: [
-              BoxShadow(
-                  color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
+              BoxShadow(color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
             ],
             borderRadius: 0);
       } else {
@@ -222,7 +284,10 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
             cashdeposit: await getmemberdeposit(),
             loandisburse: await getloandisbursement(),
             loanrepayment: await getloanrepayment(),
-            ledgertitle: selectedsomiti.name,startdate: _selectedDate,
+            getexpense: await getExpense(),
+            getincome: await getIncome(),
+            ledgertitle: selectedsomiti.name,
+            startdate: _selectedDate,
             ledgeno: selectedsomiti.id);
       }
     }

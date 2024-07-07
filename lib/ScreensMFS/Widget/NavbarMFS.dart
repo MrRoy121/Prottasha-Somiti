@@ -68,19 +68,19 @@ class _NavbarState extends State<Navbar> {
                     icon: Icons.arrow_drop_down),
               ),
 
-              AuthService.to.user?.type != "Field Officer"?
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    widget.toglechnage(3);
-                  });
-
-                },
-                child: NavbarItem(
-                    flag: widget.navbool.reports,
-                    text: 'Reports',
-                    icon: Icons.arrow_drop_down),
-              ):SizedBox(),
+              // AuthService.to.user?.type != "Field Officer"?
+              // InkWell(
+              //   onTap: () {
+              //     setState(() {
+              //       widget.toglechnage(3);
+              //     });
+              //
+              //   },
+              //   child: NavbarItem(
+              //       flag: widget.navbool.reports,
+              //       text: 'Reports',
+              //       icon: Icons.arrow_drop_down),
+              // ):SizedBox(),
 
 
             ],

@@ -238,8 +238,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
         DataCell(Text(userData["User Name"], style: const TextStyle(fontSize: 12))),
       ];
 
-      List<String> categories = ['Revenue Stamp', 'Processing Fee', 'Share Savings', 'Lien Money', 'Loan Pass Book', 'Loan Pass File'];
-      categories.forEach((category) {
+      feeTypes.forEach((category) {
         if (userData.containsKey(category)) {
           var expense = userData[category];
           print(userData[category]);
@@ -332,39 +331,41 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         'Member Name': memberss.firstname + ' ' + memberss.lastname,
                                         'Member ID': memberss.id,
                                         if (revenustampamounttxt.text.isNotEmpty)
-                                          'Revenue Stamp': {
+                                          feeTypes[0]: {
                                             'amount': revenustampamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                         if (processingfeeamounttxt.text.isNotEmpty)
-                                          'Processing Fee': {
+                                          feeTypes[1]: {
                                             'amount': processingfeeamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                         if (sharesavingsamounttxt.text.isNotEmpty)
-                                          'Share Savings': {
+                                          feeTypes[2]: {
                                             'amount': sharesavingsamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                         if (memberfeeamounttxt.text.isNotEmpty)
-                                          'Lien Money': {
+                                          feeTypes[2]: {
                                             'amount': memberfeeamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                         if (loanpassbookamounttxt.text.isNotEmpty)
-                                          'Loan Pass Book': {
+                                          feeTypes[3]: {
                                             'amount': loanpassbookamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                         if (loanpassfileamounttxt.text.isNotEmpty)
-                                          'Loan Pass File': {
+                                          feeTypes[4]: {
                                             'amount': loanpassfileamounttxt.text.trim(),
                                             'date': DateTime.now(),
                                           },
                                       };
 
-                                      final othersFeeRef = FirebaseFirestore.instance.collection('Others Fee').doc(selectedsanction.id);
-                                      final balanceAccountRef = FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
+                                      final othersFeeRef =
+                                          FirebaseFirestore.instance.collection('Others Fee').doc(selectedsanction.id);
+                                      final balanceAccountRef =
+                                          FirebaseFirestore.instance.collection('BalanceAccount').doc('0');
 
                                       DocumentSnapshot docSnapshot = await othersFeeRef.get();
 
@@ -372,23 +373,23 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         Map<String, dynamic> oldData = docSnapshot.data() as Map<String, dynamic>;
                                         double oldTotalAmount = 0.0;
 
-                                        if (oldData.containsKey('Revenue Stamp')) {
-                                          oldTotalAmount += double.parse(oldData['Revenue Stamp']['amount']);
+                                        if (oldData.containsKey(feeTypes[0])) {
+                                          oldTotalAmount += double.parse(oldData[feeTypes[0]]['amount']);
                                         }
-                                        if (oldData.containsKey('Processing Fee')) {
-                                          oldTotalAmount += double.parse(oldData['Processing Fee']['amount']);
+                                        if (oldData.containsKey(feeTypes[1])) {
+                                          oldTotalAmount += double.parse(oldData[feeTypes[1]]['amount']);
                                         }
-                                        if (oldData.containsKey('Share Savings')) {
-                                          oldTotalAmount += double.parse(oldData['Share Savings']['amount']);
+                                        if (oldData.containsKey(feeTypes[2])) {
+                                          oldTotalAmount += double.parse(oldData[feeTypes[2]]['amount']);
                                         }
-                                        if (oldData.containsKey('Lien Money')) {
-                                          oldTotalAmount += double.parse(oldData['Lien Money']['amount']);
+                                        if (oldData.containsKey(feeTypes[2])) {
+                                          oldTotalAmount += double.parse(oldData[feeTypes[2]]['amount']);
                                         }
-                                        if (oldData.containsKey('Loan Pass Book')) {
-                                          oldTotalAmount += double.parse(oldData['Loan Pass Book']['amount']);
+                                        if (oldData.containsKey(feeTypes[3])) {
+                                          oldTotalAmount += double.parse(oldData[feeTypes[3]]['amount']);
                                         }
-                                        if (oldData.containsKey('Loan Pass File')) {
-                                          oldTotalAmount += double.parse(oldData['Loan Pass File']['amount']);
+                                        if (oldData.containsKey(feeTypes[4])) {
+                                          oldTotalAmount += double.parse(oldData[feeTypes[4]]['amount']);
                                         }
 
                                         await balanceAccountRef.update({
@@ -508,7 +509,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Select Member',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -598,7 +602,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Revenue Stamp Amount',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -626,7 +633,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Date',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -653,7 +663,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
+                                                suffixIcon:
+                                                    Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -676,7 +687,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Processing Fee Amount',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -704,7 +718,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Date',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -731,7 +748,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
+                                                suffixIcon:
+                                                    Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -754,7 +772,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Share Savings Amount',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -782,7 +803,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Date',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -809,7 +833,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
+                                                suffixIcon:
+                                                    Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -832,7 +857,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Lien Money Amount',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -860,7 +888,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Date',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -887,7 +918,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
+                                                suffixIcon:
+                                                    Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -910,7 +942,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Loan Pass File Amount',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -938,7 +973,10 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                           text: 'Date',
                                           style: TextStyle(color: Colors.black, fontSize: 14),
                                           children: <TextSpan>[
-                                            TextSpan(text: ' *', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                                            TextSpan(
+                                                text: ' *',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
                                             TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
                                           ],
                                         ),
@@ -965,7 +1003,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                 ),
-                                                suffixIcon: Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
+                                                suffixIcon:
+                                                    Icon(Icons.calendar_month_sharp, size: 14, color: Colors.grey),
                                               ),
                                             ),
                                           ),
@@ -1022,7 +1061,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 25,
                           ),
                           SingleChildScrollView(
@@ -1034,8 +1073,8 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                   showCheckboxColumn: false,
                                   border: TableBorder.all(color: Colors.black26, width: 1),
                                   headingRowColor: MaterialStateProperty.all<Color>(AppColor_Blue),
-                                  columns: const [
-                                    DataColumn(
+                                  columns: [
+                                    const DataColumn(
                                       label: Text(
                                         'SL',
                                         style: TextStyle(
@@ -1045,7 +1084,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                         ),
                                       ),
                                     ),
-                                    DataColumn(
+                                    const DataColumn(
                                       label: Text(
                                         'User Name',
                                         style: TextStyle(
@@ -1057,7 +1096,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                     DataColumn(
                                       label: Text(
-                                        'Revenue Stamp',
+                                        feeTypes[0],
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,
@@ -1067,7 +1106,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                     DataColumn(
                                       label: Text(
-                                        'Processing Fee',
+                                        feeTypes[1],
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,
@@ -1077,7 +1116,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                     DataColumn(
                                       label: Text(
-                                        'Share Savings',
+                                        feeTypes[2],
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,
@@ -1087,7 +1126,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                     DataColumn(
                                       label: Text(
-                                        'Lien Money',
+                                        feeTypes[2],
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,
@@ -1097,7 +1136,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                     DataColumn(
                                       label: Text(
-                                        'Loan Pass Book',
+                                        feeTypes[3],
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,
@@ -1107,7 +1146,7 @@ class _MemberSecurityAndOtherFeeState extends State<MemberSecurityAndOtherFee> {
                                     ),
                                     DataColumn(
                                       label: Text(
-                                        'Loan Pass File',
+                                        feeTypes[4],
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,

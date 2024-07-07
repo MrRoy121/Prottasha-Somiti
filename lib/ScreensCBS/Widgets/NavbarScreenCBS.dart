@@ -1354,11 +1354,11 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                         onHover: (val) {
                           setState(() {
                             if (val) {
-                              itemColor7 = AppColor_hover1;
-                              textColor7 = Colors.white;
+                              itemColor8 = AppColor_hover1;
+                              textColor8 = Colors.white;
                             } else {
-                              itemColor7 = AppColor_Blue;
-                              textColor7 = Colors.black;
+                              itemColor8 = AppColor_Blue;
+                              textColor8 = Colors.black;
                             }
                           });
                         },
@@ -1366,17 +1366,17 @@ class _NavbarScreenCBSState extends State<NavbarScreenCBS> {
                           Get.toNamed(profitlossstatementPageRoute);
                         },
                         child: Container(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               top: 10, left: 20, right: 20, bottom: 10),
                           height: 40,
                           width: 350,
-                          color: itemColor7,
+                          color: itemColor8,
                           child: Row(
                             children: [
                               Text(
                                 "Profit Loss Statement",
                                 style: TextStyle(
-                                  color: textColor7,
+                                  color: textColor8,
                                   fontSize: 12,
                                 ),
                               ),

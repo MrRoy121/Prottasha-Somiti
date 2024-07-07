@@ -7,6 +7,8 @@ const List<String> UserTypeList = [
   'Field Officer',
 ];
 
+List<String> feeTypes = ['Revenue Stamp', 'Processing Fee', 'Share Savings', 'Lien Money', 'Loan Pass Book', 'Loan Pass File'];
+
 
 const List<String> ProductClassList = [
   'SME Loan',
