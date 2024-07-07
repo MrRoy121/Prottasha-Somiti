@@ -7,14 +7,14 @@ import '../../Model/dailyTransactionModel.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
 import '../../helpers/pdfs_helpers/pdf_dailytransactionledger.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import 'Widgets/TransactionList.dart';
 
 class DailyTransactionList extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   DailyTransactionList({required this.appbool, required this.navbool});
@@ -271,7 +271,7 @@ class _DailyTransactionListState extends State<DailyTransactionList> {
                 somitee: somitee,
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import 'Widgets/GLSummary.dart';
 
 class DailyGLSummary extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   DailyGLSummary({required this.appbool, required this.navbool});
@@ -34,7 +34,7 @@ class _DailyGLSummaryState extends State<DailyGLSummary> {
                 ],
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

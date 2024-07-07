@@ -1,38 +1,62 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../Constants/Constants.dart';
-import 'package:get/get.dart';
 import '../../Constants/values.dart';
 import '../../Model/dailyTransactionModel.dart';
-import '../../Model/member.dart';
-import '../../Model/somitee.dart';
-import '../../helpers/pdfs_helpers/pdf_dailyaffairstatementledger.dart';
-import '../../helpers/pdfs_helpers/pdf_dailytransactionledger.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
-import 'Widgets/TransactionList.dart';
+import '../../helpers/pdfs_helpers/pdf_trialbalanceledger.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 
-class DailyAffairStatement extends StatefulWidget {
-  Navbool navbool;
+class TrailBalance extends StatefulWidget {
+  NavboolCBS navbool;
   Appbool appbool;
 
-  DailyAffairStatement({required this.appbool, required this.navbool});
+  TrailBalance({required this.appbool, required this.navbool});
 
   @override
-  State<DailyAffairStatement> createState() => _DailyAffairStatementState();
+  State<TrailBalance> createState() => _TrailBalanceState();
 }
 
-class _DailyAffairStatementState extends State<DailyAffairStatement> {
+class _TrailBalanceState extends State<TrailBalance> {
   DateTime _selectedDate = DateTime.now();
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
 
-  double calculateSum(List<dynamic> array) {
-    return array.fold(0, (sum, map) => sum + (map['value'] as double? ?? 0));
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
   }
 
-  Future<List<DailyTransactionModel>> getmemberdeposit() async {
+  Future<List<DailyTransactionModel>> getcashinhand() async {
+    List<DailyTransactionModel> allmemberss = [];
+    await FirebaseFirestore.instance
+        .collection('BalanceAccount')
+        .doc('0')
+        .get()
+        .then((element) {
+      allmemberss.add(DailyTransactionModel(
+          amount: element['Balance'],
+          transacno: '52001001',
+          drcr: true,
+          acno: '1',
+          actitle: '',
+          naration: element['Account Title'],
+          transactiondate: DateTime.now()));
+    });
+    return allmemberss;
+  }
+
+  Future<List<DailyTransactionModel>> getcashcurrentdeposti() async {
     List<DailyTransactionModel> allmemberss = [];
     double totaldepo = 0;
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -41,13 +65,8 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
         .get();
     for (var document in querySnapshot.docs) {
       List<dynamic> deposits = document["Deposits"];
-      for (int i = 0; i < deposits.length; i++) {
-        DateTime ddd = DateTime.parse(deposits[i]["date"]);
-        if (_selectedDate.day == ddd.day &&
-            _selectedDate.month == ddd.month &&
-            _selectedDate.year == ddd.year) {
-        totaldepo += deposits[i]["value"] ?? 0.0;
-        }
+      for (var deposit in deposits) {
+        totaldepo += deposit["value"] ?? 0.0;
       }
     }
     allmemberss.add(DailyTransactionModel(
@@ -56,19 +75,16 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
         drcr: true,
         acno: '1',
         actitle: '',
-        naration: "Short Notice Deposit (Samittee)",
+        naration: "Cash Deposit",
         transactiondate: DateTime.now()));
+    return allmemberss;
+  }
+
+  Future<List<DailyTransactionModel>> getsavingsdeposit() async {
+    List<DailyTransactionModel> allmemberss = [];
     allmemberss.add(DailyTransactionModel(
         amount: 0,
-        transacno: '52001003',
-        drcr: true,
-        acno: '1',
-        actitle: '',
-        naration: "Short Notice Deposit (Cbs)",
-        transactiondate: DateTime.now()));
-    allmemberss.add(DailyTransactionModel(
-        amount: 0,
-        transacno: '52001001',
+        transacno: '52002002',
         drcr: true,
         acno: '1',
         actitle: '',
@@ -77,39 +93,24 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
     return allmemberss;
   }
 
-  Future<List<DailyTransactionModel>> getmemberwithdraw() async {
+  Future<List<DailyTransactionModel>> getloanandadvances() async {
     List<DailyTransactionModel> allmemberss = [];
-    int i = 0;
-    await FirebaseFirestore.instance
-        .collection('BalanceAccount')
-        .get()
-        .then((que) {
-      for (var ele in que.docs) {
-        i++;
-        allmemberss.add(DailyTransactionModel(
-            amount: ele['Balance'],
-            transacno: '30250${i.toString().padLeft(3,'0')}',
-            drcr: true,
-            acno: ele.id,
-            actitle: '',
-            naration: ele['Account Title'],
-            transactiondate: DateTime.now()));
-      }
-    });
-    int index = allmemberss.indexWhere((element) => element.acno == '0');
-    if (index != -1) {
-    var doc000 = allmemberss.removeAt(index);
-    allmemberss.insert(0, doc000);
-    }
+    allmemberss.add(DailyTransactionModel(
+        amount: 0,
+        transacno: '52002003',
+        drcr: true,
+        acno: '1',
+        actitle: '',
+        naration: "Suspense(Service Charge)",
+        transactiondate: DateTime.now()));
     return allmemberss;
   }
-
 
   Future<List<DailyTransactionModel>> getExpense() async {
     List<DailyTransactionModel> profitloss = [];
     int s = 1;
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-    await FirebaseFirestore.instance.collection('ExpenseItem').get();
+        await FirebaseFirestore.instance.collection('ExpenseItem').get();
     for (var category in ExpensecategoryList) {
       double currentmont = 0.0;
       List<QueryDocumentSnapshot<Map<String, dynamic>>> expenses = querySnapshot
@@ -125,7 +126,7 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
       }
       profitloss.add(DailyTransactionModel(
           amount: currentmont,
-          transacno: "90100${s.toString().padLeft(3, '0')}",
+          transacno: "52007${s.toString().padLeft(2, '0')}",
           drcr: false,
           acno: '1',
           actitle: '',
@@ -138,30 +139,14 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
 
   @override
   Widget build(BuildContext context) {
-
     _save() async {
-        PdfDailyAffairStatementLedger.generate(
-            cashwithdraw: await getmemberwithdraw(),
-            cashdeposit: await getmemberdeposit(),
-            expense: await getExpense(),
-            ledgertitle: 'ss',
-            date: _selectedDate);
-    }
-
-
-    Future<void> _selectDate(BuildContext context) async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate ?? DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2101),
-      );
-
-      if (picked != null && picked != _selectedDate) {
-        setState(() {
-          _selectedDate = picked;
-        });
-      }
+      PdfTrailbalanceLedger.generate(
+          cashcurrentdeposit: await getcashcurrentdeposti(),
+          expenses: await getExpense(),
+          cashinhand: await getcashinhand(),
+          savingsdeposit: await getsavingsdeposit(),
+          loanandadvances: await getloanandadvances(),
+          startdate: _selectedDate);
     }
 
     return Scaffold(
@@ -169,7 +154,7 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
         navbool: widget.appbool,
       ),
       body: SingleChildScrollView(
-        child:  Stack(
+        child: Stack(
           children: [
             Container(
               margin: EdgeInsets.only(top: 100, left: 50),
@@ -201,10 +186,10 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 40.0),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 40.0),
                                 child: Text(
-                                  "Affair Statement",
+                                  "Trail Balance",
                                   style: TextStyle(
                                     color: AppColor,
                                     fontWeight: FontWeight.bold,
@@ -253,7 +238,7 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
                                 width: 90,
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.only(top: 3.0, left: 15),
+                                      const EdgeInsets.only(top: 3.0, left: 15),
                                   child: Row(
                                     children: [
                                       Icon(
@@ -355,7 +340,7 @@ class _DailyAffairStatementState extends State<DailyAffairStatement> {
                 ],
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

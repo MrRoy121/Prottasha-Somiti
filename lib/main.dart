@@ -9,14 +9,14 @@ import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/ScreensCBS/Loan&Advances/CreditLimit.dart';
 import 'package:prottashasomit/ScreensCBS/Loan&Advances/Lien.dart';
 import 'package:prottashasomit/ScreensCBS/Transaction/CashWithdraw.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/DailyGLSummary.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/DailyTransactionList.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/MemberLedger.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/MemberWiseDisburse.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/SamiteeWiseDisburse.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/SamiteeWiseMemberDepositLoan.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/SanctionDetailInformation.dart';
-import 'package:prottashasomit/ScreensMFS/Reports/SlipReprint.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/DailyGLSummary.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/DailyTransactionList.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/MemberLedger.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/MemberWiseDisburse.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/SamiteeWiseDisburse.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/SamiteeWiseMemberDepositLoan.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/SanctionDetailInformation.dart';
+import 'package:prottashasomit/ScreensCBS/Reports/SlipReprint.dart';
 import 'package:prottashasomit/route.dart';
 import 'Constants/responsive.dart';
 import 'Model/auth_middleware.dart';
@@ -63,10 +63,10 @@ import 'ScreensMFS/MemberManagement/MemberRegistration.dart';
 import 'ScreensMFS/MemberManagement/MemberUpdate.dart';
 import 'ScreensMFS/MemberManagement/SamiteeList.dart';
 import 'ScreensMFS/MemberManagement/SamiteeRegistration.dart';
-import 'ScreensMFS/Reports/DailyAffairStatement.dart';
-import 'ScreensMFS/Reports/GeneralLedgerStatement.dart';
-import 'ScreensMFS/Reports/ProfitLossStatement.dart';
-import 'ScreensMFS/Reports/TrialBalance.dart';
+import 'ScreensCBS/Reports/DailyAffairStatement.dart';
+import 'ScreensCBS/Reports/GeneralLedgerStatement.dart';
+import 'ScreensCBS/Reports/ProfitLossStatement.dart';
+import 'ScreensCBS/Reports/TrialBalance.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequest.dart';
 import 'ScreensMFS/Transaction/DepositCollectionRequestList.dart';
 import 'ScreensMFS/Transaction/DepositCorrectionRequest.dart';
@@ -346,63 +346,63 @@ class MyApp extends StatelessWidget {
             name: memberledgerPageRoute,
             page: () => MemberLedger(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dailytransactionPageRoute,
             page: () => DailyTransactionList(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dailyglsummaryPageRoute,
             page: () => DailyGLSummary(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: samiteewisememberdepositPageRoute,
             page: () => SamiteeWiseMemberDepositeLoan(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctiondetailsinformationPageRoute,
             page: () => SanctionDetailInformation(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: glstatementPageRoute,
             page: () => GenerallLedgerStatement(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: samiteewisedisbursePageRoute,
             page: () => SamiteeWiseDisburse(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: trialbalancePageRoute,
             page: () => TrailBalance(
               appbool: appbool,
-              navbool: navbool,
+              navbool: navboolcbs,
             ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dailyaffairstatementPageRoute,
             page: () => DailyAffairStatement(
               appbool: appbool,
-              navbool: navbool,
+              navbool: navboolcbs,
             ),
             middlewares: [AuthMiddleware()]),
         GetPage(
@@ -430,21 +430,21 @@ class MyApp extends StatelessWidget {
             name: profitlossstatementPageRoute,
             page: () => ProfitLossStatement(
               appbool: appbool,
-              navbool: navbool,
+              navbool: navboolcbs,
             ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberwishdisbursePageRoute,
             page: () => MemberWiseDisburse(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: slipreprintPageRoute,
             page: () => SlipReprint(
                   appbool: appbool,
-                  navbool: navbool,
+                  navbool: navboolcbs,
                 ),
             middlewares: [AuthMiddleware()]),
 

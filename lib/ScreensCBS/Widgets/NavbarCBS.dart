@@ -84,7 +84,6 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           text: 'Processing',
                           icon: Icons.arrow_drop_down),
                     ):SizedBox(),
-
                     AuthService.to.user?.type != "Field Officer"? InkWell(
                       onTap: () {
                         setState(() {
@@ -95,7 +94,7 @@ class _NavbarCBSState extends State<NavbarCBS> {
                           flag: widget.navbool.reports,
                           text: 'Reports',
                           icon: Icons.arrow_drop_down),
-                    ):SizedBox(),
+                    ):const SizedBox(),
 
                     AuthService.to.user?.type != "Field Officer"?  InkWell(
                       onTap: () {

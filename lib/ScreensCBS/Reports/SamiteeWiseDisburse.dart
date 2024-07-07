@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import 'Widgets/SamiteeWiseDisburseWidget.dart';
 
 class SamiteeWiseDisburse extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   SamiteeWiseDisburse({required this.appbool, required this.navbool});
@@ -28,7 +28,7 @@ class _SamiteeWiseDisburseState extends State<SamiteeWiseDisburse> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NavbarScreenMFS(appbool: widget.appbool, navbool: widget.navbool,),
+            NavbarScreenCBS(appbool: widget.appbool, navbool: widget.navbool,),
 
             SizedBox(
               height: 50,

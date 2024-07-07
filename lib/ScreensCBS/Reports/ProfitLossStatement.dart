@@ -4,15 +4,13 @@ import '../../../../Constants/Constants.dart';
 import '../../Constants/values.dart';
 import '../../Model/ProfitLossModel.dart';
 import '../../helpers/pdfs_helpers/pdf_profitlossstatement.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
-import 'Widgets/GLSummary.dart';
-import 'package:get/get.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 
 class ProfitLossStatement extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   ProfitLossStatement({required this.appbool, required this.navbool});
@@ -346,7 +344,7 @@ class _ProfitLossStatementState extends State<ProfitLossStatement> {
                 ],
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

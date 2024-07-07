@@ -7,15 +7,15 @@ import '../../Model/member.dart';
 import '../../Model/reportModel.dart';
 import '../../helpers/pdfs_helpers/pdf_memberdepositledger.dart';
 import '../../helpers/pdfs_helpers/pdf_memberloanledger.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import 'Widgets/Ledger.dart';
 import 'package:get/get.dart';
 
 class MemberLedger extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   MemberLedger({required this.appbool, required this.navbool});
@@ -364,7 +364,7 @@ class _MemberLedgerState extends State<MemberLedger> {
                 ],
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

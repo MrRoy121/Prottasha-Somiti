@@ -7,14 +7,14 @@ import '../../Constants/Constants.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
 import '../../helpers/pdfs_helpers/pdf_samiteewisememberdepositloanledger.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import 'Widgets/SamiteeMemberDeposite.dart';
 
 class SamiteeWiseMemberDepositeLoan extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   SamiteeWiseMemberDepositeLoan({required this.appbool, required this.navbool});
@@ -533,7 +533,7 @@ class _SamiteeWiseMemberDepositeLoanState
                     margin: const EdgeInsets.only(top: 50, left: 15),),
                 ],
               ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),

@@ -8,14 +8,14 @@ import '../../Model/loanSanction.dart';
 import '../../Model/member.dart';
 import '../../Model/somitee.dart';
 import '../../helpers/pdfs_helpers/pdf_sanctodisbursementsheet.dart';
-import '../Widget/Appbar.dart';
-import '../Widget/Appbool.dart';
-import '../Widget/NavBoolMFS.dart';
-import '../Widget/NavbarScreenMFS.dart';
+import '../Widgets/NavBoolCBS.dart';
+import '../Widgets/NavbarScreenCBS.dart';
+import '../../ScreensMFS/Widget/Appbar.dart';
+import '../../ScreensMFS/Widget/Appbool.dart';
 import 'Widgets/SanctionDetail.dart';
 
 class SanctionDetailInformation extends StatefulWidget {
-  Navbool navbool;
+  NavboolCBS navbool;
   Appbool appbool;
 
   SanctionDetailInformation({required this.appbool, required this.navbool});
@@ -279,7 +279,7 @@ class _SanctionDetailInformationState extends State<SanctionDetailInformation> {
                 ],
               ),
             ),
-            NavbarScreenMFS(
+            NavbarScreenCBS(
               appbool: widget.appbool,
               navbool: widget.navbool,
             ),
