@@ -34,18 +34,15 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
   Future<void> fetch() async {
     DateTime selectedDate = DateTime.now();
     String formattedDate = DateFormat.yMMMd().format(selectedDate).toString();
-    var collectionReference =
-        FirebaseFirestore.instance.collection('DayOpenClose');
+    var collectionReference = FirebaseFirestore.instance.collection('DayOpenClose');
     var documentReference = collectionReference.doc('5200');
     var snapshot = await documentReference.get();
-    if (snapshot.exists && snapshot.data()?['OpenClose'] == true && snapshot.data()?['Date']==formattedDate ) {
+    if (snapshot.exists && snapshot.data()?['OpenClose'] == true && snapshot.data()?['Date'] == formattedDate) {
       click = true;
     }
-    if(AuthService.to.user!.type ==
-        "Super Admin"){
+    if (AuthService.to.user!.type == "Super Admin") {
       click = true;
-    }else if(AuthService.to.user!.type ==
-        "Branch Manager"){
+    } else if (AuthService.to.user!.type == "Branch Manager") {
       click = true;
     }
     setState(() {});
@@ -56,8 +53,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
     var ScreenWidth = MediaQuery.of(context).size.width;
 
     double ResponsiveWidth = MediaQuery.of(context as BuildContext).size.width;
-    double ResponsiveHeight =
-        MediaQuery.of(context as BuildContext).size.height;
+    double ResponsiveHeight = MediaQuery.of(context as BuildContext).size.height;
 
     bool desktop = false;
     bool tablet = false;
@@ -97,9 +93,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                         // For Desktop
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
-                                left: ScreenWidth / 19.2,
-                                top: ScreenWidth / 30.72),
+                            margin: EdgeInsets.only(left: ScreenWidth / 19.2, top: ScreenWidth / 30.72),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
@@ -115,7 +109,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Notice Board",
                                           style: TextStyle(
                                             color: AppColor,
@@ -125,12 +119,10 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                         ),
                                         Spacer(),
                                         Container(
-                                          padding: EdgeInsets.only(
-                                              left: ScreenWidth / 85.33),
+                                          padding: EdgeInsets.only(left: ScreenWidth / 85.33),
                                           decoration: BoxDecoration(
                                             color: AppColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            borderRadius: BorderRadius.circular(5),
                                           ),
                                           height: 40,
                                           width: 130,
@@ -141,8 +133,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                                 color: Colors.white,
                                                 size: 16,
                                               ),
-                                              SizedBox(
-                                                  width: ScreenWidth / 153.6),
+                                              SizedBox(width: ScreenWidth / 153.6),
                                               Text(
                                                 "All Notice",
                                                 style: TextStyle(
@@ -202,23 +193,18 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                         dashboardPageRoute,
                                         arguments: {'CBS': true},
                                       );
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
                                       prefs.setBool('CBS', true);
                                     } else {
-                                      Get.snackbar("Day Is not Opened Yet.",
-                                          "Redirecting to Home Page.",
+                                      Get.snackbar("Day Is not Opened Yet.", "Redirecting to Home Page.",
                                           snackPosition: SnackPosition.BOTTOM,
                                           colorText: Colors.white,
                                           backgroundColor: Colors.red,
                                           margin: EdgeInsets.zero,
-                                          duration: const Duration(
-                                              milliseconds: 2000),
+                                          duration: const Duration(milliseconds: 2000),
                                           boxShadows: [
                                             const BoxShadow(
-                                                color: Colors.grey,
-                                                offset: Offset(-100, 0),
-                                                blurRadius: 20),
+                                                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
                                           ],
                                           borderRadius: 0);
                                     }
@@ -236,9 +222,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                         ),
                                       ],
                                     ),
-                                    margin: EdgeInsets.only(
-                                        top: ScreenWidth / 17.66,
-                                        left: ScreenWidth / 76.8),
+                                    margin: EdgeInsets.only(top: ScreenWidth / 17.66, left: ScreenWidth / 76.8),
                                     height: ScreenWidth / 12.8,
                                     width: ScreenWidth / 3.072,
                                     // color: Colors.white,
@@ -248,8 +232,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           width: ScreenWidth / 25.6,
                                         ),
                                         Image.asset('assets/money.png',
-                                            width: ScreenWidth / 19.2,
-                                            height: ScreenWidth / 19.2),
+                                            width: ScreenWidth / 19.2, height: ScreenWidth / 19.2),
                                         SizedBox(
                                           width: ScreenWidth / 25.6,
                                         ),
@@ -272,23 +255,18 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                         dashboardPageRoute,
                                         arguments: {'CBS': false},
                                       );
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
                                       prefs.setBool('CBS', false);
                                     } else {
-                                      Get.snackbar("Day Is not Opened Yet.",
-                                          "Redirecting to Home Page.",
+                                      Get.snackbar("Day Is not Opened Yet.", "Redirecting to Home Page.",
                                           snackPosition: SnackPosition.BOTTOM,
                                           colorText: Colors.white,
                                           backgroundColor: Colors.red,
                                           margin: EdgeInsets.zero,
-                                          duration: const Duration(
-                                              milliseconds: 2000),
+                                          duration: const Duration(milliseconds: 2000),
                                           boxShadows: [
                                             const BoxShadow(
-                                                color: Colors.grey,
-                                                offset: Offset(-100, 0),
-                                                blurRadius: 20),
+                                                color: Colors.grey, offset: Offset(-100, 0), blurRadius: 20),
                                           ],
                                           borderRadius: 0);
                                     }
@@ -306,9 +284,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                         ),
                                       ],
                                     ),
-                                    margin: EdgeInsets.only(
-                                        top: ScreenWidth / 51.2,
-                                        left: ScreenWidth / 76.8),
+                                    margin: EdgeInsets.only(top: ScreenWidth / 51.2, left: ScreenWidth / 76.8),
                                     height: ScreenWidth / 12.8,
                                     width: ScreenWidth / 3.072,
                                     // color: Colors.white,
@@ -318,8 +294,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           width: ScreenWidth / 25.6,
                                         ),
                                         Image.asset('assets/management.png',
-                                            width: ScreenWidth / 19.2,
-                                            height: ScreenWidth / 19.2),
+                                            width: ScreenWidth / 19.2, height: ScreenWidth / 19.2),
                                         SizedBox(
                                           width: ScreenWidth / 25.6,
                                         ),
@@ -334,44 +309,48 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(90.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  margin: EdgeInsets.only(
-                                      top: ScreenWidth / 51.2,
-                                      left: ScreenWidth / 76.8),
-                                  height: ScreenWidth / 12.8,
-                                  width: ScreenWidth / 3.072,
-                                  // color: Colors.white,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: ScreenWidth / 25.6,
-                                      ),
-                                      Image.asset('assets/ShareManagement.png',
-                                          width: ScreenWidth / 19.2,
-                                          height: ScreenWidth / 19.2),
-                                      SizedBox(
-                                        width: ScreenWidth / 25.6,
-                                      ),
-                                      Text(
-                                        "Share Management System",
-                                        style: TextStyle(
-                                            fontSize: ScreenWidth / 96,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor_greyText),
-                                      ),
-                                    ],
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed(
+                                      shareHolderPageRoute,
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(90.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.only(top: ScreenWidth / 51.2, left: ScreenWidth / 76.8),
+                                    height: ScreenWidth / 12.8,
+                                    width: ScreenWidth / 3.072,
+                                    // color: Colors.white,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: ScreenWidth / 25.6,
+                                        ),
+                                        Image.asset('assets/ShareManagement.png',
+                                            width: ScreenWidth / 19.2, height: ScreenWidth / 19.2),
+                                        SizedBox(
+                                          width: ScreenWidth / 25.6,
+                                        ),
+                                        Text(
+                                          "Share Management System",
+                                          style: TextStyle(
+                                              fontSize: ScreenWidth / 96,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor_greyText),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -385,9 +364,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                             children: [
                               SingleChildScrollView(
                                 child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: ScreenWidth / 19.2,
-                                      top: ScreenWidth / 30.72),
+                                  margin: EdgeInsets.only(left: ScreenWidth / 19.2, top: ScreenWidth / 30.72),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10.0),
@@ -413,20 +390,17 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                               ),
                                               Spacer(),
                                               Container(
-                                                padding:
-                                                    EdgeInsets.only(left: 18),
+                                                padding: EdgeInsets.only(left: 18),
                                                 decoration: BoxDecoration(
                                                   color: AppColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
+                                                  borderRadius: BorderRadius.circular(5),
                                                 ),
                                                 height: 40,
                                                 width: 130,
                                                 child: Row(
                                                   children: [
                                                     Icon(
-                                                      Icons
-                                                          .calendar_today_rounded,
+                                                      Icons.calendar_today_rounded,
                                                       color: Colors.white,
                                                       size: 16,
                                                     ),
@@ -488,8 +462,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(90.0),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.1),
@@ -499,8 +472,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           ),
                                         ],
                                       ),
-                                      margin:
-                                          EdgeInsets.only(top: 86.92, left: 20),
+                                      margin: EdgeInsets.only(top: 86.92, left: 20),
                                       height: 120,
                                       width: 500,
                                       // color: Colors.white,
@@ -509,17 +481,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           SizedBox(
                                             width: 60,
                                           ),
-                                          Image.asset('assets/money.png',
-                                              width: 80, height: 80),
+                                          Image.asset('assets/money.png', width: 80, height: 80),
                                           SizedBox(
                                             width: 60,
                                           ),
                                           Text(
                                             "Core Banking System",
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor_greyText),
+                                                fontSize: 16, fontWeight: FontWeight.bold, color: AppColor_greyText),
                                           ),
                                         ],
                                       ),
@@ -527,8 +496,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(90.0),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.1),
@@ -538,8 +506,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           ),
                                         ],
                                       ),
-                                      margin:
-                                          EdgeInsets.only(top: 30, left: 20),
+                                      margin: EdgeInsets.only(top: 30, left: 20),
                                       height: 120,
                                       width: 500,
                                       // color: Colors.white,
@@ -548,17 +515,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           SizedBox(
                                             width: 60,
                                           ),
-                                          Image.asset('assets/management.png',
-                                              width: 80, height: 80),
+                                          Image.asset('assets/management.png', width: 80, height: 80),
                                           SizedBox(
                                             width: 60,
                                           ),
                                           Text(
                                             "Microfinance Management",
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor_greyText),
+                                                fontSize: 16, fontWeight: FontWeight.bold, color: AppColor_greyText),
                                           ),
                                         ],
                                       ),
@@ -566,8 +530,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(90.0),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.1),
@@ -577,8 +540,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           ),
                                         ],
                                       ),
-                                      margin:
-                                          EdgeInsets.only(top: 30, left: 20),
+                                      margin: EdgeInsets.only(top: 30, left: 20),
                                       height: 120,
                                       width: 500,
                                       // color: Colors.white,
@@ -587,19 +549,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           SizedBox(
                                             width: 60,
                                           ),
-                                          Image.asset(
-                                              'assets/ShareManagement.png',
-                                              width: 80,
-                                              height: 80),
+                                          Image.asset('assets/ShareManagement.png', width: 80, height: 80),
                                           SizedBox(
                                             width: 60,
                                           ),
                                           Text(
                                             "Share Management System",
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor_greyText),
+                                                fontSize: 16, fontWeight: FontWeight.bold, color: AppColor_greyText),
                                           ),
                                         ],
                                       ),
@@ -645,16 +602,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                               padding: EdgeInsets.only(left: 8),
                                               decoration: BoxDecoration(
                                                 color: AppColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
+                                                borderRadius: BorderRadius.circular(5),
                                               ),
                                               height: 20,
                                               width: 70,
                                               child: Row(
                                                 children: [
                                                   Icon(
-                                                    Icons
-                                                        .calendar_today_rounded,
+                                                    Icons.calendar_today_rounded,
                                                     color: Colors.white,
                                                     size: 10,
                                                   ),
@@ -701,8 +656,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(90.0),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.1),
@@ -712,8 +666,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           ),
                                         ],
                                       ),
-                                      margin:
-                                          EdgeInsets.only(top: 86.92, left: 20),
+                                      margin: EdgeInsets.only(top: 86.92, left: 20),
                                       height: 120,
                                       width: 500,
                                       // color: Colors.white,
@@ -722,17 +675,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           SizedBox(
                                             width: ScreenWidth / 15.6,
                                           ),
-                                          Image.asset('assets/money.png',
-                                              width: 50, height: 50),
+                                          Image.asset('assets/money.png', width: 50, height: 50),
                                           SizedBox(
                                             width: ScreenWidth / 15.6,
                                           ),
                                           Text(
                                             "Core Banking System",
                                             style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor_greyText),
+                                                fontSize: 12, fontWeight: FontWeight.bold, color: AppColor_greyText),
                                           ),
                                         ],
                                       ),
@@ -740,8 +690,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(90.0),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.1),
@@ -751,8 +700,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           ),
                                         ],
                                       ),
-                                      margin:
-                                          EdgeInsets.only(top: 30, left: 20),
+                                      margin: EdgeInsets.only(top: 30, left: 20),
                                       height: 120,
                                       width: 500,
                                       // color: Colors.white,
@@ -761,17 +709,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           SizedBox(
                                             width: ScreenWidth / 15.6,
                                           ),
-                                          Image.asset('assets/management.png',
-                                              width: 50, height: 50),
+                                          Image.asset('assets/management.png', width: 50, height: 50),
                                           SizedBox(
                                             width: ScreenWidth / 15.6,
                                           ),
                                           Text(
                                             "Microfinance Management",
                                             style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor_greyText),
+                                                fontSize: 12, fontWeight: FontWeight.bold, color: AppColor_greyText),
                                           ),
                                         ],
                                       ),
@@ -779,8 +724,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
+                                        borderRadius: BorderRadius.circular(90.0),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.1),
@@ -790,8 +734,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           ),
                                         ],
                                       ),
-                                      margin:
-                                          EdgeInsets.only(top: 30, left: 20),
+                                      margin: EdgeInsets.only(top: 30, left: 20),
                                       height: 120,
                                       width: 500,
                                       // color: Colors.white,
@@ -800,19 +743,14 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                                           SizedBox(
                                             width: ScreenWidth / 15.6,
                                           ),
-                                          Image.asset(
-                                              'assets/ShareManagement.png',
-                                              width: 50,
-                                              height: 50),
+                                          Image.asset('assets/ShareManagement.png', width: 50, height: 50),
                                           SizedBox(
                                             width: ScreenWidth / 15.6,
                                           ),
                                           const Text(
                                             "Share Management System",
                                             style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor_greyText),
+                                                fontSize: 12, fontWeight: FontWeight.bold, color: AppColor_greyText),
                                           ),
                                         ],
                                       ),

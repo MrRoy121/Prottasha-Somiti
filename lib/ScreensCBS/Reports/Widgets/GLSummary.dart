@@ -251,8 +251,8 @@ class _GLSummaryState extends State<GLSummary> {
                     Row(
                       children: [
                         RichText(
-                          text: TextSpan(
-                            text: 'Report Date',
+                          text: const TextSpan(
+                            text: 'Report End Date',
                             style: TextStyle(color: Colors.black, fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
@@ -297,31 +297,49 @@ class _GLSummaryState extends State<GLSummary> {
                   width: 150,
                 ),
                 Column(
-                  children: [
-                    SizedBox(
-                      width: 300,
-                      child: InkWell(
-                        onTap: () => widget.selectDate1(context),
-                        child: AbsorbPointer(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                  children: [   Row(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: 'Report Start Date',
+                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: ' *',
+                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 14)),
+                            TextSpan(text: ' :', style: TextStyle(color: Colors.black, fontSize: 14)),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                      ),
+                      SizedBox(
+                        width: 300,
+                        child: InkWell(
+                          onTap: () => widget.selectDate1(context),
+                          child: AbsorbPointer(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                hintText: widget.selectedDate1 != null
+                                    ? "${widget.selectedDate1!.day}-${widget.selectedDate1!.month}-${widget.selectedDate1!.year}"
+                                    : "Select Start date",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                                suffixIcon: const Icon(Icons.calendar_month_sharp, color: Colors.grey),
                               ),
-                              hintText: widget.selectedDate1 != null
-                                  ? "${widget.selectedDate1!.day}-${widget.selectedDate1!.month}-${widget.selectedDate1!.year}"
-                                  : "Select Start date",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
-                              suffixIcon: const Icon(Icons.calendar_month_sharp, color: Colors.grey),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
+                  ),
                     SizedBox(
                       height: 90,
                     ),

@@ -428,7 +428,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100, left: 50),
+              margin: const EdgeInsets.only(top: 100, left: 50),
               child: SamiteeSelection(
                   submit: true,
                   selectmember: false,

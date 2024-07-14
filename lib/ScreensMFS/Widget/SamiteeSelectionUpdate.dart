@@ -6,6 +6,7 @@ import 'package:prottashasomit/Model/member.dart';
 
 import '../../../Constants/Constants.dart';
 import '../../Model/somitee.dart';
+import 'ShareHolderButton.dart';
 
 class SamiteeSelectionUpdate extends StatefulWidget {
   List<Somitee> somitee;
@@ -109,6 +110,13 @@ class _SamiteeSelectionUpdateState extends State<SamiteeSelectionUpdate> {
                   ),
                 ),
                 Spacer(),
+
+                ShareholderButton(
+                  memberId: widget.mst.id,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
                 widget.submit
                     ? InkWell(
                         onTap: () {

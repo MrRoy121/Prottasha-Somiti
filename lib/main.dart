@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:prottashasomit/ScreensCBS/Loan&Advances/CreditLimit.dart';
 import 'package:prottashasomit/ScreensCBS/Loan&Advances/Lien.dart';
 import 'package:prottashasomit/ScreensCBS/Transaction/CashWithdraw.dart';
@@ -18,17 +16,16 @@ import 'package:prottashasomit/ScreensCBS/Reports/SamiteeWiseMemberDepositLoan.d
 import 'package:prottashasomit/ScreensCBS/Reports/SanctionDetailInformation.dart';
 import 'package:prottashasomit/ScreensCBS/Reports/SlipReprint.dart';
 import 'package:prottashasomit/route.dart';
-import 'Constants/responsive.dart';
 import 'Model/auth_middleware.dart';
 import 'Screens/DashBoard/DashBoard.dart';
 import 'Screens/Homepage/Homepage.dart';
+import 'Screens/ShareHolder/ShareHolderScreen.dart';
 import 'Screens/authentication/authentication.dart';
 import 'Screens/roles/add_role.dart';
 import 'Screens/roles/my_profile.dart';
 import 'Screens/roles/roles_list.dart';
 import 'ScreensCBS/Account/AccountList.dart';
 import 'ScreensCBS/Account/RegularACOpen.dart';
-import 'ScreensCBS/Account/RegularDepositAccount.dart';
 import 'ScreensCBS/BalanceAcc/BalanceAcc.dart';
 import 'ScreensCBS/Customer/CustomerList.dart';
 import 'ScreensCBS/Customer/ExistingSamiteeMember.dart';
@@ -98,8 +95,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   Appbool appbool = Appbool(true, false, false);
-  Navbool navbool =
-      Navbool(false, false, false, false, false, false, false, false, false);
+  Navbool navbool = Navbool(false, false, false, false, false, false, false, false, false);
   NavboolCBS navboolcbs = NavboolCBS(false, false, false, false, false, false);
 
   @override
@@ -125,10 +121,7 @@ class MyApp extends StatelessWidget {
                   navbool: appbool,
                 ),
             middlewares: [AuthMiddleware()]),
-        GetPage(
-            name: authenticationPageRoute,
-            page: () => AuthenticationPage(),
-            middlewares: [AuthMiddleware()]),
+        GetPage(name: authenticationPageRoute, page: () => AuthenticationPage(), middlewares: [AuthMiddleware()]),
         GetPage(
             name: dashboardPageRoute,
             page: () => DashBoard(
@@ -280,9 +273,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: membersfeeandothersPageRoute,
             page: () => MemberSecurityAndOtherFee(
-              appbool: appbool,
-              navbool: navbool,
-            ),
+                  appbool: appbool,
+                  navbool: navbool,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: sanctionloanrequestPageRoute,
@@ -364,6 +357,12 @@ class MyApp extends StatelessWidget {
                 ),
             middlewares: [AuthMiddleware()]),
         GetPage(
+            name: shareHolderPageRoute,
+            page: () => ShareHolderScreen(
+                  appbool: appbool,
+                ),
+            middlewares: [AuthMiddleware()]),
+        GetPage(
             name: samiteewisememberdepositPageRoute,
             page: () => SamiteeWiseMemberDepositeLoan(
                   appbool: appbool,
@@ -394,44 +393,44 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: trialbalancePageRoute,
             page: () => TrailBalance(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: dailyaffairstatementPageRoute,
             page: () => DailyAffairStatement(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: accountscreenPageRoute,
             page: () => AccountScreen(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: expensescreenPageRoute,
             page: () => ExpenseScreen(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: lienPageRoute,
             page: () => LienScreen(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: profitlossstatementPageRoute,
             page: () => ProfitLossStatement(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: memberwishdisbursePageRoute,
@@ -451,9 +450,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: dailyopenclosePageRoute,
             page: () => DayOpenClose(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: individualmemberregistrationPageRoute,
@@ -472,9 +471,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: accountlistPageRoute,
             page: () => AccountList(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: existingmemberregistrationPageRoute,
@@ -514,30 +513,30 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: creditlimitPageRoute,
             page: () => CreditLimitDefine(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: cashwithdrawlistPageRoute,
             page: () => CashWithdrawList(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: botransfertransactionPageRoute,
             page: () => BOTransaction(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: botransfertransactionlistPageRoute,
             page: () => BOTransactionList(
-              appbool: appbool,
-              navbool: navboolcbs,
-            ),
+                  appbool: appbool,
+                  navbool: navboolcbs,
+                ),
             middlewares: [AuthMiddleware()]),
         GetPage(
             name: reverserequesttransactionPageRoute,
